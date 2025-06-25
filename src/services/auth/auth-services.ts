@@ -8,6 +8,8 @@ import {
 } from "src/utils/helper";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
+import { UserInfoModel } from "src/models/user/user-info";
+import { planModel } from "src/models/admin/plan-schema";
 
 configDotenv();
 
@@ -63,6 +65,18 @@ export const authServices = {
     if (!userData) {
       throw new Error("userNotFound");
     }
+
+    await UserInfoModel.create({
+      userId: userData._id,
+      measurements: {
+        heightCm: null,
+        bustCm: null,
+        waistCm: null,
+        hipsCm: null,
+        weightKg: null,
+        shoeSizeUK: null,
+      },
+    });
 
     const token = await generateToken(userData);
     const user = userData.toObject();
@@ -173,15 +187,51 @@ export const authServices = {
 
     return {};
   },
-  async userMoreInfo(payload: any) {
-    const {measurements, gender, dob, userData} = payload;
-    const checkUser = await UserModel.findById(userData.id);
-    if(!checkUser || !checkUser?.isVerifiedEmail){
-      throw new Error("userNotFound")
-    }
 
-    console.log(checkUser)
-    return {}
+  async userMoreInfo(payload: any) {
+    const { measurements, gender, dob, userData } = payload;
+    const checkUser = await UserModel.findOne({
+      _id: userData.id,
+      isVerifiedEmail: true,
+    });
+    if (!checkUser) {
+      throw new Error("userNotFound");
+    }
+    const data = await UserInfoModel.findOneAndUpdate(
+      {
+        userId: checkUser._id,
+      },
+      {
+        $set: {
+          measurements,
+          gender,
+          dob,
+        },
+      },
+      { new: true }
+    );
+
+    return data;
   },
 
+  async getPlans(payload: any) {
+    const { language } = payload;
+
+    const plans = await planModel.find({ isActive: true }).lean();
+
+    const translatedPlans = plans?.map((plan: any) => {
+      return {
+        name: plan.name?.[language] || plan.name?.en,
+        description: plan.description?.[language] || plan.description?.en,
+        features: plan.features?.map(
+          (feature: any) => feature?.[language] || feature?.en
+        ),
+        trialDays: plan.trialDays,
+        gbpAmount: plan.unitAmounts.eur/100,
+        eurAmount: plan.unitAmounts.gbp/100,
+      };
+    });
+
+    return translatedPlans;
+  },
 };

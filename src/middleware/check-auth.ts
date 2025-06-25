@@ -22,18 +22,18 @@ export const checkUserAuth = async (
   try {
     const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
-      return UNAUTHORIZED(res, "invalidToken", req.body.language);
+      return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
     }
 
     const decoded = jwt.verify(token, process.env.AUTH_SECRET as string) as any;
-    if (!decoded) return UNAUTHORIZED(res, "invalidToken", req.body.language);
+    if (!decoded) return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
 
     const checkToken = await TokenModel.findOne({
       token,
     });
 
     if (!checkToken) {
-      return UNAUTHORIZED(res, "invalidToken", req.body.language);
+      return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
     }
     req.user = decoded;
 

@@ -7,7 +7,7 @@ import {
   resetPassword,
   verifyOtp,
   verifyResetPasswordOtp,
-} from "src/controllers/auth-controller";
+} from "src/controllers/auth/auth-controller";
 
 // Code
 const router = Router();
@@ -23,4 +23,17 @@ router.post("/reset-password", resetPassword);
 router.post("/social-login");
 
 //============================== ADMIN Routes
+
+
+
+
+
+
+
+
+
+//============================== TEST Routes
+
+router.post("/create-plan")
+
 export { router };

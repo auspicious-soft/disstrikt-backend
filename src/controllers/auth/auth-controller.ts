@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { authServices } from "src/services/auth-services";
+import { authServices } from "src/services/auth/auth-services";
 import { countries, languages } from "src/utils/constant";
 import {
   BADREQUEST,
@@ -37,7 +37,7 @@ export const registerUser = async (req: Request, res: Response) => {
     return CREATED(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
@@ -56,7 +56,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
@@ -76,7 +76,7 @@ export const resendOtp = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
@@ -95,7 +95,7 @@ export const login = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return UNAUTHORIZED(res, err.message, req.body.language);
+      return UNAUTHORIZED(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
@@ -113,7 +113,7 @@ export const forgetPassword = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
@@ -133,7 +133,7 @@ export const verifyResetPasswordOtp = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
@@ -157,31 +157,47 @@ export const resetPassword = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
 export const userMoreInfo = async (req: Request, res: Response) => {
   try {
+    const userData = req.user as any;
+    req.body.language = userData.language;
     const { measurements, dob, gender } = req.body;
     if (!measurements || !dob || !gender) {
       throw new Error("Measurements, DOB, and Gender is required");
     }
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) {
-      throw new Error("Token is required");
-    }
+
     const response = await authServices.userMoreInfo({
       measurements,
       dob,
       gender,
-      userData: req.user
+      userData: req.user,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const getPlans = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language;
+    const response = await authServices.getPlans({
+      language: userData.language,
+      country: userData.country,
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }

@@ -69,7 +69,8 @@ export const customMessages: Record<SupportedLang, any> = {
     invalidOtp:"Invalid or expired OTP",
     userNotFound:"User not found",
     invalidPassword:"Invalid password",
-    invalidToken:"Invalid or expired token"
+    invalidToken:"Invalid or expired token",
+    recordAlreadyPresent:"Data already exist"
   },
   nl: {
     badrequest: "Ongeldig verzoek",

@@ -5,7 +5,7 @@ import { fileURLToPath } from "url";
 import connectDB from "./config/db";
 import bodyParser from "body-parser";
 import { checkUserAuth } from "./middleware/check-auth";
-import { auth, user } from "./routes";
+import { admin, auth, user } from "./routes";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -49,7 +49,10 @@ app.get("/", (_, res: any) => {
 app.use("/api",auth);
 
 // //*****************User Routes******************/
-app.use("/api", checkUserAuth, user);
+app.use("/api/user", checkUserAuth, user);
+
+// //*****************Admin Routes******************/
+app.use("/api/admin", admin)
 
 // //*****************Stripe Test Routes*****************/
 // app.get("/success-test", stripeSuccess);

@@ -37,12 +37,18 @@ const userSchema = new Schema<IUserInfo>(
       unique: true,
     },
     measurements: {
-      heightCm: Number,
-      bustCm: Number,
-      waistCm: Number,
-      hipsCm: Number,
-      weightKg: Number,
-      shoeSizeUK: Number,
+      type: new Schema(
+        {
+          heightCm: Number,
+          bustCm: Number,
+          waistCm: Number,
+          hipsCm: Number,
+          weightKg: Number,
+          shoeSizeUK: Number,
+        },
+        { _id: false }
+      ),
+      default: {},
     },
     videos: [
       {
