@@ -202,3 +202,46 @@ export const getPlans = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+export const setupIntent = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language;
+
+    const response = await authServices.setupIntent({
+      language: userData.language,
+      country: userData.country,
+      ...userData
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const buyPlan = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language;
+    const { planId, currency, paymentMethodId} = req.body;
+
+    if (!planId || !currency || !paymentMethodId) {
+      throw new Error("PlanId, Currency, Payment-Method and Customer-id is required");
+    }
+    const response = await authServices.buyPlan({
+      language: userData.language,
+      country: userData.country,
+      planId,
+      currency,
+      paymentMethodId, 
+      ...userData
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};

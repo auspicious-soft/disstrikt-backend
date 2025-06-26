@@ -19,6 +19,9 @@ export interface IUser extends Document {
   createdAt?: Date;
   updatedAt?: Date;
   createdForVerificationAt?: Date;
+  stripeCustomerId?: string;
+  isCardSetupComplete?: boolean;
+  hasUsedTrial?: boolean;
 }
 
 const userSchema = new Schema<IUser>(
@@ -97,6 +100,21 @@ const userSchema = new Schema<IUser>(
         expireAfterSeconds: 600,
         partialFilterExpression: { isVerifiedEmail: false },
       },
+    },
+
+    stripeCustomerId: {
+      type: String,
+      default: null,
+    },
+
+    isCardSetupComplete: {
+      type: Boolean,
+      default: false,
+    },
+
+    hasUsedTrial: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

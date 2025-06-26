@@ -1,11 +1,12 @@
 import { Router } from "express";
-import { getPlans, userMoreInfo } from "src/controllers/auth/auth-controller";
+import { buyPlan, getPlans, setupIntent, userMoreInfo } from "src/controllers/auth/auth-controller";
 
 // Code
 const router = Router();
 
 router.post("/user-more-info", userMoreInfo);
-router.route("/plans").get(getPlans);
+router.get("/setup-intent", setupIntent)
+router.route("/plans").get(getPlans).post(buyPlan);
 
 //============================== ADMIN Routes
 export { router };

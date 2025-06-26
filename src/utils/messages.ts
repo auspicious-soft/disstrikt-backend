@@ -70,7 +70,11 @@ export const customMessages: Record<SupportedLang, any> = {
     userNotFound:"User not found",
     invalidPassword:"Invalid password",
     invalidToken:"Invalid or expired token",
-    recordAlreadyPresent:"Data already exist"
+    recordAlreadyPresent:"Data already exist",
+    planNotFound:"Plan does not exist",
+    invalidCurrency:"Invalid currency",
+    stripeCustomerIdNotFound:"Stripe customer Id in invalid",
+    userAlreadyUsedTrial:"Trial already used"
   },
   nl: {
     badrequest: "Ongeldig verzoek",

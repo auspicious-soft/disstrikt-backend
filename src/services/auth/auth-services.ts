@@ -10,6 +10,8 @@ import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
 import { UserInfoModel } from "src/models/user/user-info";
 import { planModel } from "src/models/admin/plan-schema";
+import stripe from "src/config/stripe";
+import { SubscriptionModel } from "src/models/user/subscription-schema";
 
 configDotenv();
 
@@ -227,11 +229,159 @@ export const authServices = {
           (feature: any) => feature?.[language] || feature?.en
         ),
         trialDays: plan.trialDays,
-        gbpAmount: plan.unitAmounts.eur/100,
-        eurAmount: plan.unitAmounts.gbp/100,
+        gbpAmount: plan.unitAmounts.eur / 100,
+        eurAmount: plan.unitAmounts.gbp / 100,
+        currency: Object.keys(plan.stripePrices),
+        _id: plan?._id,
       };
     });
 
     return translatedPlans;
+  },
+
+  async setupIntent(payload: any) {
+    const { language, country, fullName, email, id, phone } = payload;
+    let customer;
+    const existingCustomers = await stripe.customers.list({
+      email,
+      limit: 1,
+    });
+
+    if (existingCustomers.data.length > 0) {
+      customer = existingCustomers.data[0];
+    } else {
+      customer = await stripe.customers.create({
+        email,
+        name: fullName,
+        phone: phone,
+        metadata: {
+          userId: id,
+          country: country,
+          language: language,
+        },
+      });
+    }
+
+    await UserModel.updateOne(
+      { _id: id },
+      { $set: { stripeCustomerId: customer.id } }
+    );
+
+    // ✅ Check if card already saved
+    const paymentMethods = await stripe.paymentMethods.list({
+      customer: customer.id,
+      type: "card",
+    });
+
+    if (paymentMethods.data.length > 0) {
+      return {
+        alreadySetup: true,
+        customerId: customer.id,
+        paymentMethodId: paymentMethods.data[0].id,
+      };
+    }
+
+    // ❌ No saved card — create new SetupIntent
+    const setupIntent = await stripe.setupIntents.create({
+      customer: customer.id,
+      usage: "off_session",
+    });
+
+    return {
+      alreadySetup: false,
+      clientSecret: setupIntent.client_secret,
+      customerId: customer.id,
+    };
+  },
+
+  async buyPlan(payload: any) {
+    const { planId, currency, id, paymentMethodId } = payload;
+
+    const plans = await planModel
+      .findOne({ _id: planId, isActive: true })
+      .lean();
+
+    if (!plans) {
+      throw new Error("planNotFound");
+    }
+
+    const stripeProduct = await stripe.products.retrieve(plans.stripeProductId);
+
+    if (!stripeProduct) {
+      throw new Error("planNotFound");
+    }
+
+    const priceList = await stripe.prices.list({
+      product: stripeProduct.id,
+      active: true, // only get active prices
+      limit: 10,
+    });
+
+    const productPrice = priceList?.data?.find(
+      (price) => price.currency === currency
+    );
+
+    if (!productPrice) {
+      throw new Error("invalidCurrency");
+    }
+
+    const user = await UserModel.findById(id);
+
+    if (!user?.stripeCustomerId) {
+      throw new Error("stripeCustomerIdNotFound");
+    }
+
+    if (user.hasUsedTrial && plans.trialDays > 0) {
+      throw new Error("userAlreadyUsedTrial");
+    }
+
+    const subscription = await stripe.subscriptions.create({
+      customer: user.stripeCustomerId,
+      items: [{ price: productPrice.id }],
+      trial_period_days: plans.trialDays,
+      default_payment_method: paymentMethodId,
+      expand: ["latest_invoice.payment_intent"],
+    });
+
+    user.hasUsedTrial = true;
+    await user.save();
+
+    // Convert Unix timestamps to Date objects
+    const trialStart = subscription.trial_start
+      ? new Date(subscription.trial_start * 1000)
+      : null;
+    const trialEnd = subscription.trial_end
+      ? new Date(subscription.trial_end * 1000)
+      : null;
+    const startDate = new Date(subscription.start_date * 1000);
+    const currentPeriodStart = subscription.current_period_start
+      ? new Date(subscription.current_period_start * 1000)
+      : null;
+    const currentPeriodEnd = subscription.current_period_end
+      ? new Date(subscription.current_period_end * 1000)
+      : null;
+    const nextBillingDate = currentPeriodEnd;
+
+    // Save to DB
+    await SubscriptionModel.create({
+      userId: id,
+      stripeCustomerId: user.stripeCustomerId,
+      stripeSubscriptionId: subscription.id,
+      planId,
+      paymentMethodId,
+      status: subscription.status,
+      trialStart,
+      trialEnd,
+      startDate,
+      currentPeriodStart,
+      currentPeriodEnd,
+      nextBillingDate,
+      amount: subscription.items.data[0].price.unit_amount,
+      currency: subscription.currency,
+    });
+
+    return {
+      subscriptionId: subscription.id,
+    };
   },
 };
