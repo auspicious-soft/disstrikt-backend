@@ -18,7 +18,8 @@ interface CreatePlanPayload {
 }
 
 export const validateCreatePlanPayload = (
-  body: any
+  body: any,
+  type: "create" | "update"
 ): { valid: boolean; message?: string; data?: CreatePlanPayload } => {
   const {
     key,
@@ -32,7 +33,7 @@ export const validateCreatePlanPayload = (
     features,
   } = body;
 
-  if (!key || typeof key !== "string") {
+  if ((!key || typeof key !== "string") && type=="create") {
     throw new Error("Plan key is required and must be a string");
   }
 

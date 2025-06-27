@@ -70,6 +70,7 @@ export const customMessages: Record<SupportedLang, any> = {
     userNotFound:"User not found",
     invalidPassword:"Invalid password",
     invalidToken:"Invalid or expired token",
+    noSubscription:"No active subscription found",
     recordAlreadyPresent:"Data already exist",
     planNotFound:"Plan does not exist",
     invalidCurrency:"Invalid currency",

@@ -14,7 +14,7 @@ import { validateCreatePlanPayload } from "src/validation/validPlan";
 
 export const createPlan = async (req: Request, res: Response) => {
   try {
-    const payload = validateCreatePlanPayload(req.body);
+    const payload = validateCreatePlanPayload(req.body, "create");
 
     if (!payload.data) {
       throw new Error("Invalid payload: data is missing.");
@@ -41,10 +41,24 @@ export const createPlan = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const getPlans = async (req: Request, res: Response) => {
   try {
     const response = await planServices.getPlans({});
 
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const updatePlan = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {

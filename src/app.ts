@@ -4,8 +4,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db";
 import bodyParser from "body-parser";
-import { checkUserAuth } from "./middleware/check-auth";
-import { admin, auth, user } from "./routes";
+import { checkSubscription, checkUserAuth } from "./middleware/check-auth";
+import { admin, auth, paidUser, user } from "./routes";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -46,13 +46,15 @@ app.get("/", (_, res: any) => {
 });
 
 // //*****************User Auth Routes**************/
-app.use("/api",auth);
+app.use("/api", auth);
 
 // //*****************User Routes******************/
 app.use("/api/user", checkUserAuth, user);
 
+app.use("/api/paid-user", checkUserAuth, checkSubscription, paidUser);
+
 // //*****************Admin Routes******************/
-app.use("/api/admin", admin)
+app.use("/api/admin", admin);
 
 // //*****************Stripe Test Routes*****************/
 // app.get("/success-test", stripeSuccess);

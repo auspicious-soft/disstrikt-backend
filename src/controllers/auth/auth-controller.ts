@@ -185,7 +185,6 @@ export const userMoreInfo = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
-
 export const getPlans = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;

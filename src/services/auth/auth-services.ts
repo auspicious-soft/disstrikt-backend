@@ -121,10 +121,14 @@ export const authServices = {
     checkExist.fcmToken = payload.fcmToken;
     checkExist.save();
 
+    const subscription = await SubscriptionModel.findOne({
+      userId: checkExist._id,
+    });
+
     const token = await generateToken(checkExist);
     const userObj = checkExist.toObject();
     delete userObj.password;
-    return { ...userObj, token };
+    return { ...userObj, token, subscription: subscription?.status || null };
   },
 
   async forgetPassword(payload: any) {
@@ -344,6 +348,7 @@ export const authServices = {
     });
 
     user.hasUsedTrial = true;
+    user.isCardSetupComplete = true;
     await user.save();
 
     // Convert Unix timestamps to Date objects

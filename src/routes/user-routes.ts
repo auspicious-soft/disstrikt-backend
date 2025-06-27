@@ -8,5 +8,11 @@ router.post("/user-more-info", userMoreInfo);
 router.get("/setup-intent", setupIntent)
 router.route("/plans").get(getPlans).post(buyPlan);
 
+const paidRouter = Router();
+
+paidRouter.get("/home", async(req, res)=>{
+    console.log("Home-Page", req.user)
+})
+
 //============================== ADMIN Routes
-export { router };
+export { router , paidRouter};

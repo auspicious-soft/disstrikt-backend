@@ -24,7 +24,11 @@ const subscriptionSchema = new Schema<ISubscription>(
     stripeSubscriptionId: { type: String, required: true },
     planId: { type: Schema.Types.ObjectId, ref: "Plan", required: true },
     paymentMethodId: { type: String, required: true },
-    status: { type: String, required: true }, // trialing, active, canceled, etc.
+    status: {
+      type: String,
+      enum: ["trailing", "active", "canceled"],
+      required: true,
+    }, // trialing, active, canceled, etc.
     trialStart: { type: Date, default: null },
     trialEnd: { type: Date, default: null },
     startDate: { type: Date, required: true },

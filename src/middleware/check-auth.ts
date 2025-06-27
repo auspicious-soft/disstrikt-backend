@@ -5,6 +5,7 @@ import { decode } from "next-auth/jwt";
 import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "src/utils/response";
 import { UserModel } from "src/models/user/user-schema";
 import { TokenModel } from "src/models/user/token-schema";
+import { SubscriptionModel } from "src/models/user/subscription-schema";
 configDotenv();
 declare global {
   namespace Express {
@@ -26,7 +27,8 @@ export const checkUserAuth = async (
     }
 
     const decoded = jwt.verify(token, process.env.AUTH_SECRET as string) as any;
-    if (!decoded) return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
+    if (!decoded)
+      return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
 
     const checkToken = await TokenModel.findOne({
       token,
@@ -53,5 +55,35 @@ export const checkUserAuth = async (
     next();
   } catch (error) {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const checkSubscription = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    req.body.language =
+      typeof req.user === "object" &&
+      req.user !== null &&
+      "language" in req.user
+        ? (req.user as any).language
+        : "en";
+
+    let id: string | null = null;
+    if (req.user && typeof req.user !== "string" && "id" in req.user) {
+      id = (req.user as JwtPayload).id as string;
+    }
+    const subscription = await SubscriptionModel.findOne({ userId: id });
+
+    if (subscription?.status == "canceled") {
+      return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
+    }
+    if (req.user && typeof req.user !== "string") {
+      (req.user as JwtPayload & { subscription?: any }).subscription = subscription;
+    }
+    next();
+  } catch (error) {
+    return INTERNAL_SERVER_ERROR(res, req?.body?.language || "en");
   }
 };
