@@ -41,7 +41,6 @@ export const createPlan = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
-
 export const getPlans = async (req: Request, res: Response) => {
   try {
     const response = await planServices.getPlans({});
@@ -54,7 +53,6 @@ export const getPlans = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
-
 export const updatePlan = async (req: Request, res: Response) => {
   try {
     const { planId, ...restData } = req.body;
