@@ -6,6 +6,7 @@ import { INTERNAL_SERVER_ERROR, UNAUTHORIZED } from "src/utils/response";
 import { UserModel } from "src/models/user/user-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
+import path from "path";
 configDotenv();
 declare global {
   namespace Express {
@@ -74,13 +75,25 @@ export const checkSubscription = async (
     if (req.user && typeof req.user !== "string" && "id" in req.user) {
       id = (req.user as JwtPayload).id as string;
     }
-    const subscription = await SubscriptionModel.findOne({ userId: id });
+    const subscription = await SubscriptionModel.findOne({
+      userId: id,
+    })
+      .populate({
+        path: "planId",
+        select: `name`,
+      })
+      .lean();
 
     if (subscription?.status == "canceled") {
       return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
     }
+    (subscription as any).planName = (subscription as any).planId.name[
+      (req.user as any).language
+    ];
+    (subscription as any).planId = (subscription as any).planId._id;
     if (req.user && typeof req.user !== "string") {
-      (req.user as JwtPayload & { subscription?: any }).subscription = subscription;
+      (req.user as JwtPayload & { subscription?: any }).subscription =
+        subscription;
     }
     next();
   } catch (error) {

@@ -19,14 +19,14 @@ export interface ISubscription extends Document {
 
 const subscriptionSchema = new Schema<ISubscription>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "User", required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "user", required: true },
     stripeCustomerId: { type: String, required: true },
     stripeSubscriptionId: { type: String, required: true },
-    planId: { type: Schema.Types.ObjectId, ref: "Plan", required: true },
+    planId: { type: Schema.Types.ObjectId, ref: "plan", required: true },
     paymentMethodId: { type: String, required: true },
     status: {
       type: String,
-      enum: ["trailing", "active", "canceled"],
+      enum: ["trialing", "active", "canceled"],
       required: true,
     }, // trialing, active, canceled, etc.
     trialStart: { type: Date, default: null },
