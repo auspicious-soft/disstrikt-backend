@@ -59,6 +59,8 @@ export const messages = {
 
 export const customMessages: Record<SupportedLang, any> = {
   en: {
+    loginSuccess: "Login successful",
+    logoutSuccess: "Logout successful",
     badrequest: "Bad request",
     subjectEmailVerification: "Email Verification",
     subjectResetPassword: "Reset Password",

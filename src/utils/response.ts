@@ -11,11 +11,12 @@ export const OK = (
   res: Response,
   data: Data = null,
   lang: SupportedLang = 'en',
+  message: any = null,
   statusCode = 200
 ) => {
   return res.status(statusCode).json({
     success: true,
-    message: getMessage('success', lang),
+    message: customMessages[lang]?.[message] || getMessage('success', lang),
     data,
   });
 };

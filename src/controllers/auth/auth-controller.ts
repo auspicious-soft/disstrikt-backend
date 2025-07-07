@@ -92,7 +92,7 @@ export const login = async (req: Request, res: Response) => {
       password,
       fcmToken,
     });
-    return OK(res, response || {}, req.body.language || "en");
+    return OK(res, response || {}, req.body.language || "en", "loginSuccess");
   } catch (err: any) {
     if (err.message) {
       return UNAUTHORIZED(res, err.message, req.body.language || "en");
@@ -209,7 +209,7 @@ export const setupIntent = async (req: Request, res: Response) => {
     const response = await authServices.setupIntent({
       language: userData.language,
       country: userData.country,
-      ...userData
+      ...userData,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
@@ -223,20 +223,52 @@ export const buyPlan = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language;
-    const { planId, currency, paymentMethodId} = req.body;
+    const { planId, currency, paymentMethodId } = req.body;
 
     if (!planId || !currency || !paymentMethodId) {
-      throw new Error("PlanId, Currency, Payment-Method and Customer-id is required");
+      throw new Error(
+        "PlanId, Currency, Payment-Method and Customer-id is required"
+      );
     }
     const response = await authServices.buyPlan({
       language: userData.language,
       country: userData.country,
       planId,
       currency,
-      paymentMethodId, 
-      ...userData
+      paymentMethodId,
+      ...userData,
+    });
+    return OK(res, response || {}, req.body.language || "en", "loginSuccess");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const getLoginResponse = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const response = await authServices.getLoginResponse({
+      userId: userData.id,
     });
     return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const response = await authServices.logoutUser({
+      userId: userData.id,
+    });
+    return OK(res, response || {}, req.body.language || "en", "logoutSuccess");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");

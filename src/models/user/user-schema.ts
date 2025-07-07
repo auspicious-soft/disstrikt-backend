@@ -8,12 +8,13 @@ export interface IUser extends Document {
   image?: string;
   country?: "NL" | "BE" | "FR" | "UK" | "ES";
   language?: "en" | "nl" | "fr" | "es";
-  fcmToken?: string;
+  fcmToken?: string | null;
   authType: "EMAIL" | "GOOGLE" | "APPLE";
   countryCode?: string;
   phone?: string;
   isVerifiedEmail: boolean;
   isVerifiedPhone: boolean;
+  isUserInfoComplete: boolean;
   isDeleted: boolean;
   lastLoginAt?: Date;
   createdAt?: Date;
@@ -80,6 +81,10 @@ const userSchema = new Schema<IUser>(
       default: false,
     },
     isVerifiedPhone: {
+      type: Boolean,
+      default: false,
+    },
+    isUserInfoComplete: {
       type: Boolean,
       default: false,
     },

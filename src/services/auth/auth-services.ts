@@ -12,6 +12,7 @@ import { UserInfoModel } from "src/models/user/user-info";
 import { planModel } from "src/models/admin/plan-schema";
 import stripe from "src/config/stripe";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
+import { TokenModel } from "src/models/user/token-schema";
 
 configDotenv();
 
@@ -101,12 +102,24 @@ export const authServices = {
   async login(payload: any) {
     const checkExist = await UserModel.findOne({
       email: payload.email,
-      isVerifiedEmail: true,
       authType: "EMAIL",
     });
 
     if (!checkExist) {
       throw new Error("userNotFound");
+    }
+
+    if (!checkExist?.isVerifiedEmail) {
+      // throw new Error("emailNotVerified");
+      await generateAndSendOtp(
+        checkExist.email,
+        "SIGNUP",
+        "EMAIL",
+        checkExist.language ?? "en",
+        "USER"
+      );
+
+      return {};
     }
 
     const passwordStatus = await verifyPassword(
@@ -216,6 +229,9 @@ export const authServices = {
       },
       { new: true }
     );
+
+    checkUser.isUserInfoComplete = true;
+    await checkUser.save();
 
     return data;
   },
@@ -388,5 +404,28 @@ export const authServices = {
     return {
       subscriptionId: subscription.id,
     };
+  },
+
+  async getLoginResponse(payload: any) {
+    const { userId } = payload;
+    const user = await UserModel.findById(userId).select("-password -__v");
+    const subscription = await SubscriptionModel.findOne({
+      userId: userId,
+    });
+    return { ...user?.toObject(), subscription: subscription?.status || null };
+  },
+  async logoutUser(payload: any) {
+    const { userId } = payload;
+    const user = await UserModel.findById(userId);
+    await TokenModel.findOneAndDelete({
+      userId: userId,
+    });
+
+    if (user) {
+      user.fcmToken = null;
+      await user.save();
+    }
+
+    return {};
   },
 };
