@@ -276,3 +276,81 @@ export const logoutUser = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
+export const adminLogin = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    if (!email || !password) {
+      throw new Error("Email & Password required");
+    }
+    const response = await authServices.adminLogin({
+      email,
+      password,
+    });
+    return OK(res, response || {}, req.body.language || "en", "loginSuccess");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const adminForgetPassword = async (req: Request, res: Response) => {
+  try {
+    const { email } = req.body;
+    if (!email) {
+      throw new Error("Email is required");
+    }
+    const response = await authServices.forgetPassword({
+      email,
+      admin: true,
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const adminVerifyOtp = async (req: Request, res: Response) => {
+  try {
+    const { value, otp } = req.body;
+    if (!value) {
+      throw new Error("Email is required");
+    }
+    const response = await authServices.verifyForgetPassOtp({
+      value,
+      otp,
+      userType: "ADMIN",
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const adminResetPassword = async (req: Request, res: Response) => {
+  try {
+    const { password } = req.body;
+    if (!password) {
+      throw new Error("Password is required");
+    }
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      throw new Error("Token is required");
+    }
+    const response = await authServices.resetPassword({
+      password,
+      token,
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};

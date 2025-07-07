@@ -1,5 +1,9 @@
 import { Router } from "express";
 import {
+  adminForgetPassword,
+  adminLogin,
+  adminResetPassword,
+  adminVerifyOtp,
   forgetPassword,
   login,
   registerUser,
@@ -24,8 +28,10 @@ router.post("/social-login");
 
 //============================== ADMIN Routes
 
-
-
+router.post("/admin/login", adminLogin);
+router.post("/admin/forget-password", adminForgetPassword);
+router.post("/admin/verify-otp", adminVerifyOtp);
+router.post("/admin/reset-password", adminResetPassword);
 
 
 

@@ -13,6 +13,7 @@ import { planModel } from "src/models/admin/plan-schema";
 import stripe from "src/config/stripe";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
+import { AdminModel } from "src/models/admin/admin-schema";
 
 configDotenv();
 
@@ -145,11 +146,18 @@ export const authServices = {
   },
 
   async forgetPassword(payload: any) {
-    const checkExist = await UserModel.findOne({
-      email: payload.email,
-      isVerifiedEmail: true,
-      authType: "EMAIL",
-    });
+    const admin = payload?.admin || false;
+
+    const checkExist = admin
+      ? await AdminModel.findOne({
+          email: payload.email,
+          authType: "EMAIL",
+        })
+      : await UserModel.findOne({
+          email: payload.email,
+          isVerifiedEmail: true,
+          authType: "EMAIL",
+        });
 
     if (!checkExist) {
       throw new Error("userNotFound");
@@ -159,8 +167,8 @@ export const authServices = {
       payload.email,
       "FORGOT_PASSWORD",
       "EMAIL",
-      payload.language,
-      "USER"
+      payload?.language || "en",
+      admin ? "ADMIN" : "USER"
     );
     return {};
   },
@@ -202,7 +210,11 @@ export const authServices = {
 
     const password = await hashPassword(payload.password);
 
-    await UserModel.updateOne({ email: data.email }, { $set: { password } });
+    if (data?.userType === "ADMIN") {
+      await AdminModel.updateOne({ email: data.email }, { $set: { password } });
+    } else {
+      await UserModel.updateOne({ email: data.email }, { $set: { password } });
+    }
 
     return {};
   },
@@ -427,5 +439,29 @@ export const authServices = {
     }
 
     return {};
+  },
+
+  // admin auth services
+
+  async adminLogin(payload: any) {
+    const checkExist = await AdminModel.findOne({
+      email: payload.email,
+      authType: "EMAIL",
+    }).lean();
+
+    if (!checkExist) {
+      throw new Error("userNotFound");
+    }
+
+    const passwordStatus = await verifyPassword(
+      payload.password,
+      checkExist?.password || ""
+    );
+
+    if (!passwordStatus) {
+      throw new Error("invalidPassword");
+    }
+    delete checkExist.password;
+    return checkExist;
   },
 };
