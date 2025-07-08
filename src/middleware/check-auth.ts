@@ -84,7 +84,7 @@ export const checkSubscription = async (
       })
       .lean();
 
-    if (subscription?.status == "canceled") {
+    if (subscription?.status == "canceled" || !subscription) {
       return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
     }
     (subscription as any).planName = (subscription as any).planId.name[

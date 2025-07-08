@@ -33,13 +33,4 @@ router.post("/admin/forget-password", adminForgetPassword);
 router.post("/admin/verify-otp", adminVerifyOtp);
 router.post("/admin/reset-password", adminResetPassword);
 
-
-
-
-
-
-//============================== TEST Routes
-
-router.post("/create-plan")
-
 export { router };

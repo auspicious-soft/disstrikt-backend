@@ -2,6 +2,7 @@ import { configDotenv } from "dotenv";
 import { UserInfoModel } from "src/models/user/user-info";
 import { UserModel } from "src/models/user/user-schema";
 import { genders } from "src/utils/constant";
+import { hashPassword, verifyPassword } from "src/utils/helper";
 
 configDotenv();
 
@@ -90,5 +91,33 @@ export const profileServices = {
       measurements: userInfo?.measurements || {},
       genders: genders,
     };
+  },
+
+  changePassword: async (payload: any) => {
+    const { id, oldPassword, newPassword, language } = payload;
+
+    const user = await UserModel.findById(id);
+    if (!user) {
+      throw new Error("userNotFound");
+    }
+
+    const passwordStatus = await verifyPassword(
+      oldPassword,
+      user?.password || ""
+    );
+
+    if (!passwordStatus) {
+      throw new Error("invalidPassword");
+    }
+
+    const updatedPassword = await hashPassword(newPassword);
+    user.password = updatedPassword;
+    await user.save();
+
+    return {};
+  },
+  changeLanguage: async (payload: any) => {
+    // Implement language change logic here
+    return { success: true };
   },
 };

@@ -73,7 +73,7 @@ export const resendOtp = async (req: Request, res: Response) => {
       userType: "USER",
       language,
     });
-    return OK(res, response || {}, req.body.language || "en");
+    return OK(res, response || {}, req.body.language || "en", "otpResent");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");

@@ -9,6 +9,8 @@ import {
 } from "src/controllers/auth/auth-controller";
 import { userHome } from "src/controllers/user/home-controller";
 import {
+  changeLanguage,
+  changePassword,
   getUser,
   updateUser,
   userProfile,
@@ -32,8 +34,8 @@ paidRouter.get("/home", userHome);
 paidRouter.get("/profile", userProfile);
 paidRouter.get("/get-user", getUser);
 paidRouter.patch("/update-user", updateUser);
-paidRouter.patch("/change-password");
-paidRouter.patch("/change-language");
+paidRouter.patch("/change-password", changePassword);
+paidRouter.patch("/change-language", changeLanguage);
 paidRouter.patch("/change-country");
 
 //============================== ADMIN Routes

@@ -44,7 +44,7 @@ export const updateUser = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
 
-    const { heightCm, bustCm, waistCm, hipsCm, gender, dob, fullName, image} =
+    const { heightCm, bustCm, waistCm, hipsCm, gender, dob, fullName, image } =
       req.body;
 
     if (heightCm && !Number.isInteger(heightCm)) {
@@ -78,7 +78,56 @@ export const updateUser = async (req: Request, res: Response) => {
       dob,
       fullName,
       image,
-      id: userData.id
+      id: userData.id,
+    });
+
+    return OK(res, response || {}, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+
+export const changePassword = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const { oldPassword, newPassword } = req.body;
+
+    if (!oldPassword || !newPassword) {
+      throw new Error("invalidFields");
+    }
+
+    const response = await profileServices.changePassword({
+      id: userData.id,
+      oldPassword,
+      newPassword,
+      language: req.body.language,
+    });
+
+    return OK(res, response || {}, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const changeLanguage = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const { language } = req.body;
+
+    if (!languages.includes(language)) {
+      throw new Error("invalidFields");
+    }
+
+    const response = await profileServices.changeLanguage({
+      id: userData.id,
+      language,
     });
 
     return OK(res, response || {}, req.body.language);
