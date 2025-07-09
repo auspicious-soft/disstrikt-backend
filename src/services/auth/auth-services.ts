@@ -90,6 +90,19 @@ export const authServices = {
   },
 
   async resendOtp(payload: any) {
+
+    if(payload.userType == "USER"){
+      const checkExist = await UserModel.findOne({
+        $or: [{ email: payload.value }, { phone: payload.value }],
+        isVerifiedEmail: false,
+        isVerifiedPhone: false,
+      });
+
+      if (!checkExist) {
+        throw new Error("registerAgain");
+      }
+    }
+
     await generateAndSendOtp(
       payload.value,
       payload.purpose,
@@ -120,7 +133,7 @@ export const authServices = {
         "USER"
       );
 
-      return {};
+      return checkExist;
     }
 
     const passwordStatus = await verifyPassword(
