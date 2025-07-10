@@ -334,11 +334,10 @@ export const adminVerifyOtp = async (req: Request, res: Response) => {
 };
 export const adminResetPassword = async (req: Request, res: Response) => {
   try {
-    const { password } = req.body;
+    const { password, token } = req.body;
     if (!password) {
       throw new Error("Password is required");
     }
-    const token = req.headers.authorization?.split(" ")[1];
     if (!token) {
       throw new Error("Token is required");
     }
