@@ -1,8 +1,9 @@
+
 import { configDotenv } from "dotenv";
 import { UserInfoModel } from "src/models/user/user-info";
 import { UserModel } from "src/models/user/user-schema";
 import { genders } from "src/utils/constant";
-import { hashPassword, verifyPassword } from "src/utils/helper";
+import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
 
 configDotenv();
 
@@ -117,7 +118,22 @@ export const profileServices = {
     return {};
   },
   changeLanguage: async (payload: any) => {
-    // Implement language change logic here
-    return { success: true };
+    const { id, language } = payload;
+    const user = await UserModel.findByIdAndUpdate(
+      id,
+      { $set: { language } },
+      { new: true }
+    );
+    let updatedToken;
+    if (user) {
+      updatedToken = await generateToken(user);
+    }
+
+    return { token: updatedToken || null };
+  },
+  changeCountry: async (payload: any) => {
+    const { id, country } = payload;
+    await UserModel.findByIdAndUpdate(id, { $set: { country } });
+    return {};
   },
 };

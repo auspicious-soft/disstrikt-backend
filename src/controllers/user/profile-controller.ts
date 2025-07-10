@@ -118,18 +118,61 @@ export const changePassword = async (req: Request, res: Response) => {
 export const changeLanguage = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
-    req.body.language = userData.language || "en";
-    const { language } = req.body;
+    const { updatedLanguage } = req.body;
 
-    if (!languages.includes(language)) {
+    if (!languages.includes(updatedLanguage)) {
       throw new Error("invalidFields");
     }
 
     const response = await profileServices.changeLanguage({
       id: userData.id,
-      language,
+      language: updatedLanguage,
     });
 
+    return OK(res, response || {}, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const changeCountry = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    const { country } = req.body;
+
+    if (!countries.includes(country)) {
+      throw new Error("invalidFields");
+    }
+
+    const response = await profileServices.changeCountry({
+      id: userData.id,
+      country,
+    });
+
+    return OK(res, response || {}, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const getSupport = async (req: Request, res: Response) => {
+  try {
+    const response = {};
+    return OK(res, response || {}, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const getTermAndCondition = async (req: Request, res: Response) => {
+  try {
+    const response = {};
     return OK(res, response || {}, req.body.language);
   } catch (err: any) {
     if (err.message) {

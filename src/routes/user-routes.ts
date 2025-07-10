@@ -9,8 +9,11 @@ import {
 } from "src/controllers/auth/auth-controller";
 import { userHome } from "src/controllers/user/home-controller";
 import {
+  changeCountry,
   changeLanguage,
   changePassword,
+  getSupport,
+  getTermAndCondition,
   getUser,
   updateUser,
   userProfile,
@@ -36,7 +39,9 @@ paidRouter.get("/get-user", getUser);
 paidRouter.patch("/update-user", updateUser);
 paidRouter.patch("/change-password", changePassword);
 paidRouter.patch("/change-language", changeLanguage);
-paidRouter.patch("/change-country");
+paidRouter.patch("/change-country", changeCountry);
+paidRouter.get("/get-support", getSupport)
+paidRouter.get("/get-terms-of-services", getTermAndCondition)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

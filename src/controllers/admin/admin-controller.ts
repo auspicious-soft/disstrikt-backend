@@ -51,7 +51,81 @@ export const getPlans = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const updatePlan = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const getTermAndCondition = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const postTermAndCondition = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const getPrivacyPolicy = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const postPrivacyPolicy = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const getSupport = async (req: Request, res: Response) => {
+  try {
+    const { planId, ...restData } = req.body;
+    const response = await planServices.updatePlan(planId, restData);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const postSupport = async (req: Request, res: Response) => {
   try {
     const { planId, ...restData } = req.body;
     const response = await planServices.updatePlan(planId, restData);
