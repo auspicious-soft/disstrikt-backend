@@ -2,16 +2,12 @@ import { Router } from "express";
 import {
   createPlan,
   getPlans,
-  getPrivacyPolicy,
+  getPlatformInfo,
   postPrivacyPolicy,
   postSupport,
   postTermAndCondition,
   updatePlan,
 } from "src/controllers/admin/admin-controller";
-import {
-  getSupport,
-  getTermAndCondition,
-} from "src/controllers/user/profile-controller";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
 
@@ -22,12 +18,10 @@ const router = Router();
 router.route("/price-plan").get(getPlans).post(createPlan).put(updatePlan);
 
 // Setting-routes
-router.route("/privacy-policy").get(getPrivacyPolicy).post(postPrivacyPolicy);
-router
-  .route("/term-and-condition")
-  .get(getTermAndCondition)
-  .post(postTermAndCondition);
-router.route("/support").get(getSupport).post(postSupport);
+router.route("/get-platform-info").get(getPlatformInfo);
+router.route("/privacy-policy").post(postPrivacyPolicy);
+router.route("/term-and-condition").post(postTermAndCondition);
+router.route("/support").post(postSupport);
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {

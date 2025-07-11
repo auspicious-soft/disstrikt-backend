@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { planModel } from "src/models/admin/plan-schema";
+import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { planServices } from "src/services/admin/plan-services";
 
 import {
@@ -65,10 +66,18 @@ export const updatePlan = async (req: Request, res: Response) => {
   }
 };
 
-export const getTermAndCondition = async (req: Request, res: Response) => {
+export const getPlatformInfo = async (req: Request, res: Response) => {
   try {
-    const { planId, ...restData } = req.body;
-    const response = await planServices.updatePlan(planId, restData);
+    const response = await PlatformInfoModel.findOneAndUpdate(
+      {
+        isActive: true,
+      },
+      {},
+      {
+        new: true,
+        upsert: true, // Create if it doesn't exist
+      }
+    );
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
@@ -79,21 +88,29 @@ export const getTermAndCondition = async (req: Request, res: Response) => {
 };
 export const postTermAndCondition = async (req: Request, res: Response) => {
   try {
-    const { planId, ...restData } = req.body;
-    const response = await planServices.updatePlan(planId, restData);
-    return OK(res, response || {}, req.body.language || "en");
-  } catch (err: any) {
-    if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language || "en");
+    const { ...termAndCondition } = req.body;
+    if (!termAndCondition || Object.keys(termAndCondition).length !== 4) {
+      throw new Error("invalidFields");
     }
-    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
-  }
-};
-export const getPrivacyPolicy = async (req: Request, res: Response) => {
-  try {
-    const { planId, ...restData } = req.body;
-    const response = await planServices.updatePlan(planId, restData);
-    return OK(res, response || {}, req.body.language || "en");
+    const response = await PlatformInfoModel.findOneAndUpdate(
+      {
+        isActive: true,
+      },
+      {
+        $set: {
+          termAndCondition,
+        },
+      },
+      {
+        new: true,
+        upsert: true, // Create if it doesn't exist
+      }
+    );
+    return CREATED(
+      res,
+      response?.termAndCondition || {},
+      req.body.language || "en"
+    );
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");
@@ -103,21 +120,29 @@ export const getPrivacyPolicy = async (req: Request, res: Response) => {
 };
 export const postPrivacyPolicy = async (req: Request, res: Response) => {
   try {
-    const { planId, ...restData } = req.body;
-    const response = await planServices.updatePlan(planId, restData);
-    return OK(res, response || {}, req.body.language || "en");
-  } catch (err: any) {
-    if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language || "en");
+    const { ...privacyPolicy } = req.body;
+    if (!privacyPolicy || Object.keys(privacyPolicy).length !== 4) {
+      throw new Error("invalidFields");
     }
-    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
-  }
-};
-export const getSupport = async (req: Request, res: Response) => {
-  try {
-    const { planId, ...restData } = req.body;
-    const response = await planServices.updatePlan(planId, restData);
-    return OK(res, response || {}, req.body.language || "en");
+    const response = await PlatformInfoModel.findOneAndUpdate(
+      {
+        isActive: true,
+      },
+      {
+        $set: {
+          privacyPolicy,
+        },
+      },
+      {
+        new: true,
+        upsert: true, // Create if it doesn't exist
+      }
+    );
+    return CREATED(
+      res,
+      response?.privacyPolicy || {},
+      req.body.language || "en"
+    );
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");
@@ -127,9 +152,29 @@ export const getSupport = async (req: Request, res: Response) => {
 };
 export const postSupport = async (req: Request, res: Response) => {
   try {
-    const { planId, ...restData } = req.body;
-    const response = await planServices.updatePlan(planId, restData);
-    return OK(res, response || {}, req.body.language || "en");
+    const { ...support } = req.body;
+    if (
+      !support.phone ||
+      !support.email ||
+      Object.keys(support.address).length !== 4
+    ) {
+      throw new Error("invalidFields");
+    }
+    const response = await PlatformInfoModel.findOneAndUpdate(
+      {
+        isActive: true,
+      },
+      {
+        $set: {
+          support,
+        },
+      },
+      {
+        new: true,
+        upsert: true, // Create if it doesn't exist
+      }
+    );
+    return CREATED(res, response?.support || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");

@@ -24,6 +24,12 @@ export interface IUserInfo extends Document {
   }[];
   dob?: Date;
   gender?: "male" | "female" | "other";
+  notificationSettings: {
+    jobAlerts: boolean;
+    tasksPortfolioProgress: boolean;
+    profilePerformance: boolean;
+    engagementMotivation: boolean;
+  };
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -95,6 +101,25 @@ const userSchema = new Schema<IUserInfo>(
       type: String,
       enum: genders,
       default: null,
+    },
+
+    notificationSettings: {
+      jobAlerts: {
+        type: Boolean,
+        default: true,
+      },
+      tasksPortfolioProgress: {
+        type: Boolean,
+        default: true,
+      },
+      profilePerformance: {
+        type: Boolean,
+        default: true,
+      },
+      engagementMotivation: {
+        type: Boolean,
+        default: true,
+      },
     },
   },
   { timestamps: true }

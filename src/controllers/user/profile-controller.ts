@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { profileServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
 import {
@@ -159,21 +160,28 @@ export const changeCountry = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
-export const getSupport = async (req: Request, res: Response) => {
+export const getPlatformInfo = async (req: Request, res: Response) => {
   try {
-    const response = {};
-    return OK(res, response || {}, req.body.language);
-  } catch (err: any) {
-    if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language);
+    const key = req.query.key as string;
+
+    if (!["privacyPolicy", "support", "termAndCondition"].includes(key)) {
+      throw new Error("invalidFields");
     }
-    return INTERNAL_SERVER_ERROR(res, req.body.language);
-  }
-};
-export const getTermAndCondition = async (req: Request, res: Response) => {
-  try {
-    const response = {};
-    return OK(res, response || {}, req.body.language);
+
+    const response = await PlatformInfoModel.findOne({
+      isActive: true,
+    });
+
+    let result = {};
+    if (response) {
+      if (key === "privacyPolicy")
+        result = { privacyPolicy: response.privacyPolicy };
+      else if (key === "support") result = { support: response.support };
+      else if (key === "termAndCondition")
+        result = { termAndCondition: response.termAndCondition };
+    }
+
+    return OK(res, result, req.body.language);
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);

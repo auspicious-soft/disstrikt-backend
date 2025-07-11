@@ -12,8 +12,7 @@ import {
   changeCountry,
   changeLanguage,
   changePassword,
-  getSupport,
-  getTermAndCondition,
+  getPlatformInfo,
   getUser,
   updateUser,
   userProfile,
@@ -40,8 +39,7 @@ paidRouter.patch("/update-user", updateUser);
 paidRouter.patch("/change-password", changePassword);
 paidRouter.patch("/change-language", changeLanguage);
 paidRouter.patch("/change-country", changeCountry);
-paidRouter.get("/get-support", getSupport)
-paidRouter.get("/get-terms-of-services", getTermAndCondition)
+paidRouter.get("/get-platform-info", getPlatformInfo)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

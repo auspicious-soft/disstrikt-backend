@@ -15,6 +15,7 @@ export interface IPlatformInfo extends Document {
     email: string;
     address: TranslatedText;
   };
+  isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -51,6 +52,10 @@ const platformInfoSchema = new Schema<IPlatformInfo>(
           es: "",
         },
       },
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }
