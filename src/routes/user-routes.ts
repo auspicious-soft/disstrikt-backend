@@ -12,8 +12,12 @@ import {
   changeCountry,
   changeLanguage,
   changePassword,
+  deleteAccount,
+  getNotificationSetting,
   getPlatformInfo,
   getUser,
+  postNotificationSetting,
+  updateSubscription,
   updateUser,
   userProfile,
 } from "src/controllers/user/profile-controller";
@@ -40,6 +44,9 @@ paidRouter.patch("/change-password", changePassword);
 paidRouter.patch("/change-language", changeLanguage);
 paidRouter.patch("/change-country", changeCountry);
 paidRouter.get("/get-platform-info", getPlatformInfo)
+paidRouter.route("/notification-setting").get(getNotificationSetting).patch(postNotificationSetting)
+paidRouter.post("/delete-account", deleteAccount)
+paidRouter.post("/update-subscription", updateSubscription)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

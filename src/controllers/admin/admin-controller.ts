@@ -66,6 +66,18 @@ export const updatePlan = async (req: Request, res: Response) => {
   }
 };
 
+export const handleStripeWebhook = async (req: Request, res: Response) => {
+  try {
+    const response = await planServices.handleStripeWebhook(req);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
 export const getPlatformInfo = async (req: Request, res: Response) => {
   try {
     const response = await PlatformInfoModel.findOneAndUpdate(

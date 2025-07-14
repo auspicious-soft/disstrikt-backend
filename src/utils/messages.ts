@@ -81,6 +81,7 @@ export const customMessages: Record<SupportedLang, any> = {
     stripeCustomerIdNotFound: "Stripe customer Id is invalid",
     userAlreadyUsedTrial: "Trial already used",
     invalidFields: "Invalid fields",
+    accountDeleted: "Account deleted successfully",
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
@@ -105,6 +106,7 @@ export const customMessages: Record<SupportedLang, any> = {
     stripeCustomerIdNotFound: "Stripe klant-ID is ongeldig",
     userAlreadyUsedTrial: "Proefperiode al gebruikt",
     invalidFields: "Ongeldige velden",
+    accountDeleted: "Account succesvol verwijderd",
   },
   fr: {
     registerAgain: "Session expirée, veuillez vous réinscrire",
@@ -129,6 +131,7 @@ export const customMessages: Record<SupportedLang, any> = {
     stripeCustomerIdNotFound: "Identifiant client Stripe invalide",
     userAlreadyUsedTrial: "Essai déjà utilisé",
     invalidFields: "Champs invalides",
+    accountDeleted: "Compte supprimé avec succès",
   },
   es: {
     registerAgain: "Sesión expirada, por favor regístrate de nuevo",
@@ -153,6 +156,7 @@ export const customMessages: Record<SupportedLang, any> = {
     stripeCustomerIdNotFound: "El ID de cliente de Stripe es inválido",
     userAlreadyUsedTrial: "Prueba ya utilizada",
     invalidFields: "Campos inválidos",
+    accountDeleted: "Cuenta eliminada con éxito",
   },
 };
 

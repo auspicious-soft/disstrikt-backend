@@ -21,6 +21,7 @@ export const authServices = {
   async register(payload: any) {
     const checkExist = await UserModel.findOne({
       email: payload.email,
+      isDeleted: false,
     });
     if (checkExist) {
       throw new Error("emailExist");
@@ -90,8 +91,7 @@ export const authServices = {
   },
 
   async resendOtp(payload: any) {
-
-    if(payload.userType == "USER"){
+    if (payload.userType == "USER") {
       const checkExist = await UserModel.findOne({
         $or: [{ email: payload.value }, { phone: payload.value }],
         isVerifiedEmail: false,
@@ -116,7 +116,8 @@ export const authServices = {
   async login(payload: any) {
     const checkExist = await UserModel.findOne({
       email: payload.email,
-      authType: "EMAIL",
+      authType: payload.authType || "EMAIL",
+      isDeleted: false,
     });
 
     if (!checkExist) {
@@ -156,6 +157,11 @@ export const authServices = {
     const userObj = checkExist.toObject();
     delete userObj.password;
     return { ...userObj, token, subscription: subscription?.status || null };
+  },
+  async socialLogin(payload: any) {
+    const {idToken, fcmToken, authType} = payload;
+    
+    return { };
   },
 
   async forgetPassword(payload: any) {

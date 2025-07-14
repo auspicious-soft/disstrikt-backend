@@ -6,12 +6,22 @@ import connectDB from "./config/db";
 import bodyParser from "body-parser";
 import { checkSubscription, checkUserAuth } from "./middleware/check-auth";
 import { admin, auth, paidUser, user } from "./routes";
+import { handleStripeWebhook } from "./controllers/admin/admin-controller";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 8000;
 const app = express();
+
+//Webhook Routes
+
+app.post(
+  `/webhook`,
+  express.raw({ type: "application/json" }),
+  handleStripeWebhook
+);
+//Webhook Routes
 
 app.use(express.json());
 app.set("trust proxy", true);

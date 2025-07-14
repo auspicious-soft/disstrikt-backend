@@ -1,5 +1,6 @@
-
 import { configDotenv } from "dotenv";
+import stripe from "src/config/stripe";
+import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info";
 import { UserModel } from "src/models/user/user-schema";
 import { genders } from "src/utils/constant";
@@ -134,6 +135,61 @@ export const profileServices = {
   changeCountry: async (payload: any) => {
     const { id, country } = payload;
     await UserModel.findByIdAndUpdate(id, { $set: { country } });
+    return {};
+  },
+
+  updatePlan: async (payload: any) => {
+    const { type, planId, userData } = payload;
+    if (type == "cancelSubscription") {
+      await stripe.subscriptions.update(
+        userData.subscription.stripeSubscriptionId,
+        {
+          cancel_at_period_end: true,
+        }
+      );
+
+      await SubscriptionModel.findOneAndUpdate(
+        {
+          userId: userData.id,
+        },
+        {
+          $set: {
+            status: "canceling",
+          },
+        }
+      );
+    }
+
+    if (type == "cancelTrial") {
+      await stripe.subscriptions.update(
+        userData.subscription.stripeSubscriptionId,
+        {
+          trial_end: "now",
+          proration_behavior: "none",
+        }
+      );
+    }
+
+    if (type == "upgrade") {
+      await stripe.subscriptions.update(
+        userData.subscription.stripeSubscriptionId,
+        {
+          cancel_at_period_end: true,
+        }
+      );
+
+      await SubscriptionModel.findOneAndUpdate(
+        {
+          userId: userData.id,
+        },
+        {
+          $set: {
+            nextPlanId: planId,
+          },
+        }
+      );
+    }
+
     return {};
   },
 };

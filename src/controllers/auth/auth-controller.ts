@@ -91,6 +91,7 @@ export const login = async (req: Request, res: Response) => {
       email,
       password,
       fcmToken,
+      authType: "EMAIL",
     });
     return OK(res, response || {}, req.body.language || "en", "loginSuccess");
   } catch (err: any) {
@@ -100,6 +101,31 @@ export const login = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+export const socialLogin = async (req: Request, res: Response) => {
+  try {
+    const { authType, idToken, fcmToken } = req.body;
+    if (
+      !authType ||
+      !idToken ||
+      !fcmToken ||
+      !["Google", "Apple"].includes(authType)
+    ) {
+      throw new Error("idToken, fcmToken and Valid authType is required");
+    }
+    const response = await authServices.socialLogin({
+      authType,
+      idToken,
+      fcmToken,
+    });
+    return OK(res, response || {}, req.body.language || "en", "loginSuccess");
+  } catch (err: any) {
+    if (err.message) {
+      return UNAUTHORIZED(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
 export const forgetPassword = async (req: Request, res: Response) => {
   try {
     const { email, language } = req.body;
@@ -276,6 +302,8 @@ export const logoutUser = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
+// Admin Controllers
 
 export const adminLogin = async (req: Request, res: Response) => {
   try {

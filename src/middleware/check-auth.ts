@@ -77,14 +77,16 @@ export const checkSubscription = async (
     }
     const subscription = await SubscriptionModel.findOne({
       userId: id,
+      status: { $in: ["active", "trialing", "canceling"] }, // Only valid ones
     })
+      .sort({ createdAt: -1 }) // Latest first
       .populate({
         path: "planId",
         select: `name`,
       })
       .lean();
 
-    if (subscription?.status == "canceled" || !subscription) {
+    if (!subscription) {
       return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
     }
     (subscription as any).planName = (subscription as any).planId.name[
