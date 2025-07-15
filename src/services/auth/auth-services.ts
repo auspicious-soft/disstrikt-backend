@@ -14,6 +14,7 @@ import stripe from "src/config/stripe";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { AdminModel } from "src/models/admin/admin-schema";
+import { OAuth2Client } from "google-auth-library";
 
 configDotenv();
 
@@ -159,9 +160,48 @@ export const authServices = {
     return { ...userObj, token, subscription: subscription?.status || null };
   },
   async socialLogin(payload: any) {
-    const { idToken, fcmToken, authType } = payload;
+    const { idToken, fcmToken, authType, language, country, deviceType } =
+      payload;
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const ticket = await client.verifyIdToken({
+      idToken: idToken,
+      audience:
+        deviceType === "IOS"
+          ? process.env.GOOGLE_CLIENT_ID_IOS
+          : process.env.GOOGLE_CLIENT_ID,
+    });
+    if (!ticket) {
+      throw new Error("Invalid TokenId");
+    }
+    const userData = ticket.getPayload();
 
-    return {};
+    const { email, name, picture } = userData as any;
+
+    let checkExist = await UserModel.findOne({ email });
+
+    if (checkExist) {
+      checkExist.fcmToken = fcmToken;
+      checkExist.save();
+    } else {
+      checkExist = await UserModel.create({
+        email,
+        fullName: name,
+        image: picture,
+        language,
+        fcmToken,
+        country,
+        authType,
+        isVerifiedEmail: true,
+      });
+    }
+
+    const token = await generateToken(checkExist);
+    const subscription = await SubscriptionModel.findOne({
+      userId: checkExist._id,
+    });
+    const userObj = checkExist.toObject();
+    delete userObj.password;
+    return { ...userObj, token, subscription: subscription?.status || null };
   },
 
   async forgetPassword(payload: any) {

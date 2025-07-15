@@ -9,6 +9,7 @@ import {
   registerUser,
   resendOtp,
   resetPassword,
+  socialLogin,
   verifyOtp,
   verifyResetPasswordOtp,
 } from "src/controllers/auth/auth-controller";
@@ -24,7 +25,7 @@ router.post("/login", login);
 router.post("/forget-password", forgetPassword);
 router.post("/verify-reset-otp", verifyResetPasswordOtp);
 router.post("/reset-password", resetPassword);
-router.post("/social-login");
+router.post("/social-login", socialLogin);
 
 //============================== ADMIN Routes
 
