@@ -1,4 +1,5 @@
 import { Request, Response } from "express";
+import { planModel } from "src/models/admin/plan-schema";
 import { authServices } from "src/services/auth/auth-services";
 import { countries, languages } from "src/utils/constant";
 import {
@@ -278,6 +279,27 @@ export const getLoginResponse = async (req: Request, res: Response) => {
     req.body.language = userData.language || "en";
     const response = await authServices.getLoginResponse({
       userId: userData.id,
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const buyAgain = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const { planId } = req.body;
+    const plan = await planModel.findById(planId);
+    if (!plan) {
+      throw new Error("Invalid plan Id");
+    }
+    const response = await authServices.buyAgain({
+      userId: userData.id,
+      planId,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {

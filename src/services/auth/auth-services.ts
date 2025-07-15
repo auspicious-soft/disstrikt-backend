@@ -159,9 +159,9 @@ export const authServices = {
     return { ...userObj, token, subscription: subscription?.status || null };
   },
   async socialLogin(payload: any) {
-    const {idToken, fcmToken, authType} = payload;
-    
-    return { };
+    const { idToken, fcmToken, authType } = payload;
+
+    return {};
   },
 
   async forgetPassword(payload: any) {
@@ -445,6 +445,77 @@ export const authServices = {
     });
     return { ...user?.toObject(), subscription: subscription?.status || null };
   },
+  async buyAgain(payload: any) {
+    const { userId, planId } = payload;
+    const checkSub = await SubscriptionModel.findOne({ userId }).lean();
+
+    if (!checkSub || !["past_due", "calceled"].includes(checkSub.status)) {
+      throw new Error("planExist");
+    }
+
+    const { currency, paymentMethodId } = checkSub;
+    const planData = await planModel.findById(planId);
+    if (!planData) throw new Error("Invalid plan");
+
+    // Start MongoDB session
+    const session = await SubscriptionModel.startSession();
+    session.startTransaction();
+
+    try {
+      // Create new Stripe subscription
+      const subscription = await stripe.subscriptions.create({
+        customer: checkSub.stripeCustomerId,
+        items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
+        default_payment_method: paymentMethodId,
+        expand: ["latest_invoice.payment_intent"],
+      });
+
+      const startDate = new Date(subscription.start_date * 1000);
+      const currentPeriodStart = subscription.current_period_start
+        ? new Date(subscription.current_period_start * 1000)
+        : null;
+      const currentPeriodEnd = subscription.current_period_end
+        ? new Date(subscription.current_period_end * 1000)
+        : null;
+      const nextBillingDate = currentPeriodEnd;
+
+      // Delete old subscription (inside session)
+      await SubscriptionModel.findByIdAndDelete(checkSub._id, { session });
+
+      // Insert new subscription (inside session)
+      await SubscriptionModel.create(
+        [
+          {
+            userId,
+            stripeCustomerId: checkSub.stripeCustomerId,
+            stripeSubscriptionId: subscription.id,
+            planId,
+            paymentMethodId,
+            status: subscription.status,
+            startDate,
+            currentPeriodStart,
+            currentPeriodEnd,
+            nextBillingDate,
+            amount: subscription.items.data[0].price.unit_amount,
+            currency: subscription.currency,
+          },
+        ],
+        { session }
+      );
+
+      // Commit the transaction
+      await session.commitTransaction();
+      session.endSession();
+      return {};
+    } catch (err) {
+      // Rollback on error
+      await session.abortTransaction();
+      session.endSession();
+      console.error("❌ Transaction failed:");
+      throw new Error("buyAgainFailed");
+    }
+  },
+
   async logoutUser(payload: any) {
     const { userId } = payload;
     const user = await UserModel.findById(userId);

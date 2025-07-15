@@ -15,7 +15,7 @@ export interface ISubscription extends Document {
   nextBillingDate: Date | null;
   amount: number;
   currency: string;
-  nextPlanId: Types.ObjectId
+  nextPlanId: Types.ObjectId;
 }
 
 const subscriptionSchema = new Schema<ISubscription>(
@@ -27,7 +27,7 @@ const subscriptionSchema = new Schema<ISubscription>(
     paymentMethodId: { type: String, required: true },
     status: {
       type: String,
-      enum: ["trialing", "active", "canceled", "canceling"],
+      enum: ["trialing", "active", "canceled", "canceling", "incomplete", "past_due"],
       required: true,
     }, // trialing, active, canceled, etc.
     trialStart: { type: Date, default: null },
@@ -38,7 +38,7 @@ const subscriptionSchema = new Schema<ISubscription>(
     nextBillingDate: { type: Date, default: null },
     amount: { type: Number, required: true },
     currency: { type: String, required: true },
-    nextPlanId:{type: Schema.Types.ObjectId, ref: "plan", default: null}
+    nextPlanId: { type: Schema.Types.ObjectId, ref: "plan", default: null },
   },
   {
     timestamps: true, // adds createdAt and updatedAt

@@ -1,5 +1,6 @@
 import { configDotenv } from "dotenv";
 import stripe from "src/config/stripe";
+import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info";
 import { UserModel } from "src/models/user/user-schema";
@@ -151,6 +152,7 @@ export const profileServices = {
       await SubscriptionModel.findOneAndUpdate(
         {
           userId: userData.id,
+          status: { $or: ["active", "trialing"] },
         },
         {
           $set: {

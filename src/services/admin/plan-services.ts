@@ -2,6 +2,7 @@ import { Request } from "express";
 import stripe from "src/config/stripe";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
+import { TransactionModel } from "src/models/user/transaction-schema";
 import { features, regionalAccess } from "src/utils/constant";
 import { Stripe } from "stripe";
 
@@ -255,17 +256,16 @@ export const planServices = {
     }
 
     let event: Stripe.Event | undefined;
+    const toDate = (timestamp?: number | null): Date | null =>
+      typeof timestamp === "number" && !isNaN(timestamp)
+        ? new Date(timestamp * 1000)
+        : null;
 
     try {
       event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
       console.log(`***STRIPE EVENT TYPE***: ${event.type}`);
 
       const subscription = event.data.object as Stripe.Subscription;
-
-      const toDate = (timestamp?: number | null): Date | null =>
-        typeof timestamp === "number" && !isNaN(timestamp)
-          ? new Date(timestamp * 1000)
-          : null;
 
       switch (event.type) {
         case "customer.subscription.created":
@@ -274,17 +274,18 @@ export const planServices = {
             id: stripeSubscriptionId,
             customer: stripeCustomerId,
             status,
-            current_period_start,
-            current_period_end,
+            start_date,
             trial_start,
             trial_end,
-            start_date,
-            items,
             cancel_at_period_end,
+            items,
           } = subscription;
 
-          const planAmount = items.data[0]?.price?.unit_amount ?? 0;
-          const currency = items.data[0]?.price?.currency ?? "inr";
+          const item = items?.data?.[0];
+          const planAmount = item?.price?.unit_amount ?? 0;
+          const currency = item?.price?.currency ?? "inr";
+          const current_period_start = subscription.current_period_start;
+          const current_period_end = subscription.current_period_end;
 
           const updateData: any = {
             stripeCustomerId,
@@ -301,19 +302,19 @@ export const planServices = {
           };
 
           await SubscriptionModel.findOneAndUpdate(
-            { stripeCustomerId },
+            { stripeCustomerId, stripeSubscriptionId },
             { $set: updateData },
             { upsert: false }
           );
-
           break;
         }
 
         case "customer.subscription.deleted": {
-          const { customer: stripeCustomerId, currency } = subscription;
+          const { customer: stripeCustomerId, currency, id } = subscription;
 
           const existingSub = await SubscriptionModel.findOne({
             stripeCustomerId,
+            stripeSubscriptionId: id,
           }).lean();
 
           if (!existingSub) {
@@ -323,34 +324,29 @@ export const planServices = {
             return;
           }
 
-          const { userId, nextPlanId, paymentMethodId } = existingSub;
+          const { userId, nextPlanId, paymentMethodId, _id } = existingSub;
 
-          // Cancel current subscription in DB
-          await SubscriptionModel.findOneAndUpdate(
-            { stripeCustomerId },
-            {
-              $set: {
-                status: "canceled",
-                trialEnd: null,
-                startDate: null,
-                currentPeriodEnd: null,
-                currentPeriodStart: null,
-                nextBillingDate: null,
-              },
-            }
-          );
+          await SubscriptionModel.findByIdAndUpdate(_id, {
+            $set: {
+              status: "canceled",
+              trialEnd: null,
+              startDate: null,
+              currentPeriodEnd: null,
+              currentPeriodStart: null,
+              nextBillingDate: null,
+            },
+          });
 
-          const planData = await planModel.findById(nextPlanId);
-
-          // ⏭️ Handle Upgrade flow
           if (nextPlanId) {
+            await SubscriptionModel.findByIdAndDelete(_id);
+            const planData = await planModel.findById(nextPlanId);
             console.log("🔁 Upgrade triggered for next plan:", nextPlanId);
 
             const newSub = await stripe.subscriptions.create({
               customer:
                 typeof stripeCustomerId === "string"
                   ? stripeCustomerId
-                  : stripeCustomerId.id ?? "",
+                  : stripeCustomerId?.id ?? "",
               items: [
                 { price: planData?.stripePrices[currency as "eur" | "gbp"] },
               ],
@@ -388,13 +384,149 @@ export const planServices = {
           break;
         }
 
-        // TODO: Add other events as needed, e.g., invoice.payment_succeeded, payment_failed, etc.
+        case "invoice.payment_succeeded": {
+          const invoice = event?.data?.object as Stripe.Invoice;
+          const customerId = invoice?.customer as string;
+
+          const existing = await SubscriptionModel.findOne({
+            stripeCustomerId: customerId,
+          });
+
+          if (!existing) break;
+
+          const subscriptionId = existing?.stripeSubscriptionId as string;
+          const userId = existing?.userId;
+
+          const pi =
+            typeof invoice.payment_intent === "string"
+              ? await stripe?.paymentIntents?.retrieve(invoice?.payment_intent)
+              : invoice?.payment_intent;
+
+          // Retrieve charge
+          let charge: Stripe.Charge | undefined;
+          if (pi?.id) {
+            const chargesList = await stripe?.charges?.list({
+              payment_intent: pi.id,
+            });
+            charge = chargesList.data[0];
+          }
+
+          const card = charge?.payment_method_details?.card;
+
+          const lineItem = invoice?.lines?.data?.[0];
+          const period = lineItem?.period;
+
+          const currentPeriodStart = period?.start
+            ? new Date(period.start * 1000)
+            : null;
+
+          const currentPeriodEnd = period?.end
+            ? new Date(period.end * 1000)
+            : null;
+
+          const nextBillingDate = currentPeriodEnd; // Same as currentPeriodEnd
+
+          // Update SubscriptionModel with billing cycle info
+          await SubscriptionModel.findOneAndUpdate(
+            {
+              stripeCustomerId: customerId,
+              stripeSubscriptionId: subscriptionId,
+            },
+            {
+              $set: {
+                currentPeriodStart,
+                currentPeriodEnd,
+                nextBillingDate,
+              },
+            }
+          );
+
+          // Create transaction
+          await TransactionModel.create({
+            userId,
+            stripeCustomerId: customerId,
+            stripeSubscriptionId: subscriptionId,
+            invoiceId: invoice.id,
+            paymentIntentId: pi?.id,
+            status: "succeeded",
+            amount: invoice.amount_paid / 100,
+            currency: invoice.currency,
+            paymentMethodDetails: {
+              brand: card?.brand ?? "unknown",
+              last4: card?.last4 ?? "0000",
+              expMonth: card?.exp_month ?? 0,
+              expYear: card?.exp_year ?? 0,
+              type: card ? "card" : "unknown",
+            },
+            billingReason: invoice.billing_reason,
+            paidAt: toDate(invoice.status_transitions?.paid_at) ?? new Date(),
+          });
+
+          break;
+        }
+
+        case "invoice.payment_failed": {
+          const invoice = event.data.object as Stripe.Invoice;
+          const customerId = invoice.customer as string
+
+          const existing = await SubscriptionModel.findOne({
+            stripeCustomerId: customerId,
+          });
+
+          const subscriptionId = existing?.stripeSubscriptionId as string;
+
+          if (!existing) break;
+
+          const userId = existing.userId;
+          const pi =
+            typeof invoice?.payment_intent === "string"
+              ? await stripe?.paymentIntents?.retrieve(invoice?.payment_intent)
+              : invoice.payment_intent;
+
+          // Retrieve the charge using the payment intent id
+          let charge: Stripe.Charge | undefined;
+          if (pi?.id) {
+            const chargesList = await stripe?.charges?.list({
+              payment_intent: pi.id,
+            });
+            charge = chargesList.data[0];
+          }
+          const card = charge?.payment_method_details?.card;
+
+          await SubscriptionModel.updateOne(
+            { stripeSubscriptionId: subscriptionId },
+            { $set: { status: "past_due" } }
+          );
+
+          await TransactionModel.create({
+            userId,
+            stripeCustomerId: customerId,
+            stripeSubscriptionId: subscriptionId,
+            invoiceId: invoice.id,
+            paymentIntentId: pi?.id,
+            status: "failed",
+            amount: invoice.amount_due / 100,
+            currency: invoice.currency,
+            paymentMethodDetails: {
+              brand: card?.brand ?? "unknown",
+              last4: card?.last4 ?? "0000",
+              expMonth: card?.exp_month ?? 0,
+              expYear: card?.exp_year ?? 0,
+              type: card ? "card" : "unknown",
+            },
+            billingReason: invoice.billing_reason,
+            errorMessage: pi?.last_payment_error?.message ?? "Unknown failure",
+            paidAt: new Date(),
+          });
+
+          break;
+        }
       }
 
       console.log("✅ Successfully handled event:", event.type);
       return {};
     } catch (err: any) {
-      console.error("***STRIPE SIGNATURE FAILED***", err.message);
+      console.error("***STRIPE EVENT FAILED***", err.message);
       return {};
     }
   },

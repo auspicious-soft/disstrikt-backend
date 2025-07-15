@@ -1,5 +1,6 @@
 import { Router } from "express";
 import {
+  buyAgain,
   buyPlan,
   getLoginResponse,
   getPlans,
@@ -30,6 +31,7 @@ router.get("/setup-intent", setupIntent);
 router.route("/plans").get(getPlans).post(buyPlan);
 router.get("/get-login-response", getLoginResponse);
 router.post("/logout", logoutUser);
+router.post("/buy-again", buyAgain)
 
 const paidRouter = Router();
 
