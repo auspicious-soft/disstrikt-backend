@@ -1,8 +1,9 @@
 import { configDotenv } from "dotenv";
+import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
-import { UserInfoModel } from "src/models/user/user-info";
+import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { genders } from "src/utils/constant";
 import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
@@ -191,6 +192,163 @@ export const profileServices = {
         }
       );
     }
+
+    return {};
+  },
+};
+
+export const portfolioServices = {
+  userPortfolio: async (payload: any) => {
+    const { userData } = payload;
+    const portfolio = await UserInfoModel.findOne({
+      userId: userData.id,
+    }).lean();
+
+    const { aboutMe, portfolioImages, links, videos, setCards, _id } =
+      portfolio as any;
+
+    const response = {
+      userId: userData.id,
+      _id,
+      fullName: userData.fullName,
+      image: userData.image,
+      aboutMe,
+      portfolioImages,
+      links: links.length
+        ? links
+        : [
+            {
+              platform: "Instagram",
+              url: "",
+            },
+            {
+              platform: "Youtube",
+              url: "",
+            },
+          ],
+      videos,
+      setCards,
+      portfolioLink: `http://localhost:3000/${userData?.id}`,
+      videoSections: ["introVideo", "catwalkVideo", "other"],
+    };
+
+    return response;
+  },
+
+  updatePortfolio: async (payload: any) => {
+    const { userData, data } = payload;
+
+    const updateData = await UserInfoModel.findOneAndUpdate(
+      { userId: userData.id },
+      {
+        aboutMe: data.aboutMe,
+        links: data.links,
+      },
+      { new: true }
+    );
+
+    const response = {
+      userId: userData.id,
+      _id: updateData?._id,
+      fullName: userData.fullName,
+      image: userData.image,
+      aboutMe: updateData?.aboutMe,
+      portfolioImages: updateData?.portfolioImages,
+      links: updateData?.links.length
+        ? updateData.links
+        : [
+            {
+              platform: "Instagram",
+              url: "",
+            },
+            {
+              platform: "Youtube",
+              url: "",
+            },
+          ],
+      videos: updateData?.videos,
+      setCards: updateData?.setCards,
+      portfolioLink: `http://localhost:3000/${userData?.id}`,
+      videoSections: ["introVideo", "catwalkVideo", "other"],
+    };
+
+    return response;
+  },
+
+  addVideo: async (payload: any) => {
+    const { userData, data } = payload;
+    const checkExist = await UserInfoModel.findOne({
+      userId: userData.id,
+    }).lean();
+
+    checkExist?.videos?.map((info) => {
+      if (info.title === data.title) {
+        throw new Error("sectionExist");
+      }
+    });
+
+    checkExist?.videos.push({ title: data.title, url: data.url });
+
+    await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
+      $set: { videos: checkExist?.videos },
+    });
+
+    return {};
+  },
+
+  addImage: async (payload: any) => {
+    const { userData, data } = payload;
+    const checkExist = await UserInfoModel.findOne({
+      userId: userData.id,
+    }).lean();
+
+    checkExist?.portfolioImages?.push(data.url);
+
+    await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
+      $set: { portfolioImages: checkExist?.portfolioImages },
+    });
+
+    return {};
+  },
+
+  deleteVideo: async (payload: any) => {
+    const { userData, data } = payload;
+    const checkExist = await UserInfoModel.findOne({
+      userId: userData.id,
+    }).lean();
+
+    const udpateData = checkExist?.videos?.filter(
+      (val: any) => val.url !== data.url
+    );
+
+    await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
+      $set: { videos: udpateData },
+    });
+
+    // ************************ Need to write code to remove video from S3 *************************
+
+    await deleteFileFromS3(data.url);
+
+    return {};
+  },
+
+  deleteImage: async (payload: any) => {
+    const { userData, data } = payload;
+    const checkExist = await UserInfoModel.findOne({
+      userId: userData.id,
+    }).lean();
+
+    const udpateData = checkExist?.portfolioImages?.filter(
+      (val) => val !== data.url
+    );
+
+    await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
+      $set: { portfolioImages: udpateData },
+    });
+
+    // ************************ Need to write code to remove image from S3 *************************
+
+    await deleteFileFromS3(data.url);
 
     return {};
   },

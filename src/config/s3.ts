@@ -1,49 +1,84 @@
-import { S3Client, PutObjectCommand, DeleteObjectCommand } from '@aws-sdk/client-s3';
-import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { configDotenv } from 'dotenv';
-configDotenv()
+// s3Service.ts
+import {
+  S3Client,
+  PutObjectCommand,
+  DeleteObjectCommand,
+} from "@aws-sdk/client-s3";
+import { v4 as uuidv4 } from "uuid";
+import path from "path";
+import { config } from "dotenv";
+config();
 
-const { AWS_ACCESS_KEY_ID, AWS_REGION, AWS_SECRET_ACCESS_KEY, AWS_BUCKET_NAME } = process.env;
+const {
+  AWS_ACCESS_KEY_ID,
+  AWS_SECRET_ACCESS_KEY,
+  AWS_REGION,
+  AWS_BUCKET_NAME,
+  NEXT_PUBLIC_AWS_BUCKET_PATH,
+} = process.env;
 
 export const createS3Client = () => {
-    return new S3Client({
-        region: AWS_REGION,
-        credentials: {
-            accessKeyId: AWS_ACCESS_KEY_ID as string,
-            secretAccessKey: AWS_SECRET_ACCESS_KEY as string
-        },
+  return new S3Client({
+    region: AWS_REGION,
+    credentials: {
+      accessKeyId: AWS_ACCESS_KEY_ID as string,
+      secretAccessKey: AWS_SECRET_ACCESS_KEY as string,
+    },
+  });
+};
+
+// 🔼 Upload file directly to S3 from buffer
+export const uploadFileToS3 = async (
+  fileBuffer: Buffer,
+  originalName: string,
+  mimetype: string,
+  userId: string,
+  fileCategory: "image" | "video",
+  isAdmin = false
+) => {
+  const ext = path.extname(originalName) || mimeToExt(mimetype);
+  const fileName = `${uuidv4()}${ext}`;
+  const folder = isAdmin
+    ? `admin/${fileCategory}s`
+    : `users/${userId}/${fileCategory}s`;
+
+  const key = `${folder}/${fileName}`;
+
+  const command = new PutObjectCommand({
+    Bucket: AWS_BUCKET_NAME,
+    Key: key,
+    Body: fileBuffer,
+    ContentType: mimetype,
+  });
+
+  await createS3Client().send(command);
+
+  return { key };
+};
+
+export const deleteFileFromS3 = async (key: string): Promise<boolean> => {
+  try {
+    const command = new DeleteObjectCommand({
+      Bucket: AWS_BUCKET_NAME,
+      Key: key,
     });
-}
 
-export const generateSignedUrlToUploadOn = async (fileName: string, fileType: string, userEmail: string) => {
-    const uploadParams = {
-        Bucket: AWS_BUCKET_NAME,
-        Key: `projects/${userEmail}/my-projects/${fileName}`,
-        ContentType: fileType,
-    }
-    try {
-        const command = new PutObjectCommand(uploadParams);
-        const signedUrl = await getSignedUrl(createS3Client(), command);
-        return signedUrl;
-    } catch (error) {
-        console.error("Error generating signed URL:", error);
-        throw error;
-    }
-}
+    await createS3Client().send(command);
+    return true;
+  } catch (error) {
+    console.error("Error deleting file from S3:", error);
+    throw error;
+  }
+};
 
-export const deleteFileFromS3 = async (imageKey: string) => {
-    const params = {
-        Bucket: process.env.AWS_BUCKET_NAME,
-        Key: imageKey,
-    }
-    try {
-        const s3Client = await createS3Client()
-        const command = new DeleteObjectCommand(params)
-        const response = await s3Client.send(command)
-        return response
-    } catch (error) {
-        console.error('Error deleting file from S3:', error)
-        throw error
-    }
-}
-
+const mimeToExt = (mime: string) => {
+  const map: Record<string, string> = {
+    "image/jpeg": ".jpg",
+    "image/png": ".png",
+    "image/webp": ".webp",
+    "image/gif": ".gif",
+    "video/mp4": ".mp4",
+    "video/quicktime": ".mov",
+  };
+  return map[mime] || ".bin";
+};

@@ -8,7 +8,7 @@ import {
 } from "src/utils/helper";
 import jwt from "jsonwebtoken";
 import { configDotenv } from "dotenv";
-import { UserInfoModel } from "src/models/user/user-info";
+import { UserInfoModel } from "src/models/user/user-info-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import stripe from "src/config/stripe";
 import { SubscriptionModel } from "src/models/user/subscription-schema";

@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { TokenModel } from "src/models/user/token-schema";
-import { UserInfoModel } from "src/models/user/user-info";
+import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { profileServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
@@ -12,6 +12,7 @@ import {
   OK,
   UNAUTHORIZED,
 } from "src/utils/response";
+
 
 export const userProfile = async (req: Request, res: Response) => {
   try {
@@ -287,7 +288,7 @@ export const updateSubscription = async (req: Request, res: Response) => {
 
     const response = await profileServices.updatePlan({type, planId, userData})
  
-    return OK(res, {}, req.body.language, "accountDeleted");
+    return OK(res, response || {}, req.body.language, "accountDeleted");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);
