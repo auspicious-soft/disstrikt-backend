@@ -112,7 +112,7 @@ export const socialLogin = async (req: Request, res: Response) => {
       !country ||
       !language ||
       !["GOOGLE", "APPLE"].includes(authType) ||
-      !["ANDRIOD", "IOS"].includes(deviceType)
+      !["ANDROID", "IOS"].includes(deviceType)
     ) {
       throw new Error(
         "idToken, fcmToken, country, language and Valid authType or deviceType is required"
