@@ -260,7 +260,7 @@ export const buyPlan = async (req: Request, res: Response) => {
     req.body.language = userData.language;
     const { planId, currency, paymentMethodId } = req.body;
 
-    if (!planId || !currency || !paymentMethodId) {
+    if (!planId || !currency) {
       throw new Error(
         "PlanId, Currency, Payment-Method and Customer-id is required"
       );

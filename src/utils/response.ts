@@ -38,6 +38,7 @@ export const BADREQUEST = (
   message: any = "badrequest",
   lang: SupportedLang = 'en'
 ) => {
+  console.error("****ERROR-BAD-REQUEST**** :->", customMessages[lang]?.[message] || message)
   return res.status(400).json({
     success: false,
     message: customMessages[lang]?.[message] || message,

@@ -467,7 +467,7 @@ export const planServices = {
 
         case "invoice.payment_failed": {
           const invoice = event.data.object as Stripe.Invoice;
-          const customerId = invoice.customer as string
+          const customerId = invoice.customer as string;
 
           const existing = await SubscriptionModel.findOne({
             stripeCustomerId: customerId,
@@ -517,6 +517,48 @@ export const planServices = {
             billingReason: invoice.billing_reason,
             errorMessage: pi?.last_payment_error?.message ?? "Unknown failure",
             paidAt: new Date(),
+          });
+
+          break;
+        }
+
+        case "checkout.session.completed": {
+          const session = event.data.object as Stripe.Checkout.Session;
+
+          // Only process subscription checkouts
+          if (session.mode !== "subscription" || !session.subscription) break;
+
+          const subscription = await stripe.subscriptions.retrieve(
+            session.subscription as string
+          );
+          let paymentMethodId = subscription.default_payment_method as
+            | string
+            | null;
+          const stripeCustomerId = subscription.customer as string;
+          const item = subscription.items?.data?.[0];
+          const planAmount = item?.price?.unit_amount ?? 0;
+          const currency = item?.price?.currency ?? "gbp";
+          const userId = session.metadata?.userId; // You should send this when creating session
+          const planId = session.metadata?.planId;
+
+          await SubscriptionModel.findOneAndDelete({userId})
+
+          await SubscriptionModel.create({
+            userId,
+            stripeCustomerId,
+            stripeSubscriptionId: subscription.id,
+            planId,
+            paymentMethodId: paymentMethodId,
+            status: subscription.status,
+            trialStart: toDate(subscription.trial_start),
+            trialEnd: toDate(subscription.trial_end),
+            startDate: toDate(subscription.start_date),
+            currentPeriodStart: toDate(subscription.current_period_start),
+            currentPeriodEnd: toDate(subscription.current_period_end),
+            nextBillingDate: toDate(subscription.current_period_end),
+            amount: planAmount / 100,
+            currency,
+            nextPlanId: null,
           });
 
           break;

@@ -82,7 +82,7 @@ export const checkSubscription = async (
       .sort({ createdAt: -1 }) // Latest first
       .populate({
         path: "planId",
-        select: `name`,
+        select: "name",
       })
       .lean();
 

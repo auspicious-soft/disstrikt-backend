@@ -23,10 +23,14 @@ export const homeServices = {
 
 export const profileServices = {
   profile: async (payload: any) => {
+    const {userData} = payload
     return {
+      fullName:userData.fullName,
+      id: userData.id,
+      image:userData.image,
       milestone: 0,
       percentage: 0,
-      tasks: 0,
+      taskCount: 0,
       appliedJobs: 0,
       selectedJobs: 0,
     };

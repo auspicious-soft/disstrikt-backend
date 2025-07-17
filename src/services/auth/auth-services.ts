@@ -298,11 +298,13 @@ export const authServices = {
           dob,
         },
       },
-      { new: true }
-    );
+      { new: true, upsert: true }
+    ).lean();
 
-    checkUser.isUserInfoComplete = true;
-    await checkUser.save();
+    if (data) {
+      checkUser.isUserInfoComplete = true;
+      await checkUser.save();
+    }
 
     return data;
   },
@@ -358,10 +360,11 @@ export const authServices = {
       { $set: { stripeCustomerId: customer.id } }
     );
 
+    const subscription = await SubscriptionModel.findOne({ userId: id }).lean();
+
     // ✅ Check if card already saved
     const paymentMethods = await stripe.paymentMethods.list({
       customer: customer.id,
-      type: "card",
     });
 
     if (paymentMethods.data.length > 0) {
@@ -369,10 +372,12 @@ export const authServices = {
         alreadySetup: true,
         customerId: customer.id,
         paymentMethodId: paymentMethods.data[0].id,
+        subscriptionStatus: subscription ? subscription.status : null,
       };
     }
 
     // ❌ No saved card — create new SetupIntent
+
     const setupIntent = await stripe.setupIntents.create({
       customer: customer.id,
       usage: "off_session",
@@ -382,11 +387,12 @@ export const authServices = {
       alreadySetup: false,
       clientSecret: setupIntent.client_secret,
       customerId: customer.id,
+      subscriptionStatus: subscription ? subscription.status : null,
     };
   },
 
   async buyPlan(payload: any) {
-    const { planId, currency, id, paymentMethodId } = payload;
+    const { planId, currency, id, paymentMethodId, country } = payload;
 
     const plans = await planModel
       .findOne({ _id: planId, isActive: true })
@@ -422,61 +428,124 @@ export const authServices = {
       throw new Error("stripeCustomerIdNotFound");
     }
 
-    if (user.hasUsedTrial && plans.trialDays > 0) {
-      throw new Error("userAlreadyUsedTrial");
+    if (country === "UK") {
+      const session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        customer: user?.stripeCustomerId,
+        success_url: "https://yourapp.com/success",
+        cancel_url: "https://yourapp.com/cancel",
+        line_items: [
+          {
+            price: productPrice.id,
+            quantity: 1,
+          },
+        ],
+        subscription_data: {
+          trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
+        },
+        metadata: {
+          userId: (user as any)?._id.toString(),
+          planId: (plans as any)?._id.toString(),
+        },
+      });
+
+      user.hasUsedTrial = true;
+      await user.save();
+
+      return session;
     }
 
-    const subscription = await stripe.subscriptions.create({
-      customer: user.stripeCustomerId,
-      items: [{ price: productPrice.id }],
-      trial_period_days: plans.trialDays,
-      default_payment_method: paymentMethodId,
-      expand: ["latest_invoice.payment_intent"],
-    });
+    if (user.hasUsedTrial && plans.trialDays > 0) {
+      const subscription = await stripe.subscriptions.create({
+        customer: user.stripeCustomerId,
+        items: [{ price: productPrice.id }],
+        default_payment_method: paymentMethodId,
+        expand: ["latest_invoice.payment_intent"],
+      });
 
-    user.hasUsedTrial = true;
-    user.isCardSetupComplete = true;
-    await user.save();
+      user.hasUsedTrial = true;
+      user.isCardSetupComplete = true;
+      await user.save();
 
-    // Convert Unix timestamps to Date objects
-    const trialStart = subscription.trial_start
-      ? new Date(subscription.trial_start * 1000)
-      : null;
-    const trialEnd = subscription.trial_end
-      ? new Date(subscription.trial_end * 1000)
-      : null;
-    const startDate = new Date(subscription.start_date * 1000);
-    const currentPeriodStart = subscription.current_period_start
-      ? new Date(subscription.current_period_start * 1000)
-      : null;
-    const currentPeriodEnd = subscription.current_period_end
-      ? new Date(subscription.current_period_end * 1000)
-      : null;
-    const nextBillingDate = currentPeriodEnd;
+      const startDate = new Date(subscription.start_date * 1000);
+      const currentPeriodStart = subscription.current_period_start
+        ? new Date(subscription.current_period_start * 1000)
+        : null;
+      const currentPeriodEnd = subscription.current_period_end
+        ? new Date(subscription.current_period_end * 1000)
+        : null;
+      const nextBillingDate = currentPeriodEnd;
 
-    // Save to DB
-    await SubscriptionModel.create({
-      userId: id,
-      stripeCustomerId: user.stripeCustomerId,
-      stripeSubscriptionId: subscription.id,
-      planId,
-      paymentMethodId,
-      status: subscription.status,
-      trialStart,
-      trialEnd,
-      startDate,
-      currentPeriodStart,
-      currentPeriodEnd,
-      nextBillingDate,
-      amount: subscription.items.data[0].price.unit_amount,
-      currency: subscription.currency,
-    });
+      await SubscriptionModel.create({
+        userId: id,
+        stripeCustomerId: user.stripeCustomerId,
+        stripeSubscriptionId: subscription.id,
+        planId,
+        paymentMethodId,
+        status: subscription.status,
+        startDate,
+        currentPeriodStart,
+        currentPeriodEnd,
+        nextBillingDate,
+        amount: subscription.items.data[0].price.unit_amount,
+        currency: subscription.currency,
+      });
 
-    return {
-      subscriptionId: subscription.id,
-    };
+      return {
+        subscriptionId: subscription.id,
+      };
+    } else {
+      const subscription = await stripe.subscriptions.create({
+        customer: user.stripeCustomerId,
+        items: [{ price: productPrice.id }],
+        trial_period_days: plans.trialDays,
+        default_payment_method: paymentMethodId,
+        expand: ["latest_invoice.payment_intent"],
+      });
+
+      user.hasUsedTrial = true;
+      user.isCardSetupComplete = true;
+      await user.save();
+
+      // Convert Unix timestamps to Date objects
+      const trialStart = subscription.trial_start
+        ? new Date(subscription.trial_start * 1000)
+        : null;
+      const trialEnd = subscription.trial_end
+        ? new Date(subscription.trial_end * 1000)
+        : null;
+      const startDate = new Date(subscription.start_date * 1000);
+      const currentPeriodStart = subscription.current_period_start
+        ? new Date(subscription.current_period_start * 1000)
+        : null;
+      const currentPeriodEnd = subscription.current_period_end
+        ? new Date(subscription.current_period_end * 1000)
+        : null;
+      const nextBillingDate = currentPeriodEnd;
+
+      // Save to DB
+      await SubscriptionModel.create({
+        userId: id,
+        stripeCustomerId: user.stripeCustomerId,
+        stripeSubscriptionId: subscription.id,
+        planId,
+        paymentMethodId,
+        status: subscription.status,
+        trialStart,
+        trialEnd,
+        startDate,
+        currentPeriodStart,
+        currentPeriodEnd,
+        nextBillingDate,
+        amount: subscription.items.data[0].price.unit_amount,
+        currency: subscription.currency,
+      });
+
+      return {
+        subscriptionId: subscription.id,
+      };
+    }
   },
-
   async getLoginResponse(payload: any) {
     const { userId } = payload;
     const user = await UserModel.findById(userId).select("-password -__v");
