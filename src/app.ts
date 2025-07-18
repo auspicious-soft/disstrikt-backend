@@ -25,13 +25,13 @@ app.post(
 
 app.use(express.json());
 app.set("trust proxy", true);
-app.use(
-  bodyParser.json({
-    verify: (req: any, res, buf) => {
-      req.rawBody = buf.toString();
-    },
-  })
-);
+// app.use(
+//   bodyParser.json({
+//     verify: (req: any, res, buf) => {
+//       req.rawBody = buf.toString();
+//     },
+//   })
+// );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

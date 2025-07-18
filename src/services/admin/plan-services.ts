@@ -340,8 +340,6 @@ export const planServices = {
           if (nextPlanId) {
             await SubscriptionModel.findByIdAndDelete(_id);
             const planData = await planModel.findById(nextPlanId);
-            console.log("🔁 Upgrade triggered for next plan:", nextPlanId);
-
             const newSub = await stripe.subscriptions.create({
               customer:
                 typeof stripeCustomerId === "string"
@@ -375,10 +373,6 @@ export const planServices = {
               currency: newSubPrice?.currency ?? "inr",
               nextPlanId: null,
             });
-
-            console.log(
-              "✅ Upgrade flow completed and new subscription created."
-            );
           }
 
           break;
