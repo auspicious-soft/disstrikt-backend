@@ -193,6 +193,18 @@ export const authServices = {
         authType,
         isVerifiedEmail: true,
       });
+
+      await UserInfoModel.create({
+        userId: checkExist._id,
+        measurements: {
+          heightCm: null,
+          bustCm: null,
+          waistCm: null,
+          hipsCm: null,
+          weightKg: null,
+          shoeSizeUK: null,
+        },
+      });
     }
 
     const token = await generateToken(checkExist);
@@ -201,6 +213,7 @@ export const authServices = {
     });
     const userObj = checkExist.toObject();
     delete userObj.password;
+
     return { ...userObj, token, subscription: subscription?.status || null };
   },
 
@@ -298,7 +311,7 @@ export const authServices = {
           dob,
         },
       },
-      { new: true, upsert: true }
+      { new: true }
     ).lean();
 
     if (data) {
@@ -322,8 +335,8 @@ export const authServices = {
           (feature: any) => feature?.[language] || feature?.en
         ),
         trialDays: plan.trialDays,
-        gbpAmount: plan.unitAmounts.eur / 100,
-        eurAmount: plan.unitAmounts.gbp / 100,
+        gbpAmount: plan.unitAmounts.gbp / 100,
+        eurAmount: plan.unitAmounts.eur / 100,
         currency: Object.keys(plan.stripePrices),
         _id: plan?._id,
       };
@@ -373,6 +386,7 @@ export const authServices = {
         customerId: customer.id,
         paymentMethodId: paymentMethods.data[0].id,
         subscriptionStatus: subscription ? subscription.status : null,
+        country,
       };
     }
 
@@ -388,6 +402,7 @@ export const authServices = {
       clientSecret: setupIntent.client_secret,
       customerId: customer.id,
       subscriptionStatus: subscription ? subscription.status : null,
+      country,
     };
   },
 
@@ -428,7 +443,7 @@ export const authServices = {
       throw new Error("stripeCustomerIdNotFound");
     }
 
-    if (country === "UK") {
+    if (country === "UK" && !user.hasUsedTrial) {
       const session = await stripe.checkout.sessions.create({
         mode: "subscription",
         customer: user?.stripeCustomerId,
@@ -475,6 +490,8 @@ export const authServices = {
         ? new Date(subscription.current_period_end * 1000)
         : null;
       const nextBillingDate = currentPeriodEnd;
+
+      await SubscriptionModel.findOneAndDelete({ userId: id });
 
       await SubscriptionModel.create({
         userId: id,
