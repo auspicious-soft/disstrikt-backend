@@ -3,6 +3,7 @@ import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
 import {
   buyAgain,
   buyPlan,
+  getActivePlan,
   getLoginResponse,
   getPlans,
   logoutUser,
@@ -34,6 +35,7 @@ router.route("/plans").get(getPlans).post(buyPlan);
 router.get("/get-login-response", getLoginResponse);
 router.post("/logout", logoutUser);
 router.post("/buy-again", buyAgain)
+router.get("/get-active-plan", getActivePlan)
 
 const paidRouter = Router();
 

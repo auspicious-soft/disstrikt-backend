@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { planModel } from "src/models/admin/plan-schema";
+import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { authServices } from "src/services/auth/auth-services";
 import { countries, languages } from "src/utils/constant";
 import {
@@ -309,6 +310,20 @@ export const buyAgain = async (req: Request, res: Response) => {
       userId: userData.id,
       planId,
     });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const getActivePlan = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    const response = await SubscriptionModel.findOne({
+      userId: userData.id
+    })
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
