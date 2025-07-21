@@ -61,6 +61,12 @@ export const profileServices = {
   },
 
   updateUser: async (payload: any) => {
+    if (payload.image) {
+      const data = await UserModel.findById(payload.id).lean();
+      if (data && data.image) {
+        await deleteFileFromS3(data?.image as string);
+      }
+    }
     const userInfo = await UserInfoModel.findOneAndUpdate(
       { userId: payload.id },
       {
@@ -70,6 +76,8 @@ export const profileServices = {
             bustCm: payload?.bustCm,
             waistCm: payload?.waistCm,
             hipsCm: payload?.hipsCm,
+            weightKg: payload?.weightKg,
+            shoeSizeUK: payload?.shoeSizeUK,
           },
           gender: payload?.gender,
           dob: payload?.dob,
@@ -126,6 +134,7 @@ export const profileServices = {
 
     return {};
   },
+
   changeLanguage: async (payload: any) => {
     const { id, language } = payload;
     const user = await UserModel.findByIdAndUpdate(
@@ -140,6 +149,7 @@ export const profileServices = {
 
     return { token: updatedToken || null };
   },
+
   changeCountry: async (payload: any) => {
     const { id, country } = payload;
     await UserModel.findByIdAndUpdate(id, { $set: { country } });
@@ -160,7 +170,7 @@ export const profileServices = {
         userData.subscription;
 
       if (type == "cancelTrial" && status !== "trialing") {
-        throw new Error("You subscription is not Trailing");
+        throw new Error("Your subscription is not Trailing");
       }
       if (type == "cancelSubscription") {
         await stripe.subscriptions.update(

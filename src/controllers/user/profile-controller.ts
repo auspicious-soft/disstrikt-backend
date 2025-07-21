@@ -13,7 +13,6 @@ import {
   UNAUTHORIZED,
 } from "src/utils/response";
 
-
 export const userProfile = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -49,8 +48,18 @@ export const updateUser = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
 
-    const { heightCm, bustCm, waistCm, hipsCm, gender, dob, fullName, image } =
-      req.body;
+    const {
+      heightCm,
+      bustCm,
+      waistCm,
+      hipsCm,
+      gender,
+      dob,
+      fullName,
+      image,
+      weightKg,
+      shoeSizeUK,
+    } = req.body;
 
     if (heightCm && !Number.isInteger(heightCm)) {
       throw new Error("invalidFields");
@@ -73,6 +82,12 @@ export const updateUser = async (req: Request, res: Response) => {
     if (image && typeof image !== "string") {
       throw new Error("invalidFields");
     }
+    if (weightKg && !Number.isInteger(weightKg)) {
+      throw new Error("invalidFields");
+    }
+    if (shoeSizeUK && !Number.isInteger(shoeSizeUK)) {
+      throw new Error("invalidFields");
+    }
 
     const response = await profileServices.updateUser({
       heightCm,
@@ -84,9 +99,11 @@ export const updateUser = async (req: Request, res: Response) => {
       fullName,
       image,
       id: userData.id,
+      weightKg,
+      shoeSizeUK,
     });
 
-    return OK(res, response || {}, req.body.language);
+    return OK(res, response || {}, req.body.language, "profileUpdated");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);
@@ -276,18 +293,22 @@ export const deleteAccount = async (req: Request, res: Response) => {
 export const updateSubscription = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
-    const {type, planId} = req.body;
+    const { type, planId } = req.body;
 
-    if(!["upgrade", "cancelTrial", "cancelSubscription"].includes(type)){
-      throw new Error("invalidFields")
+    if (!["upgrade", "cancelTrial", "cancelSubscription"].includes(type)) {
+      throw new Error("invalidFields");
     }
 
-    if(type === "upgrade" && !planId){
-      throw new Error("PlanId is required")
+    if (type === "upgrade" && !planId) {
+      throw new Error("PlanId is required");
     }
 
-    const response = await profileServices.updatePlan({type, planId, userData})
- 
+    const response = await profileServices.updatePlan({
+      type,
+      planId,
+      userData,
+    });
+
     return OK(res, response || {}, req.body.language);
   } catch (err: any) {
     if (err.message) {

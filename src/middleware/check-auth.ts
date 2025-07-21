@@ -33,12 +33,25 @@ export const checkUserAuth = async (
 
     const checkToken = await TokenModel.findOne({
       token,
-    }).populate("userId").lean();
+    })
+      .populate("userId")
+      .lean() as any
 
     if (!checkToken) {
       return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
     }
-    req.user = decoded;
+
+    req.user = {
+      id:checkToken?.userId._id,
+      authType: checkToken?.userId?.authType,
+      country: checkToken.userId?.country,
+      countryCode: checkToken.userId?.countryCode,
+      email: checkToken.userId?.email,
+      fullName: checkToken.userId?.fullName,
+      image: checkToken.userId?.image,
+      language: checkToken.userId?.language,
+      phone: checkToken.userId?.phone,
+    };
 
     //********************************
     //For Admin built in Next Js
