@@ -23,11 +23,11 @@ export const homeServices = {
 
 export const profileServices = {
   profile: async (payload: any) => {
-    const {userData} = payload
+    const { userData } = payload;
     return {
-      fullName:userData.fullName,
+      fullName: userData.fullName,
       id: userData.id,
-      image:userData.image,
+      image: userData.image,
       authType: userData.authType,
       milestone: 0,
       percentage: 0,
@@ -146,7 +146,18 @@ export const profileServices = {
   },
 
   updatePlan: async (payload: any) => {
+    const toDate = (timestamp?: number | null): Date | null =>
+      typeof timestamp === "number" && !isNaN(timestamp)
+        ? new Date(timestamp * 1000)
+        : null;
+
     const { type, planId, userData } = payload;
+    const { stripeCustomerId, currency, paymentMethodId, status } =
+      userData.subscription;
+
+    if (type == "cancelTrial" && status !== "trialing") {
+      throw new Error("You subscription is not Trailing");
+    }
     if (type == "cancelSubscription") {
       await stripe.subscriptions.update(
         userData.subscription.stripeSubscriptionId,
@@ -158,7 +169,7 @@ export const profileServices = {
       await SubscriptionModel.findOneAndUpdate(
         {
           userId: userData.id,
-          status: { $or: ["active", "trialing"] },
+          $or: [{ status: "active" }, { status: "trialing" }],
         },
         {
           $set: {
@@ -168,7 +179,7 @@ export const profileServices = {
       );
     }
 
-    if (type == "cancelTrial") {
+    if (type == "cancelTrial" && !planId) {
       await stripe.subscriptions.update(
         userData.subscription.stripeSubscriptionId,
         {
@@ -176,6 +187,43 @@ export const profileServices = {
           proration_behavior: "none",
         }
       );
+    }
+    if (type == "cancelTrial" && planId) {
+      await stripe.subscriptions.cancel(
+        userData.subscription.stripeSubscriptionId
+      );
+
+      await SubscriptionModel.findByIdAndDelete(userData.subscription._id);
+      const planData = await planModel.findById(planId);
+      const newSub = await stripe.subscriptions.create({
+        customer:
+          typeof stripeCustomerId === "string"
+            ? stripeCustomerId
+            : stripeCustomerId?.id ?? "",
+        items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
+        default_payment_method: paymentMethodId,
+        expand: ["latest_invoice.payment_intent"],
+      });
+
+      const newSubPrice = newSub.items.data[0]?.price;
+
+      await SubscriptionModel.create({
+        userId: userData.id,
+        stripeCustomerId,
+        planId,
+        stripeSubscriptionId: newSub.id,
+        paymentMethodId,
+        status: newSub.status,
+        trialStart: toDate(newSub.trial_start),
+        trialEnd: toDate(newSub.trial_end),
+        startDate: toDate(newSub.start_date),
+        currentPeriodStart: toDate(newSub.current_period_start),
+        currentPeriodEnd: toDate(newSub.current_period_end),
+        nextBillingDate: toDate(newSub.current_period_end),
+        amount: newSubPrice?.unit_amount ? newSubPrice.unit_amount / 100 : 0,
+        currency: newSubPrice?.currency ?? "inr",
+        nextPlanId: null,
+      });
     }
 
     if (type == "upgrade") {

@@ -288,7 +288,7 @@ export const updateSubscription = async (req: Request, res: Response) => {
 
     const response = await profileServices.updatePlan({type, planId, userData})
  
-    return OK(res, response || {}, req.body.language, "accountDeleted");
+    return OK(res, response || {}, req.body.language);
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);
