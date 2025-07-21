@@ -54,7 +54,7 @@ app.use("/api", auth);
 // //*****************User Routes******************/
 app.use("/api/user", checkUserAuth, user);
 
-app.use("/api/paid-user", checkUserAuth, paidUser);
+app.use("/api/paid-user", checkUserAuth, checkSubscription, paidUser);
 
 // //*****************Admin Routes******************/
 app.use("/api/admin", admin);
