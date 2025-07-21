@@ -33,7 +33,7 @@ export const checkUserAuth = async (
 
     const checkToken = await TokenModel.findOne({
       token,
-    });
+    }).populate("userId").lean();
 
     if (!checkToken) {
       return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");

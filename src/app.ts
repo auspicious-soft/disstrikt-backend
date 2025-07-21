@@ -25,13 +25,6 @@ app.post(
 
 app.use(express.json());
 app.set("trust proxy", true);
-// app.use(
-//   bodyParser.json({
-//     verify: (req: any, res, buf) => {
-//       req.rawBody = buf.toString();
-//     },
-//   })
-// );
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -61,7 +54,7 @@ app.use("/api", auth);
 // //*****************User Routes******************/
 app.use("/api/user", checkUserAuth, user);
 
-app.use("/api/paid-user", checkUserAuth, checkSubscription, paidUser);
+app.use("/api/paid-user", checkUserAuth, paidUser);
 
 // //*****************Admin Routes******************/
 app.use("/api/admin", admin);

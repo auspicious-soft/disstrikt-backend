@@ -28,6 +28,7 @@ export const profileServices = {
       fullName:userData.fullName,
       id: userData.id,
       image:userData.image,
+      authType: userData.authType,
       milestone: 0,
       percentage: 0,
       taskCount: 0,

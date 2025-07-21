@@ -46,6 +46,7 @@ export async function generateToken(user: IUser){
     country: user.country,
     language: user.language,
     countryCode: user.countryCode,
+    authType: user.authType
   };
 
   const token =  jwt.sign(tokenPayload, process.env.AUTH_SECRET as string, { expiresIn: "60d" });
