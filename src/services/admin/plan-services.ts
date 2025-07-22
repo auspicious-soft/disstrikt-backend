@@ -3,6 +3,7 @@ import stripe from "src/config/stripe";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TransactionModel } from "src/models/user/transaction-schema";
+import { UserModel } from "src/models/user/user-schema";
 import { features, regionalAccess } from "src/utils/constant";
 import { Stripe } from "stripe";
 
@@ -536,6 +537,10 @@ export const planServices = {
           const planId = session.metadata?.planId;
 
           await SubscriptionModel.findOneAndDelete({userId})
+
+          if(subscription.status === "trialing"){
+            await UserModel.findByIdAndUpdate({hasUsedTrial: true})
+          }
 
           await SubscriptionModel.create({
             userId,

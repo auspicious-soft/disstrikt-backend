@@ -463,8 +463,6 @@ export const authServices = {
           planId: (plans as any)?._id.toString(),
         },
       });
-
-      user.hasUsedTrial = true;
       await user.save();
 
       return session;
