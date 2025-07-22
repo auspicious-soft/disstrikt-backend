@@ -536,12 +536,8 @@ export const planServices = {
           const userId = session.metadata?.userId; // You should send this when creating session
           const planId = session.metadata?.planId;
 
-          await SubscriptionModel.findOneAndDelete({userId})
-
-          if(subscription.status === "trialing"){
-            await UserModel.findByIdAndUpdate({hasUsedTrial: true})
-          }
-
+          await SubscriptionModel.findOneAndDelete({ userId });
+          await UserModel.findByIdAndUpdate(userId, { hasUsedTrial: true });
           await SubscriptionModel.create({
             userId,
             stripeCustomerId,
