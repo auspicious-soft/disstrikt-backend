@@ -137,17 +137,12 @@ export const profileServices = {
 
   changeLanguage: async (payload: any) => {
     const { id, language } = payload;
-    const user = await UserModel.findByIdAndUpdate(
+    await UserModel.findByIdAndUpdate(
       id,
       { $set: { language } },
       { new: true }
     );
-    let updatedToken;
-    if (user) {
-      updatedToken = await generateToken(user);
-    }
-
-    return { token: updatedToken || null };
+    return {};
   },
 
   changeCountry: async (payload: any) => {

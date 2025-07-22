@@ -361,7 +361,7 @@ export const authServices = {
         name: fullName,
         phone: phone,
         metadata: {
-          userId: id,
+          userId: id.toString(),
           country: country,
           language: language,
         },

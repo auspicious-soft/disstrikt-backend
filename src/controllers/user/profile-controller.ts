@@ -61,16 +61,16 @@ export const updateUser = async (req: Request, res: Response) => {
       shoeSizeUK,
     } = req.body;
 
-    if (heightCm && !Number.isInteger(heightCm)) {
+    if (heightCm && !Number(heightCm)) {
       throw new Error("invalidFields");
     }
-    if (bustCm && !Number.isInteger(bustCm)) {
+    if (bustCm && !Number(bustCm)) {
       throw new Error("invalidFields");
     }
-    if (waistCm && !Number.isInteger(waistCm)) {
+    if (waistCm && !Number(waistCm)) {
       throw new Error("invalidFields");
     }
-    if (hipsCm && !Number.isInteger(hipsCm)) {
+    if (hipsCm && !Number(hipsCm)) {
       throw new Error("invalidFields");
     }
     if (dob && typeof dob !== "string") {
@@ -82,10 +82,10 @@ export const updateUser = async (req: Request, res: Response) => {
     if (image && typeof image !== "string") {
       throw new Error("invalidFields");
     }
-    if (weightKg && !Number.isInteger(weightKg)) {
+    if (weightKg && !Number(weightKg)) {
       throw new Error("invalidFields");
     }
-    if (shoeSizeUK && !Number.isInteger(shoeSizeUK)) {
+    if (shoeSizeUK && !Number(shoeSizeUK)) {
       throw new Error("invalidFields");
     }
 
