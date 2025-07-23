@@ -1,4 +1,3 @@
-import axios from "axios";
 import { Translate } from "@google-cloud/translate/build/src/v2";
 import bcrypt from "bcryptjs";
 import { OtpModel } from "src/models/system/otp-schema";
@@ -11,10 +10,6 @@ import { customMessages, SupportedLang } from "./messages";
 import { IUser } from "src/models/user/user-schema";
 import jwt from "jsonwebtoken";
 import { TokenModel } from "src/models/user/token-schema";
-import path from "path";
-import { fileURLToPath } from "url";
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
 
 configDotenv();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -123,7 +118,11 @@ export async function generateAndSendOtp(
 }
 
 const translate = new Translate({
- keyFilename: path.resolve(__dirname, "../config/firebase-service-account.json"),
+  credentials: {
+    client_email: process.env.GOOGLE_CLIENT_EMAIL,
+    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+  },
+  projectId: process.env.GOOGLE_PROJECT_ID,
 });
 
 export async function translateJobFields(jobEnData: any) {
