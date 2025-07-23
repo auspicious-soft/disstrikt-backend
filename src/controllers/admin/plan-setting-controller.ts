@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { planModel } from "src/models/admin/plan-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
-import { planServices } from "src/services/admin/plan-services";
+import { planServices } from "src/services/admin/admin-services";
 
 import {
   BADREQUEST,
@@ -10,6 +10,9 @@ import {
   OK,
 } from "src/utils/response";
 import { validateCreatePlanPayload } from "src/validation/validPlan";
+
+
+// Plans---------------------->
 
 export const createPlan = async (req: Request, res: Response) => {
   try {

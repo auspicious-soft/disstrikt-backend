@@ -10,6 +10,7 @@ import {
   resendOtp,
   resetPassword,
   socialLogin,
+  userPortfolio,
   verifyOtp,
   verifyResetPasswordOtp,
 } from "src/controllers/auth/auth-controller";
@@ -28,10 +29,13 @@ router.post("/reset-password", resetPassword);
 router.post("/social-login", socialLogin);
 
 //============================== ADMIN Routes
-
 router.post("/admin/login", adminLogin);
 router.post("/admin/forget-password", adminForgetPassword);
 router.post("/admin/verify-otp", adminVerifyOtp);
 router.post("/admin/reset-password", adminResetPassword);
+
+//============================== PORTFOLIO Routes
+router.get("/portfolio/:id", userPortfolio)
+
 
 export { router };

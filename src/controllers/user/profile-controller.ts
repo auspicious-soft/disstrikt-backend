@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
+import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
@@ -280,7 +281,24 @@ export const deleteAccount = async (req: Request, res: Response) => {
       userId: userData.id,
     });
 
-    //Need to write cancel subscripiton code as well
+    const subscription = await SubscriptionModel.findOne({
+      userId: userData.id,
+    }).lean();
+    let type = null;
+
+    type =
+      subscription?.status == "trialing"
+        ? "cancelTrial"
+        : subscription?.status == "active"
+        ? "cancelSubscription"
+        : null;
+
+    if (type) {
+      await profileServices.updatePlan({
+        type,
+        userData,
+      });
+    }
 
     return OK(res, {}, req.body.language, "accountDeleted");
   } catch (err: any) {

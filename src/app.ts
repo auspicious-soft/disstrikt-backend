@@ -6,7 +6,7 @@ import connectDB from "./config/db";
 import bodyParser from "body-parser";
 import { checkSubscription, checkUserAuth } from "./middleware/check-auth";
 import { admin, auth, paidUser, user } from "./routes";
-import { handleStripeWebhook } from "./controllers/admin/admin-controller";
+import { handleStripeWebhook } from "./controllers/admin/plan-setting-controller";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);

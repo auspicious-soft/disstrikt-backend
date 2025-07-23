@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
+import { UserModel } from "src/models/user/user-schema";
 import { authServices } from "src/services/auth/auth-services";
+import { portfolioServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
 import {
   BADREQUEST,
@@ -105,7 +107,8 @@ export const login = async (req: Request, res: Response) => {
 };
 export const socialLogin = async (req: Request, res: Response) => {
   try {
-    const { authType, idToken, fcmToken, country, language, deviceType } = req.body;
+    const { authType, idToken, fcmToken, country, language, deviceType } =
+      req.body;
     if (
       !authType ||
       !idToken ||
@@ -125,7 +128,7 @@ export const socialLogin = async (req: Request, res: Response) => {
       fcmToken,
       country,
       language,
-      deviceType
+      deviceType,
     });
     return OK(res, response || {}, req.body.language || "en", "loginSuccess");
   } catch (err: any) {
@@ -322,8 +325,8 @@ export const getActivePlan = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     const response = await SubscriptionModel.findOne({
-      userId: userData.id
-    })
+      userId: userData.id,
+    });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
@@ -417,6 +420,28 @@ export const adminResetPassword = async (req: Request, res: Response) => {
     const response = await authServices.resetPassword({
       password,
       token,
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+// Portfolio Controllers
+
+export const userPortfolio = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+    if (!id) {
+      throw new Error("Id is required");
+    }
+
+    const userData = await UserModel.findById(id).lean();
+    const response = await portfolioServices.userPortfolio({
+      userData: { ...userData, id: userData?._id },
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {

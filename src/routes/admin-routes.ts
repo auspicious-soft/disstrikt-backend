@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { createJob } from "src/controllers/admin/job-controller";
 import {
   createPlan,
   getPlans,
@@ -7,7 +8,7 @@ import {
   postSupport,
   postTermAndCondition,
   updatePlan,
-} from "src/controllers/admin/admin-controller";
+} from "src/controllers/admin/plan-setting-controller";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
 
@@ -22,6 +23,9 @@ router.route("/get-platform-info").get(getPlatformInfo);
 router.route("/privacy-policy").post(postPrivacyPolicy);
 router.route("/term-and-condition").post(postTermAndCondition);
 router.route("/support").post(postSupport);
+
+// Job-management-routes
+router.route("/jobs").post(createJob)
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {

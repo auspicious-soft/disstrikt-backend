@@ -2,9 +2,11 @@ import { Request } from "express";
 import stripe from "src/config/stripe";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
+import { TokenModel } from "src/models/user/token-schema";
 import { TransactionModel } from "src/models/user/transaction-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { features, regionalAccess } from "src/utils/constant";
+import { translateJobFields } from "src/utils/helper";
 import { Stripe } from "stripe";
 
 export const planServices = {
@@ -374,8 +376,12 @@ export const planServices = {
               currency: newSubPrice?.currency ?? "inr",
               nextPlanId: null,
             });
+          } else {
+            await stripe.paymentMethods.detach(paymentMethodId);
+            await TokenModel.findOneAndDelete({
+              userId,
+            });
           }
-
           break;
         }
 
@@ -566,5 +572,12 @@ export const planServices = {
       console.error("***STRIPE EVENT FAILED***", err.message);
       return {};
     }
+  },
+};
+
+export const jobServices = {
+  async createJob(payload: any) {
+    const result = await translateJobFields(payload.en)
+    return result
   },
 };
