@@ -331,8 +331,13 @@ export const authServices = {
       return {
         name: plan.name?.[language] || plan.name?.en,
         description: plan.description?.[language] || plan.description?.en,
-        features: plan.features?.map(
-          (feature: any) => feature?.[language] || feature?.en
+        features: (Array.isArray(plan.features) ? plan.features : []).map(
+          (feature: any) => {
+            const translated = feature?.[language];
+            return translated && typeof translated === "string"
+              ? translated
+              : feature?.en || "";
+          }
         ),
         trialDays: plan.trialDays,
         gbpAmount: plan.unitAmounts.gbp / 100,

@@ -100,7 +100,7 @@ export const login = async (req: Request, res: Response) => {
     return OK(res, response || {}, req.body.language || "en", "loginSuccess");
   } catch (err: any) {
     if (err.message) {
-      return UNAUTHORIZED(res, err.message, req.body.language || "en");
+      return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
