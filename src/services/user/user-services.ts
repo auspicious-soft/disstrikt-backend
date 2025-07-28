@@ -433,3 +433,9 @@ export const portfolioServices = {
     return {};
   },
 };
+
+export const jobServices = {
+  getJobs: async(payload: any)=>{
+    return {}
+  }
+}

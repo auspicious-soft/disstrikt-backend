@@ -10,6 +10,9 @@ import { customMessages, SupportedLang } from "./messages";
 import { IUser } from "src/models/user/user-schema";
 import jwt from "jsonwebtoken";
 import { TokenModel } from "src/models/user/token-schema";
+import axios from "axios";
+import jwkToPem from "jwk-to-pem";
+import fs from "fs";
 
 configDotenv();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -50,10 +53,10 @@ export async function generateToken(user: IUser) {
   };
 
   const token = jwt.sign(tokenPayload, process.env.AUTH_SECRET as string, {
-    expiresIn: "60d",
+    expiresIn: "120d",
   });
 
-  const expiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 120 * 24 * 60 * 60 * 1000);
 
   await TokenModel.deleteMany({ userId: user._id });
   await TokenModel.create({
@@ -117,17 +120,19 @@ export async function generateAndSendOtp(
   return otp;
 }
 
+const privateKey = process.env.GOOGLE_PRIVATE_KEY2 ? process.env.GOOGLE_PRIVATE_KEY2.replace(/\\n/g, '\n') : "";
+
 const translate = new Translate({
   credentials: {
     client_email: process.env.GOOGLE_CLIENT_EMAIL,
-    private_key: process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
+    private_key: privateKey,
   },
   projectId: process.env.GOOGLE_PROJECT_ID,
 });
 
 export async function translateJobFields(jobEnData: any) {
   const languages = ["fr", "es", "nl"];
-  const translated = {} as any; 
+  const translated = {} as any;
 
   for (const lang of languages) {
     translated[lang] = {};
@@ -138,4 +143,23 @@ export async function translateJobFields(jobEnData: any) {
   }
 
   return translated;
+}
+
+export async function verifyAppleToken(idToken: string) {
+  const appleKeys = await axios.get("https://appleid.apple.com/auth/keys");
+  const decodedHeader: any = jwt.decode(idToken, { complete: true })?.header;
+  const key = appleKeys.data.keys.find((k: any) => k.kid === decodedHeader.kid);
+
+  if (!key) throw new Error("Apple public key not found");
+
+  const pubKey = jwkToPem(key);
+  const payload: any = jwt.verify(idToken, pubKey, {
+    algorithms: ["RS256"],
+  });
+
+  if (payload.iss !== "https://appleid.apple.com") {
+    throw new Error("Invalid Apple token issuer");
+  }
+
+  return payload;
 }

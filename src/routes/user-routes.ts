@@ -11,6 +11,7 @@ import {
   userMoreInfo,
 } from "src/controllers/auth/auth-controller";
 import { userHome } from "src/controllers/user/home-controller";
+import { getJobs } from "src/controllers/user/job-controller";
 import { addImage, addVideo, deleteImage, deleteVideo, updatePortfolio, userPortfolio } from "src/controllers/user/portfolio-controller";
 import {
   changeCountry,
@@ -62,6 +63,10 @@ paidRouter.get("/portfolio", userPortfolio)
 paidRouter.patch("/portfolio", updatePortfolio)
 paidRouter.route("/portfolio-video").post(addVideo).delete(deleteVideo)
 paidRouter.route("/portfolio-image").post(addImage).delete(deleteImage)
+
+// JOBS
+paidRouter.get("/jobs", getJobs)
+
 
 //============================== ADMIN Routes
 export { router, paidRouter };
