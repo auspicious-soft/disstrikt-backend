@@ -120,7 +120,8 @@ export async function generateAndSendOtp(
   return otp;
 }
 
-const privateKey = process.env.GOOGLE_PRIVATE_KEY2 ? process.env.GOOGLE_PRIVATE_KEY2.replace(/\\n/g, '\n') : "";
+// const privateKey = process.env.GOOGLE_PRIVATE_KEY2 ? process.env.GOOGLE_PRIVATE_KEY2.replace(/\\n/g, '\n') : "";
+const privateKey = "ABCS"
 
 const translate = new Translate({
   credentials: {
