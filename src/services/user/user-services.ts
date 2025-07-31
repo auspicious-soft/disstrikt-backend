@@ -400,7 +400,7 @@ export const portfolioServices = {
       userId: userData.id,
     }).lean();
 
-    const images = [...(checkExist?.portfolioImages || []), ...data.url];
+    const images = [...data.url, ...(checkExist?.portfolioImages || [])];
 
     await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
       $set: { portfolioImages: images },
