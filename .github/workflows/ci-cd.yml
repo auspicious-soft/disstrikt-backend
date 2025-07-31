@@ -17,6 +17,9 @@ jobs:
       EC2_USERNAME: ${{ secrets.EC2_USERNAME }}
       ACTIONS_STEP_DEBUG: true
       ACTIONS_RUNNER_DEBUG: true
+      GOOGLE_CLIENT_EMAIL: ${{ secrets.GOOGLE_CLIENT_EMAIL }}
+      GOOGLE_PRIVATE_KEY2: ${{ secrets.GOOGLE_PRIVATE_KEY2 }}
+      GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
 
     steps:
       # Step 1: Checkout code
