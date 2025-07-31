@@ -406,7 +406,7 @@ export const portfolioServices = {
       $set: { portfolioImages: images },
     });
 
-    return {};
+    return images;
   },
 
   deleteVideo: async (payload: any) => {
@@ -452,7 +452,7 @@ export const portfolioServices = {
       await deleteFileFromS3(url);
     }
 
-    return {};
+    return newData;
   },
 };
 
