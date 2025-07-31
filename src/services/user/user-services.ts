@@ -324,9 +324,9 @@ export const portfolioServices = {
       measurements,
       gender,
       dob,
-      country:userData.country,
-      email:userData.email,
-      phone:userData.phone
+      country: userData.country,
+      email: userData.email,
+      phone: userData.phone,
     };
 
     return response;
@@ -400,10 +400,10 @@ export const portfolioServices = {
       userId: userData.id,
     }).lean();
 
-    checkExist?.portfolioImages?.push(data.url);
+    const images = [...(checkExist?.portfolioImages || []), ...data.url];
 
     await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
-      $set: { portfolioImages: checkExist?.portfolioImages },
+      $set: { portfolioImages: images },
     });
 
     return {};
@@ -436,17 +436,21 @@ export const portfolioServices = {
       userId: userData.id,
     }).lean();
 
-    const udpateData = checkExist?.portfolioImages?.filter(
-      (val) => val !== data.url
-    );
+    let newData = checkExist?.portfolioImages || [];
+
+    for (let i = 0; i < data.url.length; i++) {
+      newData = newData?.filter((val) => val !== data.url[i]);
+    }
 
     await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
-      $set: { portfolioImages: udpateData },
+      $set: { portfolioImages: newData },
     });
 
     // ************************ Need to write code to remove image from S3 *************************
 
-    await deleteFileFromS3(data.url);
+    for (const url of data.url) {
+      await deleteFileFromS3(url);
+    }
 
     return {};
   },
