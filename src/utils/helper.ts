@@ -53,10 +53,10 @@ export async function generateToken(user: IUser) {
   };
 
   const token = jwt.sign(tokenPayload, process.env.AUTH_SECRET as string, {
-    expiresIn: "120d",
+    expiresIn: "60d",
   });
 
-  const expiresAt = new Date(Date.now() + 120 * 24 * 60 * 60 * 1000);
+  const expiresAt = new Date(Date.now() + 60 * 24 * 60 * 60 * 1000);
 
   await TokenModel.deleteMany({ userId: user._id });
   await TokenModel.create({
