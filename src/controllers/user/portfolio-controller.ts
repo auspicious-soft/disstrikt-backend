@@ -34,8 +34,7 @@ export const updatePortfolio = async (req: Request, res: Response) => {
       !data.aboutMe ||
       data.links.length !== 2 ||
       data.links[0].platform !== "Instagram" ||
-      data.links[1].platform !== "Youtube" ||
-      !data.setCards
+      data.links[1].platform !== "Youtube"
     ) {
       throw new Error("invalidFields");
     }
