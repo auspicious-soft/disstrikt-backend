@@ -578,17 +578,23 @@ export const planServices = {
 
 export const jobServices = {
   async createJob(payload: any) {
-    const { en, ...restData } = payload;
+    const { en, date, time, ...restData } = payload;
 
     // Function to translate the language of jobs
     const result = await translateJobFields(payload.en);
-    const {nl, fr, es} = result
+    const { nl, fr, es } = result;
+
+    const jobDateTimeUTC = new Date(date); 
+    jobDateTimeUTC.setUTCHours(time, 0, 0, 0); 
+
     const createdJob = await JobModel.create({
       en,
       nl,
       fr,
       es,
       ...restData,
+      date: jobDateTimeUTC,
+      time
     });
 
     return createdJob;
@@ -605,7 +611,7 @@ export const jobServices = {
       branch,
       gender,
       age,
-      currency
+      currency,
     } = payload;
     const filter: any = {};
     const pageNumber = parseInt(page as string, 10);

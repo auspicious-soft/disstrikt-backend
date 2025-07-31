@@ -84,7 +84,10 @@ export const customMessages: Record<SupportedLang, any> = {
     accountDeleted: "Account deleted successfully",
     planExist:"Plan already exist",
     sectionExist:"Section already exist",
-    profileUpdated:"Profile updated successfully"
+    profileUpdated:"Profile updated successfully",
+    requestAlreadyExist:"Request already exist",
+    jobExpired:"Job has expired",
+    invalidGender:"Invalid gender"
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",

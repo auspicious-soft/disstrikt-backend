@@ -2,11 +2,13 @@ import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
+import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
+import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
-import { genders } from "src/utils/constant";
+import { genders, languages } from "src/utils/constant";
 import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
 
 configDotenv();
@@ -323,6 +325,7 @@ export const portfolioServices = {
       {
         aboutMe: data.aboutMe,
         links: data.links,
+        setCards: data.setCards
       },
       { new: true }
     );
@@ -434,8 +437,179 @@ export const portfolioServices = {
   },
 };
 
-export const jobServices = {
-  getJobs: async(payload: any)=>{
-    return {}
-  }
-}
+export const userJobServices = {
+  async getJobs(payload: any) {
+    const {
+      sort,
+      search,
+      country,
+      language = "en",
+      page = "1",
+      limit = "10",
+      branch,
+      gender,
+      age,
+      currency,
+      type = "NEW",
+      userId,
+    } = payload;
+
+    const filter: any = {};
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    if (country) filter.countryCode = country;
+
+    if (search) {
+      filter.$or = [
+        { [`${language}.title`]: { $regex: search, $options: "i" } },
+        { [`${language}.companyName`]: { $regex: search, $options: "i" } },
+      ];
+    }
+
+    if (branch) filter[`en.branch`] = branch;
+    if (gender) filter[`en.gender`] = gender;
+
+    if (age) {
+      const ageNumber = parseInt(age as string, 10);
+      if (!isNaN(ageNumber)) {
+        filter.minAge = { $lte: ageNumber };
+        filter.maxAge = { $gte: ageNumber };
+      }
+    }
+
+    let appliedJobMap = new Map<string, string>();
+
+    if (userId && type === "APPLIED") {
+      const appliedJobs = await AppliedJobModel.find({ userId });
+      const appliedJobIds = appliedJobs.map((j) => j.jobId);
+      appliedJobMap = new Map(
+        appliedJobs.map((j) => [j.jobId.toString(), j.status])
+      );
+      filter._id = { $in: appliedJobIds };
+    } else if (userId && type === "NEW") {
+      const appliedJobs = await AppliedJobModel.find({ userId });
+      const appliedJobIds = appliedJobs.map((j) => j.jobId);
+      filter._id = { $nin: appliedJobIds };
+    }
+
+    // Sorting
+    let sortOption: any = {};
+    switch (sort) {
+      case "oldToNew":
+        sortOption.date = 1;
+        break;
+      case "newToOld":
+        sortOption.date = -1;
+        break;
+      case "highToLowPay":
+        sortOption.pay = -1;
+        break;
+      case "lowToHighPay":
+        sortOption.pay = 1;
+        break;
+    }
+
+    // Fetch jobs
+    const totalJobs = await JobModel.countDocuments(filter);
+    const rawJobs = await JobModel.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limitNumber);
+
+    const jobs = rawJobs.map((job: any) => {
+      const jobObj = job.toObject();
+      const langFields = jobObj[language] || {};
+      // remove other languages
+      languages?.forEach((langKey) => delete jobObj[langKey]);
+
+      const base = {
+        ...jobObj,
+        ...langFields,
+      };
+
+      // Add application status only for applied jobs
+      if (type === "APPLIED") {
+        base.status = appliedJobMap.get(jobObj._id.toString()) || "PENDING";
+      }
+
+      base.type = type;
+      return base;
+    });
+
+    return {
+      data: jobs,
+      pagination: {
+        total: totalJobs,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalJobs / limitNumber),
+      },
+    };
+  },
+
+  applyJobs: async (payload: any) => {
+    const { jobId, id, gender } = payload;
+
+    const isJobExpired = (jobDate: Date): boolean => {
+      const now = new Date(); // current time in UTC
+      return now > jobDate;
+    };
+
+    //*********************
+    //Will call validation helpers based on users plan later.
+    //*********************
+
+    const checkApplication = await AppliedJobModel.findOne({
+      jobId,
+      userId: id,
+    });
+    const checkJob = await JobModel.findById(jobId).lean();
+
+    if (!checkJob) {
+      throw new Error("Invalid job Id");
+    }
+    if (checkApplication) {
+      throw new Error("requestAlreadyExist");
+    }
+
+    if (checkJob?.en?.gender !== gender) {
+      throw new Error("invalidGender");
+    }
+
+    if (isJobExpired(checkJob?.date || new Date())) {
+      throw new Error("jobExpired");
+    } else {
+      await JobModel.updateOne(
+        { _id: jobId },
+        { $addToSet: { appliedUsers: id } } // avoids duplicates
+      );
+      await AppliedJobModel.create({
+        jobId,
+        userId: id,
+      });
+      return {};
+    }
+  },
+
+  getJobById: async (payload: any) => {
+    const { jobId, language } = payload;
+
+    const data = (await JobModel.findById(jobId).lean()) as any;
+    
+    const response = {
+      ...data[language],
+      minAge: data.minAge,
+      maxAge: data.maxAge,
+      date: data.date,
+      time: data.time,
+      pay: data.pay,
+      currency: data.currency,
+      countryCode: data.countryCode,
+      appliedUsers: data.appliedUsers,
+    };
+
+    return response;
+  },
+};

@@ -7,6 +7,8 @@ import { UserModel } from "src/models/user/user-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import path from "path";
+import { UserInfoModel } from "src/models/user/user-info-schema";
+
 configDotenv();
 declare global {
   namespace Express {
@@ -41,6 +43,8 @@ export const checkUserAuth = async (
       return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
     }
 
+    const moreInfo = await UserInfoModel.findOne({userId: checkToken?.userId._id}) as any
+
     req.user = {
       id:checkToken?.userId._id,
       authType: checkToken?.userId?.authType,
@@ -51,6 +55,7 @@ export const checkUserAuth = async (
       image: checkToken.userId?.image,
       language: checkToken.userId?.language,
       phone: checkToken.userId?.phone,
+      gender: moreInfo?.gender,
     };
 
     //********************************

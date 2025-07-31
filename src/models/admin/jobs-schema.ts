@@ -26,6 +26,7 @@ export interface IJOb extends Document {
   pay?: number;
   currency?: "eur" | "gbp";
   countryCode?: string;
+  appliedUsers?: mongoose.Types.ObjectId[];
   isActive?: boolean;
 }
 
@@ -76,7 +77,13 @@ const JobSchema = new Schema<IJOb>({
   time: { type: Number, requird: true },
   pay: { type: Number, requird: true },
   currency: { type: String, enum: ["eur", "gbp"] },
-  countryCode: {type: String, enum: countries},
+  countryCode: { type: String, enum: countries },
+  appliedUsers: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+    },
+  ],
   isActive: {
     type: Boolean,
     default: true,
