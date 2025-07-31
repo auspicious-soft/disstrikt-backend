@@ -11,7 +11,19 @@ import {
   userMoreInfo,
 } from "src/controllers/auth/auth-controller";
 import { userHome } from "src/controllers/user/home-controller";
-import { addImage, addVideo, deleteImage, deleteVideo, updatePortfolio, userPortfolio } from "src/controllers/user/portfolio-controller";
+import {
+  applyJobs,
+  getJobById,
+  getJobs,
+} from "src/controllers/user/job-controller";
+import {
+  addImage,
+  addVideo,
+  deleteImage,
+  deleteVideo,
+  updatePortfolio,
+  userPortfolio,
+} from "src/controllers/user/portfolio-controller";
 import {
   changeCountry,
   changeLanguage,
@@ -34,13 +46,12 @@ router.get("/setup-intent", setupIntent);
 router.route("/plans").get(getPlans).post(buyPlan);
 router.get("/get-login-response", getLoginResponse);
 router.post("/logout", logoutUser);
-router.post("/buy-again", buyAgain)
-router.get("/get-active-plan", getActivePlan)
+router.post("/buy-again", buyAgain);
+router.get("/get-active-plan", getActivePlan);
 
 const paidRouter = Router();
 
-paidRouter.post("/upload", multerUpload, uploadToS3)
-
+paidRouter.post("/upload", multerUpload, uploadToS3);
 
 // HOME
 paidRouter.get("/home", userHome);
@@ -52,16 +63,23 @@ paidRouter.patch("/update-user", updateUser);
 paidRouter.patch("/change-password", changePassword);
 paidRouter.patch("/change-language", changeLanguage);
 paidRouter.patch("/change-country", changeCountry);
-paidRouter.get("/get-platform-info", getPlatformInfo)
-paidRouter.route("/notification-setting").get(getNotificationSetting).patch(postNotificationSetting)
-paidRouter.post("/delete-account", deleteAccount)
-paidRouter.post("/update-subscription", updateSubscription) 
+paidRouter.get("/get-platform-info", getPlatformInfo);
+paidRouter
+  .route("/notification-setting")
+  .get(getNotificationSetting)
+  .patch(postNotificationSetting);
+paidRouter.post("/delete-account", deleteAccount);
+paidRouter.post("/update-subscription", updateSubscription);
 
 // PORTFOLIO
-paidRouter.get("/portfolio", userPortfolio)
-paidRouter.patch("/portfolio", updatePortfolio)
-paidRouter.route("/portfolio-video").post(addVideo).delete(deleteVideo)
-paidRouter.route("/portfolio-image").post(addImage).delete(deleteImage)
+paidRouter.get("/portfolio", userPortfolio);
+paidRouter.patch("/portfolio", updatePortfolio);
+paidRouter.route("/portfolio-video").post(addVideo).delete(deleteVideo);
+paidRouter.route("/portfolio-image").post(addImage).delete(deleteImage);
+
+// JOBS
+paidRouter.route("/jobs").get(getJobs).post(applyJobs);
+paidRouter.get("/jobs/:id", getJobById);
 
 //============================== ADMIN Routes
 export { router, paidRouter };

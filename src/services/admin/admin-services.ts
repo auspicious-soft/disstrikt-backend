@@ -1,11 +1,12 @@
 import { Request } from "express";
 import stripe from "src/config/stripe";
+import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { TransactionModel } from "src/models/user/transaction-schema";
 import { UserModel } from "src/models/user/user-schema";
-import { features, regionalAccess } from "src/utils/constant";
+import { features, languages, regionalAccess } from "src/utils/constant";
 import { translateJobFields } from "src/utils/helper";
 import { Stripe } from "stripe";
 
@@ -577,7 +578,106 @@ export const planServices = {
 
 export const jobServices = {
   async createJob(payload: any) {
-    const result = await translateJobFields(payload.en)
-    return result
+    const { en, date, time, ...restData } = payload;
+
+    // Function to translate the language of jobs
+    const result = await translateJobFields(payload.en);
+    const { nl, fr, es } = result;
+
+    const jobDateTimeUTC = new Date(date); 
+    jobDateTimeUTC.setUTCHours(time, 0, 0, 0); 
+
+    const createdJob = await JobModel.create({
+      en,
+      nl,
+      fr,
+      es,
+      ...restData,
+      date: jobDateTimeUTC,
+      time
+    });
+
+    return createdJob;
+  },
+
+  async getJobs(payload: any) {
+    const {
+      sort,
+      search,
+      country,
+      language = "en",
+      page = "1",
+      limit = "10",
+      branch,
+      gender,
+      age,
+      currency,
+    } = payload;
+    const filter: any = {};
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+    if (country) {
+      filter.countryCode = country;
+    }
+    if (search) {
+      filter.$or = [
+        { [`${language}.title`]: { $regex: search, $options: "i" } },
+        { [`${language}.companyName`]: { $regex: search, $options: "i" } },
+      ];
+    }
+    if (branch) {
+      filter[`en.branch`] = branch;
+    }
+    if (gender) {
+      filter[`en.gender`] = gender;
+    }
+    if (age) {
+      const ageNumber = parseInt(age as string, 10);
+      if (!isNaN(ageNumber)) {
+        filter.minAge = { $lte: ageNumber };
+        filter.maxAge = { $gte: ageNumber };
+      }
+    }
+    let sortOption: any = {};
+    switch (sort) {
+      case "oldToNew":
+        sortOption.date = 1;
+        break;
+      case "newToOld":
+        sortOption.date = -1;
+        break;
+      case "highToLowPay":
+        sortOption.pay = -1;
+        break;
+      case "lowToHighPay":
+        sortOption.pay = 1;
+        break;
+    }
+
+    const totalJobs = await JobModel.countDocuments(filter);
+    const rawJobs = await JobModel.find(filter)
+      .sort(sortOption)
+      .skip(skip)
+      .limit(limitNumber);
+
+    const jobs = rawJobs.map((job: any) => {
+      const jobObj = job.toObject();
+      const langFields = jobObj[language] || {};
+      languages.forEach((langKey) => delete jobObj[langKey]);
+      return {
+        ...jobObj,
+        ...langFields,
+      };
+    });
+    return {
+      data: jobs,
+      pagination: {
+        total: totalJobs,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(totalJobs / limitNumber),
+      },
+    };
   },
 };

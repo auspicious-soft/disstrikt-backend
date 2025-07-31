@@ -84,6 +84,9 @@ jobs:
               -e GOOGLE_CLIENT_ID='${{ secrets.GOOGLE_CLIENT_ID }}' \
               -e GOOGLE_CLIENT_ID_IOS='${{ secrets.GOOGLE_CLIENT_ID_IOS }}' \
               -e FIREBASE_SERVICE_ACCOUNT='${{ secrets.FIREBASE_SERVICE_ACCOUNT }}' \
+              -e GOOGLE_CLIENT_EMAIL='${{ secrets.GOOGLE_CLIENT_EMAIL }}' \
+              -e GOOGLE_PROJECT_ID='${{ secrets.GOOGLE_PROJECT_ID }}' \
+              -e GOOGLE_PRIVATE_KEY2='${{ secrets.GOOGLE_PRIVATE_KEY2 }}' \
               -e AWS_ACCESS_KEY_ID='${{ secrets.AWS_ACCESS_KEY_ID }}' \
               -e AWS_REGION='${{ secrets.AWS_REGION }}' \
               -e AWS_SECRET_ACCESS_KEY='${{ secrets.AWS_SECRET_ACCESS_KEY }}' \
