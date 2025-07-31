@@ -31,7 +31,7 @@ export const updatePortfolio = async (req: Request, res: Response) => {
     const data = req.body;
 
     if (
-      !data.aboutMe ||
+      // !data.aboutMe || //TODO 
       data.links.length !== 2 ||
       data.links[0].platform !== "Instagram" ||
       data.links[1].platform !== "Youtube"

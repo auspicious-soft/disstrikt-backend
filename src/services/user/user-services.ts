@@ -286,7 +286,9 @@ export const portfolioServices = {
       userId: userData.id,
     }).lean();
 
-    const { aboutMe, portfolioImages, links, videos, setCards, _id } =
+    // const { aboutMe, portfolioImages, links, videos, setCards, _id } =
+    //   portfolio as any; //TODO  MAKE THIS CHANGES
+    const {  portfolioImages, links, videos, setCards, _id } =
       portfolio as any;
 
     const response = {
@@ -294,7 +296,7 @@ export const portfolioServices = {
       _id,
       fullName: userData.fullName,
       image: userData.image,
-      aboutMe,
+      // aboutMe,  //TODO  MAKE THIS CHANGES
       portfolioImages,
       links: links.length
         ? links
@@ -323,7 +325,7 @@ export const portfolioServices = {
     const updateData = await UserInfoModel.findOneAndUpdate(
       { userId: userData.id },
       {
-        aboutMe: data.aboutMe,
+        // aboutMe: data.aboutMe, //TODO  MAKE THIS CHANGES
         links: data.links,
         setCards: data.setCards
       },
@@ -335,7 +337,7 @@ export const portfolioServices = {
       _id: updateData?._id,
       fullName: userData.fullName,
       image: userData.image,
-      aboutMe: updateData?.aboutMe,
+      // aboutMe: updateData?.aboutMe, //TODO  MAKE THIS CHANGES
       portfolioImages: updateData?.portfolioImages,
       links: updateData?.links.length
         ? updateData.links
