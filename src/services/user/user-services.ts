@@ -286,16 +286,24 @@ export const portfolioServices = {
       userId: userData.id,
     }).lean();
 
-    const { aboutMe, portfolioImages, links, videos, setCards, _id } =
-      portfolio as any; 
-   
+    const {
+      aboutMe,
+      portfolioImages,
+      links,
+      videos,
+      setCards,
+      _id,
+      measurements,
+      gender,
+      dob,
+    } = portfolio as any;
 
     const response = {
       userId: userData.id,
       _id,
       fullName: userData.fullName,
       image: userData.image,
-      aboutMe,  
+      aboutMe,
       portfolioImages,
       links: links.length
         ? links
@@ -313,6 +321,12 @@ export const portfolioServices = {
       setCards,
       portfolioLink: `http://localhost:3000/${userData?.id}`,
       videoSections: ["introVideo", "catwalkVideo", "other"],
+      measurements,
+      gender,
+      dob,
+      country:userData.country,
+      email:userData.email,
+      phone:userData.phone
     };
 
     return response;
@@ -324,9 +338,9 @@ export const portfolioServices = {
     const updateData = await UserInfoModel.findOneAndUpdate(
       { userId: userData.id },
       {
-        aboutMe: data.aboutMe, 
+        aboutMe: data.aboutMe,
         links: data.links,
-        setCards: data.setCards
+        setCards: data.setCards,
       },
       { new: true }
     );
@@ -336,7 +350,7 @@ export const portfolioServices = {
       _id: updateData?._id,
       fullName: userData.fullName,
       image: userData.image,
-      aboutMe: updateData?.aboutMe, 
+      aboutMe: updateData?.aboutMe,
       portfolioImages: updateData?.portfolioImages,
       links: updateData?.links.length
         ? updateData.links
@@ -598,7 +612,7 @@ export const userJobServices = {
     const { jobId, language } = payload;
 
     const data = (await JobModel.findById(jobId).lean()) as any;
-    
+
     const response = {
       ...data[language],
       minAge: data.minAge,
