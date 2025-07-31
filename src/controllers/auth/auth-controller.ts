@@ -210,10 +210,6 @@ export const userMoreInfo = async (req: Request, res: Response) => {
       throw new Error("Measurements, DOB, and Gender is required");
     }
 
-    if (!["MALE", "FEMALE"].includes(gender)) {
-      throw new Error("Gender can be either MALE or FEMALE");
-    }
-
     const response = await authServices.userMoreInfo({
       measurements,
       dob,

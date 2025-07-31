@@ -4,7 +4,6 @@ import {
   generateAndSendOtp,
   generateToken,
   hashPassword,
-  verifyAppleToken,
   verifyPassword,
 } from "src/utils/helper";
 import jwt from "jsonwebtoken";
@@ -163,52 +162,26 @@ export const authServices = {
   async socialLogin(payload: any) {
     const { idToken, fcmToken, authType, language, country, deviceType } =
       payload;
-
-    let email, name, picture;
-
-    if (authType === "GOOGLE") {
-      const client = new OAuth2Client(
+    const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+    const ticket = await client.verifyIdToken({
+      idToken: idToken,
+      audience:
         deviceType === "IOS"
           ? process.env.GOOGLE_CLIENT_ID_IOS
-          : process.env.GOOGLE_CLIENT_ID
-      );
-
-      const ticket = await client.verifyIdToken({
-        idToken,
-        audience:
-          deviceType === "IOS"
-            ? process.env.GOOGLE_CLIENT_ID_IOS
-            : process.env.GOOGLE_CLIENT_ID,
-      });
-
-      if (!ticket) {
-        throw new Error("Invalid Google TokenId");
-      }
-
-      const userData = ticket.getPayload();
-      email = userData?.email;
-      name = userData?.name;
-      picture = userData?.picture;
-
-    } else if (authType === "APPLE") {
-      const appleData = await verifyAppleToken(idToken);
-
-      email = `${appleData?.sub}@appleId.com`;
-      name = appleData?.name || "Apple User";
-      picture = null; // Apple does not provide profile image in token
-    } else {
-      throw new Error("Unsupported auth type");
+          : process.env.GOOGLE_CLIENT_ID,
+    });
+    if (!ticket) {
+      throw new Error("Invalid TokenId");
     }
+    const userData = ticket.getPayload();
 
-    if (!email) {
-      throw new Error("Email is required for login");
-    }
+    const { email, name, picture } = userData as any;
 
     let checkExist = await UserModel.findOne({ email });
 
     if (checkExist) {
       checkExist.fcmToken = fcmToken;
-      await checkExist.save();
+      checkExist.save();
     } else {
       checkExist = await UserModel.create({
         email,
@@ -238,15 +211,10 @@ export const authServices = {
     const subscription = await SubscriptionModel.findOne({
       userId: checkExist._id,
     });
-
     const userObj = checkExist.toObject();
     delete userObj.password;
 
-    return {
-      ...userObj,
-      token,
-      subscription: subscription?.status || null,
-    };
+    return { ...userObj, token, subscription: subscription?.status || null };
   },
 
   async forgetPassword(payload: any) {

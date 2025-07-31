@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createJob, getJobs } from "src/controllers/admin/job-controller";
+import { createJob } from "src/controllers/admin/job-controller";
 import {
   createPlan,
   getPlans,
@@ -25,7 +25,7 @@ router.route("/term-and-condition").post(postTermAndCondition);
 router.route("/support").post(postSupport);
 
 // Job-management-routes
-router.route("/jobs").post(createJob).get(getJobs)
+router.route("/jobs").post(createJob)
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {
