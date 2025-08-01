@@ -379,19 +379,23 @@ export const portfolioServices = {
       userId: userData.id,
     }).lean();
 
-    checkExist?.videos?.map((info) => {
-      if (info.title === data.title) {
-        throw new Error("sectionExist");
-      }
-    });
+    // checkExist?.videos?.map((info) => {
+    //   if (info.title === data.title) {
+    //     throw new Error("sectionExist");
+    //   }
+    // });
 
-    checkExist?.videos.push({ title: data.title, url: data.url });
+    checkExist?.videos.push({
+      title: data.title,
+      url: data.url,
+      thumbnail: data.thumbnail,
+    });
 
     await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
       $set: { videos: checkExist?.videos },
     });
 
-    return {};
+    return checkExist?.videos;
   },
 
   addImage: async (payload: any) => {
@@ -426,8 +430,9 @@ export const portfolioServices = {
     // ************************ Need to write code to remove video from S3 *************************
 
     await deleteFileFromS3(data.url);
+    await deleteFileFromS3(data.thumbnail);
 
-    return {};
+    return udpateData;
   },
 
   deleteImage: async (payload: any) => {

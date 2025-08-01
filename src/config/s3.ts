@@ -1,12 +1,14 @@
 // s3Service.ts
 import {
   S3Client,
-  PutObjectCommand,
   DeleteObjectCommand,
+  PutObjectCommandInput,
 } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 import { v4 as uuidv4 } from "uuid";
 import path from "path";
 import { config } from "dotenv";
+import { Readable } from "stream";
 config();
 
 const {
@@ -14,8 +16,16 @@ const {
   AWS_SECRET_ACCESS_KEY,
   AWS_REGION,
   AWS_BUCKET_NAME,
-  NEXT_PUBLIC_AWS_BUCKET_PATH,
 } = process.env;
+
+if (
+  !AWS_BUCKET_NAME ||
+  !AWS_REGION ||
+  !AWS_ACCESS_KEY_ID ||
+  !AWS_SECRET_ACCESS_KEY
+) {
+  throw new Error("Missing required AWS environment variables");
+}
 
 export const createS3Client = () => {
   return new S3Client({
@@ -27,9 +37,11 @@ export const createS3Client = () => {
   });
 };
 
-// 🔼 Upload file directly to S3 from buffer
+/**
+ * Uploads a file (buffer or stream) to S3 using multipart under the hood for large files.
+ */
 export const uploadFileToS3 = async (
-  fileBuffer: Buffer,
+  fileInput: Buffer | NodeJS.ReadableStream,
   originalName: string,
   mimetype: string,
   userId: string,
@@ -41,17 +53,38 @@ export const uploadFileToS3 = async (
   const folder = isAdmin
     ? `admin/${fileCategory}s`
     : `users/${userId}/${fileCategory}s`;
-
   const key = `${folder}/${fileName}`;
 
-  const command = new PutObjectCommand({
+  // Normalize input to a stream if buffer
+  let bodyStream: NodeJS.ReadableStream;
+  if (Buffer.isBuffer(fileInput)) {
+    bodyStream = Readable.from(fileInput);
+  } else {
+    bodyStream = fileInput;
+  }
+
+  const params: PutObjectCommandInput = {
     Bucket: AWS_BUCKET_NAME,
     Key: key,
-    Body: fileBuffer,
+    Body: bodyStream as any,
     ContentType: mimetype,
+  };
+
+  // Use the high-level Upload helper which does multipart uploads properly
+  const upload = new Upload({
+    client: createS3Client(),
+    params,
+    queueSize: 4, // concurrency; tweak if needed
+    partSize: 5 * 1024 * 1024, // 5MB minimum part size
+    leavePartsOnError: false, // cleanup on failure
   });
 
-  await createS3Client().send(command);
+  // Optional: you can listen to progress like:
+  upload.on("httpUploadProgress", (progress) => {
+    console.log("Upload progress:", progress);
+  });
+
+  await upload.done();
 
   return { key };
 };
@@ -59,7 +92,7 @@ export const uploadFileToS3 = async (
 export const deleteFileFromS3 = async (key: string): Promise<boolean> => {
   try {
     const command = new DeleteObjectCommand({
-      Bucket: AWS_BUCKET_NAME,
+      Bucket: AWS_BUCKET_NAME!,
       Key: key,
     });
 

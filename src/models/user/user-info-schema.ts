@@ -21,6 +21,7 @@ export interface IUserInfo extends Document {
   videos: {
     title: "introVideo" | "catwalkVideo" | "other" | string;
     url: string;
+    thumbnail: string;
   }[];
   dob?: Date;
   gender?: "male" | "female" | "other";
@@ -67,6 +68,10 @@ const userSchema = new Schema<IUserInfo>(
           type: String,
           required: true,
         },
+        thumbnail:{
+          type: String,
+          required: true
+        }
       },
     ],
     portfolioImages: {

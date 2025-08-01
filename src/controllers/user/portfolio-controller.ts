@@ -31,7 +31,7 @@ export const updatePortfolio = async (req: Request, res: Response) => {
     const data = req.body;
 
     if (
-      !data.aboutMe || //TODO 
+      !data.aboutMe || //TODO
       data.links.length !== 2 ||
       data.links[0].platform !== "Instagram" ||
       data.links[1].platform !== "Youtube"
@@ -56,6 +56,10 @@ export const addVideo = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
+    const { title, url, thumbnail } = req.body;
+    if (!title || !url || !thumbnail) {
+      throw new Error("invalidFields");
+    }
     const response = await portfolioServices.addVideo({
       userData,
       data: req.body,

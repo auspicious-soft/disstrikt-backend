@@ -4,7 +4,11 @@ import { uploadFileToS3 } from "src/config/s3";
 import { BADREQUEST, CREATED, INTERNAL_SERVER_ERROR } from "src/utils/response";
 
 const storage = multer.memoryStorage();
-export const multerUpload = multer({ storage }).single("file");
+export const multerUpload = multer({
+  storage,
+  limits: { fileSize: 1000 * 1024 * 1024 },
+}).single("file");
+
 export const uploadToS3 = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -44,5 +48,3 @@ export const uploadToS3 = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
-
-
