@@ -4,17 +4,17 @@ import { countries } from "src/utils/constant";
 
 // "en", "nl", "fr", "es"
 
-interface JobData {
+interface TaskData {
   title?: string;
   description?: string;
   subject?: string;
 }
 
-export interface IJOb extends Document {
-  en?: JobData;
-  nl?: JobData;
-  fr?: JobData;
-  es?: JobData;
+export interface ITask extends Document {
+  en?: TaskData;
+  nl?: TaskData;
+  fr?: TaskData;
+  es?: TaskData;
   appReview?: boolean;
   taskType?: string;
   answerType?: string;
@@ -24,7 +24,7 @@ export interface IJOb extends Document {
   isActive?: boolean;
 }
 
-const JobSchema = new Schema<IJOb>({
+const TaskSchema = new Schema<ITask>({
   en: {
     title: { type: String, default: "" },
     subject: { type: String, default: "" },
@@ -96,4 +96,4 @@ const JobSchema = new Schema<IJOb>({
   },
 });
 
-export const JobModel = mongoose.model<IJOb>("job", JobSchema);
+export const TaskModel = mongoose.model<ITask>("task", TaskSchema);
