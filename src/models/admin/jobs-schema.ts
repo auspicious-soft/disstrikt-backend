@@ -21,6 +21,7 @@ export interface IJOb extends Document {
   es?: JobData;
   minAge?: number;
   maxAge?: number;
+  minHeightInCm?: number;
   date?: Date;
   time?: number;
   pay?: number;
@@ -73,6 +74,10 @@ const JobSchema = new Schema<IJOb>({
   },
   minAge: { type: Number, requird: true },
   maxAge: { type: Number, requird: true },
+  minHeightInCm: {
+    type: Number,
+    default: 0,
+  },
   date: { type: Date, required: true, index: true },
   time: { type: Number, requird: true },
   pay: { type: Number, requird: true },

@@ -584,8 +584,8 @@ export const jobServices = {
     const result = await translateJobFields(payload.en);
     const { nl, fr, es } = result;
 
-    const jobDateTimeUTC = new Date(date); 
-    jobDateTimeUTC.setUTCHours(time, 0, 0, 0); 
+    const jobDateTimeUTC = new Date(date);
+    jobDateTimeUTC.setUTCHours(time, 0, 0, 0);
 
     const createdJob = await JobModel.create({
       en,
@@ -594,7 +594,7 @@ export const jobServices = {
       es,
       ...restData,
       date: jobDateTimeUTC,
-      time
+      time,
     });
 
     return createdJob;

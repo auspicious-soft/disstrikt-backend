@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
 import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
+
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
@@ -516,6 +517,7 @@ export const userJobServices = {
       const appliedJobs = await AppliedJobModel.find({ userId });
       const appliedJobIds = appliedJobs.map((j) => j.jobId);
       filter._id = { $nin: appliedJobIds };
+      filter.date = { $gte: new Date().toUTCString() };
     }
 
     // Sorting
@@ -635,5 +637,50 @@ export const userJobServices = {
     };
 
     return response;
+  },
+};
+
+export const userSearchServices = {
+  searchUsers: async (payload: any) => {
+    const { userData, req } = payload;
+    const { page = 1, limit = 10, search } = req.query;
+
+    const pageNumber = parseInt(page as string, 10);
+    const limitNumber = parseInt(limit as string, 10);
+    const skip = (pageNumber - 1) * limitNumber;
+
+    const filter: any = {};
+
+    if (search) {
+      filter.$or = [
+        { fullName: { $regex: search, $options: "i" } },
+        { email: { $regex: search, $options: "i" } },
+      ];
+    } else {
+      filter.country = userData.country;
+    }
+
+    const response = await UserModel.find(filter)
+      .skip(skip)
+      .limit(limitNumber)
+      .select("_id fullName image country");
+    const total = await UserModel.countDocuments(filter);
+
+    //Need to put a logic to find popular users which has completed most tasks later when this is implemented
+    //Need to put a logic to find popular users which has completed most tasks later when this is implemented
+    //Need to put a logic to find popular users which has completed most tasks later when this is implemented
+    //Need to put a logic to find popular users which has completed most tasks later when this is implemented
+    //Need to put a logic to find popular users which has completed most tasks later when this is implemented
+    //Need to put a logic to find popular users which has completed most tasks later when this is implemented
+
+    return {
+      data: response,
+      pagination: {
+        total,
+        page: pageNumber,
+        limit: limitNumber,
+        totalPages: Math.ceil(total / limitNumber),
+      },
+    };
   },
 };

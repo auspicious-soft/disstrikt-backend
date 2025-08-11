@@ -10,7 +10,7 @@ import {
 
 export const createJob = async (req: Request, res: Response) => {
   try {
-    const { minAge, maxAge, date, time, pay, currency, countryCode } = req.body;
+    const { minAge, maxAge, date, time, pay, currency, countryCode, minHeightInCm } = req.body;
 
     if (
       !minAge ||
@@ -19,7 +19,8 @@ export const createJob = async (req: Request, res: Response) => {
       !time ||
       !pay ||
       !currency ||
-      !countryCode
+      !countryCode ||
+      !minHeightInCm
     ) {
       throw new Error("invalidFields");
     }

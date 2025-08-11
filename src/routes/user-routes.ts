@@ -10,7 +10,7 @@ import {
   setupIntent,
   userMoreInfo,
 } from "src/controllers/auth/auth-controller";
-import { userHome } from "src/controllers/user/home-controller";
+import { userHome, userSearch } from "src/controllers/user/home-controller";
 import {
   applyJobs,
   getJobById,
@@ -80,6 +80,9 @@ paidRouter.route("/portfolio-image").post(addImage).delete(deleteImage);
 // JOBS
 paidRouter.route("/jobs").get(getJobs).post(applyJobs);
 paidRouter.get("/jobs/:id", getJobById);
+
+// SEARCH
+paidRouter.get("/search-user", userSearch)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

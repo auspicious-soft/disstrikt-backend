@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { homeServices } from "src/services/user/user-services";
+import { homeServices, userSearchServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
 import {
   BADREQUEST,
@@ -15,6 +15,25 @@ export const userHome = async (req: Request, res: Response) => {
     req.body.language = userData.language || "en";
     const response = await homeServices.getUserHome({
       userData,
+    });
+    return OK(res, response || {}, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+
+
+//SEARCH CONTROLLER
+export const userSearch = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const response = await userSearchServices.searchUsers({
+      userData,
+      req
     });
     return OK(res, response || {}, req.body.language);
   } catch (err: any) {
