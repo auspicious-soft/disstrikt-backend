@@ -21,6 +21,7 @@ export interface ITask extends Document {
   link?: string;
   count?: number;
   milestone?: number;
+  taskNumber?: number;
   isActive?: boolean;
 }
 
@@ -75,7 +76,20 @@ const TaskSchema = new Schema<ITask>({
   },
   answerType: {
     type: String,
-    enum: ["DOWNLOAD", "UPLOAD", "TEXT", "QUIZ", "CHECKBOX", "DONE"],
+    enum: [
+      "DOWNLOAD-FILE",
+      "VIEW-IMAGE",
+      "VIEW-VIDEO",
+      "VIEW-AUDIO",
+      "UPLOAD-IMAGE",
+      "UPLOAD-FILE",
+      "UPLOAD-VIDEO",
+      "UPLOAD-AUDIO",
+      "TEXT",
+      "QUIZ",
+      "CHECKBOX",
+      "DONE",
+    ],
   },
 
   link: {
@@ -85,6 +99,11 @@ const TaskSchema = new Schema<ITask>({
   count: {
     type: Number,
     default: 0,
+  },
+  taskNumber: {
+    type: Number,
+    autoIncrement: true,
+    default: 1,
   },
   milestone: {
     type: Number,

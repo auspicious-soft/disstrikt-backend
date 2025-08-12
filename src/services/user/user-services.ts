@@ -636,7 +636,11 @@ export const userJobServices = {
 
     const status = await AppliedJobModel.findOne({ userId: id, jobId: jobId });
 
-    return { ...response, type : status? "APPLIED":"NEW", status: status?.status || null};
+    return {
+      ...response,
+      type: status ? "APPLIED" : "NEW",
+      status: status?.status || null,
+    };
   },
 };
 
@@ -649,22 +653,55 @@ export const userSearchServices = {
     const limitNumber = parseInt(limit as string, 10);
     const skip = (pageNumber - 1) * limitNumber;
 
+    let queryPipeline: any[] = [];
+
     const filter: any = {};
 
     if (search) {
-      filter.$or = [
-        { fullName: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
-      ];
+      queryPipeline.push({
+        $match: {
+          $or: [
+            { fullName: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } },
+          ],
+        },
+      });
     } else {
-      filter.country = userData.country;
+      queryPipeline.push(
+        { $match: {} },
+        {
+          $addFields: {
+            priority: {
+              $cond: [{ $eq: ["$country", userData.country] }, 0, 1],
+            },
+          },
+        },
+        { $sort: { priority: 1 } } // Same-country first
+      );
     }
 
-    const response = await UserModel.find(filter)
-      .skip(skip)
-      .limit(limitNumber)
-      .select("_id fullName image country");
-    const total = await UserModel.countDocuments(filter);
+    queryPipeline.push(
+      { $skip: skip },
+      { $limit: limitNumber },
+      {
+        $project: {
+          _id: 1,
+          fullName: 1,
+          image: 1,
+          country: 1,
+        },
+      }
+    );
+
+    const response = await UserModel.aggregate(queryPipeline);
+    const total = search
+      ? await UserModel.countDocuments({
+          $or: [
+            { fullName: { $regex: search, $options: "i" } },
+            { email: { $regex: search, $options: "i" } },
+          ],
+        })
+      : await UserModel.countDocuments({});
 
     //Need to put a logic to find popular users which has completed most tasks later when this is implemented
     //Need to put a logic to find popular users which has completed most tasks later when this is implemented
