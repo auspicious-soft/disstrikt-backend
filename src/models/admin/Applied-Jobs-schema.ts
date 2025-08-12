@@ -17,7 +17,6 @@ const AppliedJobSchema = new Schema<IAppliedJobs>(
       type: Schema.Types.ObjectId,
       ref: "job",
       required: true,
-      unique: true,
     },
     status: {
       type: String,
