@@ -622,9 +622,7 @@ export const userJobServices = {
 
   getJobById: async (payload: any) => {
     const { jobId, language } = payload;
-
     const data = (await JobModel.findById(jobId).lean()) as any;
-
     const response = {
       ...data[language],
       minAge: data.minAge,
