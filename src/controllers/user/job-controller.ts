@@ -38,7 +38,7 @@ export const applyJobs = async (req: Request, res: Response) => {
       language: req.body.language || "en",
       ...userData,
     });
-    return OK(res, response || {}, req.body.language);
+    return OK(res, response || {}, req.body.language, "jobAppliedSuccessfully");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);

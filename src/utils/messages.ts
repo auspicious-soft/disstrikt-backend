@@ -87,7 +87,8 @@ export const customMessages: Record<SupportedLang, any> = {
     profileUpdated:"Profile updated successfully",
     requestAlreadyExist:"Request already exist",
     jobExpired:"Job has expired",
-    invalidGender:"Invalid gender"
+    invalidGender:"Invalid gender",
+    jobAppliedSuccessfully: "Job applied successfully"
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",

@@ -636,7 +636,7 @@ export const userJobServices = {
 
     const status = await AppliedJobModel.findOne({ userId: id, jobId: jobId });
 
-    return { ...response, status: status?.status || null};
+    return { ...response, type : status? "APPLIED":"NEW", status: status?.status || null};
   },
 };
 
