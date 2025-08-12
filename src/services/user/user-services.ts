@@ -619,7 +619,7 @@ export const userJobServices = {
   },
 
   getJobById: async (payload: any) => {
-    const { jobId, language } = payload;
+    const { jobId, language, id } = payload;
     const data = (await JobModel.findById(jobId).lean()) as any;
     const response = {
       ...data[language],
@@ -634,7 +634,9 @@ export const userJobServices = {
       minHeightInCm: data.minHeightInCm,
     };
 
-    return response;
+    const status = await AppliedJobModel.findOne({ userId: id, jobId: jobId });
+
+    return { ...response, status: status?.status || null};
   },
 };
 
