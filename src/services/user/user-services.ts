@@ -2,7 +2,8 @@ import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
-import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
+import { AppliedJobModel } from "src/models/admin/applied-Jobs-schema";
+
 
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
@@ -634,6 +635,7 @@ export const userJobServices = {
       currency: data.currency,
       countryCode: data.countryCode,
       appliedUsers: data.appliedUsers,
+      minHeightInCm: data.minHeightInCm,
     };
 
     return response;
