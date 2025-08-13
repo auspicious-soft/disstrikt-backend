@@ -29,11 +29,11 @@ export const profileServices = {
     const { userData } = payload;
     const userJobs = await AppliedJobModel.find({userId: userData.id}).lean()
 
-    let appliedJobs = 0;
+    let selectedJobs = 0;
 
     for(let i = 0; i<userJobs.length; i++){
       if(userJobs[i].status == "SELECTED"){
-        appliedJobs += 1
+        selectedJobs += 1
       }
     }
 
@@ -46,7 +46,7 @@ export const profileServices = {
       percentage: 0,
       taskCount: 0,
       appliedJobs: userJobs.length || 0,
-      selectedJobs: 0,
+      selectedJobs: selectedJobs,
     };
   },
 
