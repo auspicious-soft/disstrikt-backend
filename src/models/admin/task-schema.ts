@@ -18,7 +18,7 @@ export interface ITask extends Document {
   appReview?: boolean;
   taskType?: string;
   answerType?: string;
-  link?: string;
+  link?: string[];
   count?: number;
   milestone?: number;
   taskNumber?: number;
@@ -55,46 +55,38 @@ const TaskSchema = new Schema<ITask>({
   taskType: {
     type: String,
     enum: [
-      "PROFILE-PIC",
-      "JOB-APPLY",
-      "PORT-BIO",
-      "QUIZ",
-      "PORT-IMAGE",
-      "CALENDLY",
-      "JOB-SELECTED",
-      "PORT-UPDATE",
-      "PORT-INTRO-VIDEO",
+      "JOB_APPLY",
+      "PROFILE_PIC",
+      "PORT_BIO",
+      "LINK",
+      "TEXT",
+      "WATCH_VIDEO",
+      "DOWNLOAD_FILE",
+      "JOB_SELECTED",
+      "CHECK_BOX",
       "UPLOAD",
-      "PORT-MEDIAKIT",
-      "PORT-YOUTUBE",
-      "CHECK-BOX",
-      "LEARN",
-      "DONE",
-      "WRITE-SECTION",
     ],
     default: "DONE",
   },
   answerType: {
     type: String,
     enum: [
-      "DOWNLOAD-FILE",
-      "VIEW-IMAGE",
-      "VIEW-VIDEO",
-      "VIEW-AUDIO",
-      "UPLOAD-IMAGE",
-      "UPLOAD-FILE",
-      "UPLOAD-VIDEO",
-      "UPLOAD-AUDIO",
-      "TEXT",
+      "UPLOAD_IMAGE",
+      "WRITE_SECTION",
       "QUIZ",
-      "CHECKBOX",
+      "UPLOAD_VIDEO",
       "DONE",
+      "CALENDLY",
+      "INPUT",
+      "UPLOAD_FILE",
+      "CHECK_BOX",
+      "PORT_INTRO_VIDEO",
     ],
   },
 
   link: {
-    type: String,
-    default: "",
+    type: Array,
+    default: [],
   },
   count: {
     type: Number,
@@ -103,7 +95,7 @@ const TaskSchema = new Schema<ITask>({
   taskNumber: {
     type: Number,
     autoIncrement: true,
-    default: 1,
+    default: 0,
   },
   milestone: {
     type: Number,

@@ -2,6 +2,7 @@ import { Request } from "express";
 import stripe from "src/config/stripe";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
+import { TaskModel } from "src/models/admin/task-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { TransactionModel } from "src/models/user/transaction-schema";
@@ -679,5 +680,40 @@ export const jobServices = {
         totalPages: Math.ceil(totalJobs / limitNumber),
       },
     };
+  },
+};
+
+export const taskServices = {
+  async createTask(payload: any) {
+    await TaskModel.create({
+      en: {
+        title: "Add a profile picture",
+        description: "",
+        subject: "",
+      },
+      nl: {
+        title: "",
+        description: "",
+        subject: "",
+      },
+      fr: {
+        title: "",
+        description: "",
+        subject: "",
+      },
+      es: {
+        title: "",
+        description: "",
+        subject: "",
+      },
+      appReview: true,
+      taskType: "PROFILE_PIC",
+      answerType: "DONE",
+      link: [],
+      count: 0,
+      taskNumber: 1,
+      isActive: true,
+    });
+    return {};
   },
 };

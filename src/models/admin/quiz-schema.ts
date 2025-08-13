@@ -4,22 +4,22 @@ import { countries } from "src/utils/constant";
 
 // "en", "nl", "fr", "es"
 
-interface TaskData {
+interface QuizData {
   question?: string;
   option_A?: string;
 }
 
-export interface ITask extends Document {
+export interface IQuiz extends Document {
   taskId: mongoose.Types.ObjectId;
-  en?: TaskData;
-  nl?: TaskData;
-  fr?: TaskData;
-  es?: TaskData;
+  en?: QuizData;
+  nl?: QuizData;
+  fr?: QuizData;
+  es?: QuizData;
   answer?: string;
   isActive?: boolean;
 }
 
-const TaskSchema = new Schema<ITask>({
+const QuizSchema = new Schema<IQuiz>({
   taskId: {
     type: Schema.Types.ObjectId,
     ref: "task",
@@ -66,4 +66,4 @@ const TaskSchema = new Schema<ITask>({
   },
 });
 
-export const TaskModel = mongoose.model<ITask>("task", TaskSchema);
+export const QuizModel = mongoose.model<IQuiz>("quiz", QuizSchema);

@@ -1,0 +1,6092 @@
+[
+  {
+    "en": {
+      "title": "Add a profile picture",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "PROFILE_PIC",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 1,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Disstrikt: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 2,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Test: Apply for a job",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 1,
+    "taskNumber": 3,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add a Bio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "PORT_BIO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 4,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn taking measurements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 5,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 6,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Take all your measurements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 7,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add 3 more pictures to your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 8,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 3 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 3,
+    "taskNumber": 9,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Share your portfolio link on your Instagram",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 10,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add @disstrikt in your bio (instagram)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 11,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn about different styles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 12,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Clothing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 13,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make-up & skincare",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 14,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make up & beauty Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 15,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Shoot outfit checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 16,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a lookbook for the shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 17,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule your model bootcamp",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 18,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Bootcamp",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 19,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upgrade your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 20,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Setcard",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 1,
+    "taskNumber": 21,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add your setcard to your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 22,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Write a Trustpilot Review",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 23,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Skill Powerpoint",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 24,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Skill Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 25,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing Tips",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 26,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "3 Poses",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 3,
+    "taskNumber": 27,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 28,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing Quiz (lighting variant)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 29,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing: Send a video of you training your poses at home",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 30,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Post a picture on your social media (book me now)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 31,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 5 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 5,
+    "taskNumber": 32,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Create an extra outfit for your portfolio shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 33,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Portfolio Shoot outfit check",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 34,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make-up + accessories portfolio shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 35,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule Portfolio Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 36,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Portfolio Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 37,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upgrade your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 38,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 5 more jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 10,
+    "taskNumber": 39,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get selected for a job",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 1,
+    "taskNumber": 40,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Styles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 41,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Styles Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 42,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Americas subject top model (episode 1)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 43,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 44,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Preparation order list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 45,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photographer follow list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 46,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a pitch",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 47,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Send the pitch to 5 photographers (25)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 5,
+    "taskNumber": 48,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule the shoot with the photographer",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 49,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the shoot with the photographer in Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 50,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Update your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 51,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Portfolio: Select your talents",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 52,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get selected for 3 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 3,
+    "taskNumber": 53,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Invite friends to join Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 54,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Introduction video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 55,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Introduction Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 56,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Write an introduction script",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 57,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the studio to take the video tapes",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 58,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make the video tapes in the studio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 59,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upload the introduction video to your portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "PORT_INTRO_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 60,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 10 more jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 20,
+    "taskNumber": 61,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Duo shoot (ask a friend)!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 62,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Study together",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 63,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz together",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 64,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Practice together (shoot)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 65,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a clothing and shoot moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 66,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upload bts and other reel ideas",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 67,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule the Duo Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 68,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the Duo shoot inside the studio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 69,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get the Disstrikt Family contract",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 70,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Find and sign as much people who would like to join your journey",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 71,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Information",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 72,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 73,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your mediakit",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 74,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upload your mediakit to your portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 75,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "See how Canva works",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 76,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your own model website via Canva",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 77,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add a Disstrikt blog on your website",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 78,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply to 50 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 50,
+    "taskNumber": 79,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Got accepted for 5 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 5,
+    "taskNumber": 80,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make different mood boards of makeup styles. (video)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 81,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Website color palette (undertones) MIX & MATCH (colorwise.me)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 82,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a mood board with outfits that match your color palette",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 83,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get posted on our socials! Select a picture!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 84,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the studio and make a make-up tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 85,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make the make-up tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 86,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Study editorial poses",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 87,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a video of you posing 50 poses after each other",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 88,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "You got access to the theme shoot! (choose 1 of the 4)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 89,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Moodboard clothing",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 90,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Checklist clothing",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 91,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule the theme shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 92,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the theme shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 93,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add the pictures to your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 94,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Watch videos",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 95,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Read Artricles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 96,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 97,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Netherlands subject top model episode 1",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 98,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "What to do with physical auditions",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 99,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Physical audition Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 100,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule Physical audition test",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 101,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the Physical audition test",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 102,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Read about being a freelancer (business)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 103,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz KVK (pro's and cons)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 104,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule an online meeting with one of our coaches",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 105,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 106,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule your Job Hunting",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 107,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the Job Hunting",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 108,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing info",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 109,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 110,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing follow list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 111,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing Amazon afiliate account",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 112,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a pitch!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 113,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply on affiliate marketing jobs within the program",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 114,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn about making content for brands",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 115,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn about Capcut editing",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 116,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Test your content creation knowledge Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 117,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Test your editing knowledge Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 118,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go and make content in the content creation hub, bring a friend",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 119,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Diet Plan Targets",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 120,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Diet Plan",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 121,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a model health tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 122,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Catwalk information",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 123,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Catwalk Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 124,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Practice your catwalk at home",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 125,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the model gym and practice your model skills",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 126,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Quiz 1",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 127,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Quiz 2",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 128,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Quiz 3",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 129,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 100 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 100,
+    "taskNumber": 130,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Information",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 131,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 132,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Script",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 133,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 134,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Schedule",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 135,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Do",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 136,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: upload",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 137,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Retake and update your measurements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "INPUT",
+    "link": [],
+    "count": 0,
+    "taskNumber": 138,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make connections: MUA follow list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 139,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make connections: MUA Pitch",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 140,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Use the following application/websites to order your feed",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 141,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your own Youtube Channel + add to profile",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 142,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn how to edit your own pictures via FaceApp 1",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 143,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn how to edit your own pictures via FaceApp 2",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 144,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "FaceApp Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 145,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Submit an editted picture",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 146,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "List agencies",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 147,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "List Fashion shows",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 148,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting 2: Schedule",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 149,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting 2: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 150,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting 2: Appointment",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 151,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Search for models on the application",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "",
+    "answerType": "",
+    "link": [],
+    "count": 0,
+    "taskNumber": 152,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Write the 5 names of the models, where you would like to collaborate with.",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 153,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a message which you can send to them via DM",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 154,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make and submit a list of brands/designers where you would to collab with",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 155,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Sit down together and make a photoshoot / content campaign",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 156,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the Disstrikt facilities and make this memorable!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 157,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Update your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "INPUT",
+    "link": [],
+    "count": 0,
+    "taskNumber": 158,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your acting resume",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 159,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Camera Course: Learn about cameras",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 160,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Camera Course: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 161,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video editting: CapCut tutorials",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 162,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video editting: CapCut Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 163,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video editting: CapCut upload test video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 164,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply on 250 jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 250,
+    "taskNumber": 165,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get selected for 10 jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 10,
+    "taskNumber": 166,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for designer brands in the studio rooms",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 167,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Learn how to create fashion (articles)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 168,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Learn how to create fashion (Videos)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 169,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 170,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Physical practice (schedule)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 171,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Personal Branding: Video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 172,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Personal branding: Articles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 173,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Personal Branding: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 174,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Join",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 175,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Invitation",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 176,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Battle 1 (Photo)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 177,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Battle 2 (Catwalk)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 178,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Compeition: Battle 3: (Content Creation)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 179,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Searching: Old school (streetwork)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 180,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Receive a ticket to Wondr (make a reel)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 181,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Attributes (articles)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 182,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Attributes (videos)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 183,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 184,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Content: Share disstrikt journey in a reel",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 185,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Lightroom video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 186,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Lightroom Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 187,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Record testimonials",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 188,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Try on fashion items",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 189,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Unbox products",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 190,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Do voiceovers or explainers",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 191,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 192,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Photoshop basics",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 193,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Photoshop Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 194,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Design: Make your first clothing item (go to the studio)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 195,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Watch: Season 1 of Americas subject top model",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 196,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Watch: ANTM Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 197,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studios: Choose which studio you would like to learn more about (Game/Dance/Sing/CC)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 198,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio: Go to the studio and see what you can do!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 199,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Fashion: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 200,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Pose: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 201,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Editting: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 202,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photography: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 203,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designer: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 204,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Acting Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 205,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video Editting: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 206,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to Spain!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 207,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make travel reels",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 208,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Share your top 3 achievements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 209,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Feedback: What helped for you outside disstrikt?",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 210,
+    "isActive": true
+  }
+]

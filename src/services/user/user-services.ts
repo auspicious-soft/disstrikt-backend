@@ -27,6 +27,16 @@ export const homeServices = {
 export const profileServices = {
   profile: async (payload: any) => {
     const { userData } = payload;
+    const userJobs = await AppliedJobModel.find({userId: userData.id}).lean()
+
+    let appliedJobs = 0;
+
+    for(let i = 0; i<userJobs.length; i++){
+      if(userJobs[i].status == "SELECTED"){
+        appliedJobs += 1
+      }
+    }
+
     return {
       fullName: userData.fullName,
       id: userData.id,
@@ -35,7 +45,7 @@ export const profileServices = {
       milestone: 0,
       percentage: 0,
       taskCount: 0,
-      appliedJobs: 0,
+      appliedJobs: userJobs.length || 0,
       selectedJobs: 0,
     };
   },

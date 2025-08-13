@@ -1,0 +1,6092 @@
+[
+  {
+    "en": {
+      "title": "Add a profile picture",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg een profielfoto toe",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter une photo de profil",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir una foto de perfil",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "PROFILE_PIC",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 1,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Disstrikt: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Disstrikt: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Disstrikt : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Disstrikt: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 2,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Test: Apply for a job",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Test: Solliciteer voor een baan",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Test : Postuler pour un emploi",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Prueba: Solicitar un trabajo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 1,
+    "taskNumber": 3,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add a Bio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg een bio toe",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter une bio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir una bio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "PORT_BIO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 4,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn taking measurements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Leer maten nemen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Apprendre à prendre des mesures",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aprender a tomar medidas",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 5,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 6,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Take all your measurements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Neem al je maten",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Prendre toutes vos mesures",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Tomar todas tus medidas",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 7,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add 3 more pictures to your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg 3 extra foto's toe aan je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter 3 photos supplémentaires à votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir 3 fotos más a tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 8,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 3 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor 3 banen in totaal",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour 3 emplois au total",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 3 trabajos en total",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 3,
+    "taskNumber": 9,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Share your portfolio link on your Instagram",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Deel je portfolio link op je Instagram",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Partager le lien de votre portfolio sur votre Instagram",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Compartir el enlace de tu portfolio en tu Instagram",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 10,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add @disstrikt in your bio (instagram)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg @disstrikt toe aan je bio (instagram)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter @disstrikt dans votre bio (instagram)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir @disstrikt en tu bio (instagram)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 11,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn about different styles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Leer over verschillende stijlen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Apprendre sur différents styles",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aprender sobre diferentes estilos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 12,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Clothing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Kleding Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz sur les vêtements",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de ropa",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 13,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make-up & skincare",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Make-up & huidverzorging",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Maquillage & soins de la peau",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Maquillaje & cuidado de la piel",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 14,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make up & beauty Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Make-up & schoonheidsquiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz maquillage & beauté",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de maquillaje & belleza",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 15,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Shoot outfit checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Shoot outfit checklist",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Checklist tenue de shoot",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Checklist de outfit para shoot",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 16,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a lookbook for the shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een lookbook voor de shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer un lookbook pour le shoot",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un lookbook para el shoot",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 17,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule your model bootcamp",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan je model bootcamp",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer votre bootcamp de mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar tu bootcamp de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 18,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Bootcamp",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Bootcamp",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Bootcamp de mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Bootcamp de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 19,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upgrade your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Upgrade je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Mettre à niveau votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Actualizar tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 20,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Setcard",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je setcard",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer votre setcard",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tu setcard",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 1,
+    "taskNumber": 21,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add your setcard to your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg je setcard toe aan je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter votre setcard à votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir tu setcard a tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 22,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Write a Trustpilot Review",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Schrijf een Trustpilot Review",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Écrire un avis Trustpilot",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Escribir una reseña en Trustpilot",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 23,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Skill Powerpoint",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Vaardigheden Powerpoint",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Powerpoint compétences de mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Powerpoint de habilidades de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 24,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Skill Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Vaardigheden Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz compétences de mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de habilidades de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 25,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing Tips",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Posing Tips",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Conseils de posing",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Consejos de posing",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 26,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "3 Poses",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "3 Poses",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "3 Poses",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "3 Poses",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 3,
+    "taskNumber": 27,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Posing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz de posing",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de posing",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 28,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing Quiz (lighting variant)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Posing Quiz (verlichtingsvariant)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz de posing (variante éclairage)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de posing (variante de iluminación)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 29,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Posing: Send a video of you training your poses at home",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Posing: Stuur een video van jezelf die je poses thuis traint",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Posing : Envoyer une vidéo de vous entraînant vos poses à la maison",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Posing: Envía un video de ti entrenando tus poses en casa",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 30,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Post a picture on your social media (book me now)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Post een foto op je sociale media (book me now)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Publier une photo sur vos réseaux sociaux (book me now)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Publicar una foto en tus redes sociales (book me now)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 31,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 5 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor 5 banen in totaal",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour 5 emplois au total",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 5 trabajos en total",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 5,
+    "taskNumber": 32,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Create an extra outfit for your portfolio shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Creëer een extra outfit voor je portfolio shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer une tenue supplémentaire pour votre shoot portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Crear un outfit extra para tu shoot de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 33,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Portfolio Shoot outfit check",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Portfolio Shoot outfit check",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Vérification tenue shoot portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Comprobación de outfit para shoot de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 34,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make-up + accessories portfolio shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Make-up + accessoires portfolio shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Maquillage + accessoires shoot portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Maquillaje + accesorios shoot de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 35,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule Portfolio Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan Portfolio Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer shoot portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar shoot de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 36,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Portfolio Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Portfolio Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Shoot portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Shoot de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 37,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upgrade your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Upgrade je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Mettre à niveau votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Actualizar tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 38,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 5 more jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor 5 extra banen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour 5 emplois supplémentaires",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 5 trabajos más",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 10,
+    "taskNumber": 39,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get selected for a job",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Word geselecteerd voor een baan",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Être sélectionné pour un emploi",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ser seleccionado para un trabajo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 1,
+    "taskNumber": 40,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Styles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Stijlen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Styles",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Estilos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 41,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Styles Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Stijlen Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz styles",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de estilos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 42,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Americas subject top model (episode 1)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "America's Next Top Model (aflevering 1)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "America's Next Top Model (épisode 1)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "America's Next Top Model (episodio 1)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 43,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 44,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Preparation order list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voorbereidingsvolgorde lijst",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Liste d'ordre de préparation",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Lista de orden de preparación",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 45,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photographer follow list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Fotograaf volg lijst",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Liste de suivi photographe",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Lista de seguimiento de fotógrafos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 46,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a pitch",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een pitch",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire un pitch",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un pitch",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 47,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Send the pitch to 5 photographers (25)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Stuur de pitch naar 5 fotografen (25)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Envoyer le pitch à 5 photographes (25)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Enviar el pitch a 5 fotógrafos (25)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 5,
+    "taskNumber": 48,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule the shoot with the photographer",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan de shoot met de fotograaf",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer le shoot avec le photographe",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar el shoot con el fotógrafo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 49,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the shoot with the photographer in Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Doe de shoot met de fotograaf in Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire le shoot avec le photographe dans Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer el shoot con el fotógrafo en Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 50,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Update your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Update je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Mettre à jour votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Actualizar tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 51,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Portfolio: Select your talents",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Portfolio: Selecteer je talenten",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Portfolio : Sélectionnez vos talents",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Portfolio: Selecciona tus talentos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 52,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get selected for 3 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Word geselecteerd voor 3 banen in totaal",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Être sélectionné pour 3 emplois au total",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ser seleccionado para 3 trabajos en total",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 3,
+    "taskNumber": 53,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Invite friends to join Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Nodig vrienden uit om lid te worden van Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Inviter des amis à rejoindre Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Invitar amigos a unirse a Disstrikt",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 54,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Introduction video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Introductievideo",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Vidéo d'introduction",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Video de introducción",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 55,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Introduction Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Introductie Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz d'introduction",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de introducción",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 56,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Write an introduction script",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Schrijf een introductiescript",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Écrire un script d'introduction",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Escribir un script de introducción",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 57,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the studio to take the video tapes",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga naar de studio om de video-opnames te maken",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Aller au studio pour prendre les vidéos",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ir al estudio para tomar las cintas de video",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 58,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make the video tapes in the studio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak de video-opnames in de studio",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire les vidéos dans le studio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer las cintas de video en el estudio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 59,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upload the introduction video to your portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Upload de introductievideo naar je portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Télécharger la vidéo d'introduction dans votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Subir el video de introducción a tu portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "PORT_INTRO_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 60,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 10 more jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor 10 extra banen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour 10 emplois supplémentaires",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 10 trabajos más",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 20,
+    "taskNumber": 61,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Duo shoot (ask a friend)!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Duo shoot (vraag een vriend)!",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Shoot duo (demandez à un ami)!",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Shoot duo (¡pregunta a un amigo)!",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 62,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Study together",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Samen studeren",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Étudier ensemble",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Estudiar juntos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 63,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz together",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Quiz samen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz ensemble",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz juntos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 64,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Practice together (shoot)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Oefen samen (shoot)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Pratiquer ensemble (shoot)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Practicar juntos (shoot)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 65,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a clothing and shoot moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een kleding en shoot moodboard",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer un moodboard vêtements et shoot",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un moodboard de ropa y shoot",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 66,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upload bts and other reel ideas",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Upload BTS en andere reel ideeën",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Télécharger BTS et autres idées de reel",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Subir BTS y otras ideas de reel",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 67,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule the Duo Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan de Duo Shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer le shoot duo",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar el shoot duo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 68,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the Duo shoot inside the studio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Doe de Duo shoot in de studio",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire le shoot duo dans le studio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer el shoot duo dentro del estudio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 69,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get the Disstrikt Family contract",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Krijg het Disstrikt Family contract",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Obtenir le contrat Disstrikt Family",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Obtener el contrato Disstrikt Family",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 70,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Find and sign as much people who would like to join your journey",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Vind en teken zoveel mensen die mee willen doen aan je reis",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Trouver et signer autant de personnes qui veulent rejoindre votre voyage",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Encontrar y firmar a tantas personas que quieran unirse a tu viaje",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 71,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Information",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Informatie",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Information",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Información",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 72,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 73,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your mediakit",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je mediakit",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer votre mediakit",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tu mediakit",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 74,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Upload your mediakit to your portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Upload je mediakit naar je portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Télécharger votre mediakit dans votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Subir tu mediakit a tu portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 75,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "See how Canva works",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Bekijk hoe Canva werkt",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Voir comment Canva fonctionne",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ver cómo funciona Canva",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 76,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your own model website via Canva",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je eigen model website via Canva",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer votre propre site web de mannequin via Canva",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tu propio sitio web de modelo vía Canva",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 77,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add a Disstrikt blog on your website",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg een Disstrikt blog toe op je website",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter un blog Disstrikt sur votre site web",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir un blog de Disstrikt en tu sitio web",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 78,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply to 50 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor 50 banen in totaal",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour 50 emplois au total",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 50 trabajos en total",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 50,
+    "taskNumber": 79,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Got accepted for 5 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Geaccepteerd voor 5 banen in totaal",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Accepté pour 5 emplois au total",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aceptado para 5 trabajos en total",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 5,
+    "taskNumber": 80,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make different mood boards of makeup styles. (video)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak verschillende moodboards van make-up stijlen. (video)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer différents moodboards de styles de maquillage. (vidéo)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer diferentes moodboards de estilos de maquillaje. (video)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 81,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Website color palette (undertones) MIX & MATCH (colorwise.me)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Website kleurenpalet (ondertonen) MIX & MATCH (colorwise.me)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Palette de couleurs du site web (sous-tons) MIX & MATCH (colorwise.me)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Paleta de colores del sitio web (subtonos) MIX & MATCH (colorwise.me)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 82,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a mood board with outfits that match your color palette",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een moodboard met outfits die bij je kleurenpalet passen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer un moodboard avec des tenues qui correspondent à votre palette de couleurs",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un moodboard con outfits que coincidan con tu paleta de colores",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 83,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get posted on our socials! Select a picture!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Word gepost op onze socials! Selecteer een foto!",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Soyez posté sur nos réseaux sociaux ! Sélectionnez une photo !",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "¡Sé publicado en nuestras redes sociales! ¡Selecciona una foto!",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 84,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the studio and make a make-up tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga naar de studio en maak een make-up tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Aller au studio et faire un tutoriel maquillage",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ir al estudio y hacer un tutorial de maquillaje",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 85,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make the make-up tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak de make-up tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire le tutoriel maquillage",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer el tutorial de maquillaje",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 86,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Study editorial poses",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Bestudeer editorial poses",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Étudier les poses éditoriales",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Estudiar poses editoriales",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 87,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a video of you posing 50 poses after each other",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een video van jezelf die 50 poses achter elkaar doet",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire une vidéo de vous posant 50 poses l'une après l'autre",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un video de ti posando 50 poses una tras otra",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 88,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "You got access to the theme shoot! (choose 1 of the 4)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Je hebt toegang tot de theme shoot! (kies 1 van de 4)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Vous avez accès au shoot thématique ! (choisissez 1 sur 4)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "¡Tienes acceso al shoot temático! (elige 1 de 4)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 89,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Moodboard clothing",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Moodboard kleding",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Moodboard vêtements",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Moodboard ropa",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 90,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Checklist clothing",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Checklist kleding",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Checklist vêtements",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Checklist ropa",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 91,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule the theme shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan de theme shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer le shoot thématique",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar el shoot temático",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 92,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the theme shoot",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Doe de theme shoot",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire le shoot thématique",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer el shoot temático",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 93,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Add the pictures to your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Voeg de foto's toe aan je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Ajouter les photos à votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Añadir las fotos a tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "UPLOAD",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 94,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Watch videos",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Bekijk video's",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Regarder des vidéos",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ver videos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 95,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Read Artricles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Lees artikelen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Lire des articles",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Leer artículos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 96,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 97,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Netherlands subject top model episode 1",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Netherlands Next Top Model aflevering 1",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Netherlands Next Top Model épisode 1",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Netherlands Next Top Model episodio 1",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 98,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "What to do with physical auditions",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Wat te doen met fysieke audities",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Que faire avec les auditions physiques",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Qué hacer con audiciones físicas",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 99,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Physical audition Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Fysieke auditie Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz audition physique",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de audición física",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 100,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule Physical audition test",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan fysieke auditie test",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer test d'audition physique",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar prueba de audición física",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 101,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the Physical audition test",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Doe de fysieke auditie test",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire le test d'audition physique",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer la prueba de audición física",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 102,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Read about being a freelancer (business)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Lees over freelancer zijn (business)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Lire sur être freelance (business)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Leer sobre ser freelancer (negocios)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 103,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Quiz KVK (pro's and cons)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Quiz KVK (voor- en nadelen)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz KVK (avantages et inconvénients)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz KVK (pros y contras)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 104,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule an online meeting with one of our coaches",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan een online meeting met een van onze coaches",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer une réunion en ligne avec l'un de nos coaches",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar una reunión en línea con uno de nuestros coaches",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 105,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Job Hunting checklist",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Checklist chasse à l'emploi",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Checklist de caza de empleo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 106,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Schedule your Job Hunting",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Plan je Job Hunting",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Programmer votre chasse à l'emploi",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Programar tu caza de empleo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CALENDLY",
+    "answerType": "CALENDLY",
+    "link": [],
+    "count": 0,
+    "taskNumber": 107,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Do the Job Hunting",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Doe de Job Hunting",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire la chasse à l'emploi",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer la caza de empleo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 108,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing info",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Affiliate marketing info",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Info marketing d'affiliation",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Info de marketing de afiliados",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 109,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Affiliate marketing Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz marketing d'affiliation",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de marketing de afiliados",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 110,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing follow list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Affiliate marketing volg lijst",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Liste de suivi marketing d'affiliation",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Lista de seguimiento de marketing de afiliados",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 111,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Affiliate marketing Amazon afiliate account",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Affiliate marketing Amazon affiliate account",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Marketing d'affiliation compte Amazon affiliate",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Marketing de afiliados cuenta Amazon affiliate",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 112,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a pitch!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een pitch!",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire un pitch !",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "¡Hacer un pitch!",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 113,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply on affiliate marketing jobs within the program",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer op affiliate marketing banen binnen het programma",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler à des emplois de marketing d'affiliation au sein du programme",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar trabajos de marketing de afiliados dentro del programa",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 114,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn about making content for brands",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Leer over het maken van content voor merken",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Apprendre à créer du contenu pour les marques",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aprender sobre crear contenido para marcas",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 115,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn about Capcut editing",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Leer over Capcut editing",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Apprendre sur l'édition Capcut",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aprender sobre edición Capcut",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 116,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Test your content creation knowledge Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Test je kennis over contentcreatie Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Testez vos connaissances en création de contenu Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Prueba tu conocimiento de creación de contenido Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 117,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Test your editing knowledge Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Test je editing kennis Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Testez vos connaissances en édition Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Prueba tu conocimiento de edición Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 118,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go and make content in the content creation hub, bring a friend",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga content maken in de content creation hub, neem een vriend mee",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Allez créer du contenu dans le hub de création de contenu, amenez un ami",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ve y crea contenido en el hub de creación de contenido, trae a un amigo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 119,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Diet Plan Targets",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Dieet Plan Doelen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Objectifs du plan diététique mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Objetivos del plan de dieta de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 120,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Diet Plan",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Dieet Plan",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Plan diététique mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Plan de dieta de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 121,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a model health tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een model gezondheid tutorial",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer un tutoriel santé mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un tutorial de salud de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 122,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Catwalk information",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Catwalk informatie",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Information défilé",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Información de pasarela",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 123,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Catwalk Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Catwalk Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz défilé",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de pasarela",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 124,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Practice your catwalk at home",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Oefen je catwalk thuis",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Pratiquer votre défilé à la maison",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Practicar tu pasarela en casa",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 125,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the model gym and practice your model skills",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga naar de model gym en oefen je model vaardigheden",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Aller à la gym mannequin et pratiquer vos compétences de mannequin",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ir al gym de modelos y practicar tus habilidades de modelo",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 126,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Quiz 1",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Quiz 1",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz mannequin 1",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de modelo 1",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 127,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Quiz 2",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Quiz 2",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz mannequin 2",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de modelo 2",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 128,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Quiz 3",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Quiz 3",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz mannequin 3",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de modelo 3",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 129,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for 100 jobs in total",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor 100 banen in totaal",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour 100 emplois au total",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 100 trabajos en total",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 100,
+    "taskNumber": 130,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Information",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: Informatie",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : Information",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: Información",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 131,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 132,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Script",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: Script",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : Script",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: Script",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 133,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 134,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Schedule",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: Schema",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : Planning",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: Horario",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 135,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: Do",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: Doen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : Faire",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: Hacer",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 136,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your Showreels: upload",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je Showreels: upload",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer vos Showreels : téléchargement",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tus Showreels: subir",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 137,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Retake and update your measurements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Herneem en update je maten",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Reprendre et mettre à jour vos mesures",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Volver a tomar y actualizar tus medidas",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "INPUT",
+    "link": [],
+    "count": 0,
+    "taskNumber": 138,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make connections: MUA follow list",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak verbindingen: MUA volg lijst",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire des connexions : Liste de suivi MUA",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer conexiones: Lista de seguimiento MUA",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 139,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make connections: MUA Pitch",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak verbindingen: MUA Pitch",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Faire des connexions : Pitch MUA",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer conexiones: Pitch MUA",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 140,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Use the following application/websites to order your feed",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Gebruik de volgende applicatie/websites om je feed te ordenen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Utiliser les applications/sites web suivants pour ordonner votre feed",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Usar las siguientes aplicaciones/sitios web para ordenar tu feed",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "LINK",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 141,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your own Youtube Channel + add to profile",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je eigen YouTube-kanaal + voeg toe aan profiel",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer votre propre chaîne YouTube + ajouter au profil",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tu propio canal de YouTube + añadir al perfil",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 142,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn how to edit your own pictures via FaceApp 1",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Leer hoe je je eigen foto's kunt bewerken via FaceApp 1",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Apprendre à éditer vos propres photos via FaceApp 1",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aprender a editar tus propias fotos vía FaceApp 1",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 143,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Learn how to edit your own pictures via FaceApp 2",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Leer hoe je je eigen foto's kunt bewerken via FaceApp 2",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Apprendre à éditer vos propres photos via FaceApp 2",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Aprender a editar tus propias fotos vía FaceApp 2",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 144,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "FaceApp Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "FaceApp Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz FaceApp",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz FaceApp",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 145,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Submit an editted picture",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Dien een bewerkte foto in",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Soumettre une photo éditée",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Enviar una foto editada",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 146,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "List agencies",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Lijst bureaus",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Lister les agences",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Listar agencias",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 147,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "List Fashion shows",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Lijst modeshows",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Lister les défilés de mode",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Listar desfiles de moda",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 148,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting 2: Schedule",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Job Hunting 2: Schema",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Chasse à l'emploi 2 : Planning",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Caza de empleo 2: Horario",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 149,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting 2: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Job Hunting 2: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Chasse à l'emploi 2 : Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Caza de empleo 2: Checklist",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "CHECK_BOX",
+    "answerType": "CHECK_BOX",
+    "link": [],
+    "count": 0,
+    "taskNumber": 150,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Hunting 2: Appointment",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Job Hunting 2: Afspraak",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Chasse à l'emploi 2 : Rendez-vous",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Caza de empleo 2: Cita",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 151,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Search for models on the application",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Zoek naar modellen op de applicatie",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Rechercher des mannequins sur l'application",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Buscar modelos en la aplicación",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "",
+    "answerType": "",
+    "link": [],
+    "count": 0,
+    "taskNumber": 152,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Write the 5 names of the models, where you would like to collaborate with.",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Schrijf de 5 namen van de modellen waarmee je wilt samenwerken.",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Écrire les 5 noms des mannequins avec qui vous souhaitez collaborer.",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Escribe los 5 nombres de los modelos con los que te gustaría colaborar.",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 153,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make a message which you can send to them via DM",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak een bericht dat je naar hen kunt sturen via DM",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer un message que vous pouvez leur envoyer via DM",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer un mensaje que puedas enviarles vía DM",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 154,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make and submit a list of brands/designers where you would to collab with",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak en dien een lijst in van merken/ontwerpers waarmee je wilt samenwerken",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer et soumettre une liste de marques/designers avec qui vous souhaitez collaborer",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer y enviar una lista de marcas/diseñadores con los que te gustaría colaborar",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 155,
+    "isActive": true
+  },
+  {
+    "en": {
+     "title": "Sit down together and make a photoshoot / content campaign",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga samen zitten en maak een photoshoot / content campagne",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Asseyez-vous ensemble et faites un photoshoot / campagne de contenu",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Sentarse juntos y hacer un photoshoot / campaña de contenido",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 156,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to the Disstrikt facilities and make this memorable!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga naar de Disstrikt faciliteiten en maak dit memorabel!",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Aller aux installations Disstrikt et rendre cela mémorable !",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ir a las instalaciones de Disstrikt y hacer esto memorable!",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 157,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Update your portfolio book",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Update je portfolio boek",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Mettre à jour votre portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Actualizar tu libro de portfolio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "INPUT",
+    "link": [],
+    "count": 0,
+    "taskNumber": 158,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make your acting resume",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak je acteer cv",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer votre CV d'acteur",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer tu currículum de actuación",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_FILE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 159,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Camera Course: Learn about cameras",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Cameracursus: Leer over camera's",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Cours caméra : Apprendre sur les caméras",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Curso de cámara: Aprender sobre cámaras",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 160,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Camera Course: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Cameracursus: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Cours caméra : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Curso de cámara: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 161,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video editting: CapCut tutorials",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Video-editing: CapCut tutorials",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Montage vidéo : Tutoriels CapCut",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de video: Tutoriales CapCut",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 162,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video editting: CapCut Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Video-editing: CapCut Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Montage vidéo : Quiz CapCut",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de video: Quiz CapCut",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 163,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video editting: CapCut upload test video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Video-editing: CapCut upload testvideo",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Montage vidéo : Télécharger vidéo test CapCut",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de video: Subir video de prueba CapCut",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 164,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply on 250 jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer op 250 banen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler à 250 emplois",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar 250 trabajos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_APPLY",
+    "answerType": "DONE",
+    "link": [],
+    "count": 250,
+    "taskNumber": 165,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Get selected for 10 jobs",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Word geselecteerd voor 10 banen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Être sélectionné pour 10 emplois",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ser seleccionado para 10 trabajos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "JOB_SELECTED",
+    "answerType": "DONE",
+    "link": [],
+    "count": 10,
+    "taskNumber": 166,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Apply for designer brands in the studio rooms",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Solliciteer voor designer merken in de studio rooms",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Postuler pour des marques de designers dans les salles de studio",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Solicitar marcas de diseñadores en las salas de estudio",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 167,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Learn how to create fashion (articles)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ontwerpen: Leer hoe je mode creëert (artikelen)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Designs : Apprendre à créer de la mode (articles)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Diseños: Aprender a crear moda (artículos)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 168,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Learn how to create fashion (Videos)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ontwerpen: Leer hoe je mode creëert (Video's)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Designs : Apprendre à créer de la mode (Vidéos)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Diseños: Aprender a crear moda (Videos)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 169,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ontwerpen: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Designs : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Diseños: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 170,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designs: Physical practice (schedule)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ontwerpen: Fysieke oefening (schema)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Designs : Pratique physique (planning)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Diseños: Práctica física (horario)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 171,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Personal Branding: Video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Persoonlijke Branding: Video",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Branding personnel : Vidéo",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Branding personal: Video",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 172,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Personal branding: Articles",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Persoonlijke branding: Artikelen",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Branding personnel : Articles",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Branding personal: Artículos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 173,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Personal Branding: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Persoonlijke Branding: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Branding personnel : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Branding personal: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 174,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Join",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Competitie: Doe mee",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Compétition mannequin : Rejoindre",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Competición de modelos: Unirse",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 175,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Invitation",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Competitie: Uitnodiging",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Compétition mannequin : Invitation",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Competición de modelos: Invitación",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "DOWNLOAD_FILE",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 176,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Battle 1 (Photo)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Competitie: Battle 1 (Foto)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Compétition mannequin : Battle 1 (Photo)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Competición de modelos: Batalla 1 (Foto)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_IMAGE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 177,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Competition: Battle 2 (Catwalk)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Competitie: Battle 2 (Catwalk)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Compétition mannequin : Battle 2 (Défilé)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Competición de modelos: Batalla 2 (Pasarela)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 178,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Model Compeition: Battle 3: (Content Creation)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Model Competitie: Battle 3 (Content Creatie)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Compétition mannequin : Battle 3 (Création de contenu)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Competición de modelos: Batalla 3 (Creación de contenido)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 179,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Job Searching: Old school (streetwork)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Banen zoeken: Oude school (straatwerk)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Recherche d'emploi : Vieille école (travail de rue)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Búsqueda de empleo: Vieja escuela (trabajo callejero)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 180,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Receive a ticket to Wondr (make a reel)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ontvang een ticket voor Wondr (maak een reel)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Recevoir un ticket pour Wondr (faire un reel)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Recibir un ticket para Wondr (hacer un reel)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 181,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Attributes (articles)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Studio kennis: Attributen (artikelen)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Connaissances studio : Attributs (articles)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Conocimiento de estudio: Atributos (artículos)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 182,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Attributes (videos)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Studio kennis: Attributen (video's)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Connaissances studio : Attributs (vidéos)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Conocimiento de estudio: Atributos (videos)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 183,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Studio kennis: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Connaissances studio : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Conocimiento de estudio: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 184,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Content: Share disstrikt journey in a reel",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Content: Deel disstrikt reis in een reel",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Contenu : Partager le voyage disstrikt dans un reel",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Contenido: Compartir el viaje disstrikt en un reel",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 185,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Lightroom video",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Foto-editing: Lightroom video",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Édition photo : Vidéo Lightroom",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de foto: Video Lightroom",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 186,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Lightroom Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Foto-editing: Lightroom Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Édition photo : Quiz Lightroom",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de foto: Quiz Lightroom",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 187,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Record testimonials",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "UGC: Neem testimonials op",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "UGC : Enregistrer des témoignages",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "UGC: Grabar testimonios",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 188,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Try on fashion items",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "UGC: Pas mode-items aan",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "UGC : Essayer des articles de mode",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "UGC: Probar artículos de moda",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 189,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Unbox products",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "UGC: Unbox producten",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "UGC : Déballer des produits",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "UGC: Desempaquetar productos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 190,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Do voiceovers or explainers",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "UGC: Doe voice-overs of explainers",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "UGC : Faire des voiceovers ou des explainers",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "UGC: Hacer voiceovers o explainers",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 191,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "UGC: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "UGC: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "UGC : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "UGC: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 192,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Photoshop basics",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Foto-editing: Photoshop basis",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Édition photo : Bases Photoshop",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de foto: Básicos de Photoshop",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 193,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photo editting: Photoshop Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Foto-editing: Photoshop Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Édition photo : Quiz Photoshop",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de foto: Quiz Photoshop",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 194,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Design: Make your first clothing item (go to the studio)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ontwerp: Maak je eerste kledingstuk (ga naar de studio)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Design : Créer votre premier article de vêtement (aller au studio)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Diseño: Hacer tu primer artículo de ropa (ir al estudio)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 195,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Watch: Season 1 of Americas subject top model",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Bekijk: Seizoen 1 van America's Next Top Model",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Regarder : Saison 1 d'America's Next Top Model",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ver: Temporada 1 de America's Next Top Model",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 196,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Watch: ANTM Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Bekijk: ANTM Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Regarder : Quiz ANTM",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Ver: Quiz ANTM",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 197,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studios: Choose which studio you would like to learn more about (Game/Dance/Sing/CC)",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Studios: Kies welke studio je meer over wilt leren (Game/Dans/Zingen/CC)",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Studios : Choisissez le studio sur lequel vous souhaitez en savoir plus (Jeu/Danse/Chant/CC)",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Estudios: Elige qué estudio te gustaría aprender más (Juego/Baile/Canto/CC)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 198,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Studio: Go to the studio and see what you can do!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Studio: Ga naar de studio en zie wat je kunt doen!",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Studio : Aller au studio et voir ce que vous pouvez faire !",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Estudio: ¡Ve al estudio y ve qué puedes hacer!",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 199,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Fashion: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Mode: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Mode : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Moda: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 200,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Pose: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Pose: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Pose : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Pose: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 201,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Editting: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Editing: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Édition : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 202,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Photography: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Fotografie: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Photographie : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Fotografía: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 203,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Designer: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Designer: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Designer : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Diseñador: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 204,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Acting Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Acteer Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Quiz d'acting",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Quiz de actuación",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 205,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Video Editting: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Video Editing: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Montage vidéo : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Edición de video: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 206,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Go to Spain!",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Ga naar Spanje!",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Aller en Espagne !",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "¡Ir a España!",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 207,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Make travel reels",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Maak reis reels",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Créer des reels de voyage",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Hacer reels de viaje",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
+    "link": [],
+    "count": 0,
+    "taskNumber": 208,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Share your top 3 achievements",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Deel je top 3 prestaties",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Partager vos 3 meilleures réalisations",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Compartir tus 3 mejores logros",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 209,
+    "isActive": true
+  },
+  {
+    "en": {
+      "title": "Feedback: What helped for you outside disstrikt?",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Feedback: Wat heeft je geholpen buiten disstrikt?",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Feedback : Qu'est-ce qui vous a aidé en dehors de disstrikt ?",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Feedback: ¿Qué te ayudó fuera de disstrikt?",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 210,
+    "isActive": true
+  }
+]
