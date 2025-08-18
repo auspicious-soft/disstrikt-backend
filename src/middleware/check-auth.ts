@@ -56,6 +56,7 @@ export const checkUserAuth = async (
       language: checkToken.userId?.language,
       phone: checkToken.userId?.phone,
       gender: moreInfo?.gender,
+      currentMilestone: checkToken?.userId?.currentMilestone
     };
 
     //********************************

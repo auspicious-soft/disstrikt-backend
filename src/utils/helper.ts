@@ -50,6 +50,7 @@ export async function generateToken(user: IUser) {
     language: user.language,
     countryCode: user.countryCode,
     authType: user.authType,
+    currentMilestone: user.currentMilestone
   };
 
   const token = jwt.sign(tokenPayload, process.env.AUTH_SECRET as string, {

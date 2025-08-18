@@ -23,6 +23,7 @@ export interface IUser extends Document {
   stripeCustomerId?: string;
   isCardSetupComplete?: boolean;
   hasUsedTrial?: boolean;
+  currentMilestone?: number;
 }
 
 const userSchema = new Schema<IUser>(
@@ -120,6 +121,10 @@ const userSchema = new Schema<IUser>(
     hasUsedTrial: {
       type: Boolean,
       default: false,
+    },
+    currentMilestone: {
+      type: Number,
+      default: 1,
     },
   },
   { timestamps: true }

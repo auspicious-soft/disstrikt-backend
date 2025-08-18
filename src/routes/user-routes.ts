@@ -10,7 +10,12 @@ import {
   setupIntent,
   userMoreInfo,
 } from "src/controllers/auth/auth-controller";
-import { userHome, userSearch } from "src/controllers/user/home-controller";
+import {
+  getTaskById,
+  submitTaskById,
+  userHome,
+  userSearch,
+} from "src/controllers/user/home-controller";
 import {
   applyJobs,
   getJobById,
@@ -55,6 +60,7 @@ paidRouter.post("/upload", multerUpload, uploadToS3);
 
 // HOME
 paidRouter.get("/home", userHome);
+paidRouter.route("/taskById/:id").get(getTaskById).post(submitTaskById);
 
 // PROFILE
 paidRouter.get("/profile", userProfile);
@@ -82,7 +88,7 @@ paidRouter.route("/jobs").get(getJobs).post(applyJobs);
 paidRouter.get("/jobs/:id", getJobById);
 
 // SEARCH
-paidRouter.get("/search-user", userSearch)
+paidRouter.get("/search-user", userSearch);
 
 //============================== ADMIN Routes
 export { router, paidRouter };

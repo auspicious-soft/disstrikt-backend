@@ -5,6 +5,9 @@ import stripe from "src/config/stripe";
 import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
+import { QuizModel } from "src/models/admin/quiz-schema";
+import { TaskResponse } from "src/models/admin/task-response";
+import { TaskModel } from "src/models/admin/task-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
@@ -14,26 +17,232 @@ import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
 configDotenv();
 
 export const homeServices = {
+  
   getUserHome: async (payload: any) => {
+    const { language, id, currentMilestone = 1 } = payload.userData;
+    const { page = 1, limit = 10 } = payload; // 👈 pagination inputs
+
+    const plan = await planModel
+      .findById(payload.userData.subscription.planId)
+      .lean();
+
+    console.log(plan?.fullAccess?.tasks);
+
+    const skip = (page - 1) * limit;
+
+    const result = await TaskModel.aggregate([
+      {
+        $match: {
+          taskNumber: { $lte: plan?.fullAccess?.tasks },
+          isActive: true,
+        },
+      },
+      {
+        $lookup: {
+          from: "taskresponses", // 👈 collection name for TaskResponse
+          let: { taskNumber: "$taskNumber", milestone: "$milestone" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$userId", new mongoose.Types.ObjectId(id)] },
+                    { $eq: ["$taskNumber", "$$taskNumber"] },
+                    { $eq: ["$milestone", "$$milestone"] },
+                    { $eq: ["$taskReviewed", true] },
+                  ],
+                },
+              },
+            },
+            { $limit: 1 }, // only need one matching response
+          ],
+          as: "response",
+        },
+      },
+      {
+        $addFields: {
+          rating: { $ifNull: [{ $arrayElemAt: ["$response.rating", 0] }, 0] },
+          attempted: { $gt: [{ $size: "$response" }, 0] }, // 👈 true if response exists
+        },
+      },
+      {
+        $project: {
+          taskType: 1,
+          answerType: 1,
+          taskNumber: 1,
+          milestone: 1,
+          attempted: 1,
+          title: `$${language}.title`,
+          rating: 1,
+        },
+      },
+      { $sort: { taskNumber: 1 } },
+      {
+        $facet: {
+          tasks: [{ $skip: skip }, { $limit: limit }],
+          meta: [{ $count: "total" }],
+        },
+      },
+    ]);
+
+    const tasks = result[0]?.tasks || [];
+    const total = result[0]?.meta[0]?.total || 0;
+
+    const percentage =
+      total > 0
+        ? ((await TaskResponse.countDocuments({
+            userId: id,
+            milestone: { $lte: currentMilestone },
+            taskReviewed: true,
+          })) /
+            total) *
+          100
+        : 0;
+
     return {
       plan: payload.userData.subscription.planName || null,
-      milestone: 0,
-      percentage: 0,
-      tasks: [],
+      milestone: currentMilestone,
+      percentage: Number(percentage.toFixed(1)),
+      tasks,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
     };
+  },
+
+  getTaskById: async (payload: any) => {
+    const { taskId, userData } = payload;
+
+    const task = (await TaskModel.findById(taskId)
+      .select(
+        `${userData.language} taskType answerType link taskNumber milestone`
+      )
+      .lean()) as any;
+
+    if (!task) {
+      throw new Error("taskNotFound");
+    }
+
+    let response = {
+      ...task,
+      ...task[userData.language],
+    };
+
+    if (task.taskType === "QUIZ") {
+      const quizData = await QuizModel.aggregate([
+        {
+          $match: { taskId: new mongoose.Types.ObjectId(taskId) },
+        },
+        {
+          $project: {
+            taskId: 1,
+            questionNumber: 1,
+            question: `$en.question`,
+            option_A: `$en.option_A`,
+            option_B: `$en.option_B`,
+            option_C: `$en.option_C`,
+            option_D: `$en.option_D`,
+          },
+        },
+        {
+          $sort: { questionNumber: 1 },
+        },
+      ]);
+      response["quiz"] = quizData;
+    }
+
+    delete response[userData.language];
+
+    return response;
+  },
+
+  submitTaskById: async (payload: any) => {
+    const { taskId, userData, body } = payload;
+
+    const taskData = await TaskModel.findById(taskId).lean();
+
+    let checkResponse = await TaskResponse.findOne({
+      userId: userData.id,
+      taskId: taskId,
+    });
+
+    if (checkResponse) {
+      throw new Error("taskAlreadySubmitted");
+    }
+
+    let finalQuiz = [] as any;
+    let rating = 0;
+
+    if (taskData?.appReview) {
+      if (taskData?.taskType === "QUIZ") {
+        const quizData = await QuizModel.find({ taskId }).lean();
+
+        const quiz = body.quiz.map((data: any) => {
+          const checkFrom = quizData.find((val: any) => val._id == data.quizId);
+          if (data.answer == checkFrom?.answer) {
+            return { ...data, isCorrect: true };
+          } else {
+            return { ...data, isCorrect: false };
+          }
+        });
+
+        finalQuiz = quiz;
+        const correctCount = quiz.filter((q: any) => q.isCorrect).length;
+        const totalCount = quiz.length || 1; // avoid division by zero
+
+        // Scale to 0–3
+        rating = Math.round((correctCount / totalCount) * 3);
+      }
+
+      await TaskResponse.updateOne(
+        { userId: userData.id, taskId: taskId },
+        {
+          $set: {
+            rating: rating,
+            taskReviewed: true,
+            quiz: finalQuiz,
+            taskNumber: taskData?.taskNumber,
+            milestone: taskData?.milestone,
+            appReview: taskData?.appReview,
+          },
+        },
+        { upsert: true }
+      );
+
+      return {};
+    } else {
+      return {};
+    }
+
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
+    // Switch Cases For All The Task Handling
   },
 };
 
 export const profileServices = {
   profile: async (payload: any) => {
     const { userData } = payload;
-    const userJobs = await AppliedJobModel.find({userId: userData.id}).lean()
+    const userJobs = await AppliedJobModel.find({ userId: userData.id }).lean();
 
     let selectedJobs = 0;
 
-    for(let i = 0; i<userJobs.length; i++){
-      if(userJobs[i].status == "SELECTED"){
-        selectedJobs += 1
+    for (let i = 0; i < userJobs.length; i++) {
+      if (userJobs[i].status == "SELECTED") {
+        selectedJobs += 1;
       }
     }
 

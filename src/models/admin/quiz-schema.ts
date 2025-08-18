@@ -15,6 +15,7 @@ export interface IQuiz extends Document {
   nl?: QuizData;
   fr?: QuizData;
   es?: QuizData;
+  questionNumber?: number;
   answer?: string;
   isActive?: boolean;
 }
@@ -52,6 +53,11 @@ const QuizSchema = new Schema<IQuiz>({
     option_B: { type: String, default: "" },
     option_C: { type: String, default: "" },
     option_D: { type: String, default: "" },
+  },
+
+  questionNumber: {
+    type: Number,
+    default: 0,
   },
 
   answer: {

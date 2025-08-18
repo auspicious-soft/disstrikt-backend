@@ -6,17 +6,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg een profielfoto toe",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter une photo de profil",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir una foto de perfil",
       "description": "",
       "subject": ""
     },
@@ -26,7 +26,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 1,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -35,17 +36,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Disstrikt: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Disstrikt : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Disstrikt: Quiz",
       "description": "",
       "subject": ""
     },
@@ -55,7 +56,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 2,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -64,17 +66,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Test: Solliciteer voor een baan",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Test : Postuler pour un emploi",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Prueba: Solicitar un trabajo",
       "description": "",
       "subject": ""
     },
@@ -84,7 +86,8 @@
     "link": [],
     "count": 1,
     "taskNumber": 3,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -93,17 +96,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg een bio toe",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter une bio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir una bio",
       "description": "",
       "subject": ""
     },
@@ -113,7 +116,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 4,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -122,17 +126,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Leer maten nemen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Apprendre à prendre des mesures",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aprender a tomar medidas",
       "description": "",
       "subject": ""
     },
@@ -142,7 +146,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 5,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -151,17 +156,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
@@ -171,7 +176,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 6,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -180,17 +186,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Neem al je maten",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Prendre toutes vos mesures",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Tomar todas tus medidas",
       "description": "",
       "subject": ""
     },
@@ -200,7 +206,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 7,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -209,17 +216,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg 3 extra foto's toe aan je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter 3 photos supplémentaires à votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir 3 fotos más a tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -229,7 +236,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 8,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -238,17 +246,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor 3 banen in totaal",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour 3 emplois au total",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 3 trabajos en total",
       "description": "",
       "subject": ""
     },
@@ -258,7 +266,8 @@
     "link": [],
     "count": 3,
     "taskNumber": 9,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -267,17 +276,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Deel je portfolio link op je Instagram",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Partager le lien de votre portfolio sur votre Instagram",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Compartir el enlace de tu portfolio en tu Instagram",
       "description": "",
       "subject": ""
     },
@@ -287,7 +296,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 10,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -296,17 +306,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg @disstrikt toe aan je bio (instagram)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter @disstrikt dans votre bio (instagram)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir @disstrikt en tu bio (instagram)",
       "description": "",
       "subject": ""
     },
@@ -316,7 +326,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 11,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -325,17 +336,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Leer over verschillende stijlen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Apprendre sur différents styles",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aprender sobre diferentes estilos",
       "description": "",
       "subject": ""
     },
@@ -345,7 +356,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 12,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -354,17 +366,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Kleding Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz sur les vêtements",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de ropa",
       "description": "",
       "subject": ""
     },
@@ -374,7 +386,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 13,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -383,17 +396,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Make-up & huidverzorging",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Maquillage & soins de la peau",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Maquillaje & cuidado de la piel",
       "description": "",
       "subject": ""
     },
@@ -403,7 +416,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 14,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -412,17 +426,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Make-up & schoonheidsquiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz maquillage & beauté",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de maquillaje & belleza",
       "description": "",
       "subject": ""
     },
@@ -432,7 +446,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 15,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -441,17 +456,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Shoot outfit checklist",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Checklist tenue de shoot",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Checklist de outfit para shoot",
       "description": "",
       "subject": ""
     },
@@ -461,7 +476,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 16,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -470,17 +486,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een lookbook voor de shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer un lookbook pour le shoot",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un lookbook para el shoot",
       "description": "",
       "subject": ""
     },
@@ -490,7 +506,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 17,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -499,17 +516,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan je model bootcamp",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer votre bootcamp de mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar tu bootcamp de modelo",
       "description": "",
       "subject": ""
     },
@@ -519,7 +536,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 18,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -528,17 +546,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Bootcamp",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Bootcamp de mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Bootcamp de modelo",
       "description": "",
       "subject": ""
     },
@@ -548,7 +566,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 19,
-    "isActive": true
+    "isActive": true,
+    "milestone":1
   },
   {
     "en": {
@@ -557,17 +576,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Upgrade je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Mettre à niveau votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Actualizar tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -577,7 +596,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 20,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -586,17 +606,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je setcard",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer votre setcard",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tu setcard",
       "description": "",
       "subject": ""
     },
@@ -606,7 +626,8 @@
     "link": [],
     "count": 1,
     "taskNumber": 21,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -615,17 +636,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg je setcard toe aan je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter votre setcard à votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir tu setcard a tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -635,7 +656,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 22,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -644,17 +666,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Schrijf een Trustpilot Review",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Écrire un avis Trustpilot",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Escribir una reseña en Trustpilot",
       "description": "",
       "subject": ""
     },
@@ -664,7 +686,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 23,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -673,17 +696,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Vaardigheden Powerpoint",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Powerpoint compétences de mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Powerpoint de habilidades de modelo",
       "description": "",
       "subject": ""
     },
@@ -693,7 +716,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 24,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -702,17 +726,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Vaardigheden Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz compétences de mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de habilidades de modelo",
       "description": "",
       "subject": ""
     },
@@ -722,7 +746,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 25,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -731,17 +756,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Posing Tips",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Conseils de posing",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Consejos de posing",
       "description": "",
       "subject": ""
     },
@@ -751,7 +776,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 26,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -760,17 +786,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "3 Poses",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "3 Poses",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "3 Poses",
       "description": "",
       "subject": ""
     },
@@ -780,7 +806,8 @@
     "link": [],
     "count": 3,
     "taskNumber": 27,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -789,17 +816,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Posing Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz de posing",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de posing",
       "description": "",
       "subject": ""
     },
@@ -809,7 +836,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 28,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -818,17 +846,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Posing Quiz (verlichtingsvariant)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz de posing (variante éclairage)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de posing (variante de iluminación)",
       "description": "",
       "subject": ""
     },
@@ -838,7 +866,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 29,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -847,17 +876,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Posing: Stuur een video van jezelf die je poses thuis traint",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Posing : Envoyer une vidéo de vous entraînant vos poses à la maison",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Posing: Envía un video de ti entrenando tus poses en casa",
       "description": "",
       "subject": ""
     },
@@ -867,7 +896,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 30,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -876,17 +906,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Post een foto op je sociale media (book me now)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Publier une photo sur vos réseaux sociaux (book me now)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Publicar una foto en tus redes sociales (book me now)",
       "description": "",
       "subject": ""
     },
@@ -896,7 +926,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 31,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -905,17 +936,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor 5 banen in totaal",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour 5 emplois au total",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 5 trabajos en total",
       "description": "",
       "subject": ""
     },
@@ -925,7 +956,8 @@
     "link": [],
     "count": 5,
     "taskNumber": 32,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -934,17 +966,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Creëer een extra outfit voor je portfolio shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer une tenue supplémentaire pour votre shoot portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Crear un outfit extra para tu shoot de portfolio",
       "description": "",
       "subject": ""
     },
@@ -954,7 +986,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 33,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -963,17 +996,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Portfolio Shoot outfit check",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Vérification tenue shoot portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Comprobación de outfit para shoot de portfolio",
       "description": "",
       "subject": ""
     },
@@ -983,7 +1016,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 34,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -992,17 +1026,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Make-up + accessoires portfolio shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Maquillage + accessoires shoot portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Maquillaje + accesorios shoot de portfolio",
       "description": "",
       "subject": ""
     },
@@ -1012,7 +1046,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 35,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -1021,17 +1056,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan Portfolio Shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer shoot portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar shoot de portfolio",
       "description": "",
       "subject": ""
     },
@@ -1041,7 +1076,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 36,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -1050,17 +1086,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Portfolio Shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Shoot portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Shoot de portfolio",
       "description": "",
       "subject": ""
     },
@@ -1070,7 +1106,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 37,
-    "isActive": true
+    "isActive": true,
+    "milestone": 2
   },
   {
     "en": {
@@ -1079,17 +1116,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Upgrade je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Mettre à niveau votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Actualizar tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -1099,7 +1136,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 38,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1108,17 +1146,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor 5 extra banen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour 5 emplois supplémentaires",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 5 trabajos más",
       "description": "",
       "subject": ""
     },
@@ -1128,7 +1166,8 @@
     "link": [],
     "count": 10,
     "taskNumber": 39,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1137,17 +1176,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Word geselecteerd voor een baan",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Être sélectionné pour un emploi",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ser seleccionado para un trabajo",
       "description": "",
       "subject": ""
     },
@@ -1157,7 +1196,8 @@
     "link": [],
     "count": 1,
     "taskNumber": 40,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1166,17 +1206,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Stijlen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Styles",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Estilos",
       "description": "",
       "subject": ""
     },
@@ -1186,7 +1226,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 41,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1195,17 +1236,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Stijlen Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz styles",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de estilos",
       "description": "",
       "subject": ""
     },
@@ -1215,7 +1256,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 42,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1224,17 +1266,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "America's Next Top Model (aflevering 1)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "America's Next Top Model (épisode 1)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "America's Next Top Model (episodio 1)",
       "description": "",
       "subject": ""
     },
@@ -1244,7 +1286,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 43,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1253,17 +1296,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Moodboard",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Moodboard",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Moodboard",
       "description": "",
       "subject": ""
     },
@@ -1273,7 +1316,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 44,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1282,17 +1326,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voorbereidingsvolgorde lijst",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Liste d'ordre de préparation",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Lista de orden de preparación",
       "description": "",
       "subject": ""
     },
@@ -1302,7 +1346,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 45,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1311,17 +1356,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Fotograaf volg lijst",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Liste de suivi photographe",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Lista de seguimiento de fotógrafos",
       "description": "",
       "subject": ""
     },
@@ -1331,7 +1376,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 46,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1340,17 +1386,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een pitch",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire un pitch",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un pitch",
       "description": "",
       "subject": ""
     },
@@ -1360,7 +1406,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 47,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1369,17 +1416,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Stuur de pitch naar 5 fotografen (25)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Envoyer le pitch à 5 photographes (25)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Enviar el pitch a 5 fotógrafos (25)",
       "description": "",
       "subject": ""
     },
@@ -1389,7 +1436,8 @@
     "link": [],
     "count": 5,
     "taskNumber": 48,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1398,17 +1446,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan de shoot met de fotograaf",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer le shoot avec le photographe",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar el shoot con el fotógrafo",
       "description": "",
       "subject": ""
     },
@@ -1418,7 +1466,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 49,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1427,17 +1476,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Doe de shoot met de fotograaf in Disstrikt",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire le shoot avec le photographe dans Disstrikt",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer el shoot con el fotógrafo en Disstrikt",
       "description": "",
       "subject": ""
     },
@@ -1447,7 +1496,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 50,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1456,17 +1506,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Update je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Mettre à jour votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Actualizar tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -1476,7 +1526,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 51,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1485,17 +1536,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Portfolio: Selecteer je talenten",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Portfolio : Sélectionnez vos talents",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Portfolio: Selecciona tus talentos",
       "description": "",
       "subject": ""
     },
@@ -1505,7 +1556,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 52,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1514,17 +1566,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Word geselecteerd voor 3 banen in totaal",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Être sélectionné pour 3 emplois au total",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ser seleccionado para 3 trabajos en total",
       "description": "",
       "subject": ""
     },
@@ -1534,7 +1586,8 @@
     "link": [],
     "count": 3,
     "taskNumber": 53,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1543,17 +1596,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Nodig vrienden uit om lid te worden van Disstrikt",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Inviter des amis à rejoindre Disstrikt",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Invitar amigos a unirse a Disstrikt",
       "description": "",
       "subject": ""
     },
@@ -1563,7 +1616,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 54,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1572,17 +1626,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Introductievideo",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Vidéo d'introduction",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Video de introducción",
       "description": "",
       "subject": ""
     },
@@ -1592,7 +1646,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 55,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1601,17 +1656,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Introductie Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz d'introduction",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de introducción",
       "description": "",
       "subject": ""
     },
@@ -1621,7 +1676,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 56,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1630,17 +1686,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Schrijf een introductiescript",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Écrire un script d'introduction",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Escribir un script de introducción",
       "description": "",
       "subject": ""
     },
@@ -1650,7 +1706,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 57,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1659,17 +1716,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga naar de studio om de video-opnames te maken",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Aller au studio pour prendre les vidéos",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ir al estudio para tomar las cintas de video",
       "description": "",
       "subject": ""
     },
@@ -1679,7 +1736,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 58,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1688,17 +1746,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak de video-opnames in de studio",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire les vidéos dans le studio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer las cintas de video en el estudio",
       "description": "",
       "subject": ""
     },
@@ -1708,7 +1766,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 59,
-    "isActive": true
+    "isActive": true,
+    "milestone": 3
   },
   {
     "en": {
@@ -1717,17 +1776,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Upload de introductievideo naar je portfolio",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Télécharger la vidéo d'introduction dans votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Subir el video de introducción a tu portfolio",
       "description": "",
       "subject": ""
     },
@@ -1737,7 +1796,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 60,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1746,17 +1806,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor 10 extra banen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour 10 emplois supplémentaires",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 10 trabajos más",
       "description": "",
       "subject": ""
     },
@@ -1766,7 +1826,8 @@
     "link": [],
     "count": 20,
     "taskNumber": 61,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1775,17 +1836,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Duo shoot (vraag een vriend)!",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Shoot duo (demandez à un ami)!",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Shoot duo (¡pregunta a un amigo)!",
       "description": "",
       "subject": ""
     },
@@ -1795,7 +1856,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 62,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1804,17 +1866,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Samen studeren",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Étudier ensemble",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Estudiar juntos",
       "description": "",
       "subject": ""
     },
@@ -1824,7 +1886,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 63,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1833,17 +1896,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Quiz samen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz ensemble",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz juntos",
       "description": "",
       "subject": ""
     },
@@ -1853,7 +1916,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 64,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1862,17 +1926,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Oefen samen (shoot)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Pratiquer ensemble (shoot)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Practicar juntos (shoot)",
       "description": "",
       "subject": ""
     },
@@ -1882,7 +1946,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 65,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1891,17 +1956,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een kleding en shoot moodboard",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer un moodboard vêtements et shoot",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un moodboard de ropa y shoot",
       "description": "",
       "subject": ""
     },
@@ -1911,7 +1976,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 66,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1920,17 +1986,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Upload BTS en andere reel ideeën",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Télécharger BTS et autres idées de reel",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Subir BTS y otras ideas de reel",
       "description": "",
       "subject": ""
     },
@@ -1940,7 +2006,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 67,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1949,17 +2016,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan de Duo Shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer le shoot duo",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar el shoot duo",
       "description": "",
       "subject": ""
     },
@@ -1969,7 +2036,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 68,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -1978,17 +2046,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Doe de Duo shoot in de studio",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire le shoot duo dans le studio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer el shoot duo dentro del estudio",
       "description": "",
       "subject": ""
     },
@@ -1998,7 +2066,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 69,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2007,17 +2076,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Krijg het Disstrikt Family contract",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Obtenir le contrat Disstrikt Family",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Obtener el contrato Disstrikt Family",
       "description": "",
       "subject": ""
     },
@@ -2027,7 +2096,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 70,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2036,17 +2106,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Vind en teken zoveel mensen die mee willen doen aan je reis",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Trouver et signer autant de personnes qui veulent rejoindre votre voyage",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Encontrar y firmar a tantas personas que quieran unirse a tu viaje",
       "description": "",
       "subject": ""
     },
@@ -2056,7 +2126,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 71,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2065,17 +2136,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Informatie",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Information",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Información",
       "description": "",
       "subject": ""
     },
@@ -2085,7 +2156,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 72,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2094,17 +2166,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
@@ -2114,7 +2186,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 73,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2123,17 +2196,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je mediakit",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer votre mediakit",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tu mediakit",
       "description": "",
       "subject": ""
     },
@@ -2143,7 +2216,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 74,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2152,17 +2226,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Upload je mediakit naar je portfolio",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Télécharger votre mediakit dans votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Subir tu mediakit a tu portfolio",
       "description": "",
       "subject": ""
     },
@@ -2172,7 +2246,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 75,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2181,17 +2256,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Bekijk hoe Canva werkt",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Voir comment Canva fonctionne",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ver cómo funciona Canva",
       "description": "",
       "subject": ""
     },
@@ -2201,7 +2276,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 76,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2210,17 +2286,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je eigen model website via Canva",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer votre propre site web de mannequin via Canva",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tu propio sitio web de modelo vía Canva",
       "description": "",
       "subject": ""
     },
@@ -2230,7 +2306,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 77,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2239,17 +2316,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg een Disstrikt blog toe op je website",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter un blog Disstrikt sur votre site web",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir un blog de Disstrikt en tu sitio web",
       "description": "",
       "subject": ""
     },
@@ -2259,7 +2336,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 78,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2268,17 +2346,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor 50 banen in totaal",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour 50 emplois au total",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 50 trabajos en total",
       "description": "",
       "subject": ""
     },
@@ -2288,7 +2366,8 @@
     "link": [],
     "count": 50,
     "taskNumber": 79,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2297,17 +2376,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Geaccepteerd voor 5 banen in totaal",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Accepté pour 5 emplois au total",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aceptado para 5 trabajos en total",
       "description": "",
       "subject": ""
     },
@@ -2317,7 +2396,8 @@
     "link": [],
     "count": 5,
     "taskNumber": 80,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2326,17 +2406,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak verschillende moodboards van make-up stijlen. (video)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer différents moodboards de styles de maquillage. (vidéo)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer diferentes moodboards de estilos de maquillaje. (video)",
       "description": "",
       "subject": ""
     },
@@ -2346,7 +2426,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 81,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2355,17 +2436,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Website kleurenpalet (ondertonen) MIX & MATCH (colorwise.me)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Palette de couleurs du site web (sous-tons) MIX & MATCH (colorwise.me)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Paleta de colores del sitio web (subtonos) MIX & MATCH (colorwise.me)",
       "description": "",
       "subject": ""
     },
@@ -2375,7 +2456,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 82,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2384,17 +2466,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een moodboard met outfits die bij je kleurenpalet passen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer un moodboard avec des tenues qui correspondent à votre palette de couleurs",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un moodboard con outfits que coincidan con tu paleta de colores",
       "description": "",
       "subject": ""
     },
@@ -2404,7 +2486,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 83,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2413,17 +2496,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Word gepost op onze socials! Selecteer een foto!",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Soyez posté sur nos réseaux sociaux ! Sélectionnez une photo !",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "¡Sé publicado en nuestras redes sociales! ¡Selecciona una foto!",
       "description": "",
       "subject": ""
     },
@@ -2433,7 +2516,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 84,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2442,17 +2526,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga naar de studio en maak een make-up tutorial",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Aller au studio et faire un tutoriel maquillage",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ir al estudio y hacer un tutorial de maquillaje",
       "description": "",
       "subject": ""
     },
@@ -2462,7 +2546,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 85,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2471,17 +2556,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak de make-up tutorial",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire le tutoriel maquillage",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer el tutorial de maquillaje",
       "description": "",
       "subject": ""
     },
@@ -2491,7 +2576,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 86,
-    "isActive": true
+    "isActive": true,
+    "milestone": 4
   },
   {
     "en": {
@@ -2500,17 +2586,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Bestudeer editorial poses",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Étudier les poses éditoriales",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Estudiar poses editoriales",
       "description": "",
       "subject": ""
     },
@@ -2520,7 +2606,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 87,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2529,17 +2616,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een video van jezelf die 50 poses achter elkaar doet",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire une vidéo de vous posant 50 poses l'une après l'autre",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un video de ti posando 50 poses una tras otra",
       "description": "",
       "subject": ""
     },
@@ -2549,7 +2636,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 88,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2558,17 +2646,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Je hebt toegang tot de theme shoot! (kies 1 van de 4)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Vous avez accès au shoot thématique ! (choisissez 1 sur 4)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "¡Tienes acceso al shoot temático! (elige 1 de 4)",
       "description": "",
       "subject": ""
     },
@@ -2578,7 +2666,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 89,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2587,17 +2676,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Moodboard kleding",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Moodboard vêtements",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Moodboard ropa",
       "description": "",
       "subject": ""
     },
@@ -2607,7 +2696,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 90,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2616,17 +2706,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Checklist kleding",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Checklist vêtements",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Checklist ropa",
       "description": "",
       "subject": ""
     },
@@ -2636,7 +2726,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 91,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2645,17 +2736,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan de theme shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer le shoot thématique",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar el shoot temático",
       "description": "",
       "subject": ""
     },
@@ -2665,7 +2756,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 92,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2674,17 +2766,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Doe de theme shoot",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire le shoot thématique",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer el shoot temático",
       "description": "",
       "subject": ""
     },
@@ -2694,7 +2786,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 93,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2703,17 +2796,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Voeg de foto's toe aan je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Ajouter les photos à votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Añadir las fotos a tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -2723,7 +2816,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 94,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2732,17 +2826,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Bekijk video's",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Regarder des vidéos",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ver videos",
       "description": "",
       "subject": ""
     },
@@ -2752,7 +2846,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 95,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2761,17 +2856,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Lees artikelen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Lire des articles",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Leer artículos",
       "description": "",
       "subject": ""
     },
@@ -2781,7 +2876,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 96,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2790,17 +2886,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz",
       "description": "",
       "subject": ""
     },
@@ -2810,7 +2906,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 97,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2819,17 +2916,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Netherlands Next Top Model aflevering 1",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Netherlands Next Top Model épisode 1",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Netherlands Next Top Model episodio 1",
       "description": "",
       "subject": ""
     },
@@ -2839,7 +2936,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 98,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2848,17 +2946,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Wat te doen met fysieke audities",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Que faire avec les auditions physiques",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Qué hacer con audiciones físicas",
       "description": "",
       "subject": ""
     },
@@ -2868,7 +2966,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 99,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2877,17 +2976,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Fysieke auditie Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz audition physique",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de audición física",
       "description": "",
       "subject": ""
     },
@@ -2897,7 +2996,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 100,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2906,17 +3006,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan fysieke auditie test",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer test d'audition physique",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar prueba de audición física",
       "description": "",
       "subject": ""
     },
@@ -2926,7 +3026,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 101,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2935,17 +3036,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Doe de fysieke auditie test",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire le test d'audition physique",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer la prueba de audición física",
       "description": "",
       "subject": ""
     },
@@ -2955,7 +3056,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 102,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2964,17 +3066,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Lees over freelancer zijn (business)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Lire sur être freelance (business)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Leer sobre ser freelancer (negocios)",
       "description": "",
       "subject": ""
     },
@@ -2984,7 +3086,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 103,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -2993,17 +3096,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Quiz KVK (voor- en nadelen)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz KVK (avantages et inconvénients)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz KVK (pros y contras)",
       "description": "",
       "subject": ""
     },
@@ -3013,7 +3116,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 104,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -3022,17 +3126,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan een online meeting met een van onze coaches",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer une réunion en ligne avec l'un de nos coaches",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar una reunión en línea con uno de nuestros coaches",
       "description": "",
       "subject": ""
     },
@@ -3042,7 +3146,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 105,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -3051,17 +3156,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Job Hunting checklist",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Checklist chasse à l'emploi",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Checklist de caza de empleo",
       "description": "",
       "subject": ""
     },
@@ -3071,7 +3176,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 106,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -3080,17 +3186,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Plan je Job Hunting",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Programmer votre chasse à l'emploi",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Programar tu caza de empleo",
       "description": "",
       "subject": ""
     },
@@ -3100,7 +3206,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 107,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -3109,17 +3216,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Doe de Job Hunting",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire la chasse à l'emploi",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer la caza de empleo",
       "description": "",
       "subject": ""
     },
@@ -3129,7 +3236,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 108,
-    "isActive": true
+    "isActive": true,
+    "milestone": 5
   },
   {
     "en": {
@@ -3138,17 +3246,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Affiliate marketing info",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Info marketing d'affiliation",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Info de marketing de afiliados",
       "description": "",
       "subject": ""
     },
@@ -3158,7 +3266,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 109,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3167,17 +3276,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Affiliate marketing Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz marketing d'affiliation",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de marketing de afiliados",
       "description": "",
       "subject": ""
     },
@@ -3187,7 +3296,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 110,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3196,17 +3306,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Affiliate marketing volg lijst",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Liste de suivi marketing d'affiliation",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Lista de seguimiento de marketing de afiliados",
       "description": "",
       "subject": ""
     },
@@ -3216,7 +3326,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 111,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3225,17 +3336,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Affiliate marketing Amazon affiliate account",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Marketing d'affiliation compte Amazon affiliate",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Marketing de afiliados cuenta Amazon affiliate",
       "description": "",
       "subject": ""
     },
@@ -3245,7 +3356,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 112,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3254,17 +3366,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een pitch!",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire un pitch !",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "¡Hacer un pitch!",
       "description": "",
       "subject": ""
     },
@@ -3274,7 +3386,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 113,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3283,17 +3396,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer op affiliate marketing banen binnen het programma",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler à des emplois de marketing d'affiliation au sein du programme",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar trabajos de marketing de afiliados dentro del programa",
       "description": "",
       "subject": ""
     },
@@ -3303,7 +3416,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 114,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3312,17 +3426,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Leer over het maken van content voor merken",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Apprendre à créer du contenu pour les marques",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aprender sobre crear contenido para marcas",
       "description": "",
       "subject": ""
     },
@@ -3332,7 +3446,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 115,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3341,17 +3456,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Leer over Capcut editing",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Apprendre sur l'édition Capcut",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aprender sobre edición Capcut",
       "description": "",
       "subject": ""
     },
@@ -3361,7 +3476,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 116,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3370,17 +3486,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Test je kennis over contentcreatie Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Testez vos connaissances en création de contenu Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Prueba tu conocimiento de creación de contenido Quiz",
       "description": "",
       "subject": ""
     },
@@ -3390,7 +3506,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 117,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3399,17 +3516,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Test je editing kennis Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Testez vos connaissances en édition Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Prueba tu conocimiento de edición Quiz",
       "description": "",
       "subject": ""
     },
@@ -3419,7 +3536,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 118,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3428,17 +3546,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga content maken in de content creation hub, neem een vriend mee",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Allez créer du contenu dans le hub de création de contenu, amenez un ami",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ve y crea contenido en el hub de creación de contenido, trae a un amigo",
       "description": "",
       "subject": ""
     },
@@ -3448,7 +3566,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 119,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3457,17 +3576,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Dieet Plan Doelen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Objectifs du plan diététique mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Objetivos del plan de dieta de modelo",
       "description": "",
       "subject": ""
     },
@@ -3477,7 +3596,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 120,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3486,17 +3606,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Dieet Plan",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Plan diététique mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Plan de dieta de modelo",
       "description": "",
       "subject": ""
     },
@@ -3506,7 +3626,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 121,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3515,17 +3636,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een model gezondheid tutorial",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer un tutoriel santé mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un tutorial de salud de modelo",
       "description": "",
       "subject": ""
     },
@@ -3535,7 +3656,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 122,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3544,17 +3666,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Catwalk informatie",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Information défilé",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Información de pasarela",
       "description": "",
       "subject": ""
     },
@@ -3564,7 +3686,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 123,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3573,17 +3696,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Catwalk Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz défilé",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de pasarela",
       "description": "",
       "subject": ""
     },
@@ -3593,7 +3716,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 124,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3602,17 +3726,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Oefen je catwalk thuis",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Pratiquer votre défilé à la maison",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Practicar tu pasarela en casa",
       "description": "",
       "subject": ""
     },
@@ -3622,7 +3746,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 125,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3631,17 +3756,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga naar de model gym en oefen je model vaardigheden",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Aller à la gym mannequin et pratiquer vos compétences de mannequin",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ir al gym de modelos y practicar tus habilidades de modelo",
       "description": "",
       "subject": ""
     },
@@ -3651,7 +3776,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 126,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3660,17 +3786,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Quiz 1",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz mannequin 1",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de modelo 1",
       "description": "",
       "subject": ""
     },
@@ -3680,7 +3806,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 127,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3689,17 +3816,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Quiz 2",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz mannequin 2",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de modelo 2",
       "description": "",
       "subject": ""
     },
@@ -3709,7 +3836,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 128,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3718,17 +3846,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Model Quiz 3",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz mannequin 3",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de modelo 3",
       "description": "",
       "subject": ""
     },
@@ -3738,7 +3866,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 129,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3747,17 +3876,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor 100 banen in totaal",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour 100 emplois au total",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 100 trabajos en total",
       "description": "",
       "subject": ""
     },
@@ -3767,7 +3896,8 @@
     "link": [],
     "count": 100,
     "taskNumber": 130,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3776,17 +3906,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: Informatie",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : Information",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: Información",
       "description": "",
       "subject": ""
     },
@@ -3796,7 +3926,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 131,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3805,17 +3936,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: Quiz",
       "description": "",
       "subject": ""
     },
@@ -3825,7 +3956,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 132,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3834,17 +3966,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: Script",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : Script",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: Script",
       "description": "",
       "subject": ""
     },
@@ -3854,7 +3986,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 133,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3863,17 +3996,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: Checklist",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : Checklist",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: Checklist",
       "description": "",
       "subject": ""
     },
@@ -3883,7 +4016,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 134,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3892,17 +4026,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: Schema",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : Planning",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: Horario",
       "description": "",
       "subject": ""
     },
@@ -3912,7 +4046,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 135,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3921,17 +4056,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: Doen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : Faire",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: Hacer",
       "description": "",
       "subject": ""
     },
@@ -3941,7 +4076,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 136,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3950,17 +4086,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je Showreels: upload",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer vos Showreels : téléchargement",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tus Showreels: subir",
       "description": "",
       "subject": ""
     },
@@ -3970,7 +4106,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 137,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -3979,17 +4116,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Herneem en update je maten",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Reprendre et mettre à jour vos mesures",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Volver a tomar y actualizar tus medidas",
       "description": "",
       "subject": ""
     },
@@ -3999,7 +4136,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 138,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4008,17 +4146,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak verbindingen: MUA volg lijst",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire des connexions : Liste de suivi MUA",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer conexiones: Lista de seguimiento MUA",
       "description": "",
       "subject": ""
     },
@@ -4028,7 +4166,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 139,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4037,17 +4176,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak verbindingen: MUA Pitch",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Faire des connexions : Pitch MUA",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer conexiones: Pitch MUA",
       "description": "",
       "subject": ""
     },
@@ -4057,7 +4196,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 140,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4066,17 +4206,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Gebruik de volgende applicatie/websites om je feed te ordenen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Utiliser les applications/sites web suivants pour ordonner votre feed",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Usar las siguientes aplicaciones/sitios web para ordenar tu feed",
       "description": "",
       "subject": ""
     },
@@ -4086,7 +4226,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 141,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4095,17 +4236,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je eigen YouTube-kanaal + voeg toe aan profiel",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer votre propre chaîne YouTube + ajouter au profil",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tu propio canal de YouTube + añadir al perfil",
       "description": "",
       "subject": ""
     },
@@ -4115,7 +4256,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 142,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4124,17 +4266,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Leer hoe je je eigen foto's kunt bewerken via FaceApp 1",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Apprendre à éditer vos propres photos via FaceApp 1",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aprender a editar tus propias fotos vía FaceApp 1",
       "description": "",
       "subject": ""
     },
@@ -4144,7 +4286,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 143,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4153,17 +4296,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Leer hoe je je eigen foto's kunt bewerken via FaceApp 2",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Apprendre à éditer vos propres photos via FaceApp 2",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Aprender a editar tus propias fotos vía FaceApp 2",
       "description": "",
       "subject": ""
     },
@@ -4173,7 +4316,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 144,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4182,17 +4326,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "FaceApp Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz FaceApp",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz FaceApp",
       "description": "",
       "subject": ""
     },
@@ -4202,7 +4346,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 145,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4211,17 +4356,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Dien een bewerkte foto in",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Soumettre une photo éditée",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Enviar una foto editada",
       "description": "",
       "subject": ""
     },
@@ -4231,7 +4376,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 146,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4240,17 +4386,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Lijst bureaus",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Lister les agences",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Listar agencias",
       "description": "",
       "subject": ""
     },
@@ -4260,7 +4406,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 147,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4269,17 +4416,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Lijst modeshows",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Lister les défilés de mode",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Listar desfiles de moda",
       "description": "",
       "subject": ""
     },
@@ -4289,7 +4436,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 148,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4298,17 +4446,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Job Hunting 2: Schema",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Chasse à l'emploi 2 : Planning",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Caza de empleo 2: Horario",
       "description": "",
       "subject": ""
     },
@@ -4318,7 +4466,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 149,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4327,17 +4476,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Job Hunting 2: Checklist",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Chasse à l'emploi 2 : Checklist",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Caza de empleo 2: Checklist",
       "description": "",
       "subject": ""
     },
@@ -4347,7 +4496,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 150,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4356,17 +4506,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Job Hunting 2: Afspraak",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Chasse à l'emploi 2 : Rendez-vous",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Caza de empleo 2: Cita",
       "description": "",
       "subject": ""
     },
@@ -4376,7 +4526,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 151,
-    "isActive": true
+    "isActive": true,
+    "milestone": 6
   },
   {
     "en": {
@@ -4385,17 +4536,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Zoek naar modellen op de applicatie",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Rechercher des mannequins sur l'application",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Buscar modelos en la aplicación",
       "description": "",
       "subject": ""
     },
@@ -4405,7 +4556,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 152,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4414,17 +4566,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Schrijf de 5 namen van de modellen waarmee je wilt samenwerken.",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Écrire les 5 noms des mannequins avec qui vous souhaitez collaborer.",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Escribe los 5 nombres de los modelos con los que te gustaría colaborar.",
       "description": "",
       "subject": ""
     },
@@ -4434,7 +4586,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 153,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4443,17 +4596,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak een bericht dat je naar hen kunt sturen via DM",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer un message que vous pouvez leur envoyer via DM",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer un mensaje que puedas enviarles vía DM",
       "description": "",
       "subject": ""
     },
@@ -4463,7 +4616,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 154,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4472,17 +4626,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak en dien een lijst in van merken/ontwerpers waarmee je wilt samenwerken",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer et soumettre une liste de marques/designers avec qui vous souhaitez collaborer",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer y enviar una lista de marcas/diseñadores con los que te gustaría colaborar",
       "description": "",
       "subject": ""
     },
@@ -4492,26 +4646,27 @@
     "link": [],
     "count": 0,
     "taskNumber": 155,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Sit down together and make a photoshoot / content campaign",
+     "title": "Sit down together and make a photoshoot / content campaign",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga samen zitten en maak een photoshoot / content campagne",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Asseyez-vous ensemble et faites un photoshoot / campagne de contenu",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Sentarse juntos y hacer un photoshoot / campaña de contenido",
       "description": "",
       "subject": ""
     },
@@ -4521,7 +4676,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 156,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4530,17 +4686,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga naar de Disstrikt faciliteiten en maak dit memorabel!",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Aller aux installations Disstrikt et rendre cela mémorable !",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ir a las instalaciones de Disstrikt y hacer esto memorable!",
       "description": "",
       "subject": ""
     },
@@ -4550,7 +4706,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 157,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4559,17 +4716,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Update je portfolio boek",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Mettre à jour votre portfolio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Actualizar tu libro de portfolio",
       "description": "",
       "subject": ""
     },
@@ -4579,7 +4736,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 158,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4588,17 +4746,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak je acteer cv",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer votre CV d'acteur",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer tu currículum de actuación",
       "description": "",
       "subject": ""
     },
@@ -4608,7 +4766,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 159,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4617,17 +4776,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Cameracursus: Leer over camera's",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Cours caméra : Apprendre sur les caméras",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Curso de cámara: Aprender sobre cámaras",
       "description": "",
       "subject": ""
     },
@@ -4637,7 +4796,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 160,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4646,17 +4806,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Cameracursus: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Cours caméra : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Curso de cámara: Quiz",
       "description": "",
       "subject": ""
     },
@@ -4666,7 +4826,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 161,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4675,17 +4836,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Video-editing: CapCut tutorials",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Montage vidéo : Tutoriels CapCut",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Edición de video: Tutoriales CapCut",
       "description": "",
       "subject": ""
     },
@@ -4695,7 +4856,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 162,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4704,17 +4866,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Video-editing: CapCut Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Montage vidéo : Quiz CapCut",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Edición de video: Quiz CapCut",
       "description": "",
       "subject": ""
     },
@@ -4724,7 +4886,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 163,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4733,17 +4896,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Video-editing: CapCut upload testvideo",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Montage vidéo : Télécharger vidéo test CapCut",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Edición de video: Subir video de prueba CapCut",
       "description": "",
       "subject": ""
     },
@@ -4753,7 +4916,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 164,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4762,17 +4926,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer op 250 banen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler à 250 emplois",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar 250 trabajos",
       "description": "",
       "subject": ""
     },
@@ -4782,7 +4946,8 @@
     "link": [],
     "count": 250,
     "taskNumber": 165,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4791,17 +4956,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Word geselecteerd voor 10 banen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Être sélectionné pour 10 emplois",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ser seleccionado para 10 trabajos",
       "description": "",
       "subject": ""
     },
@@ -4811,7 +4976,8 @@
     "link": [],
     "count": 10,
     "taskNumber": 166,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
@@ -4820,17 +4986,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Solliciteer voor designer merken in de studio rooms",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Postuler pour des marques de designers dans les salles de studio",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Solicitar marcas de diseñadores en las salas de estudio",
       "description": "",
       "subject": ""
     },
@@ -4840,55 +5006,27 @@
     "link": [],
     "count": 0,
     "taskNumber": 167,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Designs: Learn how to create fashion (articles)",
+      "title": "Personal Branding: Video",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Persoonlijke Branding: Video",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Branding personnel : Vidéo",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "LINK",
-    "answerType": "DONE",
-    "link": [],
-    "count": 0,
-    "taskNumber": 168,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Designs: Learn how to create fashion (Videos)",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
+      "title": "Branding personal: Video",
       "description": "",
       "subject": ""
     },
@@ -4897,27 +5035,58 @@
     "answerType": "DONE",
     "link": [],
     "count": 0,
-    "taskNumber": 169,
-    "isActive": true
+    "taskNumber": 168,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Designs: Quiz",
+      "title": "Personal branding: Articles",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Persoonlijke branding: Artikelen",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Branding personnel : Articles",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Branding personal: Artículos",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "LINK",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 169,
+    "isActive": true,
+    "milestone": 7
+  },
+  {
+    "en": {
+      "title": "Personal Branding: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Persoonlijke Branding: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Branding personnel : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Branding personal: Quiz",
       "description": "",
       "subject": ""
     },
@@ -4927,84 +5096,57 @@
     "link": [],
     "count": 0,
     "taskNumber": 170,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Designs: Physical practice (schedule)",
+      "title": "Job Searching: Old school (streetwork)",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Banen zoeken: Oude school (straatwerk)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Recherche d'emploi : Vieille école (travail de rue)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Búsqueda de empleo: Vieja escuela (trabajo callejero)",
       "description": "",
       "subject": ""
     },
-    "appReview": true,
+    "appReview": false,
     "taskType": "TEXT",
     "answerType": "UPLOAD_VIDEO",
     "link": [],
     "count": 0,
     "taskNumber": 171,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Personal Branding: Video",
+      "title": "Studio knowledge: Attributes (articles)",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Studio kennis: Attributen (artikelen)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Connaissances studio : Attributs (articles)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "WATCH_VIDEO",
-    "answerType": "DONE",
-    "link": [],
-    "count": 0,
-    "taskNumber": 172,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Personal branding: Articles",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
+      "title": "Conocimiento de estudio: Atributos (artículos)",
       "description": "",
       "subject": ""
     },
@@ -5013,27 +5155,58 @@
     "answerType": "DONE",
     "link": [],
     "count": 0,
-    "taskNumber": 173,
-    "isActive": true
+    "taskNumber": 172,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Personal Branding: Quiz",
+      "title": "Studio knowledge: Attributes (videos)",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Studio kennis: Attributen (video's)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Connaissances studio : Attributs (vidéos)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Conocimiento de estudio: Atributos (videos)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "WATCH_VIDEO",
+    "answerType": "DONE",
+    "link": [],
+    "count": 0,
+    "taskNumber": 173,
+    "isActive": true,
+    "milestone": 7
+  },
+  {
+    "en": {
+      "title": "Studio knowledge: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Studio kennis: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Connaissances studio : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Conocimiento de estudio: Quiz",
       "description": "",
       "subject": ""
     },
@@ -5043,171 +5216,147 @@
     "link": [],
     "count": 0,
     "taskNumber": 174,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Model Competition: Join",
+      "title": "Content: Share disstrikt journey in a reel",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Content: Deel disstrikt reis in een reel",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Contenu : Partager le voyage disstrikt dans un reel",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Contenido: Compartir el viaje disstrikt en un reel",
       "description": "",
       "subject": ""
     },
-    "appReview": true,
-    "taskType": "LINK",
-    "answerType": "DONE",
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
     "link": [],
     "count": 0,
     "taskNumber": 175,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Model Competition: Invitation",
+      "title": "UGC: Record testimonials",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "UGC: Neem testimonials op",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "UGC : Enregistrer des témoignages",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "UGC: Grabar testimonios",
       "description": "",
       "subject": ""
     },
-    "appReview": true,
-    "taskType": "DOWNLOAD_FILE",
-    "answerType": "DONE",
+    "appReview": false,
+    "taskType": "TEXT",
+    "answerType": "UPLOAD_VIDEO",
     "link": [],
     "count": 0,
     "taskNumber": 176,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Model Competition: Battle 1 (Photo)",
+      "title": "UGC: Try on fashion items",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "UGC: Pas mode-items aan",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "UGC : Essayer des articles de mode",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "UGC: Probar artículos de moda",
       "description": "",
       "subject": ""
     },
-    "appReview": true,
+    "appReview": false,
     "taskType": "TEXT",
-    "answerType": "UPLOAD_IMAGE",
+    "answerType": "UPLOAD_VIDEO",
     "link": [],
     "count": 0,
     "taskNumber": 177,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Model Competition: Battle 2 (Catwalk)",
+      "title": "UGC: Unbox products",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "UGC: Unbox producten",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "UGC : Déballer des produits",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "UGC: Desempaquetar productos",
       "description": "",
       "subject": ""
     },
-    "appReview": true,
+    "appReview": false,
     "taskType": "TEXT",
     "answerType": "UPLOAD_VIDEO",
     "link": [],
     "count": 0,
     "taskNumber": 178,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Model Compeition: Battle 3: (Content Creation)",
+      "title": "UGC: Do voiceovers or explainers",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "UGC: Doe voice-overs of explainers",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "UGC : Faire des voiceovers ou des explainers",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "TEXT",
-    "answerType": "WRITE_SECTION",
-    "link": [],
-    "count": 0,
-    "taskNumber": 179,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Job Searching: Old school (streetwork)",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
+      "title": "UGC: Hacer voiceovers o explainers",
       "description": "",
       "subject": ""
     },
@@ -5216,56 +5365,58 @@
     "answerType": "UPLOAD_VIDEO",
     "link": [],
     "count": 0,
-    "taskNumber": 180,
-    "isActive": true
+    "taskNumber": 179,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Receive a ticket to Wondr (make a reel)",
+      "title": "UGC: Quiz",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "UGC: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "UGC : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "UGC: Quiz",
       "description": "",
       "subject": ""
     },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "WRITE_SECTION",
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
     "link": [],
     "count": 0,
-    "taskNumber": 181,
-    "isActive": true
+    "taskNumber": 180,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Studio knowledge: Attributes (articles)",
+      "title": "Watch: Season 1 of Americas subject top model",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Bekijk: Seizoen 1 van America's Next Top Model",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Regarder : Saison 1 d'America's Next Top Model",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ver: Temporada 1 de America's Next Top Model",
       "description": "",
       "subject": ""
     },
@@ -5274,56 +5425,88 @@
     "answerType": "DONE",
     "link": [],
     "count": 0,
-    "taskNumber": 182,
-    "isActive": true
+    "taskNumber": 181,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Studio knowledge: Attributes (videos)",
+      "title": "Watch: ANTM Quiz",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Bekijk: ANTM Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Regarder : Quiz ANTM",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Ver: Quiz ANTM",
       "description": "",
       "subject": ""
     },
     "appReview": true,
-    "taskType": "WATCH_VIDEO",
-    "answerType": "DONE",
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
     "link": [],
     "count": 0,
-    "taskNumber": 183,
-    "isActive": true
+    "taskNumber": 182,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Studio knowledge: Quiz",
+      "title": "Studios: Choose which studio you would like to learn more about (Game/Dance/Sing/CC)",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Studios: Kies welke studio je meer over wilt leren (Game/Dans/Zingen/CC)",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Studios : Choisissez le studio sur lequel vous souhaitez en savoir plus (Jeu/Danse/Chant/CC)",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Estudios: Elige qué estudio te gustaría aprender más (Juego/Baile/Canto/CC)",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "TEXT",
+    "answerType": "WRITE_SECTION",
+    "link": [],
+    "count": 0,
+    "taskNumber": 183,
+    "isActive": true,
+    "milestone": 7
+  },
+  {
+    "en": {
+      "title": "Fashion: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Mode: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Mode : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Moda: Quiz",
       "description": "",
       "subject": ""
     },
@@ -5333,84 +5516,87 @@
     "link": [],
     "count": 0,
     "taskNumber": 184,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Content: Share disstrikt journey in a reel",
+      "title": "Pose: Quiz",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Pose: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Pose : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
-    "link": [],
-    "count": 0,
-    "taskNumber": 185,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Photo editting: Lightroom video",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
+      "title": "Pose: Quiz",
       "description": "",
       "subject": ""
     },
     "appReview": true,
-    "taskType": "WATCH_VIDEO",
-    "answerType": "DONE",
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
     "link": [],
     "count": 0,
-    "taskNumber": 186,
-    "isActive": true
+    "taskNumber": 185,
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "Photo editting: Lightroom Quiz",
+      "title": "Editting: Quiz",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Editing: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Édition : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Edición: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
+    "link": [],
+    "count": 0,
+    "taskNumber": 186,
+    "isActive": true,
+    "milestone": 7
+  },
+  {
+    "en": {
+      "title": "Photography: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "nl": {
+      "title": "Fotografie: Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "fr": {
+      "title": "Photographie : Quiz",
+      "description": "",
+      "subject": ""
+    },
+    "es": {
+      "title": "Fotografía: Quiz",
       "description": "",
       "subject": ""
     },
@@ -5420,113 +5606,117 @@
     "link": [],
     "count": 0,
     "taskNumber": 187,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "UGC: Record testimonials",
+      "title": "Acting Quiz",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Acteer Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Quiz d'acting",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Quiz de actuación",
       "description": "",
       "subject": ""
     },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
     "link": [],
     "count": 0,
     "taskNumber": 188,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "UGC: Try on fashion items",
+      "title": "Video Editting: Quiz",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Video Editing: Quiz",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Montage vidéo : Quiz",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Edición de video: Quiz",
       "description": "",
       "subject": ""
     },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
+    "appReview": true,
+    "taskType": "QUIZ",
+    "answerType": "QUIZ",
     "link": [],
     "count": 0,
     "taskNumber": 189,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "UGC: Unbox products",
+      "title": "Go to Spain!",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Ga naar Spanje!",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Aller en Espagne !",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "¡Ir a España!",
       "description": "",
       "subject": ""
     },
     "appReview": false,
     "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
+    "answerType": "DONE",
     "link": [],
     "count": 0,
     "taskNumber": 190,
-    "isActive": true
+    "isActive": true,
+    "milestone": 7
   },
   {
     "en": {
-      "title": "UGC: Do voiceovers or explainers",
+      "title": "Make travel reels",
       "description": "",
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Maak reis reels",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Créer des reels de voyage",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Hacer reels de viaje",
       "description": "",
       "subject": ""
     },
@@ -5536,500 +5726,8 @@
     "link": [],
     "count": 0,
     "taskNumber": 191,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "UGC: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 192,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Photo editting: Photoshop basics",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "WATCH_VIDEO",
-    "answerType": "DONE",
-    "link": [],
-    "count": 0,
-    "taskNumber": 193,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Photo editting: Photoshop Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 194,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Design: Make your first clothing item (go to the studio)",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
-    "link": [],
-    "count": 0,
-    "taskNumber": 195,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Watch: Season 1 of Americas subject top model",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "LINK",
-    "answerType": "DONE",
-    "link": [],
-    "count": 0,
-    "taskNumber": 196,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Watch: ANTM Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 197,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Studios: Choose which studio you would like to learn more about (Game/Dance/Sing/CC)",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "TEXT",
-    "answerType": "WRITE_SECTION",
-    "link": [],
-    "count": 0,
-    "taskNumber": 198,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Studio: Go to the studio and see what you can do!",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
-    "link": [],
-    "count": 0,
-    "taskNumber": 199,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Fashion: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 200,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Pose: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 201,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Editting: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 202,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Photography: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 203,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Designer: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 204,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Acting Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 205,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Video Editting: Quiz",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": true,
-    "taskType": "QUIZ",
-    "answerType": "QUIZ",
-    "link": [],
-    "count": 0,
-    "taskNumber": 206,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Go to Spain!",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "DONE",
-    "link": [],
-    "count": 0,
-    "taskNumber": 207,
-    "isActive": true
-  },
-  {
-    "en": {
-      "title": "Make travel reels",
-      "description": "",
-      "subject": ""
-    },
-    "nl": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "fr": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "es": {
-      "title": "",
-      "description": "",
-      "subject": ""
-    },
-    "appReview": false,
-    "taskType": "TEXT",
-    "answerType": "UPLOAD_VIDEO",
-    "link": [],
-    "count": 0,
-    "taskNumber": 208,
-    "isActive": true
+    "isActive": true,
+    "milestone":0
   },
   {
     "en": {
@@ -6038,17 +5736,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Deel je top 3 prestaties",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Partager vos 3 meilleures réalisations",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Compartir tus 3 mejores logros",
       "description": "",
       "subject": ""
     },
@@ -6057,8 +5755,9 @@
     "answerType": "WRITE_SECTION",
     "link": [],
     "count": 0,
-    "taskNumber": 209,
-    "isActive": true
+    "taskNumber": 192,
+    "isActive": true,
+    "milestone":0
   },
   {
     "en": {
@@ -6067,17 +5766,17 @@
       "subject": ""
     },
     "nl": {
-      "title": "",
+      "title": "Feedback: Wat heeft je geholpen buiten disstrikt?",
       "description": "",
       "subject": ""
     },
     "fr": {
-      "title": "",
+      "title": "Feedback : Qu'est-ce qui vous a aidé en dehors de disstrikt ?",
       "description": "",
       "subject": ""
     },
     "es": {
-      "title": "",
+      "title": "Feedback: ¿Qué te ayudó fuera de disstrikt?",
       "description": "",
       "subject": ""
     },
@@ -6086,7 +5785,8 @@
     "answerType": "WRITE_SECTION",
     "link": [],
     "count": 0,
-    "taskNumber": 210,
-    "isActive": true
+    "taskNumber": 193,
+    "isActive": true,
+    "milestone":0
   }
 ]

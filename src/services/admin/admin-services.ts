@@ -1,7 +1,9 @@
 import { Request } from "express";
+import mongoose from "mongoose";
 import stripe from "src/config/stripe";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
+import { QuizModel } from "src/models/admin/quiz-schema";
 import { TaskModel } from "src/models/admin/task-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
@@ -685,35 +687,189 @@ export const jobServices = {
 
 export const taskServices = {
   async createTask(payload: any) {
-    await TaskModel.create({
-      en: {
-        title: "Add a profile picture",
-        description: "",
-        subject: "",
+    return {};
+  },
+
+  async updateTask(payload: any) {
+    const { data, taskId } = payload;
+
+    const task = await TaskModel.findById(taskId);
+
+    if (!task) {
+      throw new Error("taskNotFound");
+    }
+
+    const en = {
+      title: data.title,
+      description: data.description,
+      subject: data.subject,
+    };
+
+    const result = await translateJobFields(en);
+    const { nl, fr, es } = result;
+
+    task.en = en;
+    task.nl = nl;
+    task.fr = fr;
+    task.es = es;
+    task.link = data.link;
+    task.save();
+
+    return task;
+  },
+
+  async getTasks(payload: any) {
+    const page = Number(payload.page) || 1;
+    const limit = Number(payload.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    const result = await TaskModel.aggregate([
+      {
+        $match: {
+          isActive: true,
+        },
       },
-      nl: {
-        title: "",
-        description: "",
-        subject: "",
+      {
+        $lookup: {
+          from: "taskresponses", // 👈 collection name for TaskResponse
+          let: { taskNum: "$taskNumber", ms: "$milestone" },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ["$taskNumber", "$$taskNum"] },
+                    { $eq: ["$milestone", "$$ms"] },
+                    { $eq: ["$taskReviewed", true] },
+                  ],
+                },
+              },
+            },
+          ],
+          as: "completedUsers",
+        },
       },
-      fr: {
-        title: "",
-        description: "",
-        subject: "",
+      {
+        $addFields: {
+          completedCount: { $size: "$completedUsers" }, // 👈 count of completed
+        },
       },
-      es: {
-        title: "",
-        description: "",
-        subject: "",
+      {
+        $project: {
+          taskType: 1,
+          answerType: 1,
+          taskNumber: 1,
+          milestone: 1,
+          title: "$en.title",
+          description: "$en.description",
+          subject: "$en.subject",
+          completedCount: 1,
+        },
       },
-      appReview: true,
-      taskType: "PROFILE_PIC",
-      answerType: "DONE",
-      link: [],
-      count: 0,
-      taskNumber: 1,
-      isActive: true,
-    });
+      { $sort: { taskNumber: 1 } },
+      {
+        $facet: {
+          tasks: [{ $skip: skip }, { $limit: limit }],
+          meta: [{ $count: "total" }],
+        },
+      },
+    ]);
+
+    const tasks = result[0]?.tasks || [];
+    const total = result[0]?.meta[0]?.total || 0;
+
+    return {
+      tasks,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  },
+
+  async getTaskById(payload: any) {
+    const { taskId } = payload;
+
+    const task = (await TaskModel.findById(taskId)
+      .select(`en taskType answerType link taskNumber milestone`)
+      .lean()) as any;
+
+    if (!task) {
+      throw new Error("taskNotFound");
+    }
+
+    let response = {
+      ...task,
+      ...task["en"],
+    };
+
+    delete response.en;
+
+    if (task.taskType == "QUIZ") {
+      const quizData = await QuizModel.aggregate([
+        {
+          $match: { taskId: new mongoose.Types.ObjectId(taskId) },
+        },
+        {
+          $project: {
+            taskId: 1,
+            questionNumber: 1,
+            answer:1,
+            question: `$en.question`,
+            option_A: `$en.option_A`,
+            option_B: `$en.option_B`,
+            option_C: `$en.option_C`,
+            option_D: `$en.option_D`,
+          },
+        },
+        {
+          $sort: { questionNumber: 1 },
+        },
+      ]);
+
+      response["quiz"] = quizData;
+    }
+
+    return response;
+  },
+
+  async addQuiz(payload: any) {
+    const { taskId, quiz } = payload;
+
+    const task = await TaskModel.findById(taskId);
+
+    if (!task) {
+      throw new Error("taskNotFound");
+    }
+
+    const newQuiz = quiz
+      .filter((q: any) => !q._id)
+      .map((q: any) => ({
+        taskId,
+        en: {
+          question: q.question,
+          option_A: q.option_A,
+          option_B: q.option_B,
+          option_C: q.option_C,
+          option_D: q.option_D,
+        },
+        questionNumber: q.questionNumber,
+        answer: q.answer,
+      }));
+
+    if (!newQuiz.length) return {}; // nothing new to add
+
+    const translatedQuizzes = await Promise.all(
+      newQuiz.map(async (q: any) => {
+        const { nl, fr, es } = await translateJobFields(q.en);
+        return { ...q, nl, fr, es };
+      })
+    );
+
+    await QuizModel.insertMany(translatedQuizzes);
+
     return {};
   },
 };

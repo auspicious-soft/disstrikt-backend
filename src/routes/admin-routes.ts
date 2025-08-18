@@ -9,7 +9,7 @@ import {
   postTermAndCondition,
   updatePlan,
 } from "src/controllers/admin/plan-setting-controller";
-import { createTask } from "src/controllers/admin/task-controller";
+import { addQuiz, createTask, getTaskById, getTasks, updateTask } from "src/controllers/admin/task-controller";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
 
@@ -29,7 +29,9 @@ router.route("/support").post(postSupport);
 router.route("/jobs").post(createJob).get(getJobs)
 
 // Task-management-routes
-router.route("/tasks").post(createTask)
+router.route("/tasks").get(getTasks)
+router.route("/tasksById/:id").post(createTask).put(updateTask).get(getTaskById)
+router.route("/addQuiz").post(addQuiz)
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {
