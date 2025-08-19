@@ -9,7 +9,8 @@ import {
   postTermAndCondition,
   updatePlan,
 } from "src/controllers/admin/plan-setting-controller";
-import { addQuiz, createTask, getTaskById, getTasks, updateTask } from "src/controllers/admin/task-controller";
+import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
+import { addCheckbox, addQuiz, createTask, deleteQuiz, getTaskById, getTasks, updateTask } from "src/controllers/admin/task-controller";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
 
@@ -31,7 +32,9 @@ router.route("/jobs").post(createJob).get(getJobs)
 // Task-management-routes
 router.route("/tasks").get(getTasks)
 router.route("/tasksById/:id").post(createTask).put(updateTask).get(getTaskById)
-router.route("/addQuiz").post(addQuiz)
+router.route("/addQuiz").post(addQuiz).delete(deleteQuiz)
+router.route("/addCheckbox").post(addCheckbox)
+router.post("/upload", multerUpload, uploadToS3);
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {

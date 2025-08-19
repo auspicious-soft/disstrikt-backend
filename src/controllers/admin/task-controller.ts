@@ -65,3 +65,28 @@ export const addQuiz = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
+export const deleteQuiz = async (req: Request, res: Response) => {
+  try {
+    const {quizId} = req.body;
+    const response = await taskServices.deleteQuiz({quizId});
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const addCheckbox = async (req: Request, res: Response) => {
+  try {
+    const response = await taskServices.addCheckbox(req.body);
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};

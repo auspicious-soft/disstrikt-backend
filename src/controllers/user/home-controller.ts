@@ -13,7 +13,7 @@ export const userHome = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
-    const {page, limit} = req.query;
+    const {page = 1, limit = 10} = req.query;
     const response = await homeServices.getUserHome({
       userData,
       page : Number(page),

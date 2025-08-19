@@ -45,7 +45,7 @@ export const uploadFileToS3 = async (
   originalName: string,
   mimetype: string,
   userId: string,
-  fileCategory: "image" | "video",
+  fileCategory: string,
   isAdmin = false
 ) => {
   const ext = path.extname(originalName) || mimeToExt(mimetype);

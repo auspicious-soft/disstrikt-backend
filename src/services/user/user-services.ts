@@ -17,16 +17,14 @@ import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
 configDotenv();
 
 export const homeServices = {
-  
   getUserHome: async (payload: any) => {
-    const { language, id, currentMilestone = 1 } = payload.userData;
+    const { language, id, currentMilestone = 1} = payload.userData;
+
     const { page = 1, limit = 10 } = payload; // 👈 pagination inputs
 
     const plan = await planModel
       .findById(payload.userData.subscription.planId)
       .lean();
-
-    console.log(plan?.fullAccess?.tasks);
 
     const skip = (page - 1) * limit;
 
@@ -34,6 +32,7 @@ export const homeServices = {
       {
         $match: {
           taskNumber: { $lte: plan?.fullAccess?.tasks },
+          milestone: { $lte: currentMilestone },
           isActive: true,
         },
       },
@@ -86,13 +85,23 @@ export const homeServices = {
     ]);
 
     const tasks = result[0]?.tasks || [];
+    // Group by milestone
+    const groupedTasks = tasks.reduce((acc: any, task: any) => {
+      const milestone = task.milestone;
+      if (!acc[milestone]) {
+        acc[milestone] = [];
+      }
+      acc[milestone].push(task);
+      return acc;
+    }, {});
+
     const total = result[0]?.meta[0]?.total || 0;
 
     const percentage =
       total > 0
         ? ((await TaskResponse.countDocuments({
             userId: id,
-            milestone: { $lte: currentMilestone },
+            milestone: { $eq: currentMilestone },
             taskReviewed: true,
           })) /
             total) *
@@ -102,8 +111,18 @@ export const homeServices = {
     return {
       plan: payload.userData.subscription.planName || null,
       milestone: currentMilestone,
+      fullName: payload.userData.fullName,
+      image: payload.userData.image,
+      planName: payload.userData.subscription.planName,
       percentage: Number(percentage.toFixed(1)),
-      tasks,
+      milestone1: groupedTasks[1] || [],
+      milestone2: groupedTasks[2] || [],
+      milestone3: groupedTasks[3] || [],
+      milestone4: groupedTasks[4] || [],
+      milestone5: groupedTasks[5] || [],
+      milestone6: groupedTasks[6] || [],
+      milestone7: groupedTasks[7] || [],
+      milestone8: groupedTasks[8] || [],
       pagination: {
         page,
         limit,
@@ -175,9 +194,22 @@ export const homeServices = {
 
     let finalQuiz = [] as any;
     let rating = 0;
+    let checkBox = {} as any;
+    let taskReviewed = false;
+    let uploadLinks = [] as any;
+    let text = "";
 
     if (taskData?.appReview) {
-      if (taskData?.taskType === "QUIZ") {
+      taskReviewed = true;
+      if (
+        ["CALENDLY", "WRITE_SECTION", "DONE"].includes(
+          taskData?.answerType || ""
+        )
+      ) {
+        text = body.writeSection;
+        rating = 3;
+      }
+      if (taskData?.answerType === "QUIZ") {
         const quizData = await QuizModel.find({ taskId }).lean();
 
         const quiz = body.quiz.map((data: any) => {
@@ -192,18 +224,34 @@ export const homeServices = {
         finalQuiz = quiz;
         const correctCount = quiz.filter((q: any) => q.isCorrect).length;
         const totalCount = quiz.length || 1; // avoid division by zero
-
         // Scale to 0–3
         rating = Math.round((correctCount / totalCount) * 3);
       }
 
+      if (taskData?.answerType === "CHECK_BOX") {
+        checkBox = body.checkbox;
+        rating = 3;
+      }
+
+      if (
+        ["UPLOAD_IMAGE", "UPLOAD_VIDEO", "UPLOAD_FILE"].includes(
+          taskData?.answerType || ""
+        )
+      ) {
+        uploadLinks = body.uploadLinks;
+        rating = 3;
+        text = body.writeSection;
+      }
       await TaskResponse.updateOne(
         { userId: userData.id, taskId: taskId },
         {
           $set: {
             rating: rating,
-            taskReviewed: true,
+            taskReviewed,
             quiz: finalQuiz,
+            uploadLinks,
+            checkBox,
+            text,
             taskNumber: taskData?.taskNumber,
             milestone: taskData?.milestone,
             appReview: taskData?.appReview,

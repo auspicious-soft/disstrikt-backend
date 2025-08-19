@@ -1,6 +1,8 @@
 import { Request } from "express";
 import mongoose from "mongoose";
+import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
+import { CheckboxModel } from "src/models/admin/checkbox-schema";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { QuizModel } from "src/models/admin/quiz-schema";
@@ -699,20 +701,38 @@ export const taskServices = {
       throw new Error("taskNotFound");
     }
 
-    const en = {
-      title: data.title,
-      description: data.description,
-      subject: data.subject,
-    };
+    const {
+      title = null,
+      description = null,
+      subject = null,
+      link = [],
+    } = data;
 
-    const result = await translateJobFields(en);
-    const { nl, fr, es } = result;
+    let en = {};
 
-    task.en = en;
-    task.nl = nl;
-    task.fr = fr;
-    task.es = es;
-    task.link = data.link;
+    if (title || description || subject) {
+      en = {
+        title: data.title,
+        description: data.description,
+        subject: data.subject,
+      };
+      const { nl, fr, es } = await translateJobFields(en);
+      task.en = en;
+      task.nl = nl;
+      task.fr = fr;
+      task.es = es;
+    }
+
+    if (link.length) {
+      if (task?.link?.length) {
+        await Promise.all(
+          task.link.map((data: string) => deleteFileFromS3(data))
+        );
+      }
+
+      task.link = data.link;
+    }
+
     task.save();
 
     return task;
@@ -790,10 +810,10 @@ export const taskServices = {
   },
 
   async getTaskById(payload: any) {
-    const { taskId } = payload;
+    const { taskId, language = "en" } = payload;
 
     const task = (await TaskModel.findById(taskId)
-      .select(`en taskType answerType link taskNumber milestone`)
+      .select(`en taskType answerType link taskNumber milestone count`)
       .lean()) as any;
 
     if (!task) {
@@ -802,7 +822,7 @@ export const taskServices = {
 
     let response = {
       ...task,
-      ...task["en"],
+      ...task[language],
     };
 
     delete response.en;
@@ -816,7 +836,7 @@ export const taskServices = {
           $project: {
             taskId: 1,
             questionNumber: 1,
-            answer:1,
+            answer: 1,
             question: `$en.question`,
             option_A: `$en.option_A`,
             option_B: `$en.option_B`,
@@ -832,21 +852,68 @@ export const taskServices = {
       response["quiz"] = quizData;
     }
 
+    if (task.taskType == "CHECK_BOX") {
+      const checkbox = (await CheckboxModel.findOne({ taskId }).lean()) as any;
+      const data = checkbox[language] || {};
+      response["checkbox"] = data;
+    }
+
     return response;
   },
+
+  // async addQuiz(payload: any) {
+  //   const { taskId, quiz } = payload;
+
+  //   const task = await TaskModel.findById(taskId);
+
+  //   if (!task) {
+  //     throw new Error("taskNotFound");
+  //   }
+
+  //   const newQuiz = quiz
+  //     .filter((q: any) => !q._id)
+  //     .map((q: any) => ({
+  //       taskId,
+  //       en: {
+  //         question: q.question,
+  //         option_A: q.option_A,
+  //         option_B: q.option_B,
+  //         option_C: q.option_C,
+  //         option_D: q.option_D,
+  //       },
+  //       questionNumber: q.questionNumber,
+  //       answer: q.answer,
+  //     }));
+
+  //   if (!newQuiz.length) return {}; // nothing new to add
+
+  //   const translatedQuizzes = await Promise.all(
+  //     newQuiz.map(async (q: any) => {
+  //       const { nl, fr, es } = await translateJobFields(q.en);
+  //       return { ...q, nl, fr, es };
+  //     })
+  //   );
+
+  //   await QuizModel.insertMany(translatedQuizzes);
+
+  //   return {};
+  // },
 
   async addQuiz(payload: any) {
     const { taskId, quiz } = payload;
 
     const task = await TaskModel.findById(taskId);
-
     if (!task) {
       throw new Error("taskNotFound");
     }
 
-    const newQuiz = quiz
-      .filter((q: any) => !q._id)
-      .map((q: any) => ({
+    // Separate new and existing quizzes
+    const newQuizzes = quiz.filter((q: any) => !q._id);
+    const existingQuizzes = quiz.filter((q: any) => q._id);
+
+    /** ------------------ INSERT NEW QUIZZES ------------------ **/
+    if (newQuizzes.length > 0) {
+      const formattedNew = newQuizzes.map((q: any) => ({
         taskId,
         en: {
           question: q.question,
@@ -859,16 +926,97 @@ export const taskServices = {
         answer: q.answer,
       }));
 
-    if (!newQuiz.length) return {}; // nothing new to add
+      const translatedNew = await Promise.all(
+        formattedNew.map(async (q: any) => {
+          const { nl, fr, es } = await translateJobFields(q.en);
+          return { ...q, nl, fr, es };
+        })
+      );
 
-    const translatedQuizzes = await Promise.all(
-      newQuiz.map(async (q: any) => {
-        const { nl, fr, es } = await translateJobFields(q.en);
-        return { ...q, nl, fr, es };
-      })
-    );
+      await QuizModel.insertMany(translatedNew);
+    }
 
-    await QuizModel.insertMany(translatedQuizzes);
+    /** ------------------ UPDATE EXISTING QUIZZES ------------------ **/
+    for (const q of existingQuizzes) {
+      const existingQuiz = await QuizModel.findById(q._id) as any;
+
+      if (!existingQuiz) continue; // skip invalid IDs
+
+      const updatedEn = {
+        question: q?.question,
+        option_A: q?.option_A,
+        option_B: q?.option_B,
+        option_C: q?.option_C,
+        option_D: q?.option_D,
+      } as any;
+
+      // Check if English text changed → re-translate
+      const hasChanged =
+        existingQuiz?.en?.question !== updatedEn?.question ||
+        existingQuiz?.en?.option_A !== updatedEn?.option_A ||
+        existingQuiz?.en?.option_B !== updatedEn?.option_B ||
+        existingQuiz?.en?.option_C !== updatedEn?.option_C ||
+        existingQuiz?.en?.option_D !== updatedEn?.option_D;
+
+      let translations = {};
+      if (hasChanged) {
+        const { nl, fr, es } = await translateJobFields(updatedEn);
+        translations = { nl, fr, es };
+      }
+
+      await QuizModel.findByIdAndUpdate(
+        q._id,
+        {
+          $set: {
+            taskId,
+            en: updatedEn,
+            questionNumber: q.questionNumber,
+            answer: q.answer,
+            ...translations, // overwrite translations if needed
+          },
+        },
+        { new: true }
+      );
+    }
+
+    return { success: true };
+  },
+
+  async deleteQuiz(payload: any) {
+    const { quizId } = payload;
+
+    if (!quizId) {
+      throw new Error("Quiz id is required");
+    }
+
+    await QuizModel.findByIdAndDelete(quizId);
+    return {};
+  },
+
+  async addCheckbox(payload: any) {
+    const { taskId, checkbox } = payload;
+
+    const task = await TaskModel.findById(taskId);
+
+    if (!task) {
+      throw new Error("taskNotFound");
+    }
+
+    if (checkbox.length === 0) {
+      throw new Error("Please add data in checkbox");
+    }
+
+    await CheckboxModel.findOneAndDelete({ taskId });
+
+    const { nl, fr, es } = await translateJobFields({ ...checkbox });
+
+    await CheckboxModel.create({
+      en: { ...checkbox },
+      nl,
+      fr,
+      es,
+      taskId,
+    });
 
     return {};
   },

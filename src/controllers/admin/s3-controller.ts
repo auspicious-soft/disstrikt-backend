@@ -13,21 +13,36 @@ export const uploadToS3 = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     const file = req.file;
-    const { id: userId, isAdmin = false, language = "en" } = userData;
+    const {
+      id: userId,
+      isAdmin = false,
+      language = "en",
+    } = userData || { id: null, isAdmin: true, language: "en" };
 
-    if (!file || !userId) {
-      return BADREQUEST(res, "Missing file or userId", language);
+    if (!file || (!userId && !isAdmin)) {
+      return BADREQUEST(res, "Missing file or user", language);
     }
 
     const mime = file.mimetype;
 
-    let fileCategory: "image" | "video";
-    if (mime.startsWith("image/")) {
-      fileCategory = "image";
-    } else if (mime.startsWith("video/")) {
-      fileCategory = "video";
+    // Dynamically extract file category (top-level MIME type)
+    let fileCategory: string;
+    if (mime.includes("/")) {
+      fileCategory = mime.split("/")[0]; // e.g. "image", "video", "application", "text"
     } else {
-      return BADREQUEST(res, "Unsupported file type", language);
+      fileCategory = "other"; // fallback
+    }
+
+    // Optionally map some common extensions if needed
+    const allowedCategories = [
+      "image",
+      "video",
+      "application",
+      "text",
+      "audio",
+    ];
+    if (!allowedCategories.includes(fileCategory)) {
+      fileCategory = "other";
     }
 
     const result = await uploadFileToS3(

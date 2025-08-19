@@ -65,6 +65,7 @@ const TaskSchema = new Schema<ITask>({
       "JOB_SELECTED",
       "CHECK_BOX",
       "UPLOAD",
+      "QUIZ"
     ],
     default: "DONE",
   },
