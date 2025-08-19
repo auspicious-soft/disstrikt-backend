@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
 import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
+import { CheckboxModel } from "src/models/admin/checkbox-schema";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { QuizModel } from "src/models/admin/quiz-schema";
@@ -18,7 +19,7 @@ configDotenv();
 
 export const homeServices = {
   getUserHome: async (payload: any) => {
-    const { language, id, currentMilestone = 1} = payload.userData;
+    const { language, id, currentMilestone = 1 } = payload.userData;
 
     const { page = 1, limit = 10 } = payload; // 👈 pagination inputs
 
@@ -159,6 +160,7 @@ export const homeServices = {
           $project: {
             taskId: 1,
             questionNumber: 1,
+            answer:1,
             question: `$en.question`,
             option_A: `$en.option_A`,
             option_B: `$en.option_B`,
@@ -171,6 +173,12 @@ export const homeServices = {
         },
       ]);
       response["quiz"] = quizData;
+    }
+
+    if (task.taskType == "CHECK_BOX") {
+      const checkbox = (await CheckboxModel.findOne({ taskId }).lean()) as any;
+      const data = checkbox[userData.language] || {};
+      response["checkbox"] = data;
     }
 
     delete response[userData.language];
@@ -242,28 +250,32 @@ export const homeServices = {
         rating = 3;
         text = body.writeSection;
       }
-      await TaskResponse.updateOne(
-        { userId: userData.id, taskId: taskId },
-        {
-          $set: {
-            rating: rating,
-            taskReviewed,
-            quiz: finalQuiz,
-            uploadLinks,
-            checkBox,
-            text,
-            taskNumber: taskData?.taskNumber,
-            milestone: taskData?.milestone,
-            appReview: taskData?.appReview,
-          },
-        },
-        { upsert: true }
-      );
-
-      return {};
     } else {
-      return {};
+      rating = 0;
+      taskReviewed = false;
+      uploadLinks = body.uploadLinks;
+      text = body.writeSection;
     }
+
+    await TaskResponse.updateOne(
+      { userId: userData.id, taskId: taskId },
+      {
+        $set: {
+          rating: rating,
+          taskReviewed,
+          quiz: finalQuiz,
+          uploadLinks,
+          checkBox,
+          text,
+          taskNumber: taskData?.taskNumber,
+          milestone: taskData?.milestone,
+          appReview: taskData?.appReview,
+        },
+      },
+      { upsert: true }
+    );
+
+    return {};
 
     // Switch Cases For All The Task Handling
     // Switch Cases For All The Task Handling

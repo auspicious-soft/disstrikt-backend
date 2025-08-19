@@ -32,7 +32,7 @@ router.route("/jobs").post(createJob).get(getJobs)
 // Task-management-routes
 router.route("/tasks").get(getTasks)
 router.route("/tasksById/:id").post(createTask).put(updateTask).get(getTaskById)
-router.route("/addQuiz").post(addQuiz).delete(deleteQuiz)
+router.route("/addQuiz/:id").post(addQuiz).delete(deleteQuiz)
 router.route("/addCheckbox").post(addCheckbox)
 router.post("/upload", multerUpload, uploadToS3);
 
