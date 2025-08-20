@@ -80,10 +80,11 @@ const TaskSchema = new Schema<ITask>({
       "UPLOAD_VIDEO",
       "DONE",
       "CALENDLY",
-      "INPUT",
       "UPLOAD_FILE",
       "CHECK_BOX",
       "PORT_INTRO_VIDEO",
+      
+      "INPUT", // Not used anywhere
     ],
   },
 

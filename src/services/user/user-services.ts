@@ -148,7 +148,7 @@ export const homeServices = {
 
     const task = (await TaskModel.findById(taskId)
       .select(
-        `${userData.language} taskType answerType link taskNumber milestone`
+        `${userData.language} taskType answerType link taskNumber milestone appReview`
       )
       .lean()) as any;
 
@@ -333,12 +333,52 @@ export const homeServices = {
         throw new Error("Invalid Answer Type");
       }
     } else {
+      if (taskData?.answerType === "UPLOAD_FILE") {
+        if (body.uploadLinks.length == 0) {
+          throw new Error("noFilesFound");
+        } else {
+          uploadLinks = body.uploadLinks;
+        }
+      } else if (taskData?.answerType === "DONE") {
+        text = body.writeSection;
+        uploadLinks = body.uploadLinks;
+      } else if (taskData?.answerType === "WRITE_SECTION") {
+        if (body.writeSection != "") {
+          text = body.writeSection;
+          uploadLinks = body.uploadLinks;
+        } else {
+          throw new Error("notEnough");
+        }
+      } else if (taskData?.answerType === "UPLOAD_IMAGE") {
+        let count = taskData.count || 1;
+        if (body.uploadLinks.length < count) {
+          throw new Error("lessImageCount");
+        } else {
+          uploadLinks = body.uploadLinks;
+          text = body.writeSection;
+        }
+      } else if (taskData?.answerType === "UPLOAD_VIDEO") {
+        if (body.uploadLinks.length == 0) {
+          throw new Error("noVideoFound");
+        } else {
+          uploadLinks = body.uploadLinks;
+          text = body.writeSection;
+        }
+      } else if (taskData?.answerType === "UPLOAD_FILE") {
+        if (body.uploadLinks.length == 0) {
+          throw new Error("noFilesFound");
+        } else {
+          uploadLinks = body.uploadLinks;
+          text = body.writeSection;
+        }
+      } else if (taskData?.answerType === "CALENDLY") {
+        text = body.writeSection;
+        uploadLinks = body.uploadLinks;
+      }
+
       rating = 0;
       taskReviewed = false;
-      uploadLinks = body.uploadLinks;
-      text = body.writeSection;
     }
-
     await TaskResponseModel.updateOne(
       { userId: userData.id, taskId: taskId },
       {

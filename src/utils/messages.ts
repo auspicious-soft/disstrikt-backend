@@ -100,7 +100,8 @@ export const customMessages: Record<SupportedLang, any> = {
     noImageFound:"No image found.",
     noVideoFound:"No video found.",
     noFilesFound:"No files found.",
-    quizFailed:"Quiz failed."
+    quizFailed:"Quiz failed.",
+    lessImageCount:"Less image count",
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
