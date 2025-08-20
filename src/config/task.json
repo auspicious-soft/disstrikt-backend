@@ -1791,8 +1791,8 @@
       "subject": ""
     },
     "appReview": true,
-    "taskType": "TEXT",
-    "answerType": "PORT_INTRO_VIDEO",
+    "taskType": "PORT_INTRO_VIDEO",
+    "answerType": "DONE",
     "link": [],
     "count": 0,
     "taskNumber": 60,

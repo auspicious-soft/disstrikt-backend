@@ -23,6 +23,16 @@ export async function checkBio(userId: any) {
     return true;
   }
 }
+export async function checkIntroVideo(userId: any) {
+  const checkData = await UserInfoModel.findOne(userId).lean();
+
+  if (checkData?.videos.find((val: any) => val.title === "introVideo")) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
 export async function checkPortfolioImage(userId: any, count: number) {
   const checkData = (await UserInfoModel.findOne(userId).lean()) as any;
   if (checkData?.portfolioImages?.length < count) {

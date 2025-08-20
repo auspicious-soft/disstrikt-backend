@@ -16,6 +16,7 @@ import { genders, languages } from "src/utils/constant";
 import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
 import {
   checkBio,
+  checkIntroVideo,
   checkJobApply,
   checkJobSelected,
   checkPortfolioImage,
@@ -266,6 +267,9 @@ export const homeServices = {
             taskData?.count || 0
           );
           errorMessage = "enoughImagesNotFound";
+        } else if (taskData?.taskType === "PORT_INTRO_VIDEO") {
+          isPresent = await checkIntroVideo(userData.id);
+          errorMessage = "introVideoNotFound";
         } else if (taskData?.taskType === "WATCH_VIDEO") {
           isPresent = true;
         } else if (taskData?.taskType === "DOWNLOAD_FILE") {
@@ -338,6 +342,7 @@ export const homeServices = {
           throw new Error("noFilesFound");
         } else {
           uploadLinks = body.uploadLinks;
+          text = body.writeSection;
         }
       } else if (taskData?.answerType === "DONE") {
         text = body.writeSection;
@@ -360,13 +365,6 @@ export const homeServices = {
       } else if (taskData?.answerType === "UPLOAD_VIDEO") {
         if (body.uploadLinks.length == 0) {
           throw new Error("noVideoFound");
-        } else {
-          uploadLinks = body.uploadLinks;
-          text = body.writeSection;
-        }
-      } else if (taskData?.answerType === "UPLOAD_FILE") {
-        if (body.uploadLinks.length == 0) {
-          throw new Error("noFilesFound");
         } else {
           uploadLinks = body.uploadLinks;
           text = body.writeSection;

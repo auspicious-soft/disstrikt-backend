@@ -67,23 +67,23 @@ const TaskSchema = new Schema<ITask>({
       "CHECK_BOX",
       "UPLOAD",
       "QUIZ",
-      "SET_CARD"
+      "SET_CARD",
+      "PORT_INTRO_VIDEO",
     ],
     default: "DONE",
   },
   answerType: {
     type: String,
     enum: [
-      "UPLOAD_IMAGE",
-      "WRITE_SECTION",
       "QUIZ",
-      "UPLOAD_VIDEO",
-      "DONE",
-      "CALENDLY",
-      "UPLOAD_FILE",
       "CHECK_BOX",
-      "PORT_INTRO_VIDEO",
-      
+      "DONE",
+      "WRITE_SECTION",
+      "CALENDLY",
+      "UPLOAD_IMAGE",
+      "UPLOAD_VIDEO",
+      "UPLOAD_FILE",
+
       "INPUT", // Not used anywhere
     ],
   },
