@@ -7,13 +7,21 @@ import { CheckboxModel } from "src/models/admin/checkbox-schema";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { QuizModel } from "src/models/admin/quiz-schema";
-import { TaskResponse } from "src/models/admin/task-response";
+import { TaskResponseModel } from "src/models/admin/task-response";
 import { TaskModel } from "src/models/admin/task-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { genders, languages } from "src/utils/constant";
 import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
+import {
+  checkBio,
+  checkJobApply,
+  checkJobSelected,
+  checkPortfolioImage,
+  checkProfilePic,
+  uploadToPortfolio,
+} from "src/utils/task-helpers";
 
 configDotenv();
 
@@ -86,6 +94,7 @@ export const homeServices = {
     ]);
 
     const tasks = result[0]?.tasks || [];
+    const unlockedTask = tasks.find((data: any) => data.attempted === false);
     // Group by milestone
     const groupedTasks = tasks.reduce((acc: any, task: any) => {
       const milestone = task.milestone;
@@ -100,7 +109,7 @@ export const homeServices = {
 
     const percentage =
       total > 0
-        ? ((await TaskResponse.countDocuments({
+        ? ((await TaskResponseModel.countDocuments({
             userId: id,
             milestone: { $eq: currentMilestone },
             taskReviewed: true,
@@ -116,6 +125,7 @@ export const homeServices = {
       image: payload.userData.image,
       planName: payload.userData.subscription.planName,
       percentage: Number(percentage.toFixed(1)),
+      unlockedTask: unlockedTask.taskNumber || null,
       milestone1: groupedTasks[1] || [],
       milestone2: groupedTasks[2] || [],
       milestone3: groupedTasks[3] || [],
@@ -160,7 +170,7 @@ export const homeServices = {
           $project: {
             taskId: 1,
             questionNumber: 1,
-            answer:1,
+            answer: 1,
             question: `$en.question`,
             option_A: `$en.option_A`,
             option_B: `$en.option_B`,
@@ -191,7 +201,7 @@ export const homeServices = {
 
     const taskData = await TaskModel.findById(taskId).lean();
 
-    let checkResponse = await TaskResponse.findOne({
+    let checkResponse = await TaskResponseModel.findOne({
       userId: userData.id,
       taskId: taskId,
     });
@@ -208,15 +218,6 @@ export const homeServices = {
     let text = "";
 
     if (taskData?.appReview) {
-      taskReviewed = true;
-      if (
-        ["CALENDLY", "WRITE_SECTION", "DONE"].includes(
-          taskData?.answerType || ""
-        )
-      ) {
-        text = body.writeSection;
-        rating = 3;
-      }
       if (taskData?.answerType === "QUIZ") {
         const quizData = await QuizModel.find({ taskId }).lean();
 
@@ -231,24 +232,105 @@ export const homeServices = {
 
         finalQuiz = quiz;
         const correctCount = quiz.filter((q: any) => q.isCorrect).length;
-        const totalCount = quiz.length || 1; // avoid division by zero
+        const totalCount = quiz.length;
+
+        if (totalCount === 0) {
+          throw new Error("quizFailed");
+        }
         // Scale to 0–3
         rating = Math.round((correctCount / totalCount) * 3);
-      }
-
-      if (taskData?.answerType === "CHECK_BOX") {
+        taskReviewed = true;
+      } else if (taskData?.answerType === "CHECK_BOX") {
         checkBox = body.checkbox;
         rating = 3;
-      }
+        taskReviewed = true;
+      } else if (taskData?.answerType === "DONE") {
+        let isPresent = false;
+        let errorMessage = "taskNotFound";
 
-      if (
-        ["UPLOAD_IMAGE", "UPLOAD_VIDEO", "UPLOAD_FILE"].includes(
-          taskData?.answerType || ""
-        )
-      ) {
-        uploadLinks = body.uploadLinks;
-        rating = 3;
+        if (taskData?.taskType === "PROFILE_PIC") {
+          isPresent = await checkProfilePic(userData.id);
+          errorMessage = "noProfilePic";
+        } else if (taskData?.taskType === "JOB_APPLY") {
+          isPresent = await checkJobApply(userData.id, taskData?.count || 0);
+          errorMessage = "insuffecientJobApplication";
+        } else if (taskData?.taskType === "JOB_SELECTED") {
+          isPresent = await checkJobSelected(userData.id, taskData?.count || 0);
+          errorMessage = "insufficientSelection";
+        } else if (taskData?.taskType === "PORT_BIO") {
+          isPresent = await checkBio(userData.id);
+          errorMessage = "noBioFound";
+        } else if (taskData?.taskType === "PORT_IMAGE") {
+          isPresent = await checkPortfolioImage(
+            userData.id,
+            taskData?.count || 0
+          );
+          errorMessage = "enoughImagesNotFound";
+        } else if (taskData?.taskType === "WATCH_VIDEO") {
+          isPresent = true;
+        } else if (taskData?.taskType === "DOWNLOAD_FILE") {
+          isPresent = true;
+        } else if (taskData?.taskType === "LINK") {
+          isPresent = true;
+        } else if (taskData?.taskType === "TEXT") {
+          isPresent = true;
+        } else if (taskData?.taskType === "UPLOAD") {
+          isPresent = await uploadToPortfolio(
+            userData?.id,
+            taskData?.taskNumber || 500
+          );
+          throw new Error("Not integrated yet");
+        } else {
+          throw new Error("Invalid Task Type");
+        }
+        if (isPresent) {
+          text = body.writeSection;
+          rating = 3;
+          taskReviewed = true;
+        } else {
+          throw new Error(errorMessage);
+        }
+      } else if (taskData?.answerType === "WRITE_SECTION") {
+        if (body.writeSection != "") {
+          text = body.writeSection;
+          rating = 3;
+          taskReviewed = true;
+        } else {
+          throw new Error("notEnough");
+        }
+      } else if (taskData?.answerType === "CALENDLY") {
+        taskReviewed = true;
         text = body.writeSection;
+        rating = 3;
+      } else if (taskData?.answerType === "UPLOAD_IMAGE") {
+        if (body.uploadLinks.length == 0) {
+          throw new Error("noImageFound");
+        } else {
+          uploadLinks = body.uploadLinks;
+          rating = 3;
+          text = body.writeSection;
+          taskReviewed = true;
+        }
+      } else if (taskData?.answerType === "UPLOAD_VIDEO") {
+        if (body.uploadLinks.length == 0) {
+          throw new Error("noVideoFound");
+        } else {
+          uploadLinks = body.uploadLinks;
+          rating = 3;
+          text = body.writeSection;
+          taskReviewed = true;
+        }
+      } else if (taskData?.answerType === "UPLOAD_FILE") {
+        if (body.uploadLinks.length == 0) {
+          throw new Error("noFilesFound");
+        } else {
+          uploadLinks = body.uploadLinks;
+          rating = 3;
+          text = body.writeSection;
+          taskReviewed = true;
+        }
+      } else {
+        throw new Error("Invalid Answer Type");
       }
     } else {
       rating = 0;
@@ -257,7 +339,7 @@ export const homeServices = {
       text = body.writeSection;
     }
 
-    await TaskResponse.updateOne(
+    await TaskResponseModel.updateOne(
       { userId: userData.id, taskId: taskId },
       {
         $set: {
@@ -276,20 +358,6 @@ export const homeServices = {
     );
 
     return {};
-
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
-    // Switch Cases For All The Task Handling
   },
 };
 
@@ -306,14 +374,26 @@ export const profileServices = {
       }
     }
 
+    const total = await TaskModel.find({
+      milestone: userData.currentMilestone,
+    }).countDocuments();
+
+    const completedTasks = await TaskResponseModel.countDocuments({
+      userId: userData.id,
+      milestone: { $eq: userData.currentMilestone },
+      taskReviewed: true,
+    });
+
+    const percentage = total > 0 ? (completedTasks / total) * 100 : 0;
+
     return {
       fullName: userData.fullName,
       id: userData.id,
       image: userData.image,
       authType: userData.authType,
-      milestone: 0,
-      percentage: 0,
-      taskCount: 0,
+      milestone: userData.currentMilestone,
+      percentage: Number(percentage.toFixed(1)),
+      taskCount: completedTasks,
       appliedJobs: userJobs.length || 0,
       selectedJobs: selectedJobs,
     };

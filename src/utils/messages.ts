@@ -90,7 +90,17 @@ export const customMessages: Record<SupportedLang, any> = {
     invalidGender:"Invalid gender",
     jobAppliedSuccessfully: "Job applied successfully",
     taskNotFound:"No task found!",
-    taskAlreadySubmitted: "Task already submitted"
+    taskAlreadySubmitted: "Task already submitted",
+    noProfilePic:"No profile pic found, please upload one.",
+    noBioFound:"No bio found",
+    insuffecientJobApplication: "Insufficient job applications",
+    insufficientSelection:"Insufficient selection",
+    notEnough:"Cannot submit empty text",
+    enoughImagesNotFound:"Enough images not found",
+    noImageFound:"No image found.",
+    noVideoFound:"No video found.",
+    noFilesFound:"No files found.",
+    quizFailed:"Quiz failed."
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",

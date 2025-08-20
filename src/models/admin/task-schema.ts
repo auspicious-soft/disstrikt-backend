@@ -57,6 +57,7 @@ const TaskSchema = new Schema<ITask>({
     enum: [
       "JOB_APPLY",
       "PROFILE_PIC",
+      "PORT_IMAGE",
       "PORT_BIO",
       "LINK",
       "TEXT",
@@ -65,7 +66,8 @@ const TaskSchema = new Schema<ITask>({
       "JOB_SELECTED",
       "CHECK_BOX",
       "UPLOAD",
-      "QUIZ"
+      "QUIZ",
+      "SET_CARD"
     ],
     default: "DONE",
   },

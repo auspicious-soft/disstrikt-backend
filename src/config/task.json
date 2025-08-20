@@ -231,10 +231,10 @@
       "subject": ""
     },
     "appReview": true,
-    "taskType": "UPLOAD",
-    "answerType": "UPLOAD_IMAGE",
+    "taskType": "PORT_IMAGE",
+    "answerType": "DONE",
     "link": [],
-    "count": 0,
+    "count": 3,
     "taskNumber": 8,
     "isActive": true,
     "milestone":1
@@ -621,7 +621,7 @@
       "subject": ""
     },
     "appReview": true,
-    "taskType": "TEXT",
+    "taskType": "SET_CARD",
     "answerType": "UPLOAD_IMAGE",
     "link": [],
     "count": 1,
@@ -4642,7 +4642,7 @@
     },
     "appReview": true,
     "taskType": "TEXT",
-    "answerType": "UPLOAD_IMAGE",
+    "answerType": "WRITE_SECTION",
     "link": [],
     "count": 0,
     "taskNumber": 155,

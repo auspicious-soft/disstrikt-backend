@@ -82,7 +82,7 @@ const TaskResponseSchema = new Schema<ITaskResponse>({
   },
 });
 
-export const TaskResponse = mongoose.model<ITaskResponse>(
+export const TaskResponseModel = mongoose.model<ITaskResponse>(
   "taskresponse",
   TaskResponseSchema
 );
