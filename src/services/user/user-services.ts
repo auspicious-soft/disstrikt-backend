@@ -157,6 +157,15 @@ export const homeServices = {
       throw new Error("taskNotFound");
     }
 
+    const previousTask = await TaskResponseModel.findOne({
+      userId: userData.id,
+      taskNumber: task.taskNumber - 1,
+    }).lean();
+
+    if (!previousTask || !previousTask.taskReviewed) {
+      throw new Error("preReviewPending");
+    }
+
     let response = {
       ...task,
       ...task[userData.language],
@@ -394,6 +403,25 @@ export const homeServices = {
       },
       { upsert: true }
     );
+
+    const nextTask = await TaskModel.findOne({
+      taskNumber: (taskData?.taskNumber || 0) + 1,
+    }).lean();
+
+    if (
+      nextTask &&
+      taskReviewed &&
+      userData.currentMilestone !== nextTask?.milestone
+    ) {
+      await UserModel.findByIdAndUpdate(userData.id, {
+        $set: { currentMilestone: nextTask.milestone },
+      });
+
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+    }
 
     return {};
   },

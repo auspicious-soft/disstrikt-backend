@@ -102,7 +102,8 @@ export const customMessages: Record<SupportedLang, any> = {
     noFilesFound:"No files found.",
     quizFailed:"Quiz failed.",
     lessImageCount:"Less image count",
-    introVideoNotFound: "Intro video not found"
+    introVideoNotFound: "Intro video not found",
+    preReviewPending: "Previous task review is still pending!"
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
