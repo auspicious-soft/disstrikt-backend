@@ -1456,6 +1456,7 @@ export const userServices = {
         setCards: userMoreData?.setCards,
         images: userMoreData?.portfolioImages,
       },
+      socialLinks: userMoreData?.links,
       transactions,
       appliedJobs: formatted,
       tasks: groupedByMilestone,
