@@ -11,6 +11,7 @@ import {
 } from "src/controllers/admin/plan-setting-controller";
 import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
 import { addCheckbox, addQuiz, createTask, deleteQuiz, getTaskById, getTasks, updateTask } from "src/controllers/admin/task-controller";
+import { getUserById, getUsers, getUserTaskResponse } from "src/controllers/admin/user-controller";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
 
@@ -37,6 +38,12 @@ router.route("/tasksById/:id").post(createTask).put(updateTask).get(getTaskById)
 router.route("/addQuiz/:id").post(addQuiz).delete(deleteQuiz)
 router.route("/addCheckbox").post(addCheckbox)
 router.post("/upload", multerUpload, uploadToS3);
+
+// User-management-routes
+router.route("/getUsers").get(getUsers)
+router.route("/getUserById/:id").get(getUserById)
+router.route("/getUserTaskResponse").get(getUserTaskResponse)
+
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {

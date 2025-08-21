@@ -55,7 +55,8 @@ export const getTaskById = async (req: Request, res: Response) => {
 };
 export const addQuiz = async (req: Request, res: Response) => {
   try {
-    const {taskId, quiz} = req.body;
+    const {quiz} = req.body;
+    const taskId = req.params.id
     const response = await taskServices.addQuiz({taskId, quiz});
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {

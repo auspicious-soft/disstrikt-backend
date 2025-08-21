@@ -1,5 +1,5 @@
 import { Request } from "express";
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
 import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
@@ -16,6 +16,9 @@ import { features, languages, regionalAccess } from "src/utils/constant";
 import { translateJobFields } from "src/utils/helper";
 import { Stripe } from "stripe";
 import { Parser } from "json2csv";
+import { userMoreInfo } from "src/controllers/auth/auth-controller";
+import { UserInfoModel } from "src/models/user/user-info-schema";
+import { TaskResponseModel } from "src/models/admin/task-response";
 
 export const planServices = {
   async getPlans(payload: any) {
@@ -1241,6 +1244,225 @@ export const taskServices = {
       taskId,
     });
 
+    return {};
+  },
+};
+
+export const userServices = {
+  async getUsers(payload: any) {
+    let { page = 1, limit = 10, search, sort = null, country = null } = payload;
+
+    page = Number(page);
+    limit = Number(limit);
+
+    const matchStage: any = { isDeleted: false };
+
+    if (search) {
+      matchStage.fullName = { $regex: search, $options: "i" };
+    }
+
+    if (country) {
+      matchStage.country = country;
+    }
+
+    const skip = (page - 1) * limit;
+
+    const usersAgg = await UserModel.aggregate([
+      { $match: matchStage },
+
+      // Join applied jobs
+      {
+        $lookup: {
+          from: "appliedjobs",
+          localField: "_id",
+          foreignField: "userId",
+          as: "appliedJobs",
+        },
+      },
+
+      // Join transactions
+      {
+        $lookup: {
+          from: "transactions",
+          localField: "_id",
+          foreignField: "userId",
+          as: "transactions",
+        },
+      },
+
+      // Join subscriptions (based on userId)
+      {
+        $lookup: {
+          from: "subscriptions",
+          localField: "_id",
+          foreignField: "userId",
+          as: "subscriptions",
+        },
+      },
+
+      // Join plan from subscriptions.planId
+      {
+        $lookup: {
+          from: "plans",
+          localField: "subscriptions.planId",
+          foreignField: "_id",
+          as: "planDocs",
+        },
+      },
+
+      // Add computed fields
+      {
+        $addFields: {
+          jobAppliedCount: { $size: "$appliedJobs" },
+          totalAmountPaid: {
+            $sum: {
+              $map: {
+                input: "$transactions",
+                as: "t",
+                in: "$$t.amount",
+              },
+            },
+          },
+          subscriptionPlan: {
+            $ifNull: [
+              { $arrayElemAt: ["$planDocs.name.en", 0] }, // <-- English name
+              "",
+            ],
+          },
+        },
+      },
+
+      // Shape final output
+      {
+        $project: {
+          _id: 1,
+          fullName: 1,
+          country: 1,
+          subscriptionPlan: 1,
+          jobAppliedCount: 1,
+          totalAmountPaid: 1,
+        },
+      },
+
+      // Sorting
+      ...(sort === "jobHighToLow"
+        ? [{ $sort: { jobAppliedCount: -1 } as any }]
+        : sort === "jobLowToHigh"
+        ? [{ $sort: { jobAppliedCount: 1 } as any }]
+        : [{ $sort: { createdAt: -1 } as any }]),
+
+      // Pagination
+      { $skip: skip },
+      { $limit: limit },
+    ]);
+
+    // Count total users (without pagination)
+    const total = await UserModel.countDocuments(matchStage);
+
+    return {
+      users: usersAgg,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  },
+
+  async getUserById(payload: any) {
+    const { userId } = payload;
+
+    const userData = await UserModel.findById(userId)
+      .select("fullName email image phone country")
+      .lean();
+
+    const userMoreData = await UserInfoModel.findOne({ userId })
+      .select("measurements portfolioImages links videos gender dob setCards")
+      .lean();
+
+    const appliedJobs = (await AppliedJobModel.find({ userId })
+      .populate("jobId", "en date time")
+      .lean()) as any;
+
+    const formatted = appliedJobs.map((job: any) => ({
+      ...job,
+      ...job?.jobId?.en, // spread nested "en" fields
+      jobId: job.jobId?._id, // keep only jobId reference if needed
+    })) as any;
+
+    const transactions = await TransactionModel.aggregate([
+      {
+        $match: { userId: new Types.ObjectId(userId) },
+      },
+      // Lookup subscription by stripeSubscriptionId
+      {
+        $lookup: {
+          from: "subscriptions", // collection name in MongoDB
+          localField: "stripeSubscriptionId",
+          foreignField: "stripeSubscriptionId",
+          as: "subscription",
+        },
+      },
+      { $unwind: { path: "$subscription", preserveNullAndEmptyArrays: true } },
+      // Lookup plan using subscription.planId
+      {
+        $lookup: {
+          from: "plans", // collection name in MongoDB
+          localField: "subscription.planId",
+          foreignField: "_id",
+          as: "plan",
+        },
+      },
+      { $unwind: { path: "$plan", preserveNullAndEmptyArrays: true } },
+      {
+        $project: {
+          amount: 1,
+          currency: 1,
+          paidAt: 1,
+          status: 1,
+          planName: "$plan.name.en", // get English plan name
+          planKey: "$plan.key",
+        },
+      },
+      { $sort: { paidAt: -1 } }, // latest first
+    ]);
+
+    const tasks = await TaskResponseModel.find({ userId })
+      .populate("taskId")
+      .select("taskReviewed taskNumber milestone rating")
+      .sort({ taskNumber: 1 })
+      .lean();
+
+    const formattedTask = tasks.map((val: any) => ({
+      reviewed: val.taskReviewed,
+      number: val.taskNumber,
+      milestone: val.milestone,
+      rating: val.rating,
+      title: val.taskId.en.title,
+    }));
+
+    const groupedByMilestone: any[] = [];
+
+    formattedTask.forEach((task) => {
+      const index = task.milestone - 1; // assuming milestone starts from 1
+      if (!groupedByMilestone[index]) groupedByMilestone[index] = [];
+      groupedByMilestone[index].push(task);
+    });
+
+    return {
+      ...userData,
+      images: {
+        setCards: userMoreData?.setCards,
+        images: userMoreData?.portfolioImages,
+      },
+      transactions,
+      appliedJobs: formatted,
+      tasks: groupedByMilestone,
+    };
+  },
+
+  async getUserTaskResponse(payload: any) {
     return {};
   },
 };
