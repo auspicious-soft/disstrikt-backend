@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createJob, getJobs } from "src/controllers/admin/job-controller";
+import { createJob, getJobDataCSV, getJobs, getJobsById, updateJobStatus } from "src/controllers/admin/job-controller";
 import {
   createPlan,
   getPlans,
@@ -28,6 +28,8 @@ router.route("/support").post(postSupport);
 
 // Job-management-routes
 router.route("/jobs").post(createJob).get(getJobs)
+router.route("/jobsById/:id").get(getJobsById).put(updateJobStatus)
+router.route("/jobDataCSV/:id").get(getJobDataCSV)
 
 // Task-management-routes
 router.route("/tasks").get(getTasks)

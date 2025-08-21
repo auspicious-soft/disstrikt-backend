@@ -162,7 +162,7 @@ export const homeServices = {
       taskNumber: task.taskNumber - 1,
     }).lean();
 
-    if (!previousTask || !previousTask.taskReviewed) {
+    if (task.taskNumber - 1 !== 0 && (!previousTask || !previousTask.taskReviewed)) {
       throw new Error("preReviewPending");
     }
 
@@ -226,6 +226,7 @@ export const homeServices = {
     let taskReviewed = false;
     let uploadLinks = [] as any;
     let text = "";
+    let returnSomething = {} as any;
 
     if (taskData?.appReview) {
       if (taskData?.answerType === "QUIZ") {
@@ -250,6 +251,7 @@ export const homeServices = {
         // Scale to 0–3
         rating = Math.round((correctCount / totalCount) * 3);
         taskReviewed = true;
+        returnSomething = { correctCount, totalCount };
       } else if (taskData?.answerType === "CHECK_BOX") {
         checkBox = body.checkbox;
         rating = 3;
@@ -423,7 +425,7 @@ export const homeServices = {
       //PUSH_NOTIFICATION
     }
 
-    return {};
+    return returnSomething;
   },
 };
 

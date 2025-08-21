@@ -2,6 +2,7 @@ import { Request } from "express";
 import mongoose from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
+import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
 import { CheckboxModel } from "src/models/admin/checkbox-schema";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { planModel } from "src/models/admin/plan-schema";
@@ -14,6 +15,7 @@ import { UserModel } from "src/models/user/user-schema";
 import { features, languages, regionalAccess } from "src/utils/constant";
 import { translateJobFields } from "src/utils/helper";
 import { Stripe } from "stripe";
+import { Parser } from "json2csv";
 
 export const planServices = {
   async getPlans(payload: any) {
@@ -685,6 +687,227 @@ export const jobServices = {
       },
     };
   },
+
+  async getJobsById(payload: any) {
+    let { status = "ALL", page = 1, limit = 10, jobId } = payload;
+    page = Number(page);
+    limit = Number(limit);
+
+    // Check if job exists
+    const jobData = await JobModel.findById(jobId).lean();
+    if (!jobData) {
+      throw new Error("Invalid Id");
+    }
+
+    // Flatten translations
+    const revisedData = { ...jobData, ...jobData["en"] };
+    delete revisedData.en;
+    delete revisedData.fr;
+    delete revisedData.es;
+    delete revisedData.nl;
+    delete revisedData.appliedUsers;
+
+    // Build status match condition
+    const statusMatch = status && status !== "ALL" ? { status: status } : {};
+
+    const total = await AppliedJobModel.countDocuments({
+      jobId: new mongoose.Types.ObjectId(jobId),
+      ...statusMatch,
+    });
+
+    // Aggregate applications
+    const appliedJobs = await AppliedJobModel.aggregate([
+      {
+        $match: {
+          jobId: new mongoose.Types.ObjectId(jobId),
+          ...statusMatch,
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // users collection
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $lookup: {
+          from: "userinfos", // userInfo collection
+          localField: "userId",
+          foreignField: "userId",
+          as: "userInfo",
+        },
+      },
+      { $unwind: { path: "$userInfo", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          "userInfo.age": {
+            $cond: [
+              { $ifNull: ["$userInfo.dob", false] },
+              {
+                $dateDiff: {
+                  startDate: "$userInfo.dob",
+                  endDate: "$$NOW",
+                  unit: "year",
+                },
+              },
+              null,
+            ],
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          jobId: 1,
+          status: 1,
+          "user._id": 1,
+          "user.fullName": 1,
+          "user.country": 1,
+          "userInfo.gender": 1,
+          "userInfo.dob": 1,
+          "userInfo.age": 1,
+        },
+      },
+      { $skip: (page - 1) * limit },
+      { $limit: limit },
+    ]);
+
+    return {
+      revisedData,
+      appliedJobs,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  },
+
+  async updateJobStatus(payload: any) {
+    const { status, jobId } = payload;
+    await AppliedJobModel.findOneAndUpdate({ jobId }, { $set: { status } });
+
+    //PUSH_NOTIFICATION
+    //PUSH_NOTIFICATION
+    //PUSH_NOTIFICATION
+
+    return {};
+  },
+
+  async getJobDataCSV(payload: any) {
+    const { jobId } = payload;
+
+    // --- Get Job Info ---
+    const jobData = await JobModel.findById(jobId)
+      .select("en minAge maxAge minHeightInCm date pay currency countryCode")
+      .lean();
+
+    if (!jobData) {
+      throw new Error("Invalid Job Id");
+    }
+
+    // --- Get Applied Jobs with user info ---
+    const appliedJobs = await AppliedJobModel.aggregate([
+      {
+        $match: {
+          jobId: new mongoose.Types.ObjectId(jobId),
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // users collection
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $lookup: {
+          from: "userinfos", // userInfo collection
+          localField: "userId",
+          foreignField: "userId",
+          as: "userInfo",
+        },
+      },
+      { $unwind: { path: "$userInfo", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          "userInfo.age": {
+            $cond: [
+              { $ifNull: ["$userInfo.dob", false] },
+              {
+                $dateDiff: {
+                  startDate: "$userInfo.dob",
+                  endDate: "$$NOW",
+                  unit: "year",
+                },
+              },
+              null,
+            ],
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          status: 1,
+          "user.fullName": 1,
+          "user.country": 1,
+          "userInfo.gender": 1,
+          "userInfo.dob": 1,
+          "userInfo.age": 1,
+        },
+      },
+    ]);
+
+    // --- Map to CSV rows ---
+    const rows = appliedJobs.map((job) => ({
+      fullName: job.user.fullName,
+      country: job.user.country,
+      gender: job.userInfo?.gender || "",
+      dob: job.userInfo?.dob
+        ? new Date(job.userInfo.dob).toISOString().split("T")[0]
+        : "",
+      age: job.userInfo?.age ?? "",
+      status: job.status,
+    }));
+
+    // --- Build CSV Data ---
+    const jobMeta = [
+      { Field: "Job Title", Value: jobData?.en?.title },
+      { Field: "Min Age", Value: jobData.minAge ?? "" },
+      { Field: "Max Age", Value: jobData.maxAge ?? "" },
+      { Field: "Payment", Value: jobData.pay ?? "" },
+      { Field: "Currency", Value: jobData.currency ?? "" },
+      { Field: "Job Date", Value: jobData.date ?? "" },
+      { Field: "Location", Value: jobData.countryCode ?? "" },
+    ];
+
+    // Convert both sections into CSV separately
+    const jobParser = new Parser({ fields: ["Field", "Value"] });
+    const jobCsv = jobParser.parse(jobMeta);
+
+    const userFields = [
+      { label: "Full Name", value: "fullName" },
+      { label: "Country", value: "country" },
+      { label: "Gender", value: "gender" },
+      { label: "Date of Birth", value: "dob" },
+      { label: "Age", value: "age" },
+      { label: "Application Status", value: "status" },
+    ];
+    const userParser = new Parser({ fields: userFields });
+    const usersCsv = userParser.parse(rows);
+
+    // Merge with a blank line in between
+    const csv = jobCsv + "\n\n" + usersCsv;
+
+    return { csv, title: jobData?.en?.title || "" };
+  },
 };
 
 export const taskServices = {
@@ -938,7 +1161,7 @@ export const taskServices = {
 
     /** ------------------ UPDATE EXISTING QUIZZES ------------------ **/
     for (const q of existingQuizzes) {
-      const existingQuiz = await QuizModel.findById(q._id) as any;
+      const existingQuiz = (await QuizModel.findById(q._id)) as any;
 
       if (!existingQuiz) continue; // skip invalid IDs
 
