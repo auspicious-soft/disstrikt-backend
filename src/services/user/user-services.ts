@@ -42,7 +42,7 @@ export const homeServices = {
       {
         $match: {
           taskNumber: { $lte: plan?.fullAccess?.tasks },
-          milestone: { $lte: currentMilestone },
+          milestone: { $eq: currentMilestone },
           isActive: true,
         },
       },
@@ -86,27 +86,12 @@ export const homeServices = {
         },
       },
       { $sort: { taskNumber: 1 } },
-      {
-        $facet: {
-          tasks: [{ $skip: skip }, { $limit: limit }],
-          meta: [{ $count: "total" }],
-        },
-      },
     ]);
 
-    const tasks = result[0]?.tasks || [];
+    const tasks = result || [];
     const unlockedTask = tasks.find((data: any) => data.attempted === false);
-    // Group by milestone
-    const groupedTasks = tasks.reduce((acc: any, task: any) => {
-      const milestone = task.milestone;
-      if (!acc[milestone]) {
-        acc[milestone] = [];
-      }
-      acc[milestone].push(task);
-      return acc;
-    }, {});
 
-    const total = result[0]?.meta[0]?.total || 0;
+    const total = result.length || 0;
 
     const percentage =
       total > 0
@@ -127,20 +112,7 @@ export const homeServices = {
       planName: payload.userData.subscription.planName,
       percentage: Number(percentage.toFixed(1)),
       unlockedTask: unlockedTask.taskNumber || null,
-      milestone1: groupedTasks[1] || [],
-      milestone2: groupedTasks[2] || [],
-      milestone3: groupedTasks[3] || [],
-      milestone4: groupedTasks[4] || [],
-      milestone5: groupedTasks[5] || [],
-      milestone6: groupedTasks[6] || [],
-      milestone7: groupedTasks[7] || [],
-      milestone8: groupedTasks[8] || [],
-      pagination: {
-        page,
-        limit,
-        total,
-        totalPages: Math.ceil(total / limit),
-      },
+      milestoneData: tasks || [],
     };
   },
 
@@ -162,7 +134,10 @@ export const homeServices = {
       taskNumber: task.taskNumber - 1,
     }).lean();
 
-    if (task.taskNumber - 1 !== 0 && (!previousTask || !previousTask.taskReviewed)) {
+    if (
+      task.taskNumber - 1 !== 0 &&
+      (!previousTask || !previousTask.taskReviewed)
+    ) {
       throw new Error("preReviewPending");
     }
 
@@ -198,7 +173,7 @@ export const homeServices = {
     if (task.taskType == "CHECK_BOX") {
       const checkbox = (await CheckboxModel.findOne({ taskId }).lean()) as any;
       const data = checkbox[userData.language] || {};
-      response["checkbox"] = data;
+      response["checkbox"] = Object.values(data);
     }
 
     delete response[userData.language];
@@ -254,6 +229,9 @@ export const homeServices = {
         returnSomething = { correctCount, totalCount };
       } else if (taskData?.answerType === "CHECK_BOX") {
         checkBox = body.checkbox;
+        if(checkBox.length ===0){
+          throw new Error("noOptionSelected")
+        }
         rating = 3;
         taskReviewed = true;
       } else if (taskData?.answerType === "DONE") {

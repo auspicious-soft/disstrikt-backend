@@ -15,7 +15,7 @@ export interface ITaskResponse extends Document {
   text?: string;
   quiz?: object[];
   input?: object;
-  checkBox?: object;
+  checkBox?: string[];
   taskNumber?: number;
   milestone?: number;
   taskReviewed?: boolean;
@@ -53,7 +53,7 @@ const TaskResponseSchema = new Schema<ITaskResponse>({
   },
   checkBox: {
     type: Object,
-    default: {},
+    default: [],
   },
   taskReviewed: {
     type: Boolean,
