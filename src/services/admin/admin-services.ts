@@ -1440,6 +1440,7 @@ export const userServices = {
       milestone: val.milestone,
       rating: val.rating,
       title: val.taskId.en.title,
+      _id: val._id,
     }));
 
     const groupedByMilestone: any[] = [];
@@ -1464,6 +1465,51 @@ export const userServices = {
   },
 
   async getUserTaskResponse(payload: any) {
+    const { taskId } = payload;
+    const data = await TaskResponseModel.findById(taskId).lean();
+    return data;
+  },
+
+  async submitTaskResponse(payload: any) {
+    const { taskId, rating } = payload;
+
+    const taskData = await TaskResponseModel.findById(taskId).populate("userId").lean() as any;
+
+    if(!taskData){
+      throw new Error("Task not present")
+    }
+
+    if (rating === 0) {
+      await TaskResponseModel.findByIdAndDelete(taskId);
+      return {};
+
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+    }
+
+    await TaskResponseModel.findByIdAndUpdate(taskId, {
+      $set: { rating, taskReviewed: true },
+    });
+
+    const nextTask = await TaskModel.findOne({
+      taskNumber: (taskData?.taskNumber || 0) + 1,
+    }).lean();
+
+    if (
+      nextTask &&
+      taskData?.userId?.currentMilestone && taskData?.userId?.currentMilestone !== nextTask?.milestone
+    ) {
+      await UserModel.findByIdAndUpdate(taskData.userId._id, {
+        $set: { currentMilestone: nextTask.milestone },
+      });
+
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+      //PUSH_NOTIFICATION
+    }
+
     return {};
   },
 };

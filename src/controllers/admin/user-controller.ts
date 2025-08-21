@@ -45,7 +45,23 @@ export const getUserById = async (req: Request, res: Response) => {
 };
 export const getUserTaskResponse = async (req: Request, res: Response) => {
   try {
-    const response = await userServices.getUserTaskResponse({});
+    const {id:taskId} = req.params;
+    const response = await userServices.getUserTaskResponse({taskId});
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+export const submitTaskResponse = async (req: Request, res: Response) => {
+  try {
+    const {id:taskId} = req.params;
+    if(!taskId){
+        throw new Error("Either task id or rating is not present")
+    }
+    const response = await userServices.submitTaskResponse({taskId, rating : req.body.rating});
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {

@@ -27,7 +27,7 @@ export interface ITaskResponse extends Document {
 const TaskResponseSchema = new Schema<ITaskResponse>({
   userId: {
     type: Schema.Types.ObjectId,
-    ref: "User",
+    ref: "user",
     required: true,
   },
   taskId: {
