@@ -1080,7 +1080,7 @@ export const taskServices = {
 
     if (task.taskType == "CHECK_BOX") {
       const checkbox = (await CheckboxModel.findOne({ taskId }).lean()) as any;
-      const data = checkbox[language] || {};
+      const data = checkbox ? checkbox[language] : {};
       response["checkbox"] = data;
     }
 

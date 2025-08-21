@@ -172,7 +172,7 @@ export const homeServices = {
 
     if (task.taskType == "CHECK_BOX") {
       const checkbox = (await CheckboxModel.findOne({ taskId }).lean()) as any;
-      const data = checkbox[userData.language] || {};
+      const data = checkbox ? checkbox[userData.language] : {};
       response["checkbox"] = Object.values(data);
     }
 
