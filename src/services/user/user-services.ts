@@ -605,6 +605,7 @@ export const profileServices = {
           }
         );
       }
+      
       if (type == "cancelTrial" && planId) {
         await stripe.subscriptions.cancel(
           userData.subscription.stripeSubscriptionId

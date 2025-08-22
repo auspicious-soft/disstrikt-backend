@@ -69,6 +69,7 @@ const TaskSchema = new Schema<ITask>({
       "QUIZ",
       "SET_CARD",
       "PORT_INTRO_VIDEO",
+      "CALENDLY"
     ],
     default: "DONE",
   },

@@ -1464,6 +1464,11 @@ export const userServices = {
     };
   },
 
+  async getAllTaskResponse(payload: any){
+    console.log("working")
+    return {}
+  },
+
   async getUserTaskResponse(payload: any) {
     const { taskId } = payload;
     const data = await TaskResponseModel.findById(taskId).lean();
