@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { getDashboard } from "src/controllers/admin/dashboard-controller";
 import { createJob, getJobDataCSV, getJobs, getJobsById, updateJobStatus } from "src/controllers/admin/job-controller";
 import {
   createPlan,
@@ -17,6 +18,9 @@ import { hashPassword } from "src/utils/helper";
 
 // Code
 const router = Router();
+
+// Dashboard-routes
+router.route("/get-dashboard").get(getDashboard)
 
 // Plan-routes
 router.route("/price-plan").get(getPlans).post(createPlan).put(updatePlan);

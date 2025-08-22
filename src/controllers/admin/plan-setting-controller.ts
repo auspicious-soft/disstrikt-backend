@@ -43,6 +43,7 @@ export const createPlan = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const getPlans = async (req: Request, res: Response) => {
   try {
     const response = await planServices.getPlans({});
@@ -101,6 +102,7 @@ export const getPlatformInfo = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const postTermAndCondition = async (req: Request, res: Response) => {
   try {
     const { ...termAndCondition } = req.body;
@@ -133,6 +135,7 @@ export const postTermAndCondition = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const postPrivacyPolicy = async (req: Request, res: Response) => {
   try {
     const { ...privacyPolicy } = req.body;
@@ -165,6 +168,7 @@ export const postPrivacyPolicy = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const postSupport = async (req: Request, res: Response) => {
   try {
     const { ...support } = req.body;
