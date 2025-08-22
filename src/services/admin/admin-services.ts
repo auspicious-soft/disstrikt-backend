@@ -915,9 +915,85 @@ export const jobServices = {
 
 export const taskServices = {
   async createTask(payload: any) {
-    return {};
-  },
+    const {
+      title = null,
+      description = null,
+      subject = "Modeling",
+      link = [],
+      newMilestone = false,
+      taskType,
+      answerType,
+    } = payload;
 
+    if (
+      ![
+        "LINK",
+        "TEXT",
+        "WATCH_VIDEO",
+        "DOWNLOAD_FILE",
+        "JOB_SELECTED",
+        "CHECK_BOX",
+        "QUIZ",
+        "CALENDLY",
+      ].includes(taskType)
+    ) {
+      throw new Error("Invalid task type");
+    }
+
+    if (
+      ![
+        "UPLOAD_FILE",
+        "DONE",
+        "WRITE_SECTION",
+        "UPLOAD_IMAGE",
+        "UPLOAD_VIDEO",
+        "CALENDLY",
+      ].includes(answerType)
+    ) {
+      throw new Error("Invalid answer type");
+    }
+
+    if (!title) {
+      throw new Error("Missing title");
+    }
+
+    const lastTask = await TaskModel.findOne({})
+      .sort({ taskNumber: -1 }) // descending order
+      .limit(1)
+      .lean();
+
+    // English base fields
+    const en = {
+      title,
+      description,
+      subject,
+    };
+
+    // Generate translations for other languages
+    const { nl, fr, es } = await translateJobFields(en);
+
+    // Create new task
+    const newTask = new TaskModel({
+      en,
+      nl,
+      fr,
+      es,
+      link,
+    });
+
+    newTask.taskNumber = (lastTask?.taskNumber || 0) + 1;
+    if (newMilestone) {
+      newTask.milestone = (lastTask?.milestone || 0) + 1;
+    } else {
+      newTask.milestone = lastTask?.milestone;
+    }
+    newTask.taskType = taskType;
+    newTask.answerType = answerType;
+
+    await newTask.save();
+
+    return newTask;
+  },
   async updateTask(payload: any) {
     const { data, taskId } = payload;
 
@@ -1464,9 +1540,88 @@ export const userServices = {
     };
   },
 
-  async getAllTaskResponse(payload: any){
-    console.log("working")
-    return {}
+  async getAllTaskResponse(payload: any) {
+    let { page = 1, limit = 50, search = "", sortOrder = "newToOld" } = payload;
+    page = Number(page);
+    limit = Number(limit);
+
+    const sortStage =
+      sortOrder === "oldToNew" ? { createdAt: 1 } : { createdAt: -1 };
+
+    const pipeline: any[] = [
+      {
+        $match: {
+          taskReviewed: false,
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // name of your users collection
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $match: search
+          ? {
+              "user.fullName": { $regex: search, $options: "i" },
+            }
+          : {},
+      },
+      {
+        $project: {
+          createdAt: 1,
+          milestone: 1,
+          taskNumber: 1,
+          appReview: 1,
+          "user.fullName": 1,
+        },
+      },
+      { $sort: sortStage },
+      { $skip: (page - 1) * limit },
+      { $limit: limit },
+    ];
+
+    const allTasks = await TaskResponseModel.aggregate(pipeline);
+
+    // Total count for pagination
+    const totalCountPipeline = [
+      {
+        $match: { taskReviewed: false },
+      },
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $match: search
+          ? {
+              "user.fullName": { $regex: search, $options: "i" },
+            }
+          : {},
+      },
+      { $count: "total" },
+    ];
+
+    const totalResult = await TaskResponseModel.aggregate(totalCountPipeline);
+    const totalCount = totalResult[0]?.total || 0;
+
+    return {
+      data: allTasks,
+      pagination: {
+        total: totalCount,
+        page,
+        limit,
+        totalPages: Math.ceil(totalCount / limit),
+      },
+    };
   },
 
   async getUserTaskResponse(payload: any) {
@@ -1478,10 +1633,12 @@ export const userServices = {
   async submitTaskResponse(payload: any) {
     const { taskId, rating } = payload;
 
-    const taskData = await TaskResponseModel.findById(taskId).populate("userId").lean() as any;
+    const taskData = (await TaskResponseModel.findById(taskId)
+      .populate("userId")
+      .lean()) as any;
 
-    if(!taskData){
-      throw new Error("Task not present")
+    if (!taskData) {
+      throw new Error("Task not present");
     }
 
     if (rating === 0) {
@@ -1503,7 +1660,8 @@ export const userServices = {
 
     if (
       nextTask &&
-      taskData?.userId?.currentMilestone && taskData?.userId?.currentMilestone !== nextTask?.milestone
+      taskData?.userId?.currentMilestone &&
+      taskData?.userId?.currentMilestone !== nextTask?.milestone
     ) {
       await UserModel.findByIdAndUpdate(taskData.userId._id, {
         $set: { currentMilestone: nextTask.milestone },

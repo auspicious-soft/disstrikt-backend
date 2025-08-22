@@ -24,63 +24,68 @@ export interface ITaskResponse extends Document {
   isActive?: boolean;
 }
 
-const TaskResponseSchema = new Schema<ITaskResponse>({
-  userId: {
-    type: Schema.Types.ObjectId,
-    ref: "user",
-    required: true,
+const TaskResponseSchema = new Schema<ITaskResponse>(
+  {
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+    taskId: {
+      type: Schema.Types.ObjectId,
+      ref: "task",
+      required: true,
+    },
+    uploadLinks: {
+      type: Array,
+      default: [],
+    },
+    text: {
+      type: String,
+      default: "",
+    },
+    quiz: {
+      type: Array,
+      default: [],
+    },
+    input: {
+      type: Object,
+      default: {},
+    },
+    checkBox: {
+      type: Object,
+      default: [],
+    },
+    taskReviewed: {
+      type: Boolean,
+      default: false,
+    },
+    rating: {
+      type: Number,
+      default: 0,
+    },
+    taskNumber: {
+      type: Number,
+      autoIncrement: true,
+      default: 1,
+    },
+    milestone: {
+      type: Number,
+      default: 1,
+    },
+    appReview: {
+      type: Boolean,
+      default: false,
+    },
+    isActive: {
+      type: Boolean,
+      default: true,
+    },
   },
-  taskId: {
-    type: Schema.Types.ObjectId,
-    ref: "task",
-    required: true,
-  },
-  uploadLinks: {
-    type: Array,
-    default: [],
-  },
-  text: {
-    type: String,
-    default: "",
-  },
-  quiz: {
-    type: Array,
-    default: [],
-  },
-  input: {
-    type: Object,
-    default: {},
-  },
-  checkBox: {
-    type: Object,
-    default: [],
-  },
-  taskReviewed: {
-    type: Boolean,
-    default: false,
-  },
-  rating: {
-    type: Number,
-    default: 0,
-  },
-  taskNumber: {
-    type: Number,
-    autoIncrement: true,
-    default: 1,
-  },
-  milestone: {
-    type: Number,
-    default: 1,
-  },
-  appReview: {
-    type: Boolean,
-    default: false,
-  },
-  isActive: {
-    type: Boolean,
-    default: true,
-  },
-});
+  {
+    timestamps: true, 
+  }
+);
 
 export const TaskResponseModel = mongoose.model<ITaskResponse>(
   "taskresponse",

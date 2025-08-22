@@ -22,7 +22,7 @@ const router = Router();
 router.route("/price-plan").get(getPlans).post(createPlan).put(updatePlan);
 
 // Review-tasks-routes
-router.route("userTask").get(getAllTaskResponse)
+router.route("/userTask").get(getAllTaskResponse)
 router.route("/userTask/:id").get(getUserTaskResponse).post(submitTaskResponse)
 
 // Setting-routes
@@ -37,8 +37,8 @@ router.route("/jobsById/:id").get(getJobsById).put(updateJobStatus)
 router.route("/jobDataCSV/:id").get(getJobDataCSV)
 
 // Task-management-routes
-router.route("/tasks").get(getTasks)
-router.route("/tasksById/:id").post(createTask).put(updateTask).get(getTaskById)
+router.route("/tasks").get(getTasks).post(createTask)
+router.route("/tasksById/:id").put(updateTask).get(getTaskById)
 router.route("/addQuiz/:id").post(addQuiz).delete(deleteQuiz)
 router.route("/addCheckbox").post(addCheckbox)
 router.post("/upload", multerUpload, uploadToS3);

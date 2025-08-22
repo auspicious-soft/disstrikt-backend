@@ -46,7 +46,7 @@ export const getUserById = async (req: Request, res: Response) => {
 
 export const getAllTaskResponse = async (req: Request, res: Response) => {
   try {
-    const response = await userServices.getAllTaskResponse({});
+    const response = await userServices.getAllTaskResponse({...req.query});
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {

@@ -111,7 +111,7 @@ export const homeServices = {
       image: payload.userData.image,
       planName: payload.userData.subscription.planName,
       percentage: Number(percentage.toFixed(1)),
-      unlockedTask: unlockedTask.taskNumber || null,
+      unlockedTask: unlockedTask?.taskNumber || null,
       milestoneData: tasks || [],
     };
   },
@@ -121,7 +121,7 @@ export const homeServices = {
 
     const task = (await TaskModel.findById(taskId)
       .select(
-        `${userData.language} taskType answerType link taskNumber milestone appReview`
+        `${userData.language} taskType answerType link taskNumber milestone appReview count`
       )
       .lean()) as any;
 
@@ -220,8 +220,8 @@ export const homeServices = {
         const correctCount = quiz.filter((q: any) => q.isCorrect).length;
         const totalCount = quiz.length;
 
-        if (totalCount === 0) {
-          throw new Error("quizFailed");
+        if (correctCount == 0) {
+          return { correctCount, totalCount };
         }
         // Scale to 0–3
         rating = Math.round((correctCount / totalCount) * 3);
@@ -229,8 +229,8 @@ export const homeServices = {
         returnSomething = { correctCount, totalCount };
       } else if (taskData?.answerType === "CHECK_BOX") {
         checkBox = body.checkbox;
-        if(checkBox.length ===0){
-          throw new Error("noOptionSelected")
+        if (checkBox.length === 0) {
+          throw new Error("noOptionSelected");
         }
         rating = 3;
         taskReviewed = true;
@@ -272,7 +272,8 @@ export const homeServices = {
             userData?.id,
             taskData?.taskNumber || 500
           );
-          throw new Error("Not integrated yet");
+          rating = 3;
+          taskReviewed = true;
         } else {
           throw new Error("Invalid Task Type");
         }
@@ -296,7 +297,7 @@ export const homeServices = {
         text = body.writeSection;
         rating = 3;
       } else if (taskData?.answerType === "UPLOAD_IMAGE") {
-        if (body.uploadLinks.length == 0) {
+        if (body.uploadLinks.length == 0 || taskData.count !== body.uploadLinks.length) {
           throw new Error("noImageFound");
         } else {
           uploadLinks = body.uploadLinks;
@@ -430,6 +431,11 @@ export const profileServices = {
       taskReviewed: true,
     });
 
+    const totalCompletedTasks = await TaskResponseModel.countDocuments({
+      userId: userData.id,
+      taskReviewed: true,
+    });
+
     const percentage = total > 0 ? (completedTasks / total) * 100 : 0;
 
     return {
@@ -439,7 +445,7 @@ export const profileServices = {
       authType: userData.authType,
       milestone: userData.currentMilestone,
       percentage: Number(percentage.toFixed(1)),
-      taskCount: completedTasks,
+      taskCount: totalCompletedTasks || 0,
       appliedJobs: userJobs.length || 0,
       selectedJobs: selectedJobs,
     };
@@ -605,7 +611,7 @@ export const profileServices = {
           }
         );
       }
-      
+
       if (type == "cancelTrial" && planId) {
         await stripe.subscriptions.cancel(
           userData.subscription.stripeSubscriptionId

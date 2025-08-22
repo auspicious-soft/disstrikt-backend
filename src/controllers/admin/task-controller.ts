@@ -9,7 +9,7 @@ import {
 
 export const createTask = async (req: Request, res: Response) => {
   try {
-    const response = await taskServices.createTask({});
+    const response = await taskServices.createTask({...req.body});
     return CREATED(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {

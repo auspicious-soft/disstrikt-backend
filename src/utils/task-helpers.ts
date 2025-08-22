@@ -87,7 +87,7 @@ export async function uploadToPortfolio(userId: any, taskNumber: number) {
     // Append to setCards
     await UserInfoModel.findOneAndUpdate(
       { userId },
-      { $push: { setCards: { $each: uploadData } } },
+      { $set: { setCards: uploadData } },
       { new: true, upsert: true }
     );
   } else {
