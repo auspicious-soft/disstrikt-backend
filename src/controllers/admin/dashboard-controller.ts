@@ -14,6 +14,7 @@ import {
   OK,
 } from "src/utils/response";
 import { JobModel } from "src/models/admin/jobs-schema";
+import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
 
 export const getDashboard = async (req: Request, res: Response) => {
   try {
@@ -23,139 +24,160 @@ export const getDashboard = async (req: Request, res: Response) => {
       throw new Error("Invalid Country");
     }
 
-    const users = await UserModel.find().lean();
-    const pendingReviews = await TaskResponseModel.find({
-      taskReviewed: false,
-    }).lean();
-    const activePlans = await planModel.find().lean();
+    const now = new Date();
+    const monthStart = startOfMonth(now);
+    const monthEnd = endOfMonth(now);
+    const yearStart = startOfYear(now);
+    const yearEnd = endOfYear(now);
 
-    // Count subscribed users by plan
+    // Run independent queries in parallel
+    const [
+      users,
+      pendingReviews,
+      activePlans,
+      revenueMonthAgg,
+      revenueYearAgg,
+      thisMonthUsers,
+      totalJobs,
+      activeJobs,
+      monthlyCounts,
+      topThreeTasks,
+      userOverview,
+    ] = await Promise.all([
+      UserModel.find().lean(),
+      TaskResponseModel.find({ taskReviewed: false }).lean(),
+      planModel.find().lean(),
+
+      // Revenue this month
+      TransactionModel.aggregate([
+        {
+          $match: {
+            status: "succeeded",
+            paidAt: { $gte: monthStart, $lte: monthEnd },
+          },
+        },
+        { $group: { _id: "$currency", total: { $sum: "$amount" } } },
+      ]),
+
+      // Revenue this year
+      TransactionModel.aggregate([
+        {
+          $match: {
+            status: "succeeded",
+            paidAt: { $gte: yearStart, $lte: yearEnd },
+          },
+        },
+        { $group: { _id: "$currency", total: { $sum: "$amount" } } },
+      ]),
+
+      // Users created this month
+      UserModel.countDocuments({
+        createdAt: { $gte: monthStart, $lte: monthEnd },
+      }),
+
+      JobModel.countDocuments(),
+      JobModel.countDocuments({ date: { $gte: now } }),
+
+      // Monthly applied job counts
+      AppliedJobModel.aggregate([
+        { $match: { createdAt: { $gte: yearStart, $lt: yearEnd } } },
+        {
+          $group: {
+            _id: { month: { $month: "$createdAt" } },
+            count: { $sum: 1 },
+          },
+        },
+        { $project: { _id: 0, month: "$_id.month", count: 1 } },
+        { $sort: { month: 1 } },
+      ]),
+
+      // Top three tasks by frequency
+      TaskResponseModel.aggregate([
+        { $group: { _id: "$taskNumber", count: { $sum: 1 } } },
+        { $sort: { count: -1 } },
+        { $limit: 3 },
+        { $project: { taskNumber: "$_id", count: 1, _id: 0 } },
+      ]),
+
+      // Optimized user overview (avoid pushing all IDs)
+      UserModel.aggregate([
+        {
+          $lookup: {
+            from: "subscriptions",
+            localField: "_id",
+            foreignField: "userId",
+            pipeline: [{ $match: { status: "active" } }],
+            as: "subscriptions",
+          },
+        },
+        {
+          $group: {
+            _id: "$country",
+            totalUsers: { $sum: 1 },
+            subscribedUsersCount: {
+              $sum: { $size: "$subscriptions" },
+            },
+          },
+        },
+        {
+          $project: {
+            country: "$_id",
+            totalUsers: 1,
+            subscribedUsersCount: 1,
+          },
+        },
+      ]),
+    ]);
+
+    // Process subscribed users count by plan
     const subscribedUsers = await Promise.all(
       activePlans.map(async (val: any) => {
         const count = await SubscriptionModel.countDocuments({
           planId: val._id,
           status: "active",
         });
-        return {
-          name: val.name.en,
-          count,
-        };
+        return { name: val.name.en, count };
       })
     );
 
-    // --- User overview grouped by country ---
-    const userOverview = await UserModel.aggregate([
-      {
-        $group: {
-          _id: "$country",
-          totalUsers: { $sum: 1 },
-          userIds: { $push: "$_id" },
-        },
-      },
-      {
-        $lookup: {
-          from: "subscriptions",
-          let: { userIds: "$userIds" },
-          pipeline: [
-            {
-              $match: {
-                $expr: {
-                  $and: [
-                    { $in: ["$userId", "$$userIds"] },
-                    { $eq: ["$status", "active"] },
-                  ],
-                },
-              },
-            },
-          ],
-          as: "activeSubscriptions",
-        },
-      },
-      {
-        $project: {
-          country: "$_id",
-          totalUsers: 1,
-          subscribedUsersCount: { $size: "$activeSubscriptions" },
-        },
-      },
-    ]);
+    // Convert revenue results into simple objects
+    const revenueThisMonth = revenueMonthAgg.reduce<Record<string, number>>(
+      (acc, r) => ({ ...acc, [r._id.toLowerCase()]: r.total }),
+      { eur: 0, gbp: 0 }
+    );
 
-    const now = new Date();
+    const revenueThisYear = revenueYearAgg.reduce<Record<string, number>>(
+      (acc, r) => ({ ...acc, [r._id.toLowerCase()]: r.total }),
+      { eur: 0, gbp: 0 }
+    );
 
-    const monthStart = startOfMonth(now);
-    const monthEnd = endOfMonth(now);
-    const yearStart = startOfYear(now);
-    const yearEnd = endOfYear(now);
+    // Fill missing months in O(1)
+    const monthMap = new Map(monthlyCounts.map((m) => [m.month, m.count]));
+    const jobApplication = Array.from({ length: 12 }, (_, i) => ({
+      month: i + 1,
+      count: monthMap.get(i + 1) || 0,
+    }));
 
-    // Revenue this month
-    const revenueMonthAgg = await TransactionModel.aggregate([
-      {
-        $match: {
-          status: "succeeded",
-          paidAt: { $gte: monthStart, $lte: monthEnd },
-        },
-      },
-      {
-        $group: {
-          _id: "$currency",
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
-
-    const revenueThisMonth: Record<string, number> = { eur: 0, gbp: 0 };
-    revenueMonthAgg.forEach((r: any) => {
-      revenueThisMonth[r._id.toLowerCase()] = r.total;
-    });
-
-    // Revenue this year
-    const revenueYearAgg = await TransactionModel.aggregate([
-      {
-        $match: {
-          status: "succeeded",
-          paidAt: { $gte: yearStart, $lte: yearEnd },
-        },
-      },
-      {
-        $group: {
-          _id: "$currency",
-          total: { $sum: "$amount" },
-        },
-      },
-    ]);
-
-    const revenueThisYear: Record<string, number> = { eur: 0, gbp: 0 };
-    revenueYearAgg.forEach((r: any) => {
-      revenueThisYear[r._id.toLowerCase()] = r.total;
-    });
-
-    // Users created this month
-    const thisMonthUsers = await UserModel.countDocuments({
-      createdAt: { $gte: monthStart, $lte: monthEnd },
-    });
-
-   const totalJobs = await JobModel.countDocuments();
-
-// active jobs (date >= now)
-const activeJobs = await JobModel.countDocuments({
-  date: { $gte: now },
-});
     const response = {
       activeUsers: users.length || 0,
       pendingReviews: pendingReviews.length || 0,
       subscribedUsers,
-      userOverview, // 👈 now included
+      userOverview,
       revenueThisMonth,
       revenueThisYear,
       thisMonthUsers,
       totalJobs,
+      activeJobs,
+      jobApplication,
+      topThreeTasks,
     };
 
-    return OK(res, response || {}, req.body.language || "en");
+    return OK(res, response, req.body.language || "en");
   } catch (err: any) {
-    if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language || "en");
-    }
-    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+    return BADREQUEST(
+      res,
+      err.message || "Something went wrong",
+      req.body.language || "en"
+    );
   }
 };
