@@ -1,5 +1,5 @@
 import { Request } from "express";
-import mongoose, { Types } from "mongoose";
+import mongoose, { ObjectId, Types } from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
 import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
@@ -16,9 +16,10 @@ import { features, languages, regionalAccess } from "src/utils/constant";
 import { translateJobFields } from "src/utils/helper";
 import { Stripe } from "stripe";
 import { Parser } from "json2csv";
-import { userMoreInfo } from "src/controllers/auth/auth-controller";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { TaskResponseModel } from "src/models/admin/task-response";
+import { NotificationService } from "src/utils/FCM/fcm";
+import { userMoreInfo } from "src/controllers/auth/auth-controller";
 
 export const planServices = {
   async getPlans(payload: any) {
@@ -315,11 +316,22 @@ export const planServices = {
             currency,
           };
 
-          await SubscriptionModel.findOneAndUpdate(
+          const newSubscription = await SubscriptionModel.findOneAndUpdate(
             { stripeCustomerId, stripeSubscriptionId },
             { $set: updateData },
             { upsert: false }
           );
+
+          if (newSubscription) {
+            await NotificationService(
+              [newSubscription.userId] as any,
+              cancel_at_period_end
+                ? "SUBSCRIPTION_CANCELLED"
+                : "SUBSCRIPTION_STARTED",
+              newSubscription?._id as ObjectId
+            );
+          }
+
           break;
         }
 
@@ -368,7 +380,7 @@ export const planServices = {
 
             const newSubPrice = newSub.items.data[0]?.price;
 
-            await SubscriptionModel.create({
+            const newSubscription = await SubscriptionModel.create({
               userId,
               stripeCustomerId,
               stripeSubscriptionId: newSub.id,
@@ -387,11 +399,21 @@ export const planServices = {
               currency: newSubPrice?.currency ?? "inr",
               nextPlanId: null,
             });
+            await NotificationService(
+              [userId] as any,
+              "SUBSCRIPTION_RENEWED",
+              newSubscription?._id as ObjectId
+            );
           } else {
             await stripe.paymentMethods.detach(paymentMethodId);
             await TokenModel.findOneAndDelete({
               userId,
             });
+            await NotificationService(
+              [userId] as any,
+              "SUBSCRIPTION_CANCELLED",
+              _id as ObjectId
+            );
           }
           break;
         }
@@ -453,6 +475,12 @@ export const planServices = {
             }
           );
 
+          await NotificationService(
+            [userId],
+            "SUBSCRIPTION_RENEWED",
+            existing?._id as ObjectId
+          );
+
           // Create transaction
           await TransactionModel.create({
             userId,
@@ -510,6 +538,12 @@ export const planServices = {
             { $set: { status: "past_due" } }
           );
 
+          await NotificationService(
+            [userId],
+            "SUBSCRIPTION_FAILED",
+            existing?._id as ObjectId
+          );
+
           await TransactionModel.create({
             userId,
             stripeCustomerId: customerId,
@@ -555,7 +589,7 @@ export const planServices = {
 
           await SubscriptionModel.findOneAndDelete({ userId });
           await UserModel.findByIdAndUpdate(userId, { hasUsedTrial: true });
-          await SubscriptionModel.create({
+          const newSubscription = await SubscriptionModel.create({
             userId,
             stripeCustomerId,
             stripeSubscriptionId: subscription.id,
@@ -572,6 +606,12 @@ export const planServices = {
             currency,
             nextPlanId: null,
           });
+
+          await NotificationService(
+            [userId] as any,
+            "SUBSCRIPTION_STARTED",
+            newSubscription?._id as ObjectId
+          );
 
           break;
         }
@@ -606,6 +646,22 @@ export const jobServices = {
       date: jobDateTimeUTC,
       time,
     });
+
+    if (createdJob._id && createdJob?.en?.gender) {
+      // find all users with the same gender
+      const users = await UserInfoModel.find({
+        gender: createdJob.en.gender,
+      })
+        .select("_id userId")
+        .lean();
+
+      if (users.length > 0) {
+        const userIds = users?.map((u) => u.userId) as [];
+
+        // send notification to all these users
+        await NotificationService(userIds, "JOB_ALERT", createdJob._id);
+      }
+    }
 
     return createdJob;
   },
@@ -792,11 +848,18 @@ export const jobServices = {
 
   async updateJobStatus(payload: any) {
     const { status, jobId } = payload;
-    await AppliedJobModel.findOneAndUpdate({ jobId }, { $set: { status } });
-
-    //PUSH_NOTIFICATION
-    //PUSH_NOTIFICATION
-    //PUSH_NOTIFICATION
+    const jobData = await AppliedJobModel.findByIdAndUpdate(
+      jobId,
+      { $set: { status } },
+      { new: true }
+    );
+    if (jobData?.userId) {
+      await NotificationService(
+        [jobData?.userId],
+        status === "SELECTED" ? "JOB_SHORTLISTED" : "JOB_REJECTED",
+        jobId
+      );
+    }
 
     return {};
   },
@@ -1642,16 +1705,15 @@ export const userServices = {
 
     if (rating === 0) {
       await TaskResponseModel.findByIdAndDelete(taskId);
+      await NotificationService([taskData.userId], "TASK_REJECTED", taskId);
       return {};
-
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
     }
 
     await TaskResponseModel.findByIdAndUpdate(taskId, {
       $set: { rating, taskReviewed: true },
     });
+
+    await NotificationService([taskData.userId], "TASK_COMPLETED", taskId);
 
     const nextTask = await TaskModel.findOne({
       taskNumber: (taskData?.taskNumber || 0) + 1,
@@ -1666,10 +1728,11 @@ export const userServices = {
         $set: { currentMilestone: nextTask.milestone },
       });
 
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
+      await NotificationService(
+        [taskData.userId],
+        "MILESTONE_UNLOCKED",
+        nextTask._id
+      );
     }
 
     return {};

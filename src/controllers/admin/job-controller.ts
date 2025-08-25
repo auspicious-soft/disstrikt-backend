@@ -95,8 +95,8 @@ export const updateJobStatus = async (req: Request, res: Response) => {
     if (status !== "SELECTED" && status !== "REJECTED") {
       throw new Error("Invalid status");
     }
-
     const response = await jobServices.updateJobStatus({ jobId, status });
+
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
@@ -114,7 +114,6 @@ export const getJobDataCSV = async (req: Request, res: Response) => {
     res.header("Content-Type", "text/csv");
     res.attachment(`job_${response.title}_applications.csv`);
     res.send(response?.csv || null);
-
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");

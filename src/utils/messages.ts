@@ -280,6 +280,10 @@ export const customMessages: Record<SupportedLang, any> = {
     introVideoNotFound: "Intro video not found",
     preReviewPending: "Previous task review is still pending!",
     noOptionSelected: "No option is selected",
+    dailyApplicationLimitReached:
+      "Your daily limit to apply on job has finished",
+    monthlyApplicationLimitReached:
+      "Your monthly limit to apply on job has finished",
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",

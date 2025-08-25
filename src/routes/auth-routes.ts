@@ -43,9 +43,9 @@ router.get("/portfolio/:id", userPortfolio);
 
 router.post("/send-push", async (req: Request, res: Response) => {
   try {
-    const { userIds, type, language, referenceId } = req.body;
+    const { userIds, type, referenceId } = req.body;
 
-    await NotificationService(userIds, type, language, referenceId);
+    await NotificationService(userIds, type, referenceId);
   } catch (e) {
     console.log(e);
   }

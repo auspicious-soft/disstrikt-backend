@@ -4,6 +4,7 @@ export interface IAppliedJobs extends Document {
   userId: mongoose.Types.ObjectId;
   jobId: mongoose.Types.ObjectId;
   status: "PENDING" | "REJECTED" | "SELECTED";
+  createdAt: Date;
 }
 
 const AppliedJobSchema = new Schema<IAppliedJobs>(

@@ -46,25 +46,21 @@ export const initializeFirebase = () => {
 export const NotificationService = async (
   userIds: Types.ObjectId[],
   type: keyof (typeof notificationMessages)["en"],
-  language: keyof typeof notificationMessages = "en",
   referenceId?: Record<string, any>
 ) => {
   try {
     // pick message template
-    const messageTemplate =
-      notificationMessages[language]?.[type] ||
-      notificationMessages["en"][type];
-
-    if (!messageTemplate) {
-      throw new Error(`Notification message not found for type: ${type}`);
-    }
 
     const notifications: any[] = [];
 
     for (const userId of userIds) {
-      const userToken = await UserModel.findById(userId).select("fcmToken");
+      const userData = await UserModel.findById(userId).select("fcmToken");
+
+      const messageTemplate =
+        notificationMessages[userData?.language || "en"]?.[type];
+
       // Save each user’s notification separately in DB
-      if (userToken?.fcmToken) {
+      if (userData?.fcmToken && messageTemplate) {
         const notificationDoc = await NotificationModel.create({
           userId,
           type,
@@ -88,7 +84,7 @@ export const NotificationService = async (
                 type,
                 referenceId: referenceId ? JSON.stringify(referenceId) : "",
               },
-              token: userToken?.fcmToken,
+              token: userData?.fcmToken,
             });
             console.log(`📲 Push sent to user ${userId}`);
           } catch (pushErr) {

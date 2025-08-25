@@ -1,3 +1,4 @@
+import { endOfDay, endOfMonth, startOfDay, startOfMonth } from "date-fns";
 import { configDotenv } from "dotenv";
 import mongoose from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
@@ -13,6 +14,7 @@ import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { genders, languages } from "src/utils/constant";
+import { NotificationService } from "src/utils/FCM/fcm";
 import { generateToken, hashPassword, verifyPassword } from "src/utils/helper";
 import {
   checkBio,
@@ -297,7 +299,10 @@ export const homeServices = {
         text = body.writeSection;
         rating = 3;
       } else if (taskData?.answerType === "UPLOAD_IMAGE") {
-        if (body.uploadLinks.length == 0 || taskData.count !== body.uploadLinks.length) {
+        if (
+          body.uploadLinks.length == 0 ||
+          taskData.count !== body.uploadLinks.length
+        ) {
           throw new Error("noImageFound");
         } else {
           uploadLinks = body.uploadLinks;
@@ -385,6 +390,8 @@ export const homeServices = {
       { upsert: true }
     );
 
+    await NotificationService([userData.id], "TASK_COMPLETED", taskId);
+
     const nextTask = await TaskModel.findOne({
       taskNumber: (taskData?.taskNumber || 0) + 1,
     }).lean();
@@ -398,10 +405,11 @@ export const homeServices = {
         $set: { currentMilestone: nextTask.milestone },
       });
 
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
-      //PUSH_NOTIFICATION
+      await NotificationService(
+        [userData.id],
+        "MILESTONE_UNLOCKED",
+        nextTask._id
+      );
     }
 
     return returnSomething;
@@ -994,9 +1002,39 @@ export const userJobServices = {
       return now > jobDate;
     };
 
-    //*********************
-    //Will call validation helpers based on users plan later.
-    //*********************
+    // Get current date/time ranges
+    const todayStart = startOfDay(new Date());
+    const todayEnd = endOfDay(new Date());
+    const monthStart = startOfMonth(new Date());
+    const monthEnd = endOfMonth(new Date());
+
+    const planData = await planModel
+      .findById(payload.subscription.planId)
+      .lean();
+
+    const { jobApplicationsPerDay, jobApplicationsPerMonth } =
+      planData?.fullAccess as any;
+
+    // Check daily applied jobs
+    const jobAppliedByUserToday = await AppliedJobModel.countDocuments({
+      userId: id,
+      createdAt: { $gte: todayStart, $lte: todayEnd },
+    });
+
+    // Check monthly applied jobs
+    const jobAppliedByUserThisMonth = await AppliedJobModel.countDocuments({
+      userId: id,
+      createdAt: { $gte: monthStart, $lte: monthEnd },
+    });
+
+    // Validations
+    if (jobAppliedByUserToday >= jobApplicationsPerDay) {
+      throw new Error("dailyApplicationLimitReached");
+    }
+
+    if (jobAppliedByUserThisMonth >= jobApplicationsPerMonth) {
+      throw new Error("monthlyApplicationLimitReached");
+    }
 
     const checkApplication = await AppliedJobModel.findOne({
       jobId,
