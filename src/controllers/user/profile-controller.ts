@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
+import { NotificationModel } from "src/models/notifications/notification-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
@@ -44,6 +45,7 @@ export const getUser = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const updateUser = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -138,6 +140,7 @@ export const changePassword = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const changeLanguage = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -160,6 +163,7 @@ export const changeLanguage = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const changeCountry = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -182,6 +186,7 @@ export const changeCountry = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const getPlatformInfo = async (req: Request, res: Response) => {
   try {
     const key = req.query.key as string;
@@ -211,6 +216,7 @@ export const getPlatformInfo = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const getNotificationSetting = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -227,6 +233,7 @@ export const getNotificationSetting = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const postNotificationSetting = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -269,6 +276,50 @@ export const postNotificationSetting = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
+export const getNotifications = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    const { type, page = 1, limit = 10 } = req.query as any;
+
+    let response: any = {};
+
+    if (type === "VIEW") {
+      const skip = (Number(page) - 1) * Number(limit);
+
+      const [notifications, total] = await Promise.all([
+        NotificationModel.find({ userId: userData.id })
+          .sort({ createdAt: -1 }) // latest first
+          .skip(skip)
+          .limit(Number(limit))
+          .lean(),
+        NotificationModel.countDocuments({ userId: userData.id }),
+      ]);
+
+      response = {
+        total,
+        page: Number(page),
+        limit: Number(limit),
+        totalPages: Math.ceil(total / Number(limit)),
+        notifications,
+      };
+    } else {
+      await NotificationModel.updateMany(
+        { userId: userData.id },
+        { $set: { isRead: true } }
+      );
+      response = {};
+    }
+
+    return OK(res, response, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+
 export const deleteAccount = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -308,6 +359,7 @@ export const deleteAccount = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const updateSubscription = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;

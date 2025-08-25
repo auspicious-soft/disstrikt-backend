@@ -1,4 +1,6 @@
-import { Router } from "express";
+import { Request, Response, Router } from "express";
+import { NotificationService } from "src/utils/FCM/fcm";
+
 import {
   adminForgetPassword,
   adminLogin,
@@ -35,7 +37,18 @@ router.post("/admin/verify-otp", adminVerifyOtp);
 router.post("/admin/reset-password", adminResetPassword);
 
 //============================== PORTFOLIO Routes
-router.get("/portfolio/:id", userPortfolio)
+router.get("/portfolio/:id", userPortfolio);
 
+//============================== TEST Routes
+
+router.post("/send-push", async (req: Request, res: Response) => {
+  try {
+    const { userIds, type, language, referenceId } = req.body;
+
+    await NotificationService(userIds, type, language, referenceId);
+  } catch (e) {
+    console.log(e);
+  }
+});
 
 export { router };

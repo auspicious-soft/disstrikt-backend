@@ -34,6 +34,7 @@ import {
   changeLanguage,
   changePassword,
   deleteAccount,
+  getNotifications,
   getNotificationSetting,
   getPlatformInfo,
   getUser,
@@ -89,6 +90,9 @@ paidRouter.get("/jobs/:id", getJobById);
 
 // SEARCH
 paidRouter.get("/search-user", userSearch);
+
+// NOTIFICATION
+paidRouter.get("/get-notifications", getNotifications)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

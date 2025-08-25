@@ -994,6 +994,7 @@ export const taskServices = {
 
     return newTask;
   },
+
   async updateTask(payload: any) {
     const { data, taskId } = payload;
 
@@ -1025,15 +1026,13 @@ export const taskServices = {
       task.es = es;
     }
 
-    if (link.length) {
-      if (task?.link?.length) {
-        await Promise.all(
-          task.link.map((data: string) => deleteFileFromS3(data))
-        );
-      }
-
-      task.link = data.link;
+    if (task?.link?.length) {
+      await Promise.all(
+        task.link.map((data: string) => deleteFileFromS3(data))
+      );
     }
+
+    task.link = link;
 
     task.save();
 

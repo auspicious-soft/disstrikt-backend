@@ -3,10 +3,10 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db";
-import bodyParser from "body-parser";
 import { checkSubscription, checkUserAuth } from "./middleware/check-auth";
 import { admin, auth, paidUser, user } from "./routes";
 import { handleStripeWebhook } from "./controllers/admin/plan-setting-controller";
+import { initializeFirebase } from "./utils/FCM/fcm";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -14,6 +14,7 @@ const __dirname = path.dirname(__filename);
 const PORT = process.env.PORT || 8000;
 const app = express();
 
+initializeFirebase();
 
 //Webhook Routes
 

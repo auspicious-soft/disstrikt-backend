@@ -1,60 +1,235 @@
-export type SupportedLang = 'en' | 'nl' | 'fr' | 'es';
+export type SupportedLang = "en" | "nl" | "fr" | "es";
 
 export const messages = {
   success: {
-    en: 'Success',
-    nl: 'Succes',
-    fr: 'Succès',
-    es: 'Éxito',
+    en: "Success",
+    nl: "Succes",
+    fr: "Succès",
+    es: "Éxito",
   },
   created: {
-    en: 'Resource created successfully',
-    nl: 'Bron succesvol aangemaakt',
-    fr: 'Ressource créée avec succès',
-    es: 'Recurso creado con éxito',
+    en: "Resource created successfully",
+    nl: "Bron succesvol aangemaakt",
+    fr: "Ressource créée avec succès",
+    es: "Recurso creado con éxito",
   },
   error: {
-    en: 'Something went wrong',
-    nl: 'Er is iets misgegaan',
-    fr: 'Une erreur s\'est produite',
-    es: 'Algo salió mal',
+    en: "Something went wrong",
+    nl: "Er is iets misgegaan",
+    fr: "Une erreur s'est produite",
+    es: "Algo salió mal",
   },
   notFound: {
-    en: 'Resource not found',
-    nl: 'Bron niet gevonden',
-    fr: 'Ressource introuvable',
-    es: 'Recurso no encontrado',
+    en: "Resource not found",
+    nl: "Bron niet gevonden",
+    fr: "Ressource introuvable",
+    es: "Recurso no encontrado",
   },
   unauthorized: {
-    en: 'Unauthorized access',
-    nl: 'Niet gemachtigd',
-    fr: 'Non autorisé',
-    es: 'No autorizado',
+    en: "Unauthorized access",
+    nl: "Niet gemachtigd",
+    fr: "Non autorisé",
+    es: "No autorizado",
   },
   forbidden: {
-    en: 'Forbidden',
-    nl: 'Verboden',
-    fr: 'Interdit',
-    es: 'Prohibido',
+    en: "Forbidden",
+    nl: "Verboden",
+    fr: "Interdit",
+    es: "Prohibido",
   },
   badRequest: {
-    en: 'Bad request',
-    nl: 'Ongeldig verzoek',
-    fr: 'Requête invalide',
-    es: 'Solicitud incorrecta',
+    en: "Bad request",
+    nl: "Ongeldig verzoek",
+    fr: "Requête invalide",
+    es: "Solicitud incorrecta",
   },
   conflict: {
-    en: 'Conflict occurred',
-    nl: 'Conflict opgetreden',
-    fr: 'Conflit survenu',
-    es: 'Conflicto ocurrido',
+    en: "Conflict occurred",
+    nl: "Conflict opgetreden",
+    fr: "Conflit survenu",
+    es: "Conflicto ocurrido",
   },
   validationError: {
-    en: 'Validation failed',
-    nl: 'Validatie mislukt',
-    fr: 'Échec de la validation',
-    es: 'La validación falló',
-  }
+    en: "Validation failed",
+    nl: "Validatie mislukt",
+    fr: "Échec de la validation",
+    es: "La validación falló",
+  },
+};
+
+export const notificationMessages = {
+  en: {
+    TASK_COMPLETED: {
+      title: "Task Completed",
+      description: "You’ve unlocked a new task. Keep going!",
+    },
+    TASK_REJECTED: {
+      title: "Task Rejected",
+      description: "Your submitted task did not pass. Please try again.",
+    },
+    JOB_SHORTLISTED: {
+      title: "Job Shortlisted",
+      description: "Congratulations! Your application has been shortlisted.",
+    },
+    JOB_REJECTED: {
+      title: "Job Rejected",
+      description: "Unfortunately, your job application was not successful.",
+    },
+    JOB_ALERT: {
+      title: "New Job Alert",
+      description: "New job opportunities are available. Check them out!",
+    },
+    MILESTONE_UNLOCKED: {
+      title: "Milestone Unlocked",
+      description: "Great work! You’ve unlocked a new milestone.",
+    },
+    SUBSCRIPTION_STARTED: {
+      title: "Subscription Started",
+      description: "Your subscription is now active. Enjoy the benefits!",
+    },
+    SUBSCRIPTION_RENEWED: {
+      title: "Subscription Renewed",
+      description: "Your subscription has been successfully renewed.",
+    },
+    SUBSCRIPTION_FAILED: {
+      title: "Payment Failed",
+      description: "Your subscription payment could not be processed.",
+    },
+    SUBSCRIPTION_CANCELLED: {
+      title: "Subscription Cancelled",
+      description: "Your subscription has been cancelled.",
+    },
+  },
+  nl: {
+    TASK_COMPLETED: {
+      title: "Taak Voltooid",
+      description: "Je hebt een nieuwe taak ontgrendeld. Ga zo door!",
+    },
+    TASK_REJECTED: {
+      title: "Taak Afgewezen",
+      description:
+        "Je ingediende taak is niet goedgekeurd. Probeer het opnieuw.",
+    },
+    JOB_SHORTLISTED: {
+      title: "Vacature Geselecteerd",
+      description: "Gefeliciteerd! Je sollicitatie is geselecteerd.",
+    },
+    JOB_REJECTED: {
+      title: "Vacature Afgewezen",
+      description: "Helaas is je sollicitatie niet succesvol geweest.",
+    },
+    JOB_ALERT: {
+      title: "Nieuwe Vacature",
+      description: "Nieuwe vacatures zijn beschikbaar. Bekijk ze nu!",
+    },
+    MILESTONE_UNLOCKED: {
+      title: "Mijlpaal Behaald",
+      description: "Goed gedaan! Je hebt een nieuwe mijlpaal behaald.",
+    },
+    SUBSCRIPTION_STARTED: {
+      title: "Abonnement Gestart",
+      description: "Je abonnement is nu actief. Veel plezier!",
+    },
+    SUBSCRIPTION_RENEWED: {
+      title: "Abonnement Vernieuwd",
+      description: "Je abonnement is succesvol verlengd.",
+    },
+    SUBSCRIPTION_FAILED: {
+      title: "Betaling Mislukt",
+      description: "Je abonnementsbetaling kon niet worden verwerkt.",
+    },
+    SUBSCRIPTION_CANCELLED: {
+      title: "Abonnement Geannuleerd",
+      description: "Je abonnement is geannuleerd.",
+    },
+  },
+  fr: {
+    TASK_COMPLETED: {
+      title: "Tâche Terminée",
+      description:
+        "Vous avez débloqué une nouvelle tâche. Continuez comme ça !",
+    },
+    TASK_REJECTED: {
+      title: "Tâche Rejetée",
+      description: "Votre tâche soumise n’a pas été acceptée. Réessayez.",
+    },
+    JOB_SHORTLISTED: {
+      title: "Candidature Sélectionnée",
+      description: "Félicitations ! Votre candidature a été présélectionnée.",
+    },
+    JOB_REJECTED: {
+      title: "Candidature Rejetée",
+      description: "Malheureusement, votre candidature n’a pas été retenue.",
+    },
+    JOB_ALERT: {
+      title: "Nouvelle Offre d’Emploi",
+      description:
+        "De nouvelles offres d’emploi sont disponibles. Consultez-les !",
+    },
+    MILESTONE_UNLOCKED: {
+      title: "Étape Atteinte",
+      description: "Bravo ! Vous avez atteint une nouvelle étape.",
+    },
+    SUBSCRIPTION_STARTED: {
+      title: "Abonnement Démarré",
+      description: "Votre abonnement est maintenant actif. Profitez-en !",
+    },
+    SUBSCRIPTION_RENEWED: {
+      title: "Abonnement Renouvelé",
+      description: "Votre abonnement a été renouvelé avec succès.",
+    },
+    SUBSCRIPTION_FAILED: {
+      title: "Paiement Échoué",
+      description: "Votre paiement d’abonnement n’a pas pu être traité.",
+    },
+    SUBSCRIPTION_CANCELLED: {
+      title: "Abonnement Annulé",
+      description: "Votre abonnement a été annulé.",
+    },
+  },
+  es: {
+    TASK_COMPLETED: {
+      title: "Tarea Completada",
+      description: "Has desbloqueado una nueva tarea. ¡Sigue así!",
+    },
+    TASK_REJECTED: {
+      title: "Tarea Rechazada",
+      description: "Tu tarea enviada no fue aprobada. Intenta de nuevo.",
+    },
+    JOB_SHORTLISTED: {
+      title: "Solicitud Seleccionada",
+      description: "¡Felicidades! Tu solicitud ha sido preseleccionada.",
+    },
+    JOB_REJECTED: {
+      title: "Solicitud Rechazada",
+      description: "Desafortunadamente, tu solicitud no fue aceptada.",
+    },
+    JOB_ALERT: {
+      title: "Nueva Oferta de Trabajo",
+      description:
+        "Hay nuevas oportunidades de empleo disponibles. ¡Revisa ahora!",
+    },
+    MILESTONE_UNLOCKED: {
+      title: "Hito Alcanzado",
+      description: "¡Bien hecho! Has alcanzado un nuevo hito.",
+    },
+    SUBSCRIPTION_STARTED: {
+      title: "Suscripción Iniciada",
+      description: "Tu suscripción está activa. ¡Disfruta los beneficios!",
+    },
+    SUBSCRIPTION_RENEWED: {
+      title: "Suscripción Renovada",
+      description: "Tu suscripción se ha renovado con éxito.",
+    },
+    SUBSCRIPTION_FAILED: {
+      title: "Pago Fallido",
+      description: "No se pudo procesar el pago de tu suscripción.",
+    },
+    SUBSCRIPTION_CANCELLED: {
+      title: "Suscripción Cancelada",
+      description: "Tu suscripción ha sido cancelada.",
+    },
+  },
 };
 
 export const customMessages: Record<SupportedLang, any> = {
@@ -82,29 +257,29 @@ export const customMessages: Record<SupportedLang, any> = {
     userAlreadyUsedTrial: "Trial already used",
     invalidFields: "Invalid fields",
     accountDeleted: "Account deleted successfully",
-    planExist:"Plan already exist",
-    sectionExist:"Section already exist",
-    profileUpdated:"Profile updated successfully",
-    requestAlreadyExist:"Request already exist",
-    jobExpired:"Job has expired",
-    invalidGender:"Invalid gender",
+    planExist: "Plan already exist",
+    sectionExist: "Section already exist",
+    profileUpdated: "Profile updated successfully",
+    requestAlreadyExist: "Request already exist",
+    jobExpired: "Job has expired",
+    invalidGender: "Invalid gender",
     jobAppliedSuccessfully: "Job applied successfully",
-    taskNotFound:"No task found!",
+    taskNotFound: "No task found!",
     taskAlreadySubmitted: "Task already submitted",
-    noProfilePic:"No profile pic found, please upload one.",
-    noBioFound:"No bio found",
+    noProfilePic: "No profile pic found, please upload one.",
+    noBioFound: "No bio found",
     insuffecientJobApplication: "Insufficient job applications",
-    insufficientSelection:"Insufficient selection",
-    notEnough:"Cannot submit empty text",
-    enoughImagesNotFound:"Enough images not found",
-    noImageFound:"No image found.",
-    noVideoFound:"No video found.",
-    noFilesFound:"No files found.",
-    quizFailed:"Quiz failed.",
-    lessImageCount:"Less image count",
+    insufficientSelection: "Insufficient selection",
+    notEnough: "Cannot submit empty text",
+    enoughImagesNotFound: "Enough images not found",
+    noImageFound: "No image found.",
+    noVideoFound: "No video found.",
+    noFilesFound: "No files found.",
+    quizFailed: "Quiz failed.",
+    lessImageCount: "Less image count",
     introVideoNotFound: "Intro video not found",
     preReviewPending: "Previous task review is still pending!",
-    noOptionSelected:"No option is selected"
+    noOptionSelected: "No option is selected",
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
@@ -116,7 +291,8 @@ export const customMessages: Record<SupportedLang, any> = {
     subjectResetPassword: "Wachtwoord opnieuw instellen",
     firstNameRequired: "Voornaam is verplicht",
     emailExist: "E-mailadres bestaat al",
-    registerRequiredFields: "Volledige naam, e-mailadres en wachtwoord zijn verplicht",
+    registerRequiredFields:
+      "Volledige naam, e-mailadres en wachtwoord zijn verplicht",
     invalidRegisterFields: "Land of taal is ongeldig",
     invalidOtp: "Ongeldige of verlopen OTP",
     userNotFound: "Gebruiker niet gevonden",
@@ -166,7 +342,8 @@ export const customMessages: Record<SupportedLang, any> = {
     subjectResetPassword: "Restablecer la contraseña",
     firstNameRequired: "El nombre es obligatorio",
     emailExist: "El correo electrónico ya existe",
-    registerRequiredFields: "Nombre completo, correo electrónico y contraseña son obligatorios",
+    registerRequiredFields:
+      "Nombre completo, correo electrónico y contraseña son obligatorios",
     invalidRegisterFields: "País o idioma no válido",
     invalidOtp: "OTP inválido o expirado",
     userNotFound: "Usuario no encontrado",
@@ -182,4 +359,3 @@ export const customMessages: Record<SupportedLang, any> = {
     accountDeleted: "Cuenta eliminada con éxito",
   },
 };
-
