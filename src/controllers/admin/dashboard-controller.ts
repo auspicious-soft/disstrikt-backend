@@ -158,6 +158,10 @@ export const getDashboard = async (req: Request, res: Response) => {
       count: monthMap.get(i + 1) || 0,
     }));
 
+    topThreeTasks.map((data:any)=>{
+      data.taskNumber +=1
+    })
+
     const response = {
       activeUsers: users.length || 0,
       pendingReviews: pendingReviews.length || 0,
