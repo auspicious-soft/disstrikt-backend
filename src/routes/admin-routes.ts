@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { getDashboard } from "src/controllers/admin/dashboard-controller";
-import { createJob, getJobDataCSV, getJobs, getJobsById, updateJobStatus } from "src/controllers/admin/job-controller";
+import { getDashboard, getRevenue } from "src/controllers/admin/dashboard-controller";
+import { createJob, getAllJobApplications, getJobDataCSV, getJobs, getJobsById, updateJobStatus } from "src/controllers/admin/job-controller";
 import {
   createPlan,
   getPlans,
@@ -21,6 +21,7 @@ const router = Router();
 
 // Dashboard-routes
 router.route("/get-dashboard").get(getDashboard)
+router.route("/revenue").get(getRevenue)
 
 // Plan-routes
 router.route("/price-plan").get(getPlans).post(createPlan).put(updatePlan);
@@ -39,6 +40,9 @@ router.route("/support").post(postSupport);
 router.route("/jobs").post(createJob).get(getJobs)
 router.route("/jobsById/:id").get(getJobsById).put(updateJobStatus)
 router.route("/jobDataCSV/:id").get(getJobDataCSV)
+
+// Job-application-rout
+router.route("/get-all-applications").get(getAllJobApplications)
 
 // Task-management-routes
 router.route("/tasks").get(getTasks).post(createTask)

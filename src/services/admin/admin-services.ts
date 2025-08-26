@@ -846,6 +846,88 @@ export const jobServices = {
     };
   },
 
+  async getAllJobApplications(payload: any) {
+    let { status, page = 1, limit = 10 } = payload;
+    page = Number(page);
+    limit = Number(limit);
+
+    // Build status match condition
+    const statusMatch = status && status !== "ALL" ? { status: status } : {};
+
+    const total = await AppliedJobModel.countDocuments({
+      ...statusMatch,
+    });
+
+    // Aggregate applications
+    const appliedJobs = await AppliedJobModel.aggregate([
+      {
+        $match: {
+          ...statusMatch,
+        },
+      },
+      {
+        $lookup: {
+          from: "users", // users collection
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+      {
+        $lookup: {
+          from: "userinfos", // userInfo collection
+          localField: "userId",
+          foreignField: "userId",
+          as: "userInfo",
+        },
+      },
+      { $unwind: { path: "$userInfo", preserveNullAndEmptyArrays: true } },
+      {
+        $addFields: {
+          "userInfo.age": {
+            $cond: [
+              { $ifNull: ["$userInfo.dob", false] },
+              {
+                $dateDiff: {
+                  startDate: "$userInfo.dob",
+                  endDate: "$$NOW",
+                  unit: "year",
+                },
+              },
+              null,
+            ],
+          },
+        },
+      },
+      {
+        $project: {
+          _id: 1,
+          jobId: 1,
+          status: 1,
+          "user._id": 1,
+          "user.fullName": 1,
+          "user.country": 1,
+          "userInfo.gender": 1,
+          "userInfo.dob": 1,
+          "userInfo.age": 1,
+        },
+      },
+      { $skip: (page - 1) * limit },
+      { $limit: limit },
+    ]);
+
+    return {
+      appliedJobs,
+      pagination: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  },
+
   async updateJobStatus(payload: any) {
     const { status, jobId } = payload;
     const jobData = await AppliedJobModel.findByIdAndUpdate(

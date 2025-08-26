@@ -87,6 +87,7 @@ export const getJobsById = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const updateJobStatus = async (req: Request, res: Response) => {
   try {
     const { id: jobId } = req.params;
@@ -105,6 +106,26 @@ export const updateJobStatus = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+export const getAllJobApplications = async (req: Request, res: Response) => {
+  try {
+    const { status = "ALL" } = req.query;
+
+    const validStatus = ["SELECTED", "REJECTED", "PENDING", "ALL"];
+
+    if (!validStatus.includes(status as string)) {
+      throw new Error("Invalid status keys");
+    }
+    const response = await jobServices.getAllJobApplications({status, ...req.params });
+
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
 export const getJobDataCSV = async (req: Request, res: Response) => {
   try {
     const { id: jobId } = req.params;

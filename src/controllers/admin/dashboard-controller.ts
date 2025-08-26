@@ -158,9 +158,9 @@ export const getDashboard = async (req: Request, res: Response) => {
       count: monthMap.get(i + 1) || 0,
     }));
 
-    topThreeTasks.map((data:any)=>{
-      data.taskNumber +=1
-    })
+    topThreeTasks.map((data: any) => {
+      data.taskNumber += 1;
+    });
 
     const response = {
       activeUsers: users.length || 0,
@@ -174,6 +174,89 @@ export const getDashboard = async (req: Request, res: Response) => {
       activeJobs,
       jobApplication,
       topThreeTasks,
+    };
+
+    return OK(res, response, req.body.language || "en");
+  } catch (err: any) {
+    return BADREQUEST(
+      res,
+      err.message || "Something went wrong",
+      req.body.language || "en"
+    );
+  }
+};
+
+export const getRevenue = async (req: Request, res: Response) => {
+  try {
+    let { page = 1, limit = 10 } = req.query;
+
+    page = Number(page);
+    limit = Number(limit);
+
+    const skip = (page - 1) * limit;
+
+    const total = await TransactionModel.countDocuments({ amount: { $gt: 0 } });
+
+    const transactionData = await TransactionModel.aggregate([
+      { $match: { amount: { $gt: 0 } } },
+      { $sort: { createdAt: -1 } },
+      { $skip: skip },
+      { $limit: limit },
+
+      // 1️⃣ Join users
+      {
+        $lookup: {
+          from: "users",
+          localField: "userId",
+          foreignField: "_id",
+          as: "user",
+        },
+      },
+      { $unwind: "$user" },
+
+      // 2️⃣ Join subscriptions
+      {
+        $lookup: {
+          from: "subscriptions",
+          localField: "stripeSubscriptionId",
+          foreignField: "stripeSubscriptionId",
+          as: "subscription",
+        },
+      },
+      { $unwind: "$subscription" },
+
+      // 3️⃣ Join plans via subscription.planId
+      {
+        $lookup: {
+          from: "plans",
+          localField: "subscription.planId",
+          foreignField: "_id",
+          as: "plan",
+        },
+      },
+      { $unwind: { path: "$plan", preserveNullAndEmptyArrays: true } },
+
+      // 4️⃣ Final projection
+      {
+        $project: {
+          _id: 1,
+          status: 1,
+          amount: 1,
+          currency: 1,
+          paidAt: 1,
+          "userId._id": "$user._id",
+          "userId.fullName": "$user.fullName",
+          planName: "$plan.name.en", // or switch based on req.body.language
+        },
+      },
+    ]);
+
+    const response = {
+      data: transactionData,
+      total,
+      page,
+      limit,
+      totalPages: Math.ceil(total / limit),
     };
 
     return OK(res, response, req.body.language || "en");
