@@ -16,6 +16,7 @@ import {
   verifyOtp,
   verifyResetPasswordOtp,
 } from "src/controllers/auth/auth-controller";
+import { translateJobFields } from "src/utils/helper";
 
 // Code
 const router = Router();
@@ -45,7 +46,8 @@ router.post("/send-push", async (req: Request, res: Response) => {
   try {
     const { userIds, type, referenceId } = req.body;
 
-    await NotificationService(userIds, type, referenceId);
+    // await NotificationService(userIds, type, referenceId);
+    // const data = await translateJobFields({text:"I am Ankit Sharma, i don't know other languages"})
   } catch (e) {
     console.log(e);
   }

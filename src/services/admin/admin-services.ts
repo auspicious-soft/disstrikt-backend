@@ -120,12 +120,13 @@ export const planServices = {
       name,
       description,
       trialDays,
-      eurAmount,
-      gbpAmount,
+      unitAmounts = {},
       fullAccess,
       trialAccess,
       isActive,
     } = payload;
+
+    const { eur: eurAmount, gbp: gbpAmount } = unitAmounts;
 
     const plan = await planModel.findById(planId);
     if (!plan) throw new Error("planNotFound");
