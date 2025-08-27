@@ -195,68 +195,86 @@ export const getRevenue = async (req: Request, res: Response) => {
 
     const skip = (page - 1) * limit;
 
-    const total = await TransactionModel.countDocuments({ amount: { $gt: 0 } });
-
-    const transactionData = await TransactionModel.aggregate([
+    const [result] = await TransactionModel.aggregate([
       { $match: { amount: { $gt: 0 } } },
-      { $sort: { createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
 
-      // 1️⃣ Join users
+      // 🟢 Run both in a single facet
       {
-        $lookup: {
-          from: "users",
-          localField: "userId",
-          foreignField: "_id",
-          as: "user",
+        $facet: {
+          data: [
+            { $sort: { createdAt: -1 } },
+            { $skip: skip },
+            { $limit: limit },
+
+            // Join users
+            {
+              $lookup: {
+                from: "users",
+                localField: "userId",
+                foreignField: "_id",
+                as: "user",
+              },
+            },
+            { $unwind: "$user" },
+
+            // Join subscriptions
+            {
+              $lookup: {
+                from: "subscriptions",
+                localField: "stripeSubscriptionId",
+                foreignField: "stripeSubscriptionId",
+                as: "subscription",
+              },
+            },
+            { $unwind: "$subscription" },
+
+            // Join plans
+            {
+              $lookup: {
+                from: "plans",
+                localField: "subscription.planId",
+                foreignField: "_id",
+                as: "plan",
+              },
+            },
+            { $unwind: { path: "$plan", preserveNullAndEmptyArrays: true } },
+
+            // Projection
+            {
+              $project: {
+                _id: 1,
+                status: 1,
+                amount: 1,
+                currency: 1,
+                paidAt: 1,
+                "userId._id": "$user._id",
+                "userId.fullName": "$user.fullName",
+                planName: "$plan.name.en",
+              },
+            },
+          ],
+
+          totalCount: [
+            {
+              $count: "count",
+            },
+          ],
         },
       },
-      { $unwind: "$user" },
-
-      // 2️⃣ Join subscriptions
-      {
-        $lookup: {
-          from: "subscriptions",
-          localField: "stripeSubscriptionId",
-          foreignField: "stripeSubscriptionId",
-          as: "subscription",
-        },
-      },
-      { $unwind: "$subscription" },
-
-      // 3️⃣ Join plans via subscription.planId
-      {
-        $lookup: {
-          from: "plans",
-          localField: "subscription.planId",
-          foreignField: "_id",
-          as: "plan",
-        },
-      },
-      { $unwind: { path: "$plan", preserveNullAndEmptyArrays: true } },
-
-      // 4️⃣ Final projection
       {
         $project: {
-          _id: 1,
-          status: 1,
-          amount: 1,
-          currency: 1,
-          paidAt: 1,
-          "userId._id": "$user._id",
-          "userId.fullName": "$user.fullName",
-          planName: "$plan.name.en", // or switch based on req.body.language
+          data: 1,
+          total: { $ifNull: [{ $arrayElemAt: ["$totalCount.count", 0] }, 0] },
         },
       },
     ]);
 
     const response = {
-      data: transactionData,
-      total,
+      data: result.data,
+      total: result.total,
       page,
       limit,
-      totalPages: Math.ceil(total / limit),
+      totalPages: Math.ceil(result.total / limit),
     };
 
     return OK(res, response, req.body.language || "en");
