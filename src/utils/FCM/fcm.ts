@@ -48,7 +48,7 @@ export const NotificationService = async (
   userIds: Types.ObjectId[],
   type: keyof (typeof notificationMessages)["en"],
   referenceId?: Record<string, any>,
-  number?: any,
+  number?: any
 ) => {
   try {
     // pick message template
@@ -96,7 +96,9 @@ export const NotificationService = async (
           try {
             await admin.messaging().send({
               notification: {
-                title: number ? `${number},${messageTemplate.title}` : messageTemplate.title,
+                title: number
+                  ? `${messageTemplate.title} - (${number})`
+                  : messageTemplate.title,
                 body: messageTemplate.description,
               },
               data: {
