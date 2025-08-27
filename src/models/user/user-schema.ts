@@ -48,7 +48,7 @@ const userSchema = new Schema<IUser>(
     },
     image: {
       type: String,
-      default: "admin/images/cb4d721c-695a-4725-8369-eff28b5a967b.png",
+      default: "admin/images/image+(2).png",
     },
     country: {
       type: String,

@@ -61,7 +61,7 @@ export async function checkProfilePic(userId: any) {
   const checkData = await UserModel.findById(userId).lean();
   if (
     checkData?.image === null ||
-    checkData?.image === "admin/images/cb4d721c-695a-4725-8369-eff28b5a967b.png"
+    checkData?.image === "admin/images/image+(2).png"
   ) {
     return false;
   } else {
