@@ -391,7 +391,7 @@ export const homeServices = {
     );
 
     if (taskData?.appReview) {
-      await NotificationService([userData.id], "TASK_COMPLETED", taskId);
+      await NotificationService([userData.id], "TASK_COMPLETED", taskId, taskData?.taskNumber);
     }
 
     const nextTask = await TaskModel.findOne({
@@ -410,7 +410,8 @@ export const homeServices = {
       await NotificationService(
         [userData.id],
         "MILESTONE_UNLOCKED",
-        nextTask._id
+        nextTask._id,
+        taskData?.taskNumber
       );
     }
 

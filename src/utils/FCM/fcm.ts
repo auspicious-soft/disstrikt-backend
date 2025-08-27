@@ -47,7 +47,8 @@ export const initializeFirebase = () => {
 export const NotificationService = async (
   userIds: Types.ObjectId[],
   type: keyof (typeof notificationMessages)["en"],
-  referenceId?: Record<string, any>
+  referenceId?: Record<string, any>,
+  number?: any,
 ) => {
   try {
     // pick message template
@@ -95,7 +96,7 @@ export const NotificationService = async (
           try {
             await admin.messaging().send({
               notification: {
-                title: messageTemplate.title,
+                title: number ? `${number},${messageTemplate.title}` : messageTemplate.title,
                 body: messageTemplate.description,
               },
               data: {

@@ -913,6 +913,7 @@ export const jobServices = {
           "userInfo.age": 1,
         },
       },
+      { $sort: { createdAt: -1 } }, // ✅ latest on top
       { $skip: (page - 1) * limit },
       { $limit: limit },
     ]);
@@ -1787,7 +1788,12 @@ export const userServices = {
 
     if (rating === 0) {
       await TaskResponseModel.findByIdAndDelete(taskId);
-      await NotificationService([taskData.userId], "TASK_REJECTED", taskId);
+      await NotificationService(
+        [taskData.userId],
+        "TASK_REJECTED",
+        taskId,
+        taskData.taskNumber
+      );
       return {};
     }
 
@@ -1795,7 +1801,12 @@ export const userServices = {
       $set: { rating, taskReviewed: true },
     });
 
-    await NotificationService([taskData.userId], "TASK_COMPLETED", taskId);
+    await NotificationService(
+      [taskData.userId],
+      "TASK_COMPLETED",
+      taskId,
+      taskData.taskNumber
+    );
 
     const nextTask = await TaskModel.findOne({
       taskNumber: (taskData?.taskNumber || 0) + 1,
