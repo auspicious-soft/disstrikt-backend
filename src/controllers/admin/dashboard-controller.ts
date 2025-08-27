@@ -188,7 +188,7 @@ export const getDashboard = async (req: Request, res: Response) => {
 
 export const getRevenue = async (req: Request, res: Response) => {
   try {
-    let { page = 1, limit = 10 } = req.query;
+    let { page = 1, limit = 10 } = req.query as any;
 
     page = Number(page);
     limit = Number(limit);
@@ -198,15 +198,12 @@ export const getRevenue = async (req: Request, res: Response) => {
     const [result] = await TransactionModel.aggregate([
       { $match: { amount: { $gt: 0 } } },
 
-      // 🟢 Run both in a single facet
       {
         $facet: {
           data: [
             { $sort: { createdAt: -1 } },
-            { $skip: skip },
-            { $limit: limit },
 
-            // Join users
+            // Join users (keep even if missing)
             {
               $lookup: {
                 from: "users",
@@ -215,9 +212,9 @@ export const getRevenue = async (req: Request, res: Response) => {
                 as: "user",
               },
             },
-            { $unwind: "$user" },
+            { $unwind: { path: "$user", preserveNullAndEmptyArrays: true } },
 
-            // Join subscriptions
+            // Join subscriptions (keep even if missing)
             {
               $lookup: {
                 from: "subscriptions",
@@ -226,9 +223,14 @@ export const getRevenue = async (req: Request, res: Response) => {
                 as: "subscription",
               },
             },
-            { $unwind: "$subscription" },
+            {
+              $unwind: {
+                path: "$subscription",
+                preserveNullAndEmptyArrays: true,
+              },
+            },
 
-            // Join plans
+            // Join plans via subscription.planId (keep even if missing)
             {
               $lookup: {
                 from: "plans",
@@ -239,7 +241,7 @@ export const getRevenue = async (req: Request, res: Response) => {
             },
             { $unwind: { path: "$plan", preserveNullAndEmptyArrays: true } },
 
-            // Projection
+            // Final shape
             {
               $project: {
                 _id: 1,
@@ -249,16 +251,17 @@ export const getRevenue = async (req: Request, res: Response) => {
                 paidAt: 1,
                 "userId._id": "$user._id",
                 "userId.fullName": "$user.fullName",
-                planName: "$plan.name.en",
+                planName: "$plan.name.en", // swap based on requested language if needed
               },
             },
+
+            // Apply pagination LAST to avoid dropping count on this page
+            { $skip: skip },
+            { $limit: limit },
           ],
 
-          totalCount: [
-            {
-              $count: "count",
-            },
-          ],
+          // Count from the same base filter
+          totalCount: [{ $count: "count" }],
         },
       },
       {
@@ -269,20 +272,22 @@ export const getRevenue = async (req: Request, res: Response) => {
       },
     ]);
 
+    const total = result?.total ?? 0;
+
     const response = {
-      data: result.data,
-      total: result.total,
+      data: result?.data ?? [],
+      total,
       page,
       limit,
-      totalPages: Math.ceil(result.total / limit),
+      totalPages: Math.ceil(total / limit),
     };
 
-    return OK(res, response, req.body.language || "en");
+    return OK(res, response, (req.body as any)?.language || "en");
   } catch (err: any) {
     return BADREQUEST(
       res,
       err.message || "Something went wrong",
-      req.body.language || "en"
+      (req.body as any)?.language || "en"
     );
   }
 };
