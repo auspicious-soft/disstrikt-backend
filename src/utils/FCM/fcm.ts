@@ -83,7 +83,9 @@ export const NotificationService = async (
         const notificationDoc = await NotificationModel.create({
           userId,
           type,
-          title: messageTemplate.title,
+          title: number
+            ? `${messageTemplate.title} - (${number})`
+            : messageTemplate.title,
           description: messageTemplate.description,
           referenceId,
           isRead: false,
