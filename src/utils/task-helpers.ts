@@ -87,7 +87,7 @@ export async function checkIntroVideo(userId: any) {
 }
 
 export async function checkPortfolioImage(userId: any, count: number) {
-  const checkData = (await UserInfoModel.findOne(userId).lean()) as any;
+  const checkData = (await UserInfoModel.findOne({userId}).lean()) as any;
   if (checkData?.portfolioImages?.length < count) {
     return false;
   } else {
