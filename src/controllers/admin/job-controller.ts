@@ -115,7 +115,7 @@ export const getAllJobApplications = async (req: Request, res: Response) => {
     if (!validStatus.includes(status as string)) {
       throw new Error("Invalid status keys");
     }
-    const response = await jobServices.getAllJobApplications({status, ...req.params });
+    const response = await jobServices.getAllJobApplications({status, ...req.query });
 
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
