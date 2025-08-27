@@ -4,6 +4,7 @@ import mongoose, { Types } from "mongoose";
 import { notificationMessages } from "../messages";
 import { NotificationModel } from "src/models/notifications/notification-schema";
 import { UserModel } from "src/models/user/user-schema";
+import { UserInfoModel } from "src/models/user/user-info-schema";
 
 configDotenv();
 
@@ -59,8 +60,25 @@ export const NotificationService = async (
       const messageTemplate =
         notificationMessages[userData?.language || "en"]?.[type];
 
-      // Save each user’s notification separately in DB
-      if (userData?.fcmToken && messageTemplate) {
+      const userInfo = (await UserInfoModel.findOne({ userId })
+        .select("notificationSettings")
+        .lean()) as any;
+      const { notificationSettings } = userInfo;
+
+      let goAhead = true;
+
+      if (!notificationSettings.jobAlerts && type === "JOB_ALERT") {
+        goAhead = false;
+      }
+
+      if (
+        !notificationSettings.tasksPortfolioProgress &&
+        ["TASK_COMPLETED", "TASK_REJECTED", "MILESTONE_UNLOCKED"].includes(type)
+      ) {
+        goAhead = false;
+      }
+      if (userData?.fcmToken && messageTemplate && goAhead) {
+        // Save each user’s notification separately in DB
         const notificationDoc = await NotificationModel.create({
           userId,
           type,

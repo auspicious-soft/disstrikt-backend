@@ -390,7 +390,9 @@ export const homeServices = {
       { upsert: true }
     );
 
-    await NotificationService([userData.id], "TASK_COMPLETED", taskId);
+    if (taskData?.appReview) {
+      await NotificationService([userData.id], "TASK_COMPLETED", taskId);
+    }
 
     const nextTask = await TaskModel.findOne({
       taskNumber: (taskData?.taskNumber || 0) + 1,
