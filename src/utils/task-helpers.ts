@@ -11,49 +11,68 @@ import { uploadFileToS3 } from "src/config/s3";
 import ffmpeg from "fluent-ffmpeg";
 import ffmpegPath from "@ffmpeg-installer/ffmpeg";
 import ffprobePath from "@ffprobe-installer/ffprobe";
+import { GetObjectCommand, S3Client } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 ffmpeg.setFfprobePath(ffprobePath.path);
 
-async function generateVideoThumbnail(
+const s3 = new S3Client({ region: process.env.AWS_REGION });
+
+async function getPresignedVideoUrl(videoUrl: string, expiresIn = 3600) {
+  // Extract bucket + key from full URL
+  const url = new URL(videoUrl);
+  const bucket = url.hostname.split(".")[0]; // "disstrikt"
+  const key = decodeURIComponent(url.pathname.substring(1)); // remove leading "/"
+
+  const command = new GetObjectCommand({ Bucket: bucket, Key: key });
+  return await getSignedUrl(s3, command, { expiresIn });
+}
+
+export async function generateVideoThumbnail(
   videoUrl: string,
   userId: string,
   fileCategory = "thumbnails"
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const fileName = `${uuid()}.jpg`;
-    const localPath = path.join("/tmp", fileName);
+  return new Promise(async (resolve, reject) => {
+    try {
+      // ✅ Convert public S3 URL → signed URL
+      const signedUrl = await getPresignedVideoUrl(videoUrl);
 
-    ffmpeg(videoUrl)
-      .on("end", async () => {
-        try {
-          const fileBuffer = fs.readFileSync(localPath);
+      const fileName = `${uuid()}.jpg`;
+      const localPath = path.join("/tmp", fileName);
 
-          // Upload to S3
-          const s3Result = (await uploadFileToS3(
-            fileBuffer,
-            fileName,
-            "image/jpeg",
-            userId,
-            fileCategory,
-            false // isAdmin
-          )) as any;
+      ffmpeg(signedUrl)
+        .on("end", async () => {
+          try {
+            const fileBuffer = fs.readFileSync(localPath);
 
-          // Clean up temp file
-          fs.unlinkSync(localPath);
+            // Upload thumbnail back to S3
+            const s3Result = (await uploadFileToS3(
+              fileBuffer,
+              fileName,
+              "image/jpeg",
+              userId,
+              fileCategory,
+              false
+            )) as any;
 
-          resolve(s3Result?.Location || s3Result); // return S3 URL or key
-        } catch (err) {
-          reject(err);
-        }
-      })
-      .on("error", reject)
-      .screenshots({
-        count: 1,
-        filename: fileName,
-        folder: "/tmp",
-        size: "640x?",
-      });
+            fs.unlinkSync(localPath);
+            resolve(s3Result?.Location || s3Result);
+          } catch (err) {
+            reject(err);
+          }
+        })
+        .on("error", reject)
+        .screenshots({
+          count: 1,
+          filename: fileName,
+          folder: "/tmp",
+          size: "640x?",
+        });
+    } catch (err) {
+      reject(err);
+    }
   });
 }
 
