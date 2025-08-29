@@ -221,20 +221,22 @@ export const updateAdminData = async (req: Request, res: Response) => {
   try {
     const { oldPassword, password, ...restData } = req.body;
     const checkExist = await AdminModel.find();
+    let updatedPassword = checkExist[0].password;
 
-    const passwordStatus = await verifyPassword(
-      oldPassword,
-      checkExist[0]?.password || ""
-    );
+    if (password && oldPassword) {
+      const passwordStatus = await verifyPassword(
+        oldPassword,
+        checkExist[0]?.password || ""
+      );
 
-    if (!passwordStatus) {
-      throw new Error("invalidPassword");
+      if (!passwordStatus) {
+        throw new Error("invalidPassword");
+      }
+      updatedPassword = await hashPassword(password);
     }
 
-    const hashedPassword = await hashPassword(password);
-
     await AdminModel.findByIdAndUpdate(checkExist[0]._id, {
-      $set: { ...restData, password: hashedPassword },
+      $set: { ...restData, password: updatedPassword },
     });
 
     return OK(res, {}, req.body.language || "en");
