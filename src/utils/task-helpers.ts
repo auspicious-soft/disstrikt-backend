@@ -15,7 +15,7 @@ configDotenv();
 async function generateVideoThumbnail(
   videoUrl: string,
   userId: string,
-  fileCategory = "thumbnails"
+  fileCategory = "thumbnailss"
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileName = `${uuid()}.jpg`;
@@ -41,7 +41,7 @@ async function generateVideoThumbnail(
 
           await fs.promises.unlink(localPath);
 
-          resolve(s3Result?.Key || `${userId}/${fileCategory}/${fileName}`);
+          resolve(`users/${userId}/${fileCategory}/${fileName}`);
         } catch (err) {
           reject(err);
         }
