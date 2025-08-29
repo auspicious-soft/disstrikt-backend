@@ -10,6 +10,10 @@ import { uploadFileToS3 } from "src/config/s3";
 import { configDotenv } from "dotenv";
 import ffmpeg from "fluent-ffmpeg";
 
+// for local machine
+// ffmpeg.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe");
+// ffmpeg.setFfprobePath("C:\\ffmpeg\\bin\\ffprobe.exe");
+
 configDotenv();
 
 async function generateVideoThumbnail(
@@ -37,16 +41,16 @@ async function generateVideoThumbnail(
             userId,
             fileCategory,
             false
-          )) as { Location?: string; Key?: string };
+          )) as { Location?: string; key?: string };
 
           await fs.promises.unlink(localPath);
 
           // ✅ Use the actual S3 key that was stored
-          if (!s3Result.Key) {
+          if (!s3Result?.key) {
             return reject(new Error("S3 upload failed, no key returned"));
           }
 
-          resolve(s3Result.Key);
+          resolve(s3Result.key);
         } catch (err) {
           reject(err);
         }
