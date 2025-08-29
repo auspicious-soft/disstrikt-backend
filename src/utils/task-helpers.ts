@@ -15,7 +15,7 @@ configDotenv();
 async function generateVideoThumbnail(
   videoUrl: string,
   userId: string,
-  fileCategory = "thumbnailss"
+  fileCategory = "thumbnails"
 ): Promise<string> {
   return new Promise((resolve, reject) => {
     const fileName = `${uuid()}.jpg`;
