@@ -9,11 +9,7 @@ import { v4 as uuid } from "uuid";
 import { uploadFileToS3 } from "src/config/s3";
 import { configDotenv } from "dotenv";
 import ffmpeg from "fluent-ffmpeg";
-import ffmpegPath from "@ffmpeg-installer/ffmpeg";
-import ffprobePath from "@ffprobe-installer/ffprobe";
 
-ffmpeg.setFfmpegPath(ffmpegPath.path);
-ffmpeg.setFfprobePath(ffprobePath.path);
 configDotenv();
 
 async function generateVideoThumbnail(
@@ -28,22 +24,24 @@ async function generateVideoThumbnail(
     ffmpeg(videoUrl)
       .on("end", async () => {
         try {
+          if (!fs.existsSync(localPath)) {
+            return reject(new Error("Thumbnail was not generated"));
+          }
+
           const fileBuffer = fs.readFileSync(localPath);
 
-          // Upload to S3
           const s3Result = (await uploadFileToS3(
             fileBuffer,
             fileName,
             "image/jpeg",
             userId,
             fileCategory,
-            false // isAdmin
-          )) as any;
+            false
+          )) as { Location?: string };
 
-          // Clean up temp file
-          fs.unlinkSync(localPath);
+          await fs.promises.unlink(localPath);
 
-          resolve(s3Result?.Location || s3Result); // return S3 URL or key
+          resolve(s3Result?.Location || fileName);
         } catch (err) {
           reject(err);
         }
