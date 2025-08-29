@@ -23,7 +23,7 @@ export const authServices = {
   async register(payload: any) {
     const checkExist = await UserModel.findOne({
       email: payload.email,
-      isDeleted: false,
+      // isDeleted: false,
     });
     if (checkExist) {
       throw new Error("emailExist");

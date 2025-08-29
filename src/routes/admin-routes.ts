@@ -3,11 +3,13 @@ import { getDashboard, getRevenue } from "src/controllers/admin/dashboard-contro
 import { createJob, getAllJobApplications, getJobDataCSV, getJobs, getJobsById, updateJobStatus } from "src/controllers/admin/job-controller";
 import {
   createPlan,
+  getAdminData,
   getPlans,
   getPlatformInfo,
   postPrivacyPolicy,
   postSupport,
   postTermAndCondition,
+  updateAdminData,
   updatePlan,
 } from "src/controllers/admin/plan-setting-controller";
 import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
@@ -35,6 +37,7 @@ router.route("/get-platform-info").get(getPlatformInfo);
 router.route("/privacy-policy").post(postPrivacyPolicy);
 router.route("/term-and-condition").post(postTermAndCondition);
 router.route("/support").post(postSupport);
+router.route("/admin-data").get(getAdminData).put(updateAdminData)
 
 // Job-management-routes
 router.route("/jobs").post(createJob).get(getJobs)

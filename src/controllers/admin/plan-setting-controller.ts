@@ -1,7 +1,9 @@
 import { Request, Response } from "express";
+import { AdminModel } from "src/models/admin/admin-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { planServices } from "src/services/admin/admin-services";
+import { hashPassword, verifyPassword } from "src/utils/helper";
 
 import {
   BADREQUEST,
@@ -10,7 +12,6 @@ import {
   OK,
 } from "src/utils/response";
 import { validateCreatePlanPayload } from "src/validation/validPlan";
-
 
 // Plans---------------------->
 
@@ -194,6 +195,49 @@ export const postSupport = async (req: Request, res: Response) => {
       }
     );
     return CREATED(res, response?.support || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const getAdminData = async (req: Request, res: Response) => {
+  try {
+    const adminData = await AdminModel.find().select(
+      "fullName email image country language"
+    );
+    return OK(res, adminData[0] || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const updateAdminData = async (req: Request, res: Response) => {
+  try {
+    const { oldPassword, password, ...restData } = req.body;
+    const checkExist = await AdminModel.find();
+
+    const passwordStatus = await verifyPassword(
+      oldPassword,
+      checkExist[0]?.password || ""
+    );
+
+    if (!passwordStatus) {
+      throw new Error("invalidPassword");
+    }
+
+    const hashedPassword = await hashPassword(password);
+
+    await AdminModel.findByIdAndUpdate(checkExist[0]._id, {
+      $set: { ...restData, password: hashedPassword },
+    });
+
+    return OK(res, {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");
