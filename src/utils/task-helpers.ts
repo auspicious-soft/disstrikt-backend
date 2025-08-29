@@ -16,7 +16,6 @@ ffmpeg.setFfmpegPath(ffmpegPath.path);
 ffmpeg.setFfprobePath(ffprobePath.path);
 configDotenv();
 
-
 async function generateVideoThumbnail(
   videoUrl: string,
   userId: string,
@@ -89,7 +88,7 @@ export async function checkIntroVideo(userId: any) {
 }
 
 export async function checkPortfolioImage(userId: any, count: number) {
-  const checkData = (await UserInfoModel.findOne({userId}).lean()) as any;
+  const checkData = (await UserInfoModel.findOne({ userId }).lean()) as any;
   if (checkData?.portfolioImages?.length < count) {
     return false;
   } else {
@@ -138,9 +137,11 @@ export async function uploadToPortfolio(userId: any, taskNumber: number) {
   const uploadData = previousUploads?.uploadLinks || [];
   if (uploadData.length === 0) return true;
 
+  const baseUrl = process.env.NEXT_PUBLIC_AWS_BUCKET_PATH;
+
   if (previousTask.answerType === "UPLOAD_VIDEO") {
     const thumbnailUrl = (await generateVideoThumbnail(
-      `${process.env.NEXT_PUBLIC_AWS_BUCKET_PATH}${uploadData[0]}`,
+      `${baseUrl}${uploadData[0]}`,
       userId
     )) as any;
 
