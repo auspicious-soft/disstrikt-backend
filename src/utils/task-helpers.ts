@@ -37,11 +37,11 @@ async function generateVideoThumbnail(
             userId,
             fileCategory,
             false
-          )) as { Location?: string };
+          )) as { Location?: string, Key?:string };
 
           await fs.promises.unlink(localPath);
 
-          resolve(s3Result?.Location || fileName);
+          resolve(s3Result?.Key || `${userId}/${fileCategory}/${fileName}`);
         } catch (err) {
           reject(err);
         }
