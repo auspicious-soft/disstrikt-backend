@@ -7,13 +7,15 @@ import fs from "fs";
 import path from "path";
 import { v4 as uuid } from "uuid";
 import { uploadFileToS3 } from "src/config/s3";
-
+import { configDotenv } from "dotenv";
 import ffmpeg from "fluent-ffmpeg";
 import ffmpegPath from "@ffmpeg-installer/ffmpeg";
 import ffprobePath from "@ffprobe-installer/ffprobe";
 
 ffmpeg.setFfmpegPath(ffmpegPath.path);
 ffmpeg.setFfprobePath(ffprobePath.path);
+configDotenv();
+
 
 async function generateVideoThumbnail(
   videoUrl: string,
@@ -136,11 +138,9 @@ export async function uploadToPortfolio(userId: any, taskNumber: number) {
   const uploadData = previousUploads?.uploadLinks || [];
   if (uploadData.length === 0) return true;
 
-  const baseUrl = "https://disstrikt.s3.eu-north-1.amazonaws.com/";
-
   if (previousTask.answerType === "UPLOAD_VIDEO") {
     const thumbnailUrl = (await generateVideoThumbnail(
-      `${baseUrl}${uploadData[0]}`,
+      `${process.env.NEXT_PUBLIC_AWS_BUCKET_PATH}${uploadData[0]}`,
       userId
     )) as any;
 
