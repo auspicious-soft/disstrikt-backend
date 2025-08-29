@@ -1545,6 +1545,9 @@ export const userServices = {
               },
             },
           },
+          currency: {
+            $ifNull: [{ $arrayElemAt: ["$transactions.currency", 0] }, ""],
+          },
           subscriptionPlan: {
             $ifNull: [
               { $arrayElemAt: ["$planDocs.name.en", 0] }, // <-- English name
@@ -1563,6 +1566,7 @@ export const userServices = {
           subscriptionPlan: 1,
           jobAppliedCount: 1,
           totalAmountPaid: 1,
+          currency: 1,
         },
       },
 
