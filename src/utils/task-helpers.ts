@@ -37,11 +37,16 @@ async function generateVideoThumbnail(
             userId,
             fileCategory,
             false
-          )) as { Location?: string, Key?:string };
+          )) as { Location?: string; Key?: string };
 
           await fs.promises.unlink(localPath);
 
-          resolve(`users/${userId}/${fileCategory}/${fileName}`);
+          // ✅ Use the actual S3 key that was stored
+          if (!s3Result.Key) {
+            return reject(new Error("S3 upload failed, no key returned"));
+          }
+
+          resolve(s3Result.Key);
         } catch (err) {
           reject(err);
         }
