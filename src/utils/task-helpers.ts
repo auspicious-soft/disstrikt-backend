@@ -152,7 +152,7 @@ export async function uploadToPortfolio(userId: any, taskNumber: number) {
               {
                 title: "other",
                 url: uploadData[0], // full S3 file URL
-                thumbnail: thumbnailUrl.key, // S3 key (or construct full URL if needed)
+                thumbnail: thumbnailUrl || "", // S3 key (or construct full URL if needed)
               },
             ],
           },
