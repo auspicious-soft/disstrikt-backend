@@ -10,6 +10,7 @@ import { planModel } from "src/models/admin/plan-schema";
 import { QuizModel } from "src/models/admin/quiz-schema";
 import { TaskResponseModel } from "src/models/admin/task-response";
 import { TaskModel } from "src/models/admin/task-schema";
+import { NotificationModel } from "src/models/notifications/notification-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { UserModel } from "src/models/user/user-schema";
@@ -30,7 +31,12 @@ configDotenv();
 
 export const homeServices = {
   getUserHome: async (payload: any) => {
-    const { language, id, currentMilestone = 1 } = payload.userData;
+    const {
+      language,
+      id,
+      currentMilestone = 1,
+      subscription,
+    } = payload.userData;
 
     const { page = 1, limit = 10 } = payload; // 👈 pagination inputs
 
@@ -38,12 +44,17 @@ export const homeServices = {
       .findById(payload.userData.subscription.planId)
       .lean();
 
+    const taskLimit =
+      subscription.status === "trialing"
+        ? plan?.trialAccess.tasks
+        : plan?.fullAccess?.tasks;
+
     const skip = (page - 1) * limit;
 
     const result = await TaskModel.aggregate([
       {
         $match: {
-          taskNumber: { $lte: plan?.fullAccess?.tasks },
+          // taskNumber: { $lte: taskLimit },
           milestone: { $eq: currentMilestone },
           isActive: true,
         },
@@ -106,8 +117,14 @@ export const homeServices = {
           100
         : 0;
 
+    const unreadNotifications = await NotificationModel.countDocuments({
+      userId: id,
+      isRead: false,
+    });
+
     return {
       plan: payload.userData.subscription.planName || null,
+      unreadNotifications: unreadNotifications || 0,
       milestone: currentMilestone,
       fullName: payload.userData.fullName,
       image: payload.userData.image,
@@ -120,6 +137,14 @@ export const homeServices = {
 
   getTaskById: async (payload: any) => {
     const { taskId, userData } = payload;
+    const plan = await planModel
+      .findById(payload.userData.subscription.planId)
+      .lean();
+
+    const taskLimit =
+      userData.subscription.status === "trialing"
+        ? plan?.trialAccess.tasks
+        : plan?.fullAccess?.tasks;
 
     const task = (await TaskModel.findById(taskId)
       .select(
@@ -141,6 +166,14 @@ export const homeServices = {
       (!previousTask || !previousTask.taskReviewed)
     ) {
       throw new Error("preReviewPending");
+    }
+
+    if ((taskLimit || 3) < task.taskNumber) {
+      throw new Error(
+        userData.subscription.status === "trialing"
+          ? "youAreOnFreeTrial"
+          : "upgradeYourPlan"
+      );
     }
 
     let response = {
@@ -370,7 +403,7 @@ export const homeServices = {
       }
 
       rating = 0;
-      taskReviewed = false;
+      taskReviewed = true;
     }
     await TaskResponseModel.updateOne(
       { userId: userData.id, taskId: taskId },
@@ -391,7 +424,12 @@ export const homeServices = {
     );
 
     if (taskData?.appReview) {
-      await NotificationService([userData.id], "TASK_COMPLETED", taskId, taskData?.taskNumber);
+      await NotificationService(
+        [userData.id],
+        "TASK_COMPLETED",
+        taskId,
+        taskData?.taskNumber
+      );
     }
 
     const nextTask = await TaskModel.findOne({
@@ -624,50 +662,51 @@ export const profileServices = {
       }
 
       if (type == "cancelTrial" && planId) {
+        await SubscriptionModel.findByIdAndUpdate(userData.subscription._id, {
+          nextPlanId: planId,
+        });
+
         await stripe.subscriptions.cancel(
           userData.subscription.stripeSubscriptionId
         );
 
-        await SubscriptionModel.findByIdAndDelete(userData.subscription._id, {
-          session,
-        });
-        const planData = await planModel.findById(planId).session(session);
-        const newSub = await stripe.subscriptions.create({
-          customer:
-            typeof stripeCustomerId === "string"
-              ? stripeCustomerId
-              : stripeCustomerId?.id ?? "",
-          items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
-          default_payment_method: paymentMethodId,
-          expand: ["latest_invoice.payment_intent"],
-        });
+        // const planData = await planModel.findById(planId).session(session);
+        // const newSub = await stripe.subscriptions.create({
+        //   customer:
+        //     typeof stripeCustomerId === "string"
+        //       ? stripeCustomerId
+        //       : stripeCustomerId?.id ?? "",
+        //   items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
+        //   default_payment_method: paymentMethodId,
+        //   expand: ["latest_invoice.payment_intent"],
+        // });
 
-        const newSubPrice = newSub.items.data[0]?.price;
+        // const newSubPrice = newSub.items.data[0]?.price;
 
-        await SubscriptionModel.create(
-          [
-            {
-              userId: userData.id,
-              stripeCustomerId,
-              planId,
-              stripeSubscriptionId: newSub.id,
-              paymentMethodId,
-              status: newSub.status,
-              trialStart: toDate(newSub.trial_start),
-              trialEnd: toDate(newSub.trial_end),
-              startDate: toDate(newSub.start_date),
-              currentPeriodStart: toDate(newSub.current_period_start),
-              currentPeriodEnd: toDate(newSub.current_period_end),
-              nextBillingDate: toDate(newSub.current_period_end),
-              amount: newSubPrice?.unit_amount
-                ? newSubPrice.unit_amount / 100
-                : 0,
-              currency: newSubPrice?.currency ?? "inr",
-              nextPlanId: null,
-            },
-          ],
-          { session }
-        );
+        // await SubscriptionModel.create(
+        //   [
+        //     {
+        //       userId: userData.id,
+        //       stripeCustomerId,
+        //       planId,
+        //       stripeSubscriptionId: newSub.id,
+        //       paymentMethodId,
+        //       status: newSub.status,
+        //       trialStart: toDate(newSub.trial_start),
+        //       trialEnd: toDate(newSub.trial_end),
+        //       startDate: toDate(newSub.start_date),
+        //       currentPeriodStart: toDate(newSub.current_period_start),
+        //       currentPeriodEnd: toDate(newSub.current_period_end),
+        //       nextBillingDate: toDate(newSub.current_period_end),
+        //       amount: newSubPrice?.unit_amount
+        //         ? newSubPrice.unit_amount / 100
+        //         : 0,
+        //       currency: newSubPrice?.currency ?? "inr",
+        //       nextPlanId: null,
+        //     },
+        //   ],
+        //   { session }
+        // );
       }
 
       if (type == "upgrade") {
@@ -998,7 +1037,7 @@ export const userJobServices = {
   },
 
   applyJobs: async (payload: any) => {
-    const { jobId, id, gender } = payload;
+    const { jobId, id, gender, subscription } = payload;
 
     const isJobExpired = (jobDate: Date): boolean => {
       const now = new Date(); // current time in UTC
@@ -1016,7 +1055,9 @@ export const userJobServices = {
       .lean();
 
     const { jobApplicationsPerDay, jobApplicationsPerMonth } =
-      planData?.fullAccess as any;
+      subscription.status === "trialing"
+        ? planData?.trialAccess
+        : (planData?.fullAccess as any);
 
     // Check daily applied jobs
     const jobAppliedByUserToday = await AppliedJobModel.countDocuments({
@@ -1029,6 +1070,14 @@ export const userJobServices = {
       userId: id,
       createdAt: { $gte: monthStart, $lte: monthEnd },
     });
+
+    if (
+      subscription.status === "trialing" &&
+      (jobAppliedByUserToday >= jobApplicationsPerDay ||
+        jobAppliedByUserThisMonth >= jobApplicationsPerMonth)
+    ) {
+      throw new Error("upgradeForJob");
+    }
 
     // Validations
     if (jobAppliedByUserToday >= jobApplicationsPerDay) {

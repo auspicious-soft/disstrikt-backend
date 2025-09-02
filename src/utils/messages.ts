@@ -280,8 +280,14 @@ export const customMessages: Record<SupportedLang, any> = {
     introVideoNotFound: "Intro video not found",
     preReviewPending: "Previous task review is still pending!",
     noOptionSelected: "No option is selected",
-    dailyApplicationLimitReached: "Your daily limit to apply on job has finished",
-    monthlyApplicationLimitReached: "Your monthly limit to apply on job has finished",
+    dailyApplicationLimitReached:
+      "Your daily limit to apply on job has finished",
+    monthlyApplicationLimitReached:
+      "Your monthly limit to apply on job has finished",
+    youAreOnFreeTrial: "Free trial limited to 3 tasks. Upgrade to unlock more.",
+    upgradeForJob:
+      "You Are on Free Trial. Upgrade your plan to apply for jobs.",
+    upgradeYourPlan: "Upgrade your plan to unlock more tasks.",
   },
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
@@ -293,7 +299,8 @@ export const customMessages: Record<SupportedLang, any> = {
     subjectResetPassword: "Wachtwoord opnieuw instellen",
     firstNameRequired: "Voornaam is verplicht",
     emailExist: "E-mailadres bestaat al",
-    registerRequiredFields: "Volledige naam, e-mailadres en wachtwoord zijn verplicht",
+    registerRequiredFields:
+      "Volledige naam, e-mailadres en wachtwoord zijn verplicht",
     invalidRegisterFields: "Land of taal is ongeldig",
     invalidOtp: "Ongeldige of verlopen OTP",
     userNotFound: "Gebruiker niet gevonden",
@@ -330,8 +337,15 @@ export const customMessages: Record<SupportedLang, any> = {
     introVideoNotFound: "Introductievideo niet gevonden",
     preReviewPending: "Beoordeling van vorige taak is nog in behandeling!",
     noOptionSelected: "Geen optie geselecteerd",
-    dailyApplicationLimitReached: "Je dagelijkse limiet voor sollicitaties is bereikt",
-    monthlyApplicationLimitReached: "Je maandelijkse limiet voor sollicitaties is bereikt",
+    dailyApplicationLimitReached:
+      "Je dagelijkse limiet voor sollicitaties is bereikt",
+    monthlyApplicationLimitReached:
+      "Je maandelijkse limiet voor sollicitaties is bereikt",
+    youAreOnFreeTrial:
+      "Gratis proef beperkt tot 3 taken. Upgrade om meer te ontgrendelen.",
+    upgradeForJob:
+      "Je gebruikt een gratis proef. Upgrade je plan om op banen te solliciteren.",
+    upgradeYourPlan: "Upgrade je plan om meer taken te ontgrendelen.",
   },
   fr: {
     registerAgain: "Session expirée, veuillez vous réinscrire",
@@ -366,7 +380,8 @@ export const customMessages: Record<SupportedLang, any> = {
     jobAppliedSuccessfully: "Candidature soumise avec succès",
     taskNotFound: "Aucune tâche trouvée !",
     taskAlreadySubmitted: "Tâche déjà soumise",
-    noProfilePic: "Aucune photo de profil trouvée, veuillez en télécharger une.",
+    noProfilePic:
+      "Aucune photo de profil trouvée, veuillez en télécharger une.",
     noBioFound: "Aucune bio trouvée",
     insuffecientJobApplication: "Candidatures insuffisantes",
     insufficientSelection: "Sélection insuffisante",
@@ -380,8 +395,16 @@ export const customMessages: Record<SupportedLang, any> = {
     introVideoNotFound: "Vidéo d'introduction non trouvée",
     preReviewPending: "L'examen de la tâche précédente est toujours en cours !",
     noOptionSelected: "Aucune option sélectionnée",
-    dailyApplicationLimitReached: "Votre limite quotidienne de candidatures est atteinte",
-    monthlyApplicationLimitReached: "Votre limite mensuelle de candidatures est atteinte",
+    dailyApplicationLimitReached:
+      "Votre limite quotidienne de candidatures est atteinte",
+    monthlyApplicationLimitReached:
+      "Votre limite mensuelle de candidatures est atteinte",
+    youAreOnFreeTrial:
+      "Essai gratuit limité à 3 tâches. Passez à la version supérieure pour en débloquer davantage.",
+    upgradeForJob:
+      "Vous êtes en essai gratuit. Mettez à niveau votre plan pour postuler à des emplois.",
+    upgradeYourPlan:
+      "Mettez à niveau votre plan pour débloquer plus de tâches.",
   },
   es: {
     registerAgain: "Sesión expirada, por favor regístrate de nuevo",
@@ -393,7 +416,8 @@ export const customMessages: Record<SupportedLang, any> = {
     subjectResetPassword: "Restablecer la contraseña",
     firstNameRequired: "El nombre es obligatorio",
     emailExist: "El correo electrónico ya existe",
-    registerRequiredFields: "Nombre completo, correo electrónico y contraseña son obligatorios",
+    registerRequiredFields:
+      "Nombre completo, correo electrónico y contraseña son obligatorios",
     invalidRegisterFields: "País o idioma no válido",
     invalidOtp: "OTP inválido o expirado",
     userNotFound: "Usuario no encontrado",
@@ -430,7 +454,14 @@ export const customMessages: Record<SupportedLang, any> = {
     introVideoNotFound: "Video de introducción no encontrado",
     preReviewPending: "¡La revisión de la tarea anterior aún está pendiente!",
     noOptionSelected: "No se ha seleccionado ninguna opción",
-    dailyApplicationLimitReached: "Tu límite diario de solicitudes de trabajo ha terminado",
-    monthlyApplicationLimitReached: "Tu límite mensual de solicitudes de trabajo ha terminado",
+    dailyApplicationLimitReached:
+      "Tu límite diario de solicitudes de trabajo ha terminado",
+    monthlyApplicationLimitReached:
+      "Tu límite mensual de solicitudes de trabajo ha terminado",
+    youAreOnFreeTrial:
+      "Prueba gratuita limitada a 3 tareas. Mejora tu plan para desbloquear más.",
+    upgradeForJob:
+      "Estás en una prueba gratuita. Mejora tu plan para postular a empleos.",
+    upgradeYourPlan: "Mejora tu plan para desbloquear más tareas.",
   },
 };

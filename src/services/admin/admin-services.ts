@@ -589,7 +589,7 @@ export const planServices = {
           const planId = session.metadata?.planId;
 
           await SubscriptionModel.findOneAndDelete({ userId });
-          await UserModel.findByIdAndUpdate(userId, { hasUsedTrial: true });
+          await UserModel.findByIdAndUpdate(userId, { hasUsedTrial: true, isCardSetupComplete: true });
           const newSubscription = await SubscriptionModel.create({
             userId,
             stripeCustomerId,
