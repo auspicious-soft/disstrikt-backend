@@ -619,11 +619,13 @@ export const planServices = {
             nextPlanId: null,
           });
 
-          await NotificationService(
-            [userId] as any,
-            "SUBSCRIPTION_STARTED",
-            newSubscription?._id as ObjectId
-          );
+          if (planAmount > 0 && subscription.status !== "trialing") {
+            await NotificationService(
+              [userId] as any,
+              "SUBSCRIPTION_STARTED",
+              newSubscription?._id as ObjectId
+            );
+          }
 
           break;
         }
