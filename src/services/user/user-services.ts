@@ -122,13 +122,25 @@ export const homeServices = {
       isRead: false,
     });
 
+    const freeTrialText = {
+      en: "Free Trial",
+      nl: "Gratis Proef",
+      fr: "Essai Gratuit",
+      es: "Prueba Gratuita",
+    } as any;
+
+    const planName =
+      subscription.status === "trialing"
+        ? freeTrialText[language]
+        : payload.userData.subscription.planName;
+
     return {
       plan: payload.userData.subscription.planName || null,
       unreadNotifications: unreadNotifications || 0,
       milestone: currentMilestone,
       fullName: payload.userData.fullName,
       image: payload.userData.image,
-      planName: payload.userData.subscription.planName,
+      planName: planName,
       percentage: Number(percentage.toFixed(1)),
       unlockedTask: unlockedTask?.taskNumber || null,
       milestoneData: tasks || [],
