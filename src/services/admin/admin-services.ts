@@ -323,15 +323,15 @@ export const planServices = {
             { upsert: false }
           );
 
-          if (newSubscription) {
-            await NotificationService(
-              [newSubscription.userId] as any,
-              cancel_at_period_end
-                ? "SUBSCRIPTION_CANCELLED"
-                : "SUBSCRIPTION_STARTED",
-              newSubscription?._id as ObjectId
-            );
-          }
+          // if (newSubscription) {
+          //   await NotificationService(
+          //     [newSubscription.userId] as any,
+          //     cancel_at_period_end
+          //       ? "SUBSCRIPTION_CANCELLED"
+          //       : "SUBSCRIPTION_STARTED",
+          //     newSubscription?._id as ObjectId
+          //   );
+          // }
 
           break;
         }
