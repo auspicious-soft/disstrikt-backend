@@ -21,6 +21,7 @@ export interface ITaskResponse extends Document {
   taskReviewed?: boolean;
   rating?: number;
   appReview?: boolean;
+  adminReviewed?: boolean;
   isActive?: boolean;
 }
 
@@ -59,6 +60,10 @@ const TaskResponseSchema = new Schema<ITaskResponse>(
     taskReviewed: {
       type: Boolean,
       default: false,
+    },
+    adminReviewed:{
+      type: Boolean,
+      default: false
     },
     rating: {
       type: Number,

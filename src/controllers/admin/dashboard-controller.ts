@@ -45,7 +45,7 @@ export const getDashboard = async (req: Request, res: Response) => {
       userOverview,
     ] = await Promise.all([
       UserModel.find().lean(),
-      TaskResponseModel.find({ taskReviewed: false }).lean(),
+      TaskResponseModel.find({ adminReviewed: false }).lean(),
       planModel.find().lean(),
 
       // Revenue this month

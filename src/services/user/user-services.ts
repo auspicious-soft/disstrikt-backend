@@ -71,7 +71,7 @@ export const homeServices = {
                     { $eq: ["$userId", new mongoose.Types.ObjectId(id)] },
                     { $eq: ["$taskNumber", "$$taskNumber"] },
                     { $eq: ["$milestone", "$$milestone"] },
-                    { $eq: ["$taskReviewed", true] },
+                    { $eq: ["$adminReviewed", true] },
                   ],
                 },
               },
@@ -111,7 +111,7 @@ export const homeServices = {
         ? ((await TaskResponseModel.countDocuments({
             userId: id,
             milestone: { $eq: currentMilestone },
-            taskReviewed: true,
+            adminReviewed: true,
           })) /
             total) *
           100
@@ -175,7 +175,7 @@ export const homeServices = {
 
     if (
       task.taskNumber - 1 !== 0 &&
-      (!previousTask || !previousTask.taskReviewed)
+      (!previousTask || !previousTask.adminReviewed)
     ) {
       throw new Error("preReviewPending");
     }
@@ -246,11 +246,13 @@ export const homeServices = {
     let rating = 0;
     let checkBox = {} as any;
     let taskReviewed = false;
+    let adminReviewed = false;
     let uploadLinks = [] as any;
     let text = "";
     let returnSomething = {} as any;
 
     if (taskData?.appReview) {
+      adminReviewed = true;
       if (taskData?.answerType === "QUIZ") {
         const quizData = await QuizModel.find({ taskId }).lean();
 
@@ -377,6 +379,7 @@ export const homeServices = {
         throw new Error("Invalid Answer Type");
       }
     } else {
+      adminReviewed = false;
       if (taskData?.answerType === "UPLOAD_FILE") {
         if (body.uploadLinks.length == 0) {
           throw new Error("noFilesFound");
@@ -423,6 +426,7 @@ export const homeServices = {
         $set: {
           rating: rating,
           taskReviewed,
+          adminReviewed,
           quiz: finalQuiz,
           uploadLinks,
           checkBox,
@@ -450,7 +454,7 @@ export const homeServices = {
 
     if (
       nextTask &&
-      taskReviewed &&
+      adminReviewed &&
       userData.currentMilestone !== nextTask?.milestone
     ) {
       await UserModel.findByIdAndUpdate(userData.id, {
@@ -489,12 +493,12 @@ export const profileServices = {
     const completedTasks = await TaskResponseModel.countDocuments({
       userId: userData.id,
       milestone: { $eq: userData.currentMilestone },
-      taskReviewed: true,
+      adminReviewed: true,
     });
 
     const totalCompletedTasks = await TaskResponseModel.countDocuments({
       userId: userData.id,
-      taskReviewed: true,
+      adminReviewed: true,
     });
 
     const percentage = total > 0 ? (completedTasks / total) * 100 : 0;

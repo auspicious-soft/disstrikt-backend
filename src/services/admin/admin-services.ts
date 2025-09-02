@@ -1219,7 +1219,7 @@ export const taskServices = {
                   $and: [
                     { $eq: ["$taskNumber", "$$taskNum"] },
                     { $eq: ["$milestone", "$$ms"] },
-                    { $eq: ["$taskReviewed", true] },
+                    { $eq: ["$adminReviewed", true] },
                   ],
                 },
               },
@@ -1667,12 +1667,12 @@ export const userServices = {
 
     const tasks = await TaskResponseModel.find({ userId })
       .populate("taskId")
-      .select("taskReviewed taskNumber milestone rating")
+      .select("taskReviewed adminReviewed taskNumber milestone rating")
       .sort({ taskNumber: 1 })
       .lean();
 
     const formattedTask = tasks.map((val: any) => ({
-      reviewed: val.taskReviewed,
+      reviewed: val.adminReviewed,
       number: val.taskNumber,
       milestone: val.milestone,
       rating: val.rating,
@@ -1712,7 +1712,7 @@ export const userServices = {
     const pipeline: any[] = [
       {
         $match: {
-          taskReviewed: false,
+          adminReviewed: false,
         },
       },
       {
@@ -1750,7 +1750,7 @@ export const userServices = {
     // Total count for pagination
     const totalCountPipeline = [
       {
-        $match: { taskReviewed: false },
+        $match: { adminReviewed: false },
       },
       {
         $lookup: {
