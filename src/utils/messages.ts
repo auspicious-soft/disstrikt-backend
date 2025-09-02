@@ -83,6 +83,10 @@ export const notificationMessages = {
       title: "Milestone Unlocked",
       description: "Great work! You’ve unlocked a new milestone.",
     },
+    FREETRIAL_STARTED: {
+      title: "Free Trial Started",
+      description: "Your free trial has been started, Enjoy the benefits!",
+    },
     SUBSCRIPTION_STARTED: {
       title: "Subscription Started",
       description: "Your subscription is now active. Enjoy the benefits!",
@@ -125,6 +129,11 @@ export const notificationMessages = {
     MILESTONE_UNLOCKED: {
       title: "Mijlpaal Behaald",
       description: "Goed gedaan! Je hebt een nieuwe mijlpaal behaald.",
+    },
+    FREETRIAL_STARTED: {
+      title: "Gratis Proefperiode Gestart",
+      description:
+        "Je gratis proefperiode is gestart, geniet van de voordelen!",
     },
     SUBSCRIPTION_STARTED: {
       title: "Abonnement Gestart",
@@ -170,6 +179,10 @@ export const notificationMessages = {
       title: "Étape Atteinte",
       description: "Bravo ! Vous avez atteint une nouvelle étape.",
     },
+    FREETRIAL_STARTED: {
+      title: "Essai Gratuit Commencé",
+      description: "Votre essai gratuit a commencé, profitez-en pleinement !",
+    },
     SUBSCRIPTION_STARTED: {
       title: "Abonnement Démarré",
       description: "Votre abonnement est maintenant actif. Profitez-en !",
@@ -212,6 +225,11 @@ export const notificationMessages = {
     MILESTONE_UNLOCKED: {
       title: "Hito Alcanzado",
       description: "¡Bien hecho! Has alcanzado un nuevo hito.",
+    },
+    FREETRIAL_STARTED: {
+      title: "Prueba Gratuita Iniciada",
+      description:
+        "Tu prueba gratuita ha comenzado, ¡disfruta de los beneficios!",
     },
     SUBSCRIPTION_STARTED: {
       title: "Suscripción Iniciada",

@@ -400,11 +400,11 @@ export const planServices = {
               currency: newSubPrice?.currency ?? "inr",
               nextPlanId: null,
             });
-            await NotificationService(
-              [userId] as any,
-              "SUBSCRIPTION_RENEWED",
-              newSubscription?._id as ObjectId
-            );
+            // await NotificationService(
+            //   [userId] as any,
+            //   "SUBSCRIPTION_RENEWED",
+            //   newSubscription?._id as ObjectId
+            // );
           } else {
             await stripe.paymentMethods.detach(paymentMethodId);
             await TokenModel.findOneAndDelete({
@@ -476,11 +476,19 @@ export const planServices = {
             }
           );
 
-          await NotificationService(
-            [userId],
-            "SUBSCRIPTION_RENEWED",
-            existing?._id as ObjectId
-          );
+          if (invoice.amount_paid > 0) {
+            await NotificationService(
+              [userId],
+              "SUBSCRIPTION_STARTED",
+              existing?._id as ObjectId
+            );
+          } else {
+            await NotificationService(
+              [userId],
+              "FREETRIAL_STARTED",
+              existing?._id as ObjectId
+            );
+          }
 
           // Create transaction
           await TransactionModel.create({
@@ -589,7 +597,10 @@ export const planServices = {
           const planId = session.metadata?.planId;
 
           await SubscriptionModel.findOneAndDelete({ userId });
-          await UserModel.findByIdAndUpdate(userId, { hasUsedTrial: true, isCardSetupComplete: true });
+          await UserModel.findByIdAndUpdate(userId, {
+            hasUsedTrial: true,
+            isCardSetupComplete: true,
+          });
           const newSubscription = await SubscriptionModel.create({
             userId,
             stripeCustomerId,

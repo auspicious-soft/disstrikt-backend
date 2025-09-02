@@ -41,6 +41,7 @@ const notificationSchema = new Schema<INotification>(
         "JOB_REJECTED",
         "JOB_ALERT",
         "MILESTONE_UNLOCKED",
+        "FREETRIAL_STARTED",
         "SUBSCRIPTION_STARTED",
         "SUBSCRIPTION_RENEWED",
         "SUBSCRIPTION_FAILED",
