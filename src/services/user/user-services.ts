@@ -71,7 +71,7 @@ export const homeServices = {
                     { $eq: ["$userId", new mongoose.Types.ObjectId(id)] },
                     { $eq: ["$taskNumber", "$$taskNumber"] },
                     { $eq: ["$milestone", "$$milestone"] },
-                    { $eq: ["$adminReviewed", true] },
+                    { $eq: ["$taskReviewed", true] },
                   ],
                 },
               },
@@ -84,7 +84,7 @@ export const homeServices = {
       {
         $addFields: {
           rating: { $ifNull: [{ $arrayElemAt: ["$response.rating", 0] }, 0] },
-          attempted: { $gt: [{ $size: "$response" }, 0] }, // 👈 true if response exists
+          attempted: { $gt: [{ $size: "$response.taskReviewed" }, 0] }, // 👈 true if response exists
         },
       },
       {
@@ -171,6 +171,11 @@ export const homeServices = {
     const previousTask = await TaskResponseModel.findOne({
       userId: userData.id,
       taskNumber: task.taskNumber - 1,
+    }).lean();
+
+    const currentTask = await TaskResponseModel.findOne({
+      userId: userData.id,
+      taskNumber: task.taskNumber,
     }).lean();
 
     if (
