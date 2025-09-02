@@ -1814,7 +1814,7 @@ export const userServices = {
     }
 
     await TaskResponseModel.findByIdAndUpdate(taskId, {
-      $set: { rating, taskReviewed: true },
+      $set: { rating, taskReviewed: true, adminReviewed: true },
     });
 
     await NotificationService(
