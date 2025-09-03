@@ -136,6 +136,7 @@ export const homeServices = {
 
     return {
       plan: payload.userData.subscription.planName || null,
+      taskLimit,
       unreadNotifications: unreadNotifications || 0,
       milestone: currentMilestone,
       fullName: payload.userData.fullName,

@@ -498,6 +498,12 @@ export const planServices = {
               "SUBSCRIPTION_RENEWED",
               existing?._id as ObjectId
             );
+          } else if (billingReason === "subscription_update") {
+            await NotificationService(
+              [userId],
+              "SUBSCRIPTION_STARTED",
+              existing?._id as ObjectId
+            );
           }
           // optionally: handle "subscription_update" -> PLAN_CHANGED
 
