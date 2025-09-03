@@ -476,19 +476,44 @@ export const planServices = {
             }
           );
 
-          if (invoice.amount_paid > 0) {
+          // 🔑 Decide notification type based on billing_reason
+          const billingReason = invoice.billing_reason;
+          if (billingReason === "subscription_create") {
+            if (invoice.amount_paid > 0) {
+              await NotificationService(
+                [userId],
+                "SUBSCRIPTION_STARTED",
+                existing?._id as ObjectId
+              );
+            } else {
+              await NotificationService(
+                [userId],
+                "FREETRIAL_STARTED",
+                existing?._id as ObjectId
+              );
+            }
+          } else if (billingReason === "subscription_cycle") {
             await NotificationService(
               [userId],
-              "SUBSCRIPTION_STARTED",
-              existing?._id as ObjectId
-            );
-          } else {
-            await NotificationService(
-              [userId],
-              "FREETRIAL_STARTED",
+              "SUBSCRIPTION_RENEWED",
               existing?._id as ObjectId
             );
           }
+          // optionally: handle "subscription_update" -> PLAN_CHANGED
+
+          // if (invoice.amount_paid > 0) {
+          //   await NotificationService(
+          //     [userId],
+          //     "SUBSCRIPTION_STARTED",
+          //     existing?._id as ObjectId
+          //   );
+          // } else {
+          //   await NotificationService(
+          //     [userId],
+          //     "FREETRIAL_STARTED",
+          //     existing?._id as ObjectId
+          //   );
+          // }
 
           // Create transaction
           await TransactionModel.create({
@@ -619,13 +644,13 @@ export const planServices = {
             nextPlanId: null,
           });
 
-          if (planAmount > 0 && subscription.status !== "trialing") {
-            await NotificationService(
-              [userId] as any,
-              "SUBSCRIPTION_STARTED",
-              newSubscription?._id as ObjectId
-            );
-          }
+          // if (planAmount > 0 && subscription.status !== "trialing") {
+          //   await NotificationService(
+          //     [userId] as any,
+          //     "SUBSCRIPTION_STARTED",
+          //     newSubscription?._id as ObjectId
+          //   );
+          // }
 
           break;
         }
