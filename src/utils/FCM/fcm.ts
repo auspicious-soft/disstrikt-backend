@@ -56,7 +56,7 @@ export const NotificationService = async (
     const notifications: any[] = [];
 
     for (const userId of userIds) {
-      const userData = await UserModel.findById(userId).select("fcmToken");
+      const userData = await UserModel.findById(userId).select("fcmToken language");
 
       const messageTemplate =
         notificationMessages[userData?.language || "en"]?.[type];
