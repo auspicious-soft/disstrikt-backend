@@ -1233,13 +1233,22 @@ export const taskServices = {
   async getTasks(payload: any) {
     const page = Number(payload.page) || 1;
     const limit = Number(payload.limit) || 10;
+    const search = Number(payload.search) || "";
+    const taskType = payload.taskType || "";
+
     const skip = (page - 1) * limit;
+
+    const matchCondidtion = search
+      ? { isActive: true, taskNumber: search }
+      : ({ isActive: true } as any);
+
+    if (taskType) {
+      matchCondidtion["taskType"] = taskType;
+    }
 
     const result = await TaskModel.aggregate([
       {
-        $match: {
-          isActive: true,
-        },
+        $match: matchCondidtion,
       },
       {
         $lookup: {

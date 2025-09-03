@@ -31,8 +31,8 @@ export const updateTask = async (req: Request, res: Response) => {
 };
 export const getTasks = async (req: Request, res: Response) => {
   try {
-    const {page = 1, limit = 10} = req.query;
-    const response = await taskServices.getTasks({page, limit});
+    const {page = 1, limit = 10, search, taskType} = req.query;
+    const response = await taskServices.getTasks({page, limit, search, taskType});
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
