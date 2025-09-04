@@ -85,6 +85,9 @@ export const homeServices = {
         $addFields: {
           rating: { $ifNull: [{ $arrayElemAt: ["$response.rating", 0] }, 0] },
           attempted: { $gt: [{ $size: "$response.taskReviewed" }, 0] }, // 👈 true if response exists
+          adminReviewed: {
+            $ifNull: [{ $arrayElemAt: ["$response.adminReviewed", 0] }, false],
+          }, // 👈 true if response exists
         },
       },
       {
@@ -94,6 +97,7 @@ export const homeServices = {
           taskNumber: 1,
           milestone: 1,
           attempted: 1,
+          adminReviewed: 1,
           title: `$${language}.title`,
           rating: 1,
         },
@@ -102,7 +106,9 @@ export const homeServices = {
     ]);
 
     const tasks = result || [];
-    const unlockedTask = tasks.find((data: any) => data.adminReviewed === false);
+    const unlockedTask = tasks.find(
+      (data: any) => data.adminReviewed === false
+    );
 
     const total = result.length || 0;
 
