@@ -143,7 +143,7 @@ export const homeServices = {
       image: payload.userData.image,
       planName: planName,
       percentage: Number(percentage.toFixed(1)),
-      unlockedTask: unlockedTask?.taskNumber || null,
+      unlockedTask: unlockedTask?.taskNumber || 1,
       milestoneData: tasks || [],
     };
   },
