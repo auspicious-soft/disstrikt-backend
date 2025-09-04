@@ -102,7 +102,7 @@ export const homeServices = {
     ]);
 
     const tasks = result || [];
-    const unlockedTask = tasks.find((data: any) => data.attempted === false);
+    const unlockedTask = tasks.find((data: any) => data.adminReviewed === false);
 
     const total = result.length || 0;
 
