@@ -1623,6 +1623,7 @@ export const userServices = {
           jobAppliedCount: 1,
           totalAmountPaid: 1,
           currency: 1,
+          createdAt: 1,
         },
       },
 
@@ -1669,7 +1670,9 @@ export const userServices = {
       .lean();
 
     const userMoreData = await UserInfoModel.findOne({ userId })
-      .select("measurements portfolioImages links videos gender dob setCards")
+      .select(
+        "measurements portfolioImages links videos gender dob setCards aboutMe"
+      )
       .lean();
 
     const appliedJobs = (await AppliedJobModel.find({ userId })
@@ -1684,7 +1687,7 @@ export const userServices = {
 
     const transactions = await TransactionModel.aggregate([
       {
-        $match: { userId: new Types.ObjectId(userId) },
+        $match: { userId: new Types.ObjectId(userId), amount: { $gt: 0 } },
       },
       // Lookup subscription by stripeSubscriptionId
       {
@@ -1745,6 +1748,8 @@ export const userServices = {
     return {
       ...userData,
       ...userMoreData?.measurements,
+      bio: userMoreData?.aboutMe,
+      gender: userMoreData?.gender,
       dob: userMoreData?.dob,
       currentPlan: { ...subscription, name: subscriptionName?.name?.en },
       images: {
