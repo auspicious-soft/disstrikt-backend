@@ -1656,9 +1656,15 @@ export const userServices = {
     const userData = await UserModel.findById(userId)
       .select("fullName email image phone country")
       .lean();
-    
-    const subscription = await SubscriptionModel.findOne({userId: userData?._id}).select("nextBillingDate status amount planId currency").lean()
-    const subscriptionName = await planModel.findById(subscription?.planId).lean();
+
+    const subscription = await SubscriptionModel.findOne({
+      userId: userData?._id,
+    })
+      .select("nextBillingDate status amount planId currency")
+      .lean();
+    const subscriptionName = await planModel
+      .findById(subscription?.planId)
+      .lean();
 
     const userMoreData = await UserInfoModel.findOne({ userId })
       .select("measurements portfolioImages links videos gender dob setCards")
@@ -1738,11 +1744,12 @@ export const userServices = {
       ...userData,
       ...userMoreData?.measurements,
       dob: userMoreData?.dob,
-      currentPlan:{...subscription, name: subscriptionName?.name?.en},
+      currentPlan: { ...subscription, name: subscriptionName?.name?.en },
       images: {
         setCards: userMoreData?.setCards,
         images: userMoreData?.portfolioImages,
       },
+      videos: userMoreData?.videos,
       socialLinks: userMoreData?.links,
       transactions,
       appliedJobs: formatted,
