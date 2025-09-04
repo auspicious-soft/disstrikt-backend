@@ -13,6 +13,7 @@ import { TokenModel } from "src/models/user/token-schema";
 import axios from "axios";
 import jwkToPem from "jwk-to-pem";
 import fs from "fs";
+import { DateTime } from "luxon";
 
 configDotenv();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -163,4 +164,10 @@ export async function verifyAppleToken(idToken: string) {
   }
 
   return payload;
+}
+
+export function convertToUTC(date: string, hour: number, tz: string) {
+  return DateTime.fromISO(`${date}T${hour.toString().padStart(2, "0")}:00`, {
+    zone: tz,
+  }).toUTC().toJSDate();
 }

@@ -13,7 +13,7 @@ import { TokenModel } from "src/models/user/token-schema";
 import { TransactionModel } from "src/models/user/transaction-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { features, languages, regionalAccess } from "src/utils/constant";
-import { translateJobFields } from "src/utils/helper";
+import { convertToUTC, translateJobFields } from "src/utils/helper";
 import { Stripe } from "stripe";
 import { Parser } from "json2csv";
 import { UserInfoModel } from "src/models/user/user-info-schema";
@@ -673,14 +673,16 @@ export const planServices = {
 
 export const jobServices = {
   async createJob(payload: any) {
-    const { en, date, time, ...restData } = payload;
+    const { en, date, time, timeZone, ...restData } = payload;
 
     // Function to translate the language of jobs
     const result = await translateJobFields(payload.en);
     const { nl, fr, es } = result;
 
-    const jobDateTimeUTC = new Date(date);
-    jobDateTimeUTC.setUTCHours(time, 0, 0, 0);
+    const jobDateTimeUTC = convertToUTC(date, time, timeZone);
+
+    // const jobDateTimeUTC = new Date(date);
+    // jobDateTimeUTC.setUTCHours(time, 0, 0, 0);
 
     const createdJob = await JobModel.create({
       en,
