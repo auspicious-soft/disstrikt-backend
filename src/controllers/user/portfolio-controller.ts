@@ -30,14 +30,14 @@ export const updatePortfolio = async (req: Request, res: Response) => {
     req.body.language = userData.language || "en";
     const data = req.body;
 
-    if (
-      !data.aboutMe || //TODO
-      data.links.length !== 2 ||
-      data.links[0].platform !== "Instagram" ||
-      data.links[1].platform !== "Youtube"
-    ) {
-      throw new Error("invalidFields");
-    }
+    // if (
+    //   !data.aboutMe || //TODO
+    //   data.links.length !== 2 ||
+    //   data.links[0].platform !== "Instagram" ||
+    //   data.links[1].platform !== "Youtube"
+    // ) {
+    //   throw new Error("invalidFields");
+    // }
 
     const response = await portfolioServices.updatePortfolio({
       userData,
