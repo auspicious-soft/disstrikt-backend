@@ -137,7 +137,7 @@ export const homeServices = {
 
     const planName =
       subscription.status === "trialing"
-        ? freeTrialText[language]
+        ? freeTrialText["en"]
         : payload.userData.subscription.planName;
 
     return {
