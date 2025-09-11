@@ -43,8 +43,8 @@ export const createJob = async (req: Request, res: Response) => {
     await saveLogs({
       ...adminUser,
       logs: `Created a new job - ${response?.en?.title || "unknown"}`,
-      type: "JOB",
       referenceId: response?._id,
+      referenceModel: "jobs",
     });
 
     return CREATED(res, response || {}, req.body.language || "en");
@@ -114,8 +114,9 @@ export const updateJobStatus = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Updated job status to ${status}`,
-      type: "JOB",
+      logs: `Changed job application status to - ${status}`,
+      type: "JOB-APPLICANT",
+      referenceModel: "appliedJobs",
       referenceId: response?.jobId,
     });
 

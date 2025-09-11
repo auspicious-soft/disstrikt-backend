@@ -178,12 +178,19 @@ export function convertToUTC(date: string, hour: number, tz: string) {
 }
 
 export async function saveLogs(payload: any) {
-  const { _id, referenceId, type, logs, email, fullName, role } = payload;
+  const {
+    _id,
+    referenceId,
+    referenceModel,
+    logs,
+    email,
+    fullName,
+    role,
+  } = payload;
   await AdminLogsModel.create({
     adminId: _id,
-    taskId: type === "TASK" ? referenceId : null,
-    jobId: type === "JOB" ? referenceId : null,
-    type,
+    referenceId: referenceId,
+    referenceModel: referenceModel,
     logs,
     email,
     fullName,

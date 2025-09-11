@@ -4,11 +4,10 @@ export interface IAdminLogs extends Document {
   fullName: string;
   email: string;
   adminId: mongoose.Schema.Types.ObjectId;
-  jobId?: mongoose.Schema.Types.ObjectId;
-  taskId?: mongoose.Schema.Types.ObjectId;
+  referenceId?: mongoose.Schema.Types.ObjectId;
   logs: string;
-  type: "JOB" | "TASK";
   role: "ADMIN" | "EMPLOYEE";
+  referenceModel?: string; // Add this field for refPath
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -29,18 +28,13 @@ const adminLogsSchema = new Schema<IAdminLogs>(
       ref: "admin",
       required: true,
     },
-    jobId: {
+    referenceId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "job",
+      refPath: "referenceModel",
     },
-    taskId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "taskresponse",
-    },
-    type: {
+    referenceModel: {
       type: String,
-      enum: ["JOB", "TASK"],
-      required: true,
+      enum: ["jobs", "tasks", "appliedJobs", "taskresponse"], // collections you want to point to
     },
     logs: {
       type: String,

@@ -14,9 +14,9 @@ export const createTask = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Created a Task - ${response?.taskNumber || "Unknown"}`,
-      type: "TASK",
-      referenceId: null,
+      logs: `Created a new Task, Number ${response?.taskNumber || "Unknown"}`,
+      referenceModel: "tasks",
+      referenceId: response?._id,
     });
     return CREATED(res, response || {}, req.body.language || "en");
   } catch (err: any) {
@@ -36,9 +36,9 @@ export const updateTask = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Updated a Task - ${response?.taskNumber || "Unknown"}`,
-      type: "TASK",
-      referenceId: null,
+      logs: `Updated task number ${response?.taskNumber || "Unknown"}`,
+      referenceModel: "tasks",
+      referenceId: response?._id,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
@@ -86,8 +86,8 @@ export const addQuiz = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Added a Quiz to Task - ${response.taskNumber}`,
-      type: "TASK",
+      logs: `Added a Quiz to task number ${response.taskNumber}`,
+      referenceModel: "tasks",
       referenceId: taskId,
     });
     return OK(res, response || {}, req.body.language || "en");
@@ -106,9 +106,9 @@ export const deleteQuiz = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Deleted a Quiz from Task - ${response?.taskNumber || "Unknown"}`,
-      type: "TASK",
-      referenceId: null,
+      logs: `Deleted a Quiz from task number - ${response?.taskNumber || "Unknown"}`,
+      referenceModel: "tasks",
+      referenceId: response?._id,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
@@ -125,9 +125,9 @@ export const addCheckbox = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Added a Checkbox to Task - ${response.taskNumber}`,
-      type: "TASK",
-      referenceId: req.body.taskId,
+      logs: `Added a Checkbox to task number ${response.taskNumber}`,
+      referenceModel: "tasks",
+      referenceId: response?._id,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {

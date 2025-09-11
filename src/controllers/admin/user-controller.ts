@@ -92,8 +92,8 @@ export const submitTaskResponse = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Rated User for Task ${response} with ${req.body.rating} rating || "Unknown"}`,
-      type: "TASK",
+      logs: `Rated User for Task Number ${response} with rating ${req.body.rating}`,
+      referenceModel: "taskresponse",
       referenceId: taskId,
     });
     return OK(res, response || {}, req.body.language || "en");
