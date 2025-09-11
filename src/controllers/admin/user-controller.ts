@@ -3,7 +3,7 @@ import { AdminLogsModel } from "src/models/admin/admin-logs-schema";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { userServices } from "src/services/admin/admin-services";
 import { countries } from "src/utils/constant";
-import { hashPassword } from "src/utils/helper";
+import { hashPassword, saveLogs } from "src/utils/helper";
 import {
   BADREQUEST,
   CREATED,
@@ -88,6 +88,13 @@ export const submitTaskResponse = async (req: Request, res: Response) => {
     const response = await userServices.submitTaskResponse({
       taskId,
       rating: req.body.rating,
+    });
+    const adminUser = req.user as any;
+    await saveLogs({
+      ...adminUser,
+      logs: `Rated User for Task ${response} with ${req.body.rating} rating || "Unknown"}`,
+      type: "TASK",
+      referenceId: taskId,
     });
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
