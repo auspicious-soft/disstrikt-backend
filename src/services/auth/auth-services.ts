@@ -256,6 +256,7 @@ export const authServices = {
       ? await AdminModel.findOne({
           email: payload.email,
           authType: "EMAIL",
+          role: "ADMIN",
         })
       : await UserModel.findOne({
           email: payload.email,

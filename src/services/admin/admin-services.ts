@@ -983,7 +983,7 @@ export const jobServices = {
       jobId,
       { $set: { status } },
       { new: true }
-    );
+    ).lean();
     if (jobData?.userId) {
       await NotificationService(
         [jobData?.userId],
@@ -992,7 +992,7 @@ export const jobServices = {
       );
     }
 
-    return {};
+    return jobData;
   },
 
   async getJobDataCSV(payload: any) {
@@ -1483,7 +1483,7 @@ export const taskServices = {
       );
     }
 
-    return { success: true };
+    return task;
   },
 
   async deleteQuiz(payload: any) {
@@ -1493,8 +1493,11 @@ export const taskServices = {
       throw new Error("Quiz id is required");
     }
 
+    const taskData = await QuizModel.findById(quizId).populate("taskId").lean();
+
     await QuizModel.findByIdAndDelete(quizId);
-    return {};
+
+    return taskData?.taskId;
   },
 
   async addCheckbox(payload: any) {
@@ -1522,7 +1525,7 @@ export const taskServices = {
       taskId,
     });
 
-    return {};
+    return task;
   },
 };
 

@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { jobServices, planServices } from "src/services/admin/admin-services";
 import { countries } from "src/utils/constant";
+import { saveLogs } from "src/utils/helper";
 import {
   BADREQUEST,
   CREATED,
@@ -37,6 +38,15 @@ export const createJob = async (req: Request, res: Response) => {
     }
 
     const response = await jobServices.createJob(req.body);
+
+    const adminUser = req.user as any;
+    await saveLogs({
+      ...adminUser,
+      logs: `Created a new job - ${response?.en?.title || "unknown"}`,
+      type: "JOB",
+      referenceId: response?._id,
+    });
+
     return CREATED(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
@@ -69,6 +79,7 @@ export const getJobs = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const getJobsById = async (req: Request, res: Response) => {
   try {
     const { status } = req.query as any;
@@ -100,6 +111,14 @@ export const updateJobStatus = async (req: Request, res: Response) => {
     }
     const response = await jobServices.updateJobStatus({ jobId, status });
 
+    const adminUser = req.user as any;
+    await saveLogs({
+      ...adminUser,
+      logs: `Updated job status to ${status}`,
+      type: "JOB",
+      referenceId: response?.jobId,
+    });
+
     return OK(res, response || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
@@ -108,6 +127,7 @@ export const updateJobStatus = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const getAllJobApplications = async (req: Request, res: Response) => {
   try {
     const { status = "ALL" } = req.query;

@@ -14,6 +14,7 @@ import axios from "axios";
 import jwkToPem from "jwk-to-pem";
 import fs from "fs";
 import { DateTime } from "luxon";
+import { AdminLogsModel } from "src/models/admin/admin-logs-schema";
 
 configDotenv();
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -51,7 +52,7 @@ export async function generateToken(user: IUser) {
     language: user.language,
     countryCode: user.countryCode,
     authType: user.authType,
-    currentMilestone: user.currentMilestone
+    currentMilestone: user.currentMilestone,
   };
 
   const token = jwt.sign(tokenPayload, process.env.AUTH_SECRET as string, {
@@ -122,7 +123,9 @@ export async function generateAndSendOtp(
   return otp;
 }
 
-const privateKey = process.env.GOOGLE_PRIVATE_KEY2 ? process.env.GOOGLE_PRIVATE_KEY2.replace(/\\n/g, '\n') : "";
+const privateKey = process.env.GOOGLE_PRIVATE_KEY2
+  ? process.env.GOOGLE_PRIVATE_KEY2.replace(/\\n/g, "\n")
+  : "";
 
 const translate = new Translate({
   credentials: {
@@ -169,5 +172,21 @@ export async function verifyAppleToken(idToken: string) {
 export function convertToUTC(date: string, hour: number, tz: string) {
   return DateTime.fromISO(`${date}T${hour.toString().padStart(2, "0")}:00`, {
     zone: tz,
-  }).toUTC().toJSDate();
+  })
+    .toUTC()
+    .toJSDate();
+}
+
+export async function saveLogs(payload: any) {
+  const { _id, referenceId, type, logs, email, fullName, role } = payload;
+  await AdminLogsModel.create({
+    adminId: _id,
+    taskId: type === "TASK" ? referenceId : null,
+    jobId: type === "JOB" ? referenceId : null,
+    type,
+    logs,
+    email,
+    fullName,
+    role,
+  });
 }

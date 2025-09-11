@@ -8,6 +8,7 @@ import { TokenModel } from "src/models/user/token-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import path from "path";
 import { UserInfoModel } from "src/models/user/user-info-schema";
+import { AdminModel } from "src/models/admin/admin-schema";
 
 configDotenv();
 declare global {
@@ -33,20 +34,22 @@ export const checkUserAuth = async (
     if (!decoded)
       return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
 
-    const checkToken = await TokenModel.findOne({
+    const checkToken = (await TokenModel.findOne({
       token,
     })
       .populate("userId")
-      .lean() as any
+      .lean()) as any;
 
     if (!checkToken) {
       return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
     }
 
-    const moreInfo = await UserInfoModel.findOne({userId: checkToken?.userId._id}) as any
+    const moreInfo = (await UserInfoModel.findOne({
+      userId: checkToken?.userId._id,
+    })) as any;
 
     req.user = {
-      id:checkToken?.userId._id,
+      id: checkToken?.userId._id,
       authType: checkToken?.userId?.authType,
       country: checkToken.userId?.country,
       countryCode: checkToken.userId?.countryCode,
@@ -56,7 +59,7 @@ export const checkUserAuth = async (
       language: checkToken.userId?.language,
       phone: checkToken.userId?.phone,
       gender: moreInfo?.gender,
-      currentMilestone: checkToken?.userId?.currentMilestone
+      currentMilestone: checkToken?.userId?.currentMilestone,
     };
 
     //********************************
@@ -77,6 +80,7 @@ export const checkUserAuth = async (
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const checkSubscription = async (
   req: Request,
   res: Response,
@@ -119,5 +123,43 @@ export const checkSubscription = async (
     next();
   } catch (error) {
     return INTERNAL_SERVER_ERROR(res, req?.body?.language || "en");
+  }
+};
+
+export const checkAdminAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const token = req.headers.authorization?.split(" ")[1];
+    if (!token) {
+      return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
+    }
+
+    // For Admin built in Next Js
+
+    const decoded = await decode({
+      secret: process.env.AUTH_SECRET as string,
+      token,
+      salt: process.env.JWT_SALT as string,
+    });
+
+    const adminData = await AdminModel.findById((decoded as any).id).lean();
+
+    if (!decoded)
+      return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
+
+    if (adminData?.isBlocked) {
+      return UNAUTHORIZED(res, "adminBlocked", req.body.language || "en");
+    }
+
+    req.user = {
+      ...adminData,
+    };
+
+    next();
+  } catch (error) {
+    return UNAUTHORIZED(res, "invalidToken", req.body.language || "en");
   }
 };

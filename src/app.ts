@@ -3,7 +3,11 @@ import cors from "cors";
 import path from "path";
 import { fileURLToPath } from "url";
 import connectDB from "./config/db";
-import { checkSubscription, checkUserAuth } from "./middleware/check-auth";
+import {
+  checkAdminAuth,
+  checkSubscription,
+  checkUserAuth,
+} from "./middleware/check-auth";
 import { admin, auth, paidUser, user } from "./routes";
 import { handleStripeWebhook } from "./controllers/admin/plan-setting-controller";
 import { initializeFirebase } from "./utils/FCM/fcm";
@@ -59,7 +63,7 @@ app.use("/api/user", checkUserAuth, user);
 app.use("/api/paid-user", checkUserAuth, checkSubscription, paidUser);
 
 // //*****************Admin Routes******************/
-app.use("/api/admin", admin);
+app.use("/api/admin", checkAdminAuth, admin);
 
 // //*****************Stripe Test Routes*****************/
 // app.get("/success-test", stripeSuccess);

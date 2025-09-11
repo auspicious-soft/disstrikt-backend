@@ -6,9 +6,11 @@ export interface IAdmin extends Document {
   email: string;
   password?: string;
   image?: string;
+  role?: "ADMIN" | "EMPLOYEE";
   country?: "NL" | "BE" | "FR" | "UK" | "ES";
   language?: "en" | "nl" | "fr" | "es";
   authType: "EMAIL" | "GOOGLE" | "APPLE";
+  isBlocked?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
 }
@@ -35,7 +37,11 @@ const adminSchema = new Schema<IAdmin>(
     },
     image: {
       type: String,
-      default: null,
+      default: "admin/images/image+(2).png",
+    },
+    role: {
+      type: String,
+      default: "EMPLOYEE",
     },
     country: {
       type: String,
@@ -51,6 +57,10 @@ const adminSchema = new Schema<IAdmin>(
       type: String,
       enum: authTypes,
       default: "EMAIL",
+    },
+    isBlocked: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

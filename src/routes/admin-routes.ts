@@ -1,6 +1,16 @@
 import { Router } from "express";
-import { getDashboard, getRevenue } from "src/controllers/admin/dashboard-controller";
-import { createJob, getAllJobApplications, getJobDataCSV, getJobs, getJobsById, updateJobStatus } from "src/controllers/admin/job-controller";
+import {
+  getDashboard,
+  getRevenue,
+} from "src/controllers/admin/dashboard-controller";
+import {
+  createJob,
+  getAllJobApplications,
+  getJobDataCSV,
+  getJobs,
+  getJobsById,
+  updateJobStatus,
+} from "src/controllers/admin/job-controller";
 import {
   createPlan,
   getAdminData,
@@ -13,8 +23,27 @@ import {
   updatePlan,
 } from "src/controllers/admin/plan-setting-controller";
 import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
-import { addCheckbox, addQuiz, createTask, deleteQuiz, getTaskById, getTasks, updateTask } from "src/controllers/admin/task-controller";
-import { getAllTaskResponse, getUserById, getUsers, getUserTaskResponse, submitTaskResponse } from "src/controllers/admin/user-controller";
+import {
+  addCheckbox,
+  addQuiz,
+  createTask,
+  deleteQuiz,
+  getTaskById,
+  getTasks,
+  updateTask,
+} from "src/controllers/admin/task-controller";
+import {
+  createEmployee,
+  getAllTaskResponse,
+  getEmployees,
+  getEmployeesById,
+  getUserById,
+  getUsers,
+  getUserTaskResponse,
+  submitTaskResponse,
+  updateEmployee,
+} from "src/controllers/admin/user-controller";
+import { checkAdminAuth } from "src/middleware/check-auth";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
 
@@ -22,42 +51,45 @@ import { hashPassword } from "src/utils/helper";
 const router = Router();
 
 // Dashboard-routes
-router.route("/get-dashboard").get(getDashboard)
-router.route("/revenue").get(getRevenue)
+router.route("/get-dashboard").get(getDashboard);
+router.route("/revenue").get(getRevenue);
 
 // Plan-routes
 router.route("/price-plan").get(getPlans).post(createPlan).put(updatePlan);
 
 // Review-tasks-routes
-router.route("/userTask").get(getAllTaskResponse)
-router.route("/userTask/:id").get(getUserTaskResponse).post(submitTaskResponse)
+router.route("/userTask").get(getAllTaskResponse);
+router.route("/userTask/:id").get(getUserTaskResponse).post(submitTaskResponse);
 
 // Setting-routes
 router.route("/get-platform-info").get(getPlatformInfo);
 router.route("/privacy-policy").post(postPrivacyPolicy);
 router.route("/term-and-condition").post(postTermAndCondition);
 router.route("/support").post(postSupport);
-router.route("/admin-data").get(getAdminData).put(updateAdminData)
+router.route("/admin-data").get(getAdminData).put(updateAdminData);
 
 // Job-management-routes
-router.route("/jobs").post(createJob).get(getJobs)
-router.route("/jobsById/:id").get(getJobsById).put(updateJobStatus)
-router.route("/jobDataCSV/:id").get(getJobDataCSV)
+router.route("/jobs").post(createJob).get(getJobs);
+router.route("/jobsById/:id").get(getJobsById).put(updateJobStatus);
+router.route("/jobDataCSV/:id").get(getJobDataCSV);
 
-// Job-application-rout
-router.route("/get-all-applications").get(getAllJobApplications)
+// Job-application-routes
+router.route("/get-all-applications").get(getAllJobApplications);
 
 // Task-management-routes
-router.route("/tasks").get(getTasks).post(createTask)
-router.route("/tasksById/:id").put(updateTask).get(getTaskById)
-router.route("/addQuiz/:id").post(addQuiz).delete(deleteQuiz)
-router.route("/addCheckbox").post(addCheckbox)
+router.route("/tasks").get(getTasks).post(createTask);
+router.route("/tasksById/:id").put(updateTask).get(getTaskById);
+router.route("/addQuiz/:id").post(addQuiz).delete(deleteQuiz);
+router.route("/addCheckbox").post(addCheckbox);
 router.post("/upload", multerUpload, uploadToS3);
 
 // User-management-routes
-router.route("/getUsers").get(getUsers)
-router.route("/getUserById/:id").get(getUserById)
+router.route("/getUsers").get(getUsers);
+router.route("/getUserById/:id").get(getUserById);
 
+// Employee-management-routes
+router.route("/employee").post(createEmployee).get(getEmployees);
+router.route("/employee-by-id/:id").get(getEmployeesById).put(updateEmployee);
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {
