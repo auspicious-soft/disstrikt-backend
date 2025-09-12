@@ -174,6 +174,7 @@ export const getEmployeesById = async (req: Request, res: Response) => {
     const logs = await AdminLogsModel.find({ adminId: employeeId })
       .skip((+page - 1) * +limit)
       .limit(+limit)
+      .sort({ createdAt: -1 })
       .lean();
 
     const data = {
