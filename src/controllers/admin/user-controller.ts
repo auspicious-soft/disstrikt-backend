@@ -177,13 +177,17 @@ export const getEmployeesById = async (req: Request, res: Response) => {
       .sort({ createdAt: -1 })
       .lean();
 
+    const totalCount = await AdminLogsModel.countDocuments({
+      adminId: employeeId,
+    });
+
     const data = {
       ...checkExist,
       logs,
-      total: await AdminLogsModel.countDocuments({ adminId: employeeId }),
+      total: totalCount,
       page,
       limit,
-      totalPages: Math.ceil(logs.length / +limit),
+      totalPages: Math.ceil(totalCount / +limit),
     };
 
     return OK(res, data || {}, req.body.language || "en");
