@@ -210,29 +210,29 @@ export const updateEmployee = async (req: Request, res: Response) => {
       _id: { $ne: employeeId },
     });
 
-    if (!fullName || !email || !password) {
-      throw new Error("Fullname, email and password are required");
-    }
-
     if (checkExist) {
       throw new Error("Employee with this email already exist");
     }
 
-    const hashedPassword = await hashPassword(password);
+    const empoyeeData = await AdminModel.findById(employeeId);
 
-    const response = await AdminModel.findByIdAndUpdate(
-      employeeId,
-      {
-        fullName,
-        email,
-        password: hashedPassword,
-        country,
-        isBlocked,
-      },
-      { new: true }
-    );
+    if (!empoyeeData) {
+      throw new Error("Employee not found");
+    }
 
-    return OK(res, response || {}, req.body.language || "en");
+    if (password) {
+      password = await hashPassword(password);
+      empoyeeData.password = password;
+    }
+
+    if (fullName) empoyeeData.fullName = fullName;
+    if (email) empoyeeData.email = email;
+    if (country) empoyeeData.country = country;
+    empoyeeData.isBlocked = isBlocked;
+
+    await empoyeeData.save();
+
+    return OK(res, {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");
