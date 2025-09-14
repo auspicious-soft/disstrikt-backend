@@ -151,6 +151,7 @@ export const getEmployees = async (req: Request, res: Response) => {
       role: "EMPLOYEE",
     })
       .select("-password -__v")
+      .sort({createdAt:-1})
       .lean();
 
     return OK(res, response || {}, req.body.language || "en");
