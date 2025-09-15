@@ -92,7 +92,7 @@ export const submitTaskResponse = async (req: Request, res: Response) => {
     const adminUser = req.user as any;
     await saveLogs({
       ...adminUser,
-      logs: `Rated User for Task Number ${response?.taskNumber} with rating ${req.body.rating}`,
+      logs: `Rated User for Task Number ${response} with rating ${req.body.rating}`,
       referenceModel: "taskresponse",
       referenceId: taskId,
     });
