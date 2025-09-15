@@ -699,6 +699,7 @@ export const authServices = {
     const checkExist = await AdminModel.findOne({
       email: payload.email,
       authType: "EMAIL",
+      isBlocked: false
     }).lean();
 
     if (!checkExist) {
