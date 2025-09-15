@@ -1876,7 +1876,7 @@ export const userServices = {
         taskId,
         taskData.taskNumber
       );
-      return {};
+      return taskData.taskNumber;
     }
 
     await TaskResponseModel.findByIdAndUpdate(taskId, {
