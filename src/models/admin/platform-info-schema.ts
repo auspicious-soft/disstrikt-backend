@@ -43,8 +43,20 @@ const platformInfoSchema = new Schema<IPlatformInfo>(
     support: {
       type: Object,
       default: {
-        phone: "",
-        email: "",
+        phone: {
+          UK: "",
+          BE: "",
+          FR: "",
+          ES: "",
+          NL: "",
+        },
+        email: {
+          UK: "",
+          BE: "",
+          FR: "",
+          ES: "",
+          NL: "",
+        },
         address: {
           en: "",
           nl: "",
