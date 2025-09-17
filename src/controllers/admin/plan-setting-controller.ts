@@ -205,10 +205,14 @@ export const postSupport = async (req: Request, res: Response) => {
 
 export const getAdminData = async (req: Request, res: Response) => {
   try {
-    const adminData = await AdminModel.find().select(
+    const adminId = (req.user as any)?._id;
+    if (!adminId) {
+      return BADREQUEST(res, "invalidToken", req.body.language || "en");
+    }
+    const adminData = await AdminModel.findById(adminId).select(
       "fullName email image country language"
     );
-    return OK(res, adminData[0] || {}, req.body.language || "en");
+    return OK(res, adminData || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");
@@ -218,19 +222,27 @@ export const getAdminData = async (req: Request, res: Response) => {
 };
 
 export const updateAdminData = async (req: Request, res: Response) => {
+  const adminId = (req.user as any)?._id;
+  if (!adminId) {
+    return BADREQUEST(res, "invalidToken", req.body.language || "en");
+  }
   try {
     const { oldPassword, password, ...restData } = req.body;
-    const checkExist = await AdminModel.find();
-    let updatedPassword = checkExist[0].password;
+    const checkExist = await AdminModel.findById(adminId);
+    if (!checkExist) {
+      throw new Error("notFound");
+    }
 
-    if (!restData.fullName  || !restData.email ) {
+    let updatedPassword = checkExist.password;
+
+    if (!restData.fullName || !restData.email) {
       throw new Error("adminRequired");
     }
 
     if (password && oldPassword) {
       const passwordStatus = await verifyPassword(
         oldPassword,
-        checkExist[0]?.password || ""
+        checkExist?.password || ""
       );
 
       if (!passwordStatus) {
@@ -239,7 +251,7 @@ export const updateAdminData = async (req: Request, res: Response) => {
       updatedPassword = await hashPassword(password);
     }
 
-    await AdminModel.findByIdAndUpdate(checkExist[0]._id, {
+    await AdminModel.findByIdAndUpdate(adminId, {
       $set: { ...restData, password: updatedPassword },
     });
 
