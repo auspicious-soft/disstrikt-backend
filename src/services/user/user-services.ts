@@ -553,7 +553,7 @@ export const profileServices = {
   updateUser: async (payload: any) => {
     if (payload.image) {
       const data = await UserModel.findById(payload.id).lean();
-      if (data && data.image && data.image !== "admin/images/image+(2).png") {
+      if (data && data.image && data.image !== "admin/images/dummy-image.png") {
         await deleteFileFromS3(data?.image as string);
       }
     }

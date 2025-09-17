@@ -37,7 +37,7 @@ const adminSchema = new Schema<IAdmin>(
     },
     image: {
       type: String,
-      default: "admin/images/image+(2).png",
+      default: "admin/images/dummy-image.png",
     },
     role: {
       type: String,
