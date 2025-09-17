@@ -223,6 +223,10 @@ export const updateAdminData = async (req: Request, res: Response) => {
     const checkExist = await AdminModel.find();
     let updatedPassword = checkExist[0].password;
 
+    if (!restData.fullName  || !restData.email ) {
+      throw new Error("adminRequired");
+    }
+
     if (password && oldPassword) {
       const passwordStatus = await verifyPassword(
         oldPassword,
@@ -230,7 +234,7 @@ export const updateAdminData = async (req: Request, res: Response) => {
       );
 
       if (!passwordStatus) {
-        throw new Error("invalidPassword");
+        throw new Error("invalidOldPassword");
       }
       updatedPassword = await hashPassword(password);
     }
