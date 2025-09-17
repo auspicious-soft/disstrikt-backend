@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import multer from "multer";
+import sharp from "sharp";
 import { uploadFileToS3 } from "src/config/s3";
 import { BADREQUEST, CREATED, INTERNAL_SERVER_ERROR } from "src/utils/response";
 
@@ -24,27 +25,39 @@ export const uploadToS3 = async (req: Request, res: Response) => {
       return BADREQUEST(res, "Missing file or user", language);
     }
 
-    const mime = file.mimetype;
+    let fileBuffer = file.buffer;
 
-    // Dynamically extract file category (top-level MIME type)
-    let fileCategory: string;
-    if (mime.includes("/")) {
-      fileCategory = mime.split("/")[0]; // e.g. "image", "video", "application", "text"
-    } else {
-      fileCategory = "other"; // fallback
+    // ✅ If it's an image, compress it with sharp
+    if (file.mimetype.startsWith("image/")) {
+      fileBuffer = await sharp(file.buffer)
+        .resize({ width: 1280 }) // optional: resize max width
+        .jpeg({ quality: 50 })   // compress JPEG to ~50% quality
+        .toBuffer();
     }
 
-    // Optionally map some common extensions if needed
-    const allowedCategories = [
-      "image",
-      "video",
-      "application",
-      "text",
-      "audio",
-    ];
-    if (!allowedCategories.includes(fileCategory)) {
-      fileCategory = "other";
-    }
+    const fileCategory = file.mimetype.split("/")[0] || "other";
+
+    // const mime = file.mimetype;
+
+    // // Dynamically extract file category (top-level MIME type)
+    // let fileCategory: string;
+    // if (mime.includes("/")) {
+    //   fileCategory = mime.split("/")[0]; // e.g. "image", "video", "application", "text"
+    // } else {
+    //   fileCategory = "other"; // fallback
+    // }
+
+    // // Optionally map some common extensions if needed
+    // const allowedCategories = [
+    //   "image",
+    //   "video",
+    //   "application",
+    //   "text",
+    //   "audio",
+    // ];
+    // if (!allowedCategories.includes(fileCategory)) {
+    //   fileCategory = "other";
+    // }
 
     const result = await uploadFileToS3(
       file.buffer,
