@@ -13,13 +13,14 @@ export const uploadToS3 = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     const file = req.file;
+    const { role, _id } = userData || { role: "USER" };
     const {
-      id: userId,
-      isAdmin = false,
+      id = role === "ADMIN" ? _id : userData.userId,
+      isAdmin = role === "ADMIN" ? true : false,
       language = "en",
     } = userData || { id: null, isAdmin: true, language: "en" };
 
-    if (!file || (!userId && !isAdmin)) {
+    if (!file || !id) {
       return BADREQUEST(res, "Missing file or user", language);
     }
 
@@ -49,7 +50,7 @@ export const uploadToS3 = async (req: Request, res: Response) => {
       file.buffer,
       file.originalname,
       file.mimetype,
-      userId,
+      id,
       fileCategory,
       isAdmin === "true" || isAdmin === true
     );
