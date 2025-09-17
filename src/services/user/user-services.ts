@@ -582,6 +582,8 @@ export const profileServices = {
         $set: {
           fullName: payload?.fullName,
           image: payload?.image,
+          countryCode: payload?.countryCode,
+          phone: payload?.phone,
         },
       },
       { new: true }

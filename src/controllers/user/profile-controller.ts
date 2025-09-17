@@ -62,6 +62,8 @@ export const updateUser = async (req: Request, res: Response) => {
       image,
       weightKg,
       shoeSizeUK,
+      countryCode,
+      phone
     } = req.body;
 
     if (heightCm && !Number(heightCm)) {
@@ -104,6 +106,8 @@ export const updateUser = async (req: Request, res: Response) => {
       id: userData.id,
       weightKg,
       shoeSizeUK,
+      countryCode,
+      phone
     });
 
     return OK(res, response || {}, req.body.language, "profileUpdated");
