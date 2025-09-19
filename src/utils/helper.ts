@@ -187,6 +187,7 @@ export async function saveLogs(payload: any) {
     fullName,
     role,
   } = payload;
+
   await AdminLogsModel.create({
     adminId: _id,
     referenceId: referenceId,

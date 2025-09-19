@@ -1220,10 +1220,17 @@ export const taskServices = {
       task.es = es;
     }
 
-    if (task?.link?.length) {
-      await Promise.all(
-        task.link.map((data: string) => deleteFileFromS3(data))
+    if (Array.isArray(task.link) && task.link.length) {
+      // Find files that exist in old task but not in the new payload
+      const filesToDelete = task.link.filter(
+        (oldFile: string) => !link.includes(oldFile)
       );
+
+      if (filesToDelete.length > 0) {
+        await Promise.all(
+          filesToDelete.map((file: string) => deleteFileFromS3(file))
+        );
+      }
     }
 
     task.link = link;
