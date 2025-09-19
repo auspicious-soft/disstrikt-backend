@@ -254,6 +254,7 @@ export const customMessages: Record<SupportedLang, any> = {
   en: {
     registerAgain: "Session expired, please register again",
     loginSuccess: "Login successful",
+    invalidEmailDomain:"Invalid email domain.",
     otpResent: "OTP resent successfully",
     logoutSuccess: "Logout successful",
     badrequest: "Bad request",
@@ -312,6 +313,7 @@ export const customMessages: Record<SupportedLang, any> = {
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
     loginSuccess: "Inloggen geslaagd",
+    invalidEmailDomain:"Ongeldig e-maildomein",
     otpResent: "OTP succesvol opnieuw verzonden",
     logoutSuccess: "Uitloggen geslaagd",
     badrequest: "Ongeldig verzoek",
@@ -372,6 +374,7 @@ export const customMessages: Record<SupportedLang, any> = {
   fr: {
     registerAgain: "Session expirée, veuillez vous réinscrire",
     loginSuccess: "Connexion réussie",
+    invalidEmailDomain:"Domaine de courriel invalide",
     otpResent: "OTP renvoyé avec succès",
     logoutSuccess: "Déconnexion réussie",
     badrequest: "Requête invalide",
@@ -433,6 +436,7 @@ export const customMessages: Record<SupportedLang, any> = {
   es: {
     registerAgain: "Sesión expirada, por favor regístrate de nuevo",
     loginSuccess: "Inicio de sesión exitoso",
+    invalidEmailDomain:"Dominio de correo electrónico no válido",
     otpResent: "OTP reenviado con éxito",
     logoutSuccess: "Cierre de sesión exitoso",
     badrequest: "Solicitud incorrecta",

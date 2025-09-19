@@ -5,6 +5,7 @@ import { UserModel } from "src/models/user/user-schema";
 import { authServices } from "src/services/auth/auth-services";
 import { portfolioServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
+
 import {
   BADREQUEST,
   CREATED,
@@ -16,6 +17,7 @@ import {
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { language, fullName, email, password, country, fcmToken } = req.body;
+
     if (!fullName || !email || !password) {
       throw new Error("registerRequiredFields");
     }
@@ -26,6 +28,11 @@ export const registerUser = async (req: Request, res: Response) => {
 
     if (!fcmToken) {
       throw new Error("FCM is requird");
+    }
+    const blockedDomains = ["yopmail.com", "tempmail.com", "mailinator.com"];
+    const emailDomain = email.split("@")[1]?.toLowerCase();
+    if(blockedDomains.includes(emailDomain)){
+      throw new Error("invalidEmailDomain")
     }
 
     const response = await authServices.register({

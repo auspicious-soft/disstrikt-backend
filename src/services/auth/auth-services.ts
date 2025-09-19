@@ -189,7 +189,6 @@ export const authServices = {
       email = userData?.email;
       name = userData?.name;
       picture = userData?.picture;
-
     } else if (authType === "APPLE") {
       const appleData = await verifyAppleToken(idToken);
 
@@ -433,6 +432,7 @@ export const authServices = {
     const setupIntent = await stripe.setupIntents.create({
       customer: customer.id,
       usage: "off_session",
+      payment_method_types: ["card", "sepa_debit", "bacs_debit"],
     });
 
     return {
@@ -699,7 +699,7 @@ export const authServices = {
     const checkExist = await AdminModel.findOne({
       email: payload.email,
       authType: "EMAIL",
-      isBlocked: false
+      isBlocked: false,
     }).lean();
 
     if (!checkExist) {
