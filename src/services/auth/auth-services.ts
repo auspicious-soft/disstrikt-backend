@@ -432,7 +432,6 @@ export const authServices = {
     const setupIntent = await stripe.setupIntents.create({
       customer: customer.id,
       usage: "off_session",
-      payment_method_types: ["card", "sepa_debit", "bacs_debit"],
     });
 
     return {
