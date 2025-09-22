@@ -480,7 +480,7 @@ export const authServices = {
       throw new Error("stripeCustomerIdNotFound");
     }
 
-    if (country === "UK" && !user.hasUsedTrial) {
+    if (!user.hasUsedTrial) {
       const session = await stripe.checkout.sessions.create({
         mode: "subscription",
         customer: user?.stripeCustomerId,
@@ -495,6 +495,7 @@ export const authServices = {
         subscription_data: {
           trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
         },
+        payment_method_types: country == "UK" ?  ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
         metadata: {
           userId: (user as any)?._id.toString(),
           planId: (plans as any)?._id.toString(),
@@ -598,6 +599,7 @@ export const authServices = {
       };
     }
   },
+
   async getLoginResponse(payload: any) {
     const { userId } = payload;
     const user = await UserModel.findById(userId).select("-password -__v");
