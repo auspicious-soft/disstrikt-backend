@@ -280,14 +280,19 @@ export const homeServices = {
         finalQuiz = quiz;
         const correctCount = quiz.filter((q: any) => q.isCorrect).length;
         const totalCount = quiz.length;
+        rating = Math.round((correctCount / totalCount) * 3);
 
-        if (correctCount == 0) {
+        if (correctCount == 0 || rating == 0) {
+          await TaskResponseModel.findOneAndDelete({
+            userId: userData.id,
+            taskId: taskId,
+          });
           return { correctCount, totalCount };
         }
-        // Scale to 0–3
-        rating = Math.round((correctCount / totalCount) * 3);
         taskReviewed = true;
         returnSomething = { correctCount, totalCount };
+
+        // Scale to 0–3
       } else if (taskData?.answerType === "CHECK_BOX") {
         checkBox = body.checkbox;
         if (checkBox.length === 0) {
@@ -553,7 +558,12 @@ export const profileServices = {
   updateUser: async (payload: any) => {
     if (payload.image) {
       const data = await UserModel.findById(payload.id).lean();
-      if (data && data.image && data.image !== "admin/images/dummy-image.png" && data.image !== payload.image) {
+      if (
+        data &&
+        data.image &&
+        data.image !== "admin/images/dummy-image.png" &&
+        data.image !== payload.image
+      ) {
         await deleteFileFromS3(data?.image as string);
       }
     }
