@@ -9,6 +9,7 @@ import { SubscriptionModel } from "src/models/user/subscription-schema";
 import path from "path";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { AdminModel } from "src/models/admin/admin-schema";
+import stripe from "src/config/stripe";
 
 configDotenv();
 declare global {
@@ -85,7 +86,7 @@ export const checkSubscription = async (
   req: Request,
   res: Response,
   next: NextFunction
-) => {
+): Promise<Response | void> => {
   try {
     req.body.language =
       typeof req.user === "object" &&
@@ -98,9 +99,18 @@ export const checkSubscription = async (
     if (req.user && typeof req.user !== "string" && "id" in req.user) {
       id = (req.user as JwtPayload).id as string;
     }
+
+    // 🔑 CRITICAL FIX: Include "past_due" for BACS/SEPA users
     const subscription = await SubscriptionModel.findOne({
       userId: id,
-      status: { $in: ["active", "trialing", "canceling"] }, // Only valid ones
+      status: {
+        $in: [
+          "active",
+          "trialing",
+          "canceling",
+          "past_due", // 🔧 Added for BACS/SEPA processing delays
+        ],
+      },
     })
       .sort({ createdAt: -1 }) // Latest first
       .populate({
@@ -112,16 +122,119 @@ export const checkSubscription = async (
     if (!subscription) {
       return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
     }
-    (subscription as any).planName = (subscription as any).planId.name[
-      (req.user as any).language
-    ];
-    (subscription as any).planId = (subscription as any).planId._id;
+
+    // 🔑 ADDITIONAL CHECK: Verify if "past_due" is legitimate access
+    if (subscription.status === "past_due") {
+      try {
+        // Get payment method details to determine if it's BACS/SEPA
+        const paymentMethod = subscription.paymentMethodId
+          ? await stripe.paymentMethods.retrieve(subscription.paymentMethodId)
+          : null;
+
+        const isBacsOrSepa =
+          paymentMethod?.type === "bacs_debit" ||
+          paymentMethod?.type === "sepa_debit";
+
+        if (isBacsOrSepa) {
+          // 🔧 For BACS/SEPA, check if it's within reasonable processing time
+          const daysSincePastDue = subscription.updatedAt
+            ? Math.floor(
+                (Date.now() - new Date(subscription.updatedAt).getTime()) /
+                  (1000 * 60 * 60 * 24)
+              )
+            : 0;
+
+          // Allow 7 days for BACS, 3 days for SEPA processing
+          const maxDays = paymentMethod?.type === "bacs_debit" ? 7 : 3;
+
+          if (daysSincePastDue > maxDays) {
+            console.log(
+              `🚫 BACS/SEPA payment overdue by ${daysSincePastDue} days`
+            );
+            return UNAUTHORIZED(
+              res,
+              "subscriptionOverdue",
+              req?.body?.language || "en"
+            );
+          }
+
+          console.log(
+            `✅ Allowing BACS/SEPA user access (${daysSincePastDue}/${maxDays} days)`
+          );
+        } else {
+          // 🚫 For card payments, past_due should not have access
+          console.log("🚫 Card payment past_due - denying access");
+          return UNAUTHORIZED(
+            res,
+            "paymentFailed",
+            req?.body?.language || "en"
+          );
+        }
+      } catch (stripeError) {
+        console.error("Error checking payment method:", stripeError);
+        // If we can't verify payment method, be conservative and deny access
+        return UNAUTHORIZED(
+          res,
+          "subscriptionError",
+          req?.body?.language || "en"
+        );
+      }
+    }
+
+    // 🔑 ADDITIONAL CHECK: Handle trial periods properly
+    if (subscription.status === "trialing") {
+      // Check if trial has actually expired
+      if (
+        subscription.trialEnd &&
+        new Date(subscription.trialEnd) < new Date()
+      ) {
+        // Trial has expired, check if there's a pending payment
+        try {
+          const stripeSubscription = await stripe.subscriptions.retrieve(
+            subscription.stripeSubscriptionId
+          );
+
+          // If Stripe shows past_due but we still show trialing, sync the status
+          if (stripeSubscription.status === "past_due") {
+            await SubscriptionModel.findByIdAndUpdate(subscription._id, {
+              status: "past_due",
+            });
+
+            // Recheck with updated status
+            return checkSubscription(req, res, next);
+          }
+        } catch (stripeError) {
+          console.error("Error syncing subscription status:", stripeError);
+        }
+      }
+    }
+
+    // 🔑 ENHANCED STATUS INFORMATION: Add more context to subscription object
+    const enhancedSubscription = {
+      ...subscription,
+      isGracePeriod: subscription.status === "past_due",
+      paymentProcessing:
+        (subscription.status === "past_due" &&
+          (subscription as any).paymentMethodType === "bacs_debit") ||
+        (subscription as any).paymentMethodType === "sepa_debit",
+    };
+
+    // Set plan name
+    (enhancedSubscription as any).planName = (
+      enhancedSubscription as any
+    ).planId.name[(req.user as any).language];
+    (enhancedSubscription as any).planId = (
+      enhancedSubscription as any
+    ).planId._id;
+
     if (req.user && typeof req.user !== "string") {
       (req.user as JwtPayload & { subscription?: any }).subscription =
-        subscription;
+        enhancedSubscription;
     }
+
     next();
   } catch (error) {
+    console.error("checkSubscription error:", error);
     return INTERNAL_SERVER_ERROR(res, req?.body?.language || "en");
   }
 };

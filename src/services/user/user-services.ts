@@ -669,6 +669,7 @@ export const profileServices = {
       if (type == "cancelTrial" && status !== "trialing") {
         throw new Error("Your subscription is not Trailing");
       }
+
       if (type == "cancelSubscription") {
         await stripe.subscriptions.update(
           userData.subscription.stripeSubscriptionId,
@@ -692,13 +693,34 @@ export const profileServices = {
       }
 
       if (type == "cancelTrial" && !planId) {
-        await stripe.subscriptions.update(
-          userData.subscription.stripeSubscriptionId,
-          {
-            trial_end: "now",
-            proration_behavior: "none",
-          }
-        );
+        // 🔑 KEY FIX: Handle BACS/SEPA trial cancellation
+        const paymentMethod = paymentMethodId
+          ? await stripe.paymentMethods.retrieve(paymentMethodId)
+          : null;
+
+        const isBacsOrSepa =
+          paymentMethod?.type === "bacs_debit" ||
+          paymentMethod?.type === "sepa_debit";
+
+        if (isBacsOrSepa) {
+          // For BACS/SEPA, we need to be more careful about ending trials
+          // as the payment might still be processing
+          await stripe.subscriptions.update(
+            userData.subscription.stripeSubscriptionId,
+            {
+              trial_end: Math.floor(Date.now() / 1000) + 86400, // Give 24 hours grace
+              proration_behavior: "none",
+            }
+          );
+        } else {
+          await stripe.subscriptions.update(
+            userData.subscription.stripeSubscriptionId,
+            {
+              trial_end: "now",
+              proration_behavior: "none",
+            }
+          );
+        }
       }
 
       if (type == "cancelTrial" && planId) {
@@ -706,47 +728,31 @@ export const profileServices = {
           nextPlanId: planId,
         });
 
-        await stripe.subscriptions.cancel(
-          userData.subscription.stripeSubscriptionId
-        );
+        // 🔑 KEY FIX: For BACS/SEPA, don't immediately cancel
+        const paymentMethod = paymentMethodId
+          ? await stripe.paymentMethods.retrieve(paymentMethodId)
+          : null;
 
-        // const planData = await planModel.findById(planId).session(session);
-        // const newSub = await stripe.subscriptions.create({
-        //   customer:
-        //     typeof stripeCustomerId === "string"
-        //       ? stripeCustomerId
-        //       : stripeCustomerId?.id ?? "",
-        //   items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
-        //   default_payment_method: paymentMethodId,
-        //   expand: ["latest_invoice.payment_intent"],
-        // });
+        const isBacsOrSepa =
+          paymentMethod?.type === "bacs_debit" ||
+          paymentMethod?.type === "sepa_debit";
 
-        // const newSubPrice = newSub.items.data[0]?.price;
+        if (isBacsOrSepa) {
+          // For BACS/SEPA, schedule cancellation at period end and create the new subscription
+          await stripe.subscriptions.update(
+            userData.subscription.stripeSubscriptionId,
+            {
+              cancel_at_period_end: true,
+            }
+          );
 
-        // await SubscriptionModel.create(
-        //   [
-        //     {
-        //       userId: userData.id,
-        //       stripeCustomerId,
-        //       planId,
-        //       stripeSubscriptionId: newSub.id,
-        //       paymentMethodId,
-        //       status: newSub.status,
-        //       trialStart: toDate(newSub.trial_start),
-        //       trialEnd: toDate(newSub.trial_end),
-        //       startDate: toDate(newSub.start_date),
-        //       currentPeriodStart: toDate(newSub.current_period_start),
-        //       currentPeriodEnd: toDate(newSub.current_period_end),
-        //       nextBillingDate: toDate(newSub.current_period_end),
-        //       amount: newSubPrice?.unit_amount
-        //         ? newSubPrice.unit_amount / 100
-        //         : 0,
-        //       currency: newSubPrice?.currency ?? "inr",
-        //       nextPlanId: null,
-        //     },
-        //   ],
-        //   { session }
-        // );
+          // The new subscription will be created in the webhook when the current one is deleted
+        } else {
+          // For cards, immediate cancellation works fine
+          await stripe.subscriptions.cancel(
+            userData.subscription.stripeSubscriptionId
+          );
+        }
       }
 
       if (type == "upgrade") {
