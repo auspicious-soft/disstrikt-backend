@@ -708,7 +708,7 @@ export const profileServices = {
           await stripe.subscriptions.update(
             userData.subscription.stripeSubscriptionId,
             {
-              trial_end: Math.floor(Date.now() / 1000) + 86400, // Give 24 hours grace
+              trial_end: "now", // Give 24 hours grace
               proration_behavior: "none",
             }
           );
@@ -780,6 +780,7 @@ export const profileServices = {
       session.endSession();
       return {};
     } catch (e) {
+      console.log("==>",e)
       await session.abortTransaction();
       session.endSession();
       throw new Error("badrequest");
