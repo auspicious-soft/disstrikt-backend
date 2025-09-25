@@ -668,20 +668,26 @@ export const planServices = {
             pi?.last_payment_error?.code !==
               "payment_intent_authentication_failure";
 
-          if (!isBacsOrSepa || isActualFailure) {
+          if (isActualFailure) {
+            const invoiceFull = await stripe.invoices.retrieve(invoice.id);
+            if (invoiceFull.attempt_count >= 3) {
+              await stripe.subscriptions.cancel(subscriptionId); // Immediate cancel after max retries
+              await NotificationService(
+                [userId],
+                "SUBSCRIPTION_FAILED",
+                existing._id as ObjectId
+              );
+            }
+          } else if (!isBacsOrSepa) {
+            // For non-BACS/SEPA methods (e.g., cards), set to past_due immediately on any failure
             await SubscriptionModel.updateOne(
               { stripeSubscriptionId: subscriptionId },
               { $set: { status: "past_due" } }
             );
-
             await NotificationService(
               [userId],
               "SUBSCRIPTION_FAILED",
-              existing?._id as ObjectId
-            );
-          } else {
-            console.log(
-              "🔧 Skipping past_due update for pending BACS/SEPA payment"
+              existing._id as ObjectId
             );
           }
 
