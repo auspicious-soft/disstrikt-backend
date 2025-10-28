@@ -16,6 +16,7 @@ import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { TokenModel } from "src/models/user/token-schema";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { OAuth2Client } from "google-auth-library";
+import { testPlanModel } from "src/models/admin/test-plan-schema";
 
 configDotenv();
 
@@ -446,9 +447,10 @@ export const authServices = {
   async buyPlan(payload: any) {
     const { planId, currency, id, paymentMethodId, country } = payload;
 
-    const plans = await planModel
-      .findOne({ _id: planId, isActive: true })
-      .lean();
+    const plans =
+      process.env.PAYMENT == "PROD"
+        ? await planModel.findOne({ _id: planId, isActive: true }).lean()
+        : await testPlanModel.findOne({ _id: planId, isActive: true }).lean();
 
     if (!plans) {
       throw new Error("planNotFound");

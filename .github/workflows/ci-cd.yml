@@ -79,6 +79,7 @@ jobs:
               -e FROMPHONENUMBER='${{ secrets.FROMPHONENUMBER }}' \
               -e STRIPE_SECRET_KEY='${{ secrets.STRIPE_SECRET_KEY }}' \
               -e STRIPE_WEBHOOK_SECRET='${{ secrets.STRIPE_WEBHOOK_SECRET }}' \
+              -e PAYMENT='${{ secrets.PAYMENT }}' \
               -e AUTH_SECRET='${{ secrets.AUTH_SECRET }}' \
               -e JWT_SALT='${{ secrets.JWT_SALT }}' \
               -e GOOGLE_CLIENT_ID='${{ secrets.GOOGLE_CLIENT_ID }}' \
