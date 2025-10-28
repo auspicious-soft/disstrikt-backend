@@ -1,4 +1,4 @@
-import { Request } from "express";
+import { Request, Response } from "express";
 import mongoose, { ObjectId, Types } from "mongoose";
 import { deleteFileFromS3 } from "src/config/s3";
 import stripe from "src/config/stripe";
@@ -19,7 +19,23 @@ import { Parser } from "json2csv";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { TaskResponseModel } from "src/models/admin/task-response";
 import { NotificationService } from "src/utils/FCM/fcm";
+import { google } from "googleapis";
 import { userMoreInfo } from "src/controllers/auth/auth-controller";
+import * as crypto from "crypto"; // Signature verify ke liye
+
+const rawBodyMiddleware = (req: any, res: any, next: any) => {
+  // TypeScript types adjust kar lo
+  if (req.method !== "POST") return next();
+  let data = Buffer.alloc(0);
+  req.on("data", (chunk: Buffer) => (data = Buffer.concat([data, chunk])));
+  req.on("end", () => {
+    req.body = data;
+    console.log("Captured body length:", data.length); // 332 aana chahiye
+    console.log("Body preview:", data.toString("utf8").substring(0, 200)); // JSON start dekh lo
+    next();
+  });
+  req.on("error", () => res.status(400).send("Bad Request"));
+};
 
 export const planServices = {
   async getPlans(payload: any) {
@@ -822,6 +838,102 @@ export const planServices = {
       console.error("***STRIPE EVENT FAILED***", err.message);
       return {};
     }
+  },
+
+  async handleInAppAndroidWebhook(payload: any) {
+    console.log("Event time:", payload.eventTimeMillis);
+    console.log("Package:", payload.packageName);
+    const subNotif = payload.subscriptionNotification;
+    if (!subNotif) {
+      console.error("No subscription notification in payload");
+      return;
+    }
+
+    const { notificationType, purchaseToken, subscriptionId } = subNotif;
+    console.log("Purchase Token:", purchaseToken);
+    console.log("Subscription ID:", subscriptionId);
+
+    // Notification type ke base pe action log karo
+    let actionMessage = "";
+    switch (notificationType) {
+      case 1:
+        actionMessage =
+          "SUBSCRIPTION_RECOVERED - Subscription account hold se recover ho gayi ya pause se resume hui";
+        break;
+      case 2:
+        actionMessage =
+          "SUBSCRIPTION_RENEWED - Active subscription renew ho gayi (payment successful)";
+        break;
+      case 3:
+        actionMessage =
+          "SUBSCRIPTION_CANCELED - Subscription cancel ho gayi (user ne voluntarily/involuntarily cancel ki)";
+        break;
+      case 4:
+        actionMessage =
+          "SUBSCRIPTION_PURCHASED - Naya subscription purchase ho gaya";
+        break;
+      case 5:
+        actionMessage =
+          "SUBSCRIPTION_ON_HOLD - Subscription account hold pe chali gayi (payment issue)";
+        break;
+      case 6:
+        actionMessage =
+          "SUBSCRIPTION_IN_GRACE_PERIOD - Grace period mein enter ho gayi (trial/renewal delay)";
+        break;
+      case 7:
+        actionMessage =
+          "SUBSCRIPTION_RESTARTED - User ne canceled subscription ko restore kar liya (Play > Account > Subscriptions se)";
+        break;
+      case 8:
+        actionMessage =
+          "SUBSCRIPTION_PRICE_CHANGE_CONFIRMED (DEPRECATED) - User ne price change confirm kar liya";
+        break;
+      case 9:
+        actionMessage =
+          "SUBSCRIPTION_DEFERRED - Subscription ka recurrence time extend ho gaya (future date pe shift)";
+        break;
+      case 10:
+        actionMessage =
+          "SUBSCRIPTION_PAUSED - User ne subscription pause kar di";
+        break;
+      case 11:
+        actionMessage =
+          "SUBSCRIPTION_PAUSE_SCHEDULE_CHANGED - Pause schedule change ho gaya";
+        break;
+      case 12:
+        actionMessage =
+          "SUBSCRIPTION_REVOKED - Subscription user se revoke ho gayi (refund/chargeback se pehle expire)";
+        break;
+      case 13:
+        actionMessage =
+          "SUBSCRIPTION_EXPIRED - Subscription expire ho gayi, ab inactive hai";
+        break;
+      case 19:
+        actionMessage =
+          "SUBSCRIPTION_PRICE_CHANGE_UPDATED - Subscription item ka price change details update ho gaye";
+        break;
+      case 20:
+        actionMessage =
+          "SUBSCRIPTION_PENDING_PURCHASE_CANCELED - Pending subscription transaction cancel ho gaya";
+        break;
+      case 22:
+        actionMessage =
+          "SUBSCRIPTION_PRICE_STEP_UP_CONSENT_UPDATED - Price step-up ke liye user consent diya ya period shuru hua";
+        break;
+      default:
+        actionMessage = `UNKNOWN_TYPE_${notificationType} - Google docs check karo latest ke liye`;
+    }
+
+    console.log("🚨 ACTION:", actionMessage);
+    console.log("--- Subscription Status Update Complete ---");
+
+    // Yahan MongoDB logic add karo based on type, e.g.:
+    // if (notificationType === 13) {
+    //   await db.collection('users').updateOne({ purchaseToken }, { $set: { subscriptionStatus: 'expired', expiredAt: new Date() } });
+    // } else if (notificationType === 1) {
+    //   await db.collection('users').updateOne({ purchaseToken }, { $set: { subscriptionStatus: 'active', renewedAt: new Date() } });
+    // }
+    // ... etc. for other types
   },
 };
 

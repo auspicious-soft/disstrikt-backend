@@ -1,6 +1,7 @@
-import express from "express";
+import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
+import * as crypto from "crypto"; // Signature verify ke liye
 import { fileURLToPath } from "url";
 import connectDB from "./config/db";
 import {
@@ -9,8 +10,12 @@ import {
   checkUserAuth,
 } from "./middleware/check-auth";
 import { admin, auth, paidUser, user } from "./routes";
-import { handleStripeWebhook } from "./controllers/admin/plan-setting-controller";
+import {
+  handleStripeWebhook,
+  rawBodyMiddleware,
+} from "./controllers/admin/plan-setting-controller";
 import { initializeFirebase } from "./utils/FCM/fcm";
+import { planServices } from "./services/admin/admin-services";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -27,12 +32,70 @@ app.post(
   express.raw({ type: "application/json" }),
   handleStripeWebhook
 );
-//Webhook Routes
+
+app.post("/in-app-android", rawBodyMiddleware, async (req: any, res: any) => {
+  try {
+    const bodyBuffer = req.body as Buffer;
+    if (bodyBuffer.length === 0) return res.status(400).send("Empty body");
+
+    const bodyStr = bodyBuffer.toString("utf8");
+    console.log("Full body string:", bodyStr); // Full JSON log karo debugging ke liye
+
+    let rtdnPayload: any;
+
+    // Parse body as JSON
+    let parsedBody: any;
+    try {
+      parsedBody = JSON.parse(bodyStr);
+    } catch (e) {
+      console.error("JSON parse error:", e);
+      return res.status(400).send("Invalid JSON");
+    }
+
+    // Check if it's Pub/Sub wrapped (has 'message.data' as base64)
+    if (parsedBody.message && parsedBody.message.data) {
+      console.log("Pub/Sub wrapped detected");
+      const encodedData = parsedBody.message.data;
+      const rtdnJson = Buffer.from(encodedData, "base64").toString("utf8");
+      rtdnPayload = JSON.parse(rtdnJson);
+    } else {
+      // Direct RTDN (test or direct delivery)
+      console.log("Direct RTDN detected");
+      rtdnPayload = parsedBody; // Direct use karo
+    }
+
+    console.log("Final RTDN payload:", rtdnPayload); // {version: '1.0', packageName: '...', subscriptionNotification: {...}}
+
+    // Verification (purchaseDataSignature pe, if present)
+    if (rtdnPayload.subscriptionNotification) {
+      const subNotif = rtdnPayload.subscriptionNotification;
+      if (subNotif.oneoff) {
+        const purchaseData = subNotif.oneoff.purchaseData;
+        const signature = subNotif.oneoff.purchaseDataSignature;
+        if (purchaseData && signature) {
+          const publicKey = `-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8vVipthABb2jstNhGdbZEFl7DA5zoNpN6zSZzE8yShI0xKbN/sl4GkD7L0XAdahYuwCEZ1YGuWMwisMSN8QoVYOCB7JdoNpc7IPvA8Iaox9RUBmwzB77AX88KQCVSI/hpKJMjOe/SL//Zd2Qvrukll7E/6olYrkQleIhbLhvz+B6mO5MLHAzWUv83GFGoXGoUJAgstl2nmclx4HwucuSflcWxpBEx2oaVjaC3lnPjk1L/w+3UJSHQYlSfyzsb2zOGWGoll6+WmZZ/EigqRxbP41B2QybF+cJkhcbmHsAMA9mVHhJwbJ5m/jh2JbhM51FsfYX2hoZKm/mOMSFm6fYHwIDAQAB\n-----END PUBLIC KEY-----`; // Replace with actual
+          const verified = crypto
+            .createVerify("SHA1")
+            .update(purchaseData)
+            .verify(publicKey, signature, "base64");
+          console.log("Signature verified:", verified ? "Yes" : "No");
+          if (!verified) return res.status(400).send("Invalid signature");
+        }
+      }
+    }
+
+    // Process karo
+    await planServices.handleInAppAndroidWebhook(rtdnPayload);
+
+    res.status(200).send("OK");
+  } catch (err) {
+    console.error("Error:", err);
+    res.status(500).send("Error");
+  }
+});
 
 app.use(express.json());
 app.set("trust proxy", true);
-
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({

@@ -83,6 +83,31 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
   }
 };
 
+export const rawBodyMiddleware = (req: any, res: any, next: any) => { // TypeScript types adjust kar lo
+  if (req.method !== 'POST') return next();
+  let data = Buffer.alloc(0);
+  req.on('data', (chunk: Buffer) => data = Buffer.concat([data, chunk]));
+  req.on('end', () => {
+    req.body = data;
+    console.log('Captured body length:', data.length); // 332 aana chahiye
+    console.log('Body preview:', data.toString('utf8').substring(0, 200)); // JSON start dekh lo
+    next();
+  });
+  req.on('error', () => res.status(400).send('Bad Request'));
+};
+
+// export const handleInAppAndroidWebhook = async (req: Request, res: Response) => {
+//   try {
+//     const response = await planServices.handleInAppAndroidWebhook(req, res);
+//     return OK(res, response || {}, req.body.language || "en");
+//   } catch (err: any) {
+//     if (err.message) {
+//       return BADREQUEST(res, err.message, req.body.language || "en");
+//     }
+//     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+//   }
+// };
+
 export const getPlatformInfo = async (req: Request, res: Response) => {
   try {
     const response = await PlatformInfoModel.findOneAndUpdate(
