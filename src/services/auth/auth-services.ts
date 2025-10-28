@@ -516,8 +516,8 @@ export const authServices = {
       const session = await stripe.checkout.sessions.create({
         mode: "subscription",
         customer: user?.stripeCustomerId,
-        success_url: "https://yourapp.com/success",
-        cancel_url: "https://yourapp.com/cancel",
+        success_url: process.env.REDIRECTURL,
+        cancel_url: process.env.REDIRECTURL_FAIL,
         line_items: [
           {
             price: productPrice.id,
