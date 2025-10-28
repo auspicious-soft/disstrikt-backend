@@ -358,7 +358,10 @@ export const authServices = {
   async getPlans(payload: any) {
     const { language } = payload;
 
-    const plans = await planModel.find({ isActive: true }).lean();
+    const plans =
+      process.env.PAYMENT == "PROD"
+        ? await planModel.find({ isActive: true }).lean()
+        : await testPlanModel.find({ isActive: true }).lean();
 
     const translatedPlans = plans?.map((plan: any) => {
       return {
