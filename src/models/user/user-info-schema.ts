@@ -104,7 +104,7 @@ const userSchema = new Schema<IUserInfo>(
     },
     gender: {
       type: String,
-      enum: genders,
+      // enum: genders,
       default: null,
     },
 

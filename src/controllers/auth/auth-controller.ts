@@ -31,9 +31,9 @@ export const registerUser = async (req: Request, res: Response) => {
     }
     const blockedDomains = ["yopmail.com", "tempmail.com", "mailinator.com"];
     const emailDomain = email.split("@")[1]?.toLowerCase();
-    if(blockedDomains.includes(emailDomain)){
-      throw new Error("invalidEmailDomain")
-    }
+    // if(blockedDomains.includes(emailDomain)){
+    //   throw new Error("invalidEmailDomain")
+    // }
 
     const response = await authServices.register({
       language,
@@ -53,6 +53,7 @@ export const registerUser = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const verifyOtp = async (req: Request, res: Response) => {
   try {
     const { otp, value, language } = req.body;
@@ -72,6 +73,7 @@ export const verifyOtp = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const resendOtp = async (req: Request, res: Response) => {
   try {
     const { value, purpose, language } = req.body;
@@ -92,6 +94,7 @@ export const resendOtp = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const login = async (req: Request, res: Response) => {
   try {
     const { email, password, fcmToken, language } = req.body;
@@ -112,6 +115,7 @@ export const login = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const socialLogin = async (req: Request, res: Response) => {
   try {
     const { authType, idToken, fcmToken, country, language, deviceType } =
@@ -164,6 +168,7 @@ export const forgetPassword = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const verifyResetPasswordOtp = async (req: Request, res: Response) => {
   try {
     const { otp, value, language } = req.body;
@@ -184,6 +189,7 @@ export const verifyResetPasswordOtp = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const resetPassword = async (req: Request, res: Response) => {
   try {
     const { password, language } = req.body;
@@ -208,18 +214,19 @@ export const resetPassword = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const userMoreInfo = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language;
     const { measurements, dob, gender } = req.body;
-    if (!measurements || !dob || !gender) {
-      throw new Error("Measurements, DOB, and Gender is required");
-    }
+    // if (!measurements || !dob || !gender) {
+    //   throw new Error("Measurements, DOB, and Gender is required");
+    // }
 
-    if (!["MALE", "FEMALE"].includes(gender)) {
-      throw new Error("Gender can be either MALE or FEMALE");
-    }
+    // if (!["MALE", "FEMALE"].includes(gender)) {
+    //   throw new Error("Gender can be either MALE or FEMALE");
+    // }
 
     const response = await authServices.userMoreInfo({
       measurements,
@@ -235,6 +242,7 @@ export const userMoreInfo = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const getPlans = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -251,6 +259,7 @@ export const getPlans = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const setupIntent = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -269,23 +278,24 @@ export const setupIntent = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const buyPlan = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language;
-    const { planId, currency, paymentMethodId } = req.body;
+    
+    // const { planId, currency, paymentMethodId } = req.body;
 
-    if (!planId || !currency) {
-      throw new Error(
-        "PlanId, Currency, Payment-Method and Customer-id is required"
-      );
+    const {orderId } = req.body;
+    if (!orderId) {
+      throw new Error("orderId is required");
     }
+
     const response = await authServices.buyPlan({
       language: userData.language,
       country: userData.country,
-      planId,
-      currency,
-      paymentMethodId,
+      userId: userData.id.toString(),
+      orderId,
       ...userData,
     });
     return OK(res, response || {}, req.body.language || "en", "loginSuccess");
@@ -296,6 +306,7 @@ export const buyPlan = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const getLoginResponse = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -311,27 +322,29 @@ export const getLoginResponse = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
-export const buyAgain = async (req: Request, res: Response) => {
-  try {
-    const userData = req.user as any;
-    req.body.language = userData.language || "en";
-    const { planId } = req.body;
-    const plan = await planModel.findById(planId);
-    if (!plan) {
-      throw new Error("Invalid plan Id");
-    }
-    const response = await authServices.buyAgain({
-      userId: userData.id,
-      planId,
-    });
-    return OK(res, response || {}, req.body.language || "en");
-  } catch (err: any) {
-    if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language || "en");
-    }
-    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
-  }
-};
+
+// export const buyAgain = async (req: Request, res: Response) => {
+//   try {
+//     const userData = req.user as any;
+//     req.body.language = userData.language || "en";
+//     const { planId } = req.body;
+//     const plan = await planModel.findById(planId);
+//     if (!plan) {
+//       throw new Error("Invalid plan Id");
+//     }
+//     const response = await authServices.buyAgain({
+//       userId: userData.id,
+//       planId,
+//     });
+//     return OK(res, response || {}, req.body.language || "en");
+//   } catch (err: any) {
+//     if (err.message) {
+//       return BADREQUEST(res, err.message, req.body.language || "en");
+//     }
+//     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+//   }
+// };
+
 export const getActivePlan = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -346,6 +359,7 @@ export const getActivePlan = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const logoutUser = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
@@ -382,6 +396,7 @@ export const adminLogin = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const adminForgetPassword = async (req: Request, res: Response) => {
   try {
     const { email } = req.body;
@@ -400,6 +415,7 @@ export const adminForgetPassword = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const adminVerifyOtp = async (req: Request, res: Response) => {
   try {
     const { value, otp } = req.body;
@@ -419,6 +435,7 @@ export const adminVerifyOtp = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
 export const adminResetPassword = async (req: Request, res: Response) => {
   try {
     const { password, token } = req.body;

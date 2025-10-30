@@ -2,10 +2,11 @@ import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface ISubscription extends Document {
   userId: Types.ObjectId;
-  stripeCustomerId: string;
-  stripeSubscriptionId: string;
+  subscriptionId: string;
+  orderId: string;
+  linkedPurchaseToken: string;
+  deviceType: string;
   planId: Types.ObjectId | string;
-  paymentMethodId: string;
   status: string;
   trialStart: Date | null;
   trialEnd: Date | null;
@@ -22,11 +23,12 @@ export interface ISubscription extends Document {
 
 const subscriptionSchema = new Schema<ISubscription>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "user", required: true },
-    stripeCustomerId: { type: String, required: true },
-    stripeSubscriptionId: { type: String, required: true },
+    userId: { type: Schema.Types.ObjectId, ref: "user"},
+    linkedPurchaseToken: { type: String, required: true },
+    orderId: { type: String, required: true },
+    deviceType: { type: String, required: true },
+    subscriptionId: { type: String, required: true },
     planId: { type: Schema.Types.ObjectId, ref: "plan", required: true },
-    paymentMethodId: { type: String },
     status: {
       type: String,
       enum: [

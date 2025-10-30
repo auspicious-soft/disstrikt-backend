@@ -36,12 +36,13 @@ export const homeServices = {
       id,
       currentMilestone = 1,
       subscription,
+      planId
     } = payload.userData;
 
     const { page = 1, limit = 10 } = payload; // 👈 pagination inputs
 
     const plan = await planModel
-      .findById(payload.userData.subscription.planId)
+      .findById(planId)
       .lean();
 
     const taskLimit =

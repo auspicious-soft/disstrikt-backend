@@ -17,6 +17,9 @@ import { TokenModel } from "src/models/user/token-schema";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { OAuth2Client } from "google-auth-library";
 import { testPlanModel } from "src/models/admin/test-plan-schema";
+import { NotificationService } from "src/utils/FCM/fcm";
+import { Types } from "mongoose";
+import { TransactionModel } from "src/models/user/transaction-schema";
 
 configDotenv();
 
@@ -448,134 +451,183 @@ export const authServices = {
   },
 
   async buyPlan(payload: any) {
-    const { planId, currency, id, paymentMethodId, country } = payload;
+    const { userId, orderId } = payload;
 
-    const plans =
-      process.env.PAYMENT == "PROD"
-        ? await planModel.findOne({ _id: planId, isActive: true }).lean()
-        : await testPlanModel.findOne({ _id: planId, isActive: true }).lean();
-
-    if (!plans) {
-      throw new Error("planNotFound");
-    }
-
-    const stripeProduct = await stripe.products.retrieve(plans.stripeProductId);
-
-    if (!stripeProduct) {
-      throw new Error("planNotFound");
-    }
-
-    const priceList = await stripe.prices.list({
-      product: stripeProduct.id,
-      active: true, // only get active prices
-      limit: 10,
-    });
-
-    const productPrice = priceList?.data?.find(
-      (price) => price.currency === currency
+    const subscriptionData = await SubscriptionModel.findOneAndUpdate(
+      {
+        orderId,
+        userId: null,
+      },
+      { $set: { userId } },
+      { new: true }
     );
 
-    if (!productPrice) {
-      throw new Error("invalidCurrency");
+    if (!subscriptionData) {
+      throw new Error(`Subscription not found for orderId: ${orderId}`);
     }
 
-    const user = await UserModel.findById(id);
+    if (subscriptionData.status === "active" && userId) {
+      await NotificationService(
+        [userId],
+        "SUBSCRIPTION_STARTED",
+        subscriptionData?._id as Types.ObjectId
+      );
 
-    if (!user?.stripeCustomerId) {
-      throw new Error("stripeCustomerIdNotFound");
-    }
+      const planData = await planModel.findById(subscriptionData?.planId);
 
-    if (!user.hasUsedTrial) {
-      const session = await stripe.checkout.sessions.create({
-        mode: "subscription",
-        customer: user?.stripeCustomerId,
-        success_url: process.env.REDIRECTURL,
-        cancel_url: process.env.REDIRECTURL_FAIL,
-        line_items: [
-          {
-            price: productPrice.id,
-            quantity: 1,
+      await TransactionModel.findOneAndUpdate(
+        {
+          orderId, // unique per subscription renewal/purchase
+          userId,
+        },
+        {
+          $setOnInsert: {
+            planId: subscriptionData.planId,
+            status: "succeeded",
+            amount: (planData?.unitAmounts.gbp || 100) / 100,
+            currency: "gbp",
+            paidAt: new Date(),
           },
-        ],
-        subscription_data: {
-          trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
         },
-        payment_method_types:
-          country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
-        metadata: {
-          userId: (user as any)?._id.toString(),
-          planId: (plans as any)?._id.toString(),
-        },
-      });
-      await user.save();
+        { upsert: true, new: true }
+      );
 
-      return session;
+    } else if (subscriptionData.status === "trialing" && userId) {
+      await NotificationService(
+        [userId],
+        "FREETRIAL_STARTED",
+        subscriptionData?._id as Types.ObjectId
+      );
     }
 
-    if (user.hasUsedTrial && plans.trialDays > 0) {
-      const session = await stripe.checkout.sessions.create({
-        mode: "subscription",
-        customer: user?.stripeCustomerId,
-        success_url: process.env.REDIRECTURL,
-        cancel_url: process.env.REDIRECTURL_FAIL,
-        line_items: [
-          {
-            price: productPrice.id,
-            quantity: 1,
-          },
-        ],
-        payment_method_types:
-          country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
-        metadata: {
-          userId: (user as any)?._id.toString(),
-          planId: (plans as any)?._id.toString(),
-        },
-      });
-      await user.save();
+    return {};
 
-      return session;
+    // const plans =
+    //   process.env.PAYMENT == "PROD"
+    //     ? await planModel.findOne({ _id: planId, isActive: true }).lean()
+    //     : await testPlanModel.findOne({ _id: planId, isActive: true }).lean();
 
-      // const subscription = await stripe.subscriptions.create({
-      //   customer: user.stripeCustomerId,
-      //   items: [{ price: productPrice.id }],
-      //   default_payment_method: paymentMethodId,
-      //   expand: ["latest_invoice.payment_intent"],
-      // });
+    // if (!plans) {
+    //   throw new Error("planNotFound");
+    // }
 
-      // user.hasUsedTrial = true;
-      // user.isCardSetupComplete = true;
-      // await user.save();
+    // const stripeProduct = await stripe.products.retrieve(plans.stripeProductId);
 
-      // const startDate = new Date(subscription.start_date * 1000);
-      // const currentPeriodStart = subscription.current_period_start
-      //   ? new Date(subscription.current_period_start * 1000)
-      //   : null;
-      // const currentPeriodEnd = subscription.current_period_end
-      //   ? new Date(subscription.current_period_end * 1000)
-      //   : null;
-      // const nextBillingDate = currentPeriodEnd;
+    // if (!stripeProduct) {
+    //   throw new Error("planNotFound");
+    // }
 
-      // await SubscriptionModel.findOneAndDelete({ userId: id });
+    // const priceList = await stripe.prices.list({
+    //   product: stripeProduct.id,
+    //   active: true, // only get active prices
+    //   limit: 10,
+    // });
 
-      // await SubscriptionModel.create({
-      //   userId: id,
-      //   stripeCustomerId: user.stripeCustomerId,
-      //   stripeSubscriptionId: subscription.id,
-      //   planId,
-      //   paymentMethodId,
-      //   status: subscription.status,
-      //   startDate,
-      //   currentPeriodStart,
-      //   currentPeriodEnd,
-      //   nextBillingDate,
-      //   amount: subscription.items.data[0].price.unit_amount,
-      //   currency: subscription.currency,
-      // });
+    // const productPrice = priceList?.data?.find(
+    //   (price) => price.currency === currency
+    // );
 
-      // return {
-      //   subscriptionId: subscription.id,
-      // };
-    }
+    // if (!productPrice) {
+    //   throw new Error("invalidCurrency");
+    // }
+
+    // const user = await UserModel.findById(id);
+
+    // if (!user?.stripeCustomerId) {
+    //   throw new Error("stripeCustomerIdNotFound");
+    // }
+
+    // if (!user.hasUsedTrial) {
+    //   const session = await stripe.checkout.sessions.create({
+    //     mode: "subscription",
+    //     customer: user?.stripeCustomerId,
+    //     success_url: process.env.REDIRECTURL,
+    //     cancel_url: process.env.REDIRECTURL_FAIL,
+    //     line_items: [
+    //       {
+    //         price: productPrice.id,
+    //         quantity: 1,
+    //       },
+    //     ],
+    //     subscription_data: {
+    //       trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
+    //     },
+    //     payment_method_types:
+    //       country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
+    //     metadata: {
+    //       userId: (user as any)?._id.toString(),
+    //       planId: (plans as any)?._id.toString(),
+    //     },
+    //   });
+    //   await user.save();
+
+    //   return session;
+    // }
+
+    // if (user.hasUsedTrial && plans.trialDays > 0) {
+    //   const session = await stripe.checkout.sessions.create({
+    //     mode: "subscription",
+    //     customer: user?.stripeCustomerId,
+    //     success_url: process.env.REDIRECTURL,
+    //     cancel_url: process.env.REDIRECTURL_FAIL,
+    //     line_items: [
+    //       {
+    //         price: productPrice.id,
+    //         quantity: 1,
+    //       },
+    //     ],
+    //     payment_method_types:
+    //       country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
+    //     metadata: {
+    //       userId: (user as any)?._id.toString(),
+    //       planId: (plans as any)?._id.toString(),
+    //     },
+    //   });
+    //   await user.save();
+
+    //   return session;
+
+    //   // const subscription = await stripe.subscriptions.create({
+    //   //   customer: user.stripeCustomerId,
+    //   //   items: [{ price: productPrice.id }],
+    //   //   default_payment_method: paymentMethodId,
+    //   //   expand: ["latest_invoice.payment_intent"],
+    //   // });
+
+    //   // user.hasUsedTrial = true;
+    //   // user.isCardSetupComplete = true;
+    //   // await user.save();
+
+    //   // const startDate = new Date(subscription.start_date * 1000);
+    //   // const currentPeriodStart = subscription.current_period_start
+    //   //   ? new Date(subscription.current_period_start * 1000)
+    //   //   : null;
+    //   // const currentPeriodEnd = subscription.current_period_end
+    //   //   ? new Date(subscription.current_period_end * 1000)
+    //   //   : null;
+    //   // const nextBillingDate = currentPeriodEnd;
+
+    //   // await SubscriptionModel.findOneAndDelete({ userId: id });
+
+    //   // await SubscriptionModel.create({
+    //   //   userId: id,
+    //   //   stripeCustomerId: user.stripeCustomerId,
+    //   //   stripeSubscriptionId: subscription.id,
+    //   //   planId,
+    //   //   paymentMethodId,
+    //   //   status: subscription.status,
+    //   //   startDate,
+    //   //   currentPeriodStart,
+    //   //   currentPeriodEnd,
+    //   //   nextBillingDate,
+    //   //   amount: subscription.items.data[0].price.unit_amount,
+    //   //   currency: subscription.currency,
+    //   // });
+
+    //   // return {
+    //   //   subscriptionId: subscription.id,
+    //   // };
+    // }
   },
 
   async getLoginResponse(payload: any) {
@@ -586,76 +638,77 @@ export const authServices = {
     });
     return { ...user?.toObject(), subscription: subscription?.status || null };
   },
-  async buyAgain(payload: any) {
-    const { userId, planId } = payload;
-    const checkSub = await SubscriptionModel.findOne({ userId }).lean();
 
-    if (!checkSub || !["past_due", "calceled"].includes(checkSub.status)) {
-      throw new Error("planExist");
-    }
+  // async buyAgain(payload: any) {
+  //   const { userId, planId } = payload;
+  //   const checkSub = await SubscriptionModel.findOne({ userId }).lean();
 
-    const { currency, paymentMethodId } = checkSub;
-    const planData = await planModel.findById(planId);
-    if (!planData) throw new Error("Invalid plan");
+  //   if (!checkSub || !["past_due", "calceled"].includes(checkSub.status)) {
+  //     throw new Error("planExist");
+  //   }
 
-    // Start MongoDB session
-    const session = await SubscriptionModel.startSession();
-    session.startTransaction();
+  //   const { currency, paymentMethodId } = checkSub;
+  //   const planData = await planModel.findById(planId);
+  //   if (!planData) throw new Error("Invalid plan");
 
-    try {
-      // Create new Stripe subscription
-      const subscription = await stripe.subscriptions.create({
-        customer: checkSub.stripeCustomerId,
-        items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
-        default_payment_method: paymentMethodId,
-        expand: ["latest_invoice.payment_intent"],
-      });
+  //   // Start MongoDB session
+  //   const session = await SubscriptionModel.startSession();
+  //   session.startTransaction();
 
-      const startDate = new Date(subscription.start_date * 1000);
-      const currentPeriodStart = subscription.current_period_start
-        ? new Date(subscription.current_period_start * 1000)
-        : null;
-      const currentPeriodEnd = subscription.current_period_end
-        ? new Date(subscription.current_period_end * 1000)
-        : null;
-      const nextBillingDate = currentPeriodEnd;
+  //   try {
+  //     // Create new Stripe subscription
+  //     const subscription = await stripe.subscriptions.create({
+  //       customer: checkSub.stripeCustomerId,
+  //       items: [{ price: planData?.stripePrices[currency as "eur" | "gbp"] }],
+  //       default_payment_method: paymentMethodId,
+  //       expand: ["latest_invoice.payment_intent"],
+  //     });
 
-      // Delete old subscription (inside session)
-      await SubscriptionModel.findByIdAndDelete(checkSub._id, { session });
+  //     const startDate = new Date(subscription.start_date * 1000);
+  //     const currentPeriodStart = subscription.current_period_start
+  //       ? new Date(subscription.current_period_start * 1000)
+  //       : null;
+  //     const currentPeriodEnd = subscription.current_period_end
+  //       ? new Date(subscription.current_period_end * 1000)
+  //       : null;
+  //     const nextBillingDate = currentPeriodEnd;
 
-      // Insert new subscription (inside session)
-      await SubscriptionModel.create(
-        [
-          {
-            userId,
-            stripeCustomerId: checkSub.stripeCustomerId,
-            stripeSubscriptionId: subscription.id,
-            planId,
-            paymentMethodId,
-            status: subscription.status,
-            startDate,
-            currentPeriodStart,
-            currentPeriodEnd,
-            nextBillingDate,
-            amount: subscription.items.data[0].price.unit_amount,
-            currency: subscription.currency,
-          },
-        ],
-        { session }
-      );
+  //     // Delete old subscription (inside session)
+  //     await SubscriptionModel.findByIdAndDelete(checkSub._id, { session });
 
-      // Commit the transaction
-      await session.commitTransaction();
-      session.endSession();
-      return {};
-    } catch (err) {
-      // Rollback on error
-      await session.abortTransaction();
-      session.endSession();
-      console.error("❌ Transaction failed:");
-      throw new Error("buyAgainFailed");
-    }
-  },
+  //     // Insert new subscription (inside session)
+  //     await SubscriptionModel.create(
+  //       [
+  //         {
+  //           userId,
+  //           stripeCustomerId: checkSub.stripeCustomerId,
+  //           stripeSubscriptionId: subscription.id,
+  //           planId,
+  //           paymentMethodId,
+  //           status: subscription.status,
+  //           startDate,
+  //           currentPeriodStart,
+  //           currentPeriodEnd,
+  //           nextBillingDate,
+  //           amount: subscription.items.data[0].price.unit_amount,
+  //           currency: subscription.currency,
+  //         },
+  //       ],
+  //       { session }
+  //     );
+
+  //     // Commit the transaction
+  //     await session.commitTransaction();
+  //     session.endSession();
+  //     return {};
+  //   } catch (err) {
+  //     // Rollback on error
+  //     await session.abortTransaction();
+  //     session.endSession();
+  //     console.error("❌ Transaction failed:");
+  //     throw new Error("buyAgainFailed");
+  //   }
+  // },
 
   async logoutUser(payload: any) {
     const { userId } = payload;

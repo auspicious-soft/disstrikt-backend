@@ -39,7 +39,7 @@ app.post("/in-app-android", rawBodyMiddleware, async (req: any, res: any) => {
     if (bodyBuffer.length === 0) return res.status(400).send("Empty body");
 
     const bodyStr = bodyBuffer.toString("utf8");
-    console.log("Full body string:", bodyStr); // Full JSON log karo debugging ke liye
+    // console.log("Full body string:", bodyStr);
 
     let rtdnPayload: any;
 
@@ -48,23 +48,23 @@ app.post("/in-app-android", rawBodyMiddleware, async (req: any, res: any) => {
     try {
       parsedBody = JSON.parse(bodyStr);
     } catch (e) {
-      console.error("JSON parse error:", e);
+      // console.error("JSON parse error:", e);
       return res.status(400).send("Invalid JSON");
     }
 
     // Check if it's Pub/Sub wrapped (has 'message.data' as base64)
     if (parsedBody.message && parsedBody.message.data) {
-      console.log("Pub/Sub wrapped detected");
+      // console.log("Pub/Sub wrapped detected");
       const encodedData = parsedBody.message.data;
       const rtdnJson = Buffer.from(encodedData, "base64").toString("utf8");
       rtdnPayload = JSON.parse(rtdnJson);
     } else {
       // Direct RTDN (test or direct delivery)
-      console.log("Direct RTDN detected");
+      // console.log("Direct RTDN detected");
       rtdnPayload = parsedBody; // Direct use karo
     }
 
-    console.log("Final RTDN payload:", rtdnPayload); // {version: '1.0', packageName: '...', subscriptionNotification: {...}}
+    // console.log("Final RTDN payload:", rtdnPayload); // {version: '1.0', packageName: '...', subscriptionNotification: {...}}
 
     // Verification (purchaseDataSignature pe, if present)
     if (rtdnPayload.subscriptionNotification) {
@@ -78,14 +78,14 @@ app.post("/in-app-android", rawBodyMiddleware, async (req: any, res: any) => {
             .createVerify("SHA1")
             .update(purchaseData)
             .verify(publicKey, signature, "base64");
-          console.log("Signature verified:", verified ? "Yes" : "No");
+          // console.log("Signature verified:", verified ? "Yes" : "No");
           if (!verified) return res.status(400).send("Invalid signature");
         }
       }
     }
 
     // Process karo
-    await planServices.handleInAppAndroidWebhook(rtdnPayload);
+    await planServices.handleInAppAndroidWebhook(rtdnPayload, req);
 
     res.status(200).send("OK");
   } catch (err) {
