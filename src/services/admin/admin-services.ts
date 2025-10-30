@@ -926,12 +926,6 @@ export const planServices = {
         );
 
         if (data?.userId) {
-          await NotificationService(
-            [data?.userId] as any,
-            "SUBSCRIPTION_RENEWED",
-            data?._id as ObjectId
-          );
-
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -939,6 +933,8 @@ export const planServices = {
             },
             {
               $setOnInsert: {
+                orderId, // unique per subscription renewal/purchase
+                userId: data.userId,
                 planId: planData._id,
                 status: "succeeded",
                 amount: planData.unitAmounts.gbp / 100,
@@ -947,6 +943,11 @@ export const planServices = {
               },
             },
             { upsert: true, new: true }
+          );
+          await NotificationService(
+            [data?.userId] as any,
+            "SUBSCRIPTION_RENEWED",
+            data?._id as ObjectId
           );
         }
         break;
@@ -974,20 +975,29 @@ export const planServices = {
         );
 
         if (data?.userId) {
+          await TransactionModel.findOneAndUpdate(
+            {
+              orderId, // unique per subscription renewal/purchase
+              userId: data.userId,
+            },
+            {
+              $setOnInsert: {
+                orderId, // unique per subscription renewal/purchase
+                userId: data.userId,
+                planId: planData._id,
+                status: "succeeded",
+                amount: planData.unitAmounts.gbp / 100,
+                currency: "gbp",
+                paidAt: new Date(eventTime) ?? new Date(),
+              },
+            },
+            { upsert: true, new: true }
+          );
           await NotificationService(
             [data?.userId] as any,
             "SUBSCRIPTION_RENEWED",
             data?._id as ObjectId
           );
-
-          await TransactionModel.create({
-            userId: data.userId,
-            planId: planData._id,
-            status: "succeeded",
-            amount: planData.unitAmounts.gbp / 100,
-            currency: "gbp",
-            paidAt: new Date(eventTime) ?? new Date(),
-          });
         }
 
         break;
@@ -1124,12 +1134,6 @@ export const planServices = {
         );
 
         if (data?.userId) {
-          await NotificationService(
-            [data?.userId] as any,
-            "SUBSCRIPTION_RENEWED",
-            data?._id as ObjectId
-          );
-
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -1145,6 +1149,12 @@ export const planServices = {
               },
             },
             { upsert: true, new: true }
+          );
+
+          await NotificationService(
+            [data?.userId] as any,
+            "SUBSCRIPTION_RENEWED",
+            data?._id as ObjectId
           );
         }
 
