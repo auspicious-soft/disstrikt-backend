@@ -22,6 +22,7 @@ import { NotificationService } from "src/utils/FCM/fcm";
 import { google } from "googleapis";
 import { userMoreInfo } from "src/controllers/auth/auth-controller";
 import * as crypto from "crypto"; // Signature verify ke liye
+import axios from "axios";
 
 const rawBodyMiddleware = (req: any, res: any, next: any) => {
   // TypeScript types adjust kar lo
@@ -36,6 +37,25 @@ const rawBodyMiddleware = (req: any, res: any, next: any) => {
   });
   req.on("error", () => res.status(400).send("Bad Request"));
 };
+
+export async function convertToGBP(
+  amount: number,
+  fromCurrency: string
+): Promise<number> {
+  try {
+    if (fromCurrency === "GBP") return amount;
+
+    const { data } = await axios.get(
+      `https://api.exchangerate.host/convert?from=${fromCurrency}&to=GBP&amount=${amount}`
+    );
+
+    if (data?.result) return data.result;
+    else return amount; // fallback (no conversion)
+  } catch (err) {
+    console.error("Currency conversion failed:", err);
+    return amount; // fallback to original
+  }
+}
 
 export const planServices = {
   async getPlans(payload: any) {
@@ -926,6 +946,11 @@ export const planServices = {
         );
 
         if (data?.userId) {
+          const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
+          const convertedAmountGBP = await convertToGBP(
+            originalAmount,
+            priceCurrencyCode
+          );
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -937,7 +962,7 @@ export const planServices = {
                 userId: data.userId,
                 planId: planData._id,
                 status: "succeeded",
-                amount: planData.unitAmounts.gbp / 100,
+                amount: convertedAmountGBP,
                 currency: "gbp",
                 paidAt: new Date(eventTime) ?? new Date(),
               },
@@ -975,6 +1000,11 @@ export const planServices = {
         );
 
         if (data?.userId) {
+          const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
+          const convertedAmountGBP = await convertToGBP(
+            originalAmount,
+            priceCurrencyCode
+          );
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -986,7 +1016,7 @@ export const planServices = {
                 userId: data.userId,
                 planId: planData._id,
                 status: "succeeded",
-                amount: planData.unitAmounts.gbp / 100,
+                amount: convertedAmountGBP,
                 currency: "gbp",
                 paidAt: new Date(eventTime) ?? new Date(),
               },
@@ -1032,21 +1062,6 @@ export const planServices = {
             linkedPurchaseToken: purchaseToken,
             orderId,
             deviceType: "ANDROID",
-            subscriptionId,
-            amount:
-              paymentState === 2
-                ? 0
-                : paymentState === 1
-                ? priceAmountMicros / 1000000
-                : 0,
-            currency: priceCurrencyCode,
-            planId: planData._id,
-            status:
-              paymentState === 2
-                ? "trialing"
-                : paymentState === 1
-                ? "active"
-                : "incomplete",
           },
           {
             $set: {
@@ -1059,15 +1074,17 @@ export const planServices = {
                   : paymentState === 1
                   ? priceAmountMicros / 1000000
                   : 0,
-              currentPeriodStart: startTimeMillis
-                ? new Date(Number(startTimeMillis))
-                : null,
-              currentPeriodEnd: expiryTimeMillis
-                ? new Date(Number(expiryTimeMillis))
-                : null,
+              currentPeriodStart:
+                paymentState === 1 ? new Date(Number(startTimeMillis)) : null,
+              currentPeriodEnd:
+                paymentState === 1 ? new Date(Number(expiryTimeMillis)) : null,
               startDate: startTimeMillis
                 ? new Date(Number(startTimeMillis))
                 : null,
+              trialStart:
+                paymentState === 2 ? new Date(Number(startTimeMillis)) : null,
+              trialEnd:
+                paymentState === 2 ? new Date(Number(expiryTimeMillis)) : null,
               currency: priceCurrencyCode,
               planId: planData._id,
               status:
@@ -1134,6 +1151,11 @@ export const planServices = {
         );
 
         if (data?.userId) {
+          const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
+          const convertedAmountGBP = await convertToGBP(
+            originalAmount,
+            priceCurrencyCode
+          );
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -1143,7 +1165,7 @@ export const planServices = {
               $setOnInsert: {
                 planId: planData._id,
                 status: "succeeded",
-                amount: planData.unitAmounts.gbp / 100,
+                amount: convertedAmountGBP,
                 currency: "gbp",
                 paidAt: new Date(eventTime) ?? new Date(),
               },
@@ -1182,15 +1204,14 @@ export const planServices = {
       case 13:
         actionMessage =
           "SUBSCRIPTION_EXPIRED - Subscription expire ho gayi, ab inactive hai";
-        data = await SubscriptionModel.findOneAndUpdate(
+        data = await SubscriptionModel.findOneAndDelete(
           { linkedPurchaseToken: purchaseToken },
           {
             $set: {
               orderId,
               status: "canceled",
             },
-          },
-          { new: true }
+          }
         );
         break;
       case 19:

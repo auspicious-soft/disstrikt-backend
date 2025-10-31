@@ -20,6 +20,7 @@ import { testPlanModel } from "src/models/admin/test-plan-schema";
 import { NotificationService } from "src/utils/FCM/fcm";
 import { Types } from "mongoose";
 import { TransactionModel } from "src/models/user/transaction-schema";
+import { convertToGBP } from "../admin/admin-services";
 
 configDotenv();
 
@@ -466,15 +467,21 @@ export const authServices = {
       throw new Error(`Subscription not found for orderId: ${orderId}`);
     }
 
+    const originalAmount = subscriptionData.amount; // convert micros → base currency
+    const convertedAmountGBP = await convertToGBP(
+      originalAmount,
+      subscriptionData.currency
+    );
+
     if (subscriptionData.status === "active" && userId) {
       await NotificationService(
         [userId],
         "SUBSCRIPTION_STARTED",
         subscriptionData?._id as Types.ObjectId
       );
-
-      const planData = await planModel.findById(subscriptionData?.planId);
-
+      await UserModel.findByIdAndUpdate(userId, {
+        $set: { hasUsedTrial: true },
+      });
       await TransactionModel.findOneAndUpdate(
         {
           orderId, // unique per subscription renewal/purchase
@@ -484,19 +491,34 @@ export const authServices = {
           $setOnInsert: {
             planId: subscriptionData.planId,
             status: "succeeded",
-            amount: (planData?.unitAmounts.gbp || 100) / 100,
+            amount: convertedAmountGBP,
             currency: "gbp",
             paidAt: new Date(),
           },
         },
         { upsert: true, new: true }
       );
-
     } else if (subscriptionData.status === "trialing" && userId) {
       await NotificationService(
         [userId],
         "FREETRIAL_STARTED",
         subscriptionData?._id as Types.ObjectId
+      );
+      await TransactionModel.findOneAndUpdate(
+        {
+          orderId, // unique per subscription renewal/purchase
+          userId,
+        },
+        {
+          $setOnInsert: {
+            planId: subscriptionData.planId,
+            status: "succeeded",
+            amount: convertedAmountGBP,
+            currency: "gbp",
+            paidAt: new Date(),
+          },
+        },
+        { upsert: true, new: true }
       );
     }
 
