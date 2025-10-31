@@ -969,6 +969,9 @@ export const planServices = {
             },
             { upsert: true, new: true }
           );
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
           await NotificationService(
             [data?.userId] as any,
             "SUBSCRIPTION_RENEWED",
@@ -1023,6 +1026,9 @@ export const planServices = {
             },
             { upsert: true, new: true }
           );
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
           await NotificationService(
             [data?.userId] as any,
             "SUBSCRIPTION_RENEWED",
@@ -1172,7 +1178,9 @@ export const planServices = {
             },
             { upsert: true, new: true }
           );
-
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
           await NotificationService(
             [data?.userId] as any,
             "SUBSCRIPTION_RENEWED",
