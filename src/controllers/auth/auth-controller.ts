@@ -98,7 +98,7 @@ export const resendOtp = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password, fcmToken, language } = req.body;
+    const { email, password, fcmToken, language, userType = "mobile" } = req.body;
     if (!email || !password || !fcmToken || !language) {
       throw new Error("Email, language, Password & FCM is required");
     }
@@ -106,6 +106,7 @@ export const login = async (req: Request, res: Response) => {
       email,
       password,
       fcmToken,
+      userType,
       authType: "EMAIL",
     });
     return OK(res, response || {}, req.body.language || "en", "loginSuccess");

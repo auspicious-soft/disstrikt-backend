@@ -125,6 +125,7 @@ export const authServices = {
       email: payload.email,
       authType: payload.authType || "EMAIL",
       isDeleted: false,
+      userType: payload.userType,
     });
 
     if (!checkExist) {
