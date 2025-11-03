@@ -453,77 +453,167 @@ export const authServices = {
   },
 
   async buyPlan(payload: any) {
-    const { userId, orderId } = payload;
+    const { userId, orderId, planId, currency, paymentMethodId, userType, id, country } =
+      payload;
 
-    const subscriptionData = await SubscriptionModel.findOneAndUpdate(
-      {
-        orderId,
-        userId: null,
-      },
-      { $set: { userId } },
-      { new: true }
-    );
+    if (userType === "web") {
+      const plans = await planModel
+        .findOne({ _id: planId, isActive: true })
+        .lean();
 
-    if (!subscriptionData) {
-      throw new Error(`Subscription not found for orderId: ${orderId}`);
-    }
+      if (!plans) {
+        throw new Error("planNotFound");
+      }
 
-    const originalAmount = subscriptionData.amount; // convert micros → base currency
-    const convertedAmountGBP = await convertToGBP(
-      originalAmount,
-      subscriptionData.currency
-    );
-
-    if (subscriptionData.status === "active" && userId) {
-      await NotificationService(
-        [userId],
-        "SUBSCRIPTION_STARTED",
-        subscriptionData?._id as Types.ObjectId
+      const stripeProduct = await stripe.products.retrieve(
+        plans.stripeProductId
       );
-      await UserModel.findByIdAndUpdate(userId, {
-        $set: { hasUsedTrial: true },
+
+      if (!stripeProduct) {
+        throw new Error("planNotFound");
+      }
+
+      const priceList = await stripe.prices.list({
+        product: stripeProduct.id,
+        active: true, // only get active prices
+        limit: 10,
       });
-      await TransactionModel.findOneAndUpdate(
-        {
-          orderId, // unique per subscription renewal/purchase
-          userId,
-        },
-        {
-          $setOnInsert: {
-            planId: subscriptionData.planId,
-            status: "succeeded",
-            amount: convertedAmountGBP,
-            currency: "gbp",
-            paidAt: new Date(),
-          },
-        },
-        { upsert: true, new: true }
-      );
-    } else if (subscriptionData.status === "trialing" && userId) {
-      await NotificationService(
-        [userId],
-        "FREETRIAL_STARTED",
-        subscriptionData?._id as Types.ObjectId
-      );
-      await TransactionModel.findOneAndUpdate(
-        {
-          orderId, // unique per subscription renewal/purchase
-          userId,
-        },
-        {
-          $setOnInsert: {
-            planId: subscriptionData.planId,
-            status: "succeeded",
-            amount: convertedAmountGBP,
-            currency: "gbp",
-            paidAt: new Date(),
-          },
-        },
-        { upsert: true, new: true }
-      );
-    }
 
-    return {};
+      const productPrice = priceList?.data?.find(
+        (price) => price.currency === currency
+      );
+
+      if (!productPrice) {
+        throw new Error("invalidCurrency");
+      }
+
+      const user = await UserModel.findById(id);
+
+      if (!user?.stripeCustomerId) {
+        throw new Error("stripeCustomerIdNotFound");
+      }
+
+      if (!user.hasUsedTrial) {
+        const session = await stripe.checkout.sessions.create({
+          mode: "subscription",
+          customer: user?.stripeCustomerId,
+          success_url: "https://yourapp.com/success",
+          cancel_url: "https://yourapp.com/cancel",
+          line_items: [
+            {
+              price: productPrice.id,
+              quantity: 1,
+            },
+          ],
+          subscription_data: {
+            trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
+          },
+          payment_method_types:
+            country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
+          metadata: {
+            userId: (user as any)?._id.toString(),
+            planId: (plans as any)?._id.toString(),
+          },
+        });
+        await user.save();
+
+        return session;
+      }
+
+      if (user.hasUsedTrial && plans.trialDays > 0) {
+        const session = await stripe.checkout.sessions.create({
+          mode: "subscription",
+          customer: user?.stripeCustomerId,
+          success_url: "https://yourapp.com/success",
+          cancel_url: "https://yourapp.com/cancel",
+          line_items: [
+            {
+              price: productPrice.id,
+              quantity: 1,
+            },
+          ],
+          payment_method_types:
+            country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
+          metadata: {
+            userId: (user as any)?._id.toString(),
+            planId: (plans as any)?._id.toString(),
+          },
+        });
+        await user.save();
+
+        return session;
+      }
+    } else {
+      const subscriptionData = await SubscriptionModel.findOneAndUpdate(
+        {
+          orderId,
+          userId: null,
+        },
+        { $set: { userId } },
+        { new: true }
+      );
+
+      if (!subscriptionData) {
+        throw new Error(`Subscription not found for orderId: ${orderId}`);
+      }
+
+      const originalAmount = subscriptionData.amount; // convert micros → base currency
+      const convertedAmountGBP = await convertToGBP(
+        originalAmount,
+        subscriptionData.currency
+      );
+
+      if (subscriptionData.status === "active" && userId) {
+        await NotificationService(
+          [userId],
+          "SUBSCRIPTION_STARTED",
+          subscriptionData?._id as Types.ObjectId
+        );
+        await UserModel.findByIdAndUpdate(userId, {
+          $set: { hasUsedTrial: true },
+        });
+        await TransactionModel.findOneAndUpdate(
+          {
+            orderId, // unique per subscription renewal/purchase
+            userId,
+          },
+          {
+            $setOnInsert: {
+              planId: subscriptionData.planId,
+              status: "succeeded",
+              amount: convertedAmountGBP,
+              currency: "gbp",
+              paidAt: new Date(),
+            },
+          },
+          { upsert: true, new: true }
+        );
+      } else if (subscriptionData.status === "trialing" && userId) {
+        await NotificationService(
+          [userId],
+          "FREETRIAL_STARTED",
+          subscriptionData?._id as Types.ObjectId
+        );
+        await TransactionModel.findOneAndUpdate(
+          {
+            orderId, // unique per subscription renewal/purchase
+            userId,
+          },
+          {
+            $setOnInsert: {
+              planId: subscriptionData.planId,
+              status: "succeeded",
+              amount: convertedAmountGBP,
+              currency: "gbp",
+              paidAt: new Date(),
+            },
+          },
+          { upsert: true, new: true }
+        );
+      }
+
+      return {};
+    }
 
     // const plans =
     //   process.env.PAYMENT == "PROD"

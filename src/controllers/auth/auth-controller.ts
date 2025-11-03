@@ -16,7 +16,15 @@ import {
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { language, fullName, email, password, country, fcmToken, userType = "mobile" } = req.body;
+    const {
+      language,
+      fullName,
+      email,
+      password,
+      country,
+      fcmToken,
+      userType = "mobile",
+    } = req.body;
 
     if (!fullName || !email || !password) {
       throw new Error("registerRequiredFields");
@@ -98,7 +106,13 @@ export const resendOtp = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { email, password, fcmToken, language, userType = "mobile" } = req.body;
+    const {
+      email,
+      password,
+      fcmToken,
+      language,
+      userType = "mobile",
+    } = req.body;
     if (!email || !password || !fcmToken || !language) {
       throw new Error("Email, language, Password & FCM is required");
     }
@@ -285,18 +299,29 @@ export const buyPlan = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language;
-    
-    // const { planId, currency, paymentMethodId } = req.body;
 
-    const {orderId } = req.body;
-    if (!orderId) {
+    const { planId, currency, paymentMethodId } = req.body;
+
+    const { orderId } = req.body;
+    if (!orderId && userData.userType === "mobile") {
       throw new Error("orderId is required");
+    }
+
+    if (
+      (!planId || !currency) &&
+      userData.userType === "web"
+    ) {
+      throw new Error("planId, currency, and paymentMethodId is required");
     }
 
     const response = await authServices.buyPlan({
       language: userData.language,
       country: userData.country,
       userId: userData.id.toString(),
+      planId,
+      currency,
+      userType: userData.userType,
+      paymentMethodId,
       orderId,
       ...userData,
     });
