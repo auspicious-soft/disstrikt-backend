@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
 import {
-  // buyAgain,
+  buyAgain,
   buyPlan,
   getActivePlan,
   getLoginResponse,
@@ -52,7 +52,7 @@ router.get("/setup-intent", setupIntent);
 router.route("/plans").get(getPlans).post(buyPlan);
 router.get("/get-login-response", getLoginResponse);
 router.post("/logout", logoutUser);
-// router.post("/buy-again", buyAgain);
+router.post("/buy-again", buyAgain);
 router.get("/get-active-plan", getActivePlan);
 
 const paidRouter = Router();

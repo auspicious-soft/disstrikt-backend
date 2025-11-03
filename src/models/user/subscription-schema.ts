@@ -1,6 +1,14 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
 
 export interface ISubscription extends Document {
+  //Stripe-related
+
+  stripeCustomerId: string;
+  stripeSubscriptionId: string;
+  paymentMethodId: string;
+
+  //Stripe-related
+
   userId: Types.ObjectId;
   subscriptionId: string;
   orderId: string;
@@ -23,7 +31,15 @@ export interface ISubscription extends Document {
 
 const subscriptionSchema = new Schema<ISubscription>(
   {
-    userId: { type: Schema.Types.ObjectId, ref: "user"},
+    //Stripe Related Keys
+
+    stripeCustomerId: { type: String, required: true },
+    stripeSubscriptionId: { type: String, required: true },
+    paymentMethodId: { type: String },
+
+    //Stripe Related Keys
+
+    userId: { type: Schema.Types.ObjectId, ref: "user" },
     linkedPurchaseToken: { type: String, required: true },
     orderId: { type: String, required: true },
     deviceType: { type: String, required: true },

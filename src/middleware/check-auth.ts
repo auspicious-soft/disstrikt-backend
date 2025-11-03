@@ -66,6 +66,7 @@ export const checkUserAuth = async (
       phone: checkToken.userId?.phone,
       gender: moreInfo?.gender,
       currentMilestone: checkToken?.userId?.currentMilestone,
+      userType: decoded?.userType,
     };
 
     //********************************
@@ -128,8 +129,9 @@ export const checkSubscription = async (
       return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
     }
 
+    const userType = (req?.user as any)?.userType || "web";
     // 🔑 ADDITIONAL CHECK: Verify if "past_due" is legitimate access
-    if (subscription.status === "past_due") {
+    if (subscription.status === "past_due" && userType !== "web") {
       try {
         return UNAUTHORIZED(res, "paymentFailed", req?.body?.language || "en");
       } catch (error) {
@@ -143,31 +145,98 @@ export const checkSubscription = async (
       }
     }
 
+    if (subscription.status === "past_due" && userType == "web") {
+      try {
+        // Get payment method details to determine if it's BACS/SEPA
+        const paymentMethod = subscription.paymentMethodId
+          ? await stripe.paymentMethods.retrieve(subscription.paymentMethodId)
+          : null;
+
+        const isBacsOrSepa =
+          paymentMethod?.type === "bacs_debit" ||
+          paymentMethod?.type === "sepa_debit";
+
+        if (isBacsOrSepa) {
+          // 🔧 For BACS/SEPA, check if it's within reasonable processing time
+          const daysSincePastDue = subscription.updatedAt
+            ? Math.floor(
+                (Date.now() - new Date(subscription.updatedAt).getTime()) /
+                  (1000 * 60 * 60 * 24)
+              )
+            : 0;
+
+          // Allow 7 days for BACS, 3 days for SEPA processing
+          const maxDays = paymentMethod?.type === "bacs_debit" ? 7 : 3;
+
+          if (daysSincePastDue > maxDays) {
+            console.log(
+              `🚫 BACS/SEPA payment overdue by ${daysSincePastDue} days`
+            );
+            return UNAUTHORIZED(
+              res,
+              "subscriptionOverdue",
+              req?.body?.language || "en"
+            );
+          }
+
+          console.log(
+            `✅ Allowing BACS/SEPA user access (${daysSincePastDue}/${maxDays} days)`
+          );
+        } else {
+          // 🚫 For card payments, past_due should not have access
+          console.log("🚫 Card payment past_due - denying access");
+          return UNAUTHORIZED(
+            res,
+            "paymentFailed",
+            req?.body?.language || "en"
+          );
+        }
+      } catch (stripeError) {
+        console.error("Error checking payment method:", stripeError);
+        // If we can't verify payment method, be conservative and deny access
+        return UNAUTHORIZED(
+          res,
+          "subscriptionError",
+          req?.body?.language || "en"
+        );
+      }
+    }
+
     // 🔑 ADDITIONAL CHECK: Handle trial periods properly
-    // if (subscription.status === "trialing") {
-    //   // Check if trial has actually expired
-    //   if (
-    //     subscription.trialEnd &&
-    //     new Date(subscription.trialEnd) < new Date()
-    //   ) {
-    //     // Trial has expired, check if there's a pending payment
-    //     try {
-    //       return UNAUTHORIZED(
-    //         res,
-    //         "paymentFailed",
-    //         req?.body?.language || "en"
-    //       );
-    //       // Recheck with updated status
-    //     } catch (stripeError) {
-    //       console.error("Error syncing subscription status:", stripeError);
-    //     }
-    //   }
-    // }
+    if (subscription.status === "trialing" && userType == "web") {
+      // Check if trial has actually expired
+      if (
+        subscription.trialEnd &&
+        new Date(subscription.trialEnd) < new Date()
+      ) {
+        // Trial has expired, check if there's a pending payment
+        try {
+          return UNAUTHORIZED(
+            res,
+            "paymentFailed",
+            req?.body?.language || "en"
+          );
+          // Recheck with updated status
+        } catch (stripeError) {
+          console.error("Error syncing subscription status:", stripeError);
+        }
+      }
+    }
 
     // 🔑 ENHANCED STATUS INFORMATION: Add more context to subscription object
-    const enhancedSubscription = {
-      ...subscription,
-    };
+    const enhancedSubscription =
+      userType === "web"
+        ? {
+            ...subscription,
+          }
+        : {
+            ...subscription,
+            isGracePeriod: subscription.status === "past_due",
+            paymentProcessing:
+              (subscription.status === "past_due" &&
+                (subscription as any).paymentMethodType === "bacs_debit") ||
+              (subscription as any).paymentMethodType === "sepa_debit",
+          };
 
     // // Set plan name
     (enhancedSubscription as any).planName = (

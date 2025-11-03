@@ -298,567 +298,567 @@ export const planServices = {
     return plan;
   },
 
-  // async handleStripeWebhook(req: Request) {
-  //   const sig = req.headers["stripe-signature"] as string;
-  //   const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
-
-  //   if (!sig || !endpointSecret) {
-  //     console.error("***STRIPE SIGNATURE MISSING***");
-  //     return;
-  //   }
-
-  //   let event: Stripe.Event | undefined;
-  //   const toDate = (timestamp?: number | null): Date | null =>
-  //     typeof timestamp === "number" && !isNaN(timestamp)
-  //       ? new Date(timestamp * 1000)
-  //       : null;
-
-  //   // Helper function to determine payment method type
-  //   const getPaymentMethodType = async (paymentMethodId: string | null) => {
-  //     if (!paymentMethodId) return null;
-  //     try {
-  //       const paymentMethod = await stripe.paymentMethods.retrieve(
-  //         paymentMethodId
-  //       );
-  //       return paymentMethod.type;
-  //     } catch (error) {
-  //       console.error("Error retrieving payment method:", error);
-  //       return null;
-  //     }
-  //   };
-
-  //   // Helper function to determine if subscription should be treated as active
-  //   const shouldTreatAsActive = (
-  //     subscription: Stripe.Subscription,
-  //     paymentMethodType: string | null
-  //   ) => {
-  //     const isBacsOrSepa =
-  //       paymentMethodType === "bacs_debit" ||
-  //       paymentMethodType === "sepa_debit";
-
-  //     // If it's past_due but uses BACS/SEPA, treat as active (payment is just processing)
-  //     if (subscription.status === "past_due" && isBacsOrSepa) {
-  //       return true;
-  //     }
-
-  //     // If trial just ended but payment is pending for BACS/SEPA, treat as active
-  //     if (
-  //       subscription.status === "past_due" &&
-  //       subscription.trial_end &&
-  //       Math.abs(new Date().getTime() - subscription.trial_end * 1000) <
-  //         86400000
-  //     ) {
-  //       // Within 24 hours
-  //       return true;
-  //     }
-
-  //     return false;
-  //   };
-
-  //   try {
-  //     event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
-  //     console.log(`***STRIPE EVENT TYPE***: ${event.type}`);
-
-  //     const subscription = event.data.object as Stripe.Subscription;
-
-  //     switch (event.type) {
-  //       case "customer.subscription.created":
-  //       case "customer.subscription.updated": {
-  //         const {
-  //           id: stripeSubscriptionId,
-  //           customer: stripeCustomerId,
-  //           status,
-  //           start_date,
-  //           trial_start,
-  //           trial_end,
-  //           cancel_at_period_end,
-  //           items,
-  //         } = subscription;
-
-  //         const item = items?.data?.[0];
-  //         const planAmount = item?.price?.unit_amount ?? 0;
-  //         const currency = item?.price?.currency ?? "inr";
-  //         const current_period_start = subscription.current_period_start;
-  //         const current_period_end = subscription.current_period_end;
-
-  //         // 🔑 CRITICAL: Get payment method type
-  //         const paymentMethodType = await getPaymentMethodType(
-  //           subscription.default_payment_method as string
-  //         );
-
-  //         // 🔑 CRITICAL: Determine actual status based on payment method
-  //         let adjustedStatus = status;
-  //         if (shouldTreatAsActive(subscription, paymentMethodType)) {
-  //           adjustedStatus = "active";
-  //           console.log(
-  //             `🔧 Adjusted ${status} to active for ${paymentMethodType} payment method`
-  //           );
-  //         }
-
-  //         // 🔑 HANDLE UPDATE PLAN SCENARIOS
-  //         const existingSubscription = await SubscriptionModel.findOne({
-  //           stripeCustomerId,
-  //           stripeSubscriptionId,
-  //         });
-
-  //         if (existingSubscription) {
-  //           console.log("📋 Updating existing subscription...");
-
-  //           // Check if this is a trial ending scenario
-  //           const wasTrialing = existingSubscription.status === "trialing";
-  //           const isTrialEnding = wasTrialing && status !== "trialing";
-
-  //           if (isTrialEnding) {
-  //             console.log("🔄 Detected trial ending");
-
-  //             // For BACS/SEPA users ending trial, ensure they maintain access
-  //             if (
-  //               paymentMethodType === "bacs_debit" ||
-  //               paymentMethodType === "sepa_debit"
-  //             ) {
-  //               adjustedStatus = "active";
-  //               console.log(
-  //                 "🔧 Maintaining access for BACS/SEPA user with ending trial"
-  //               );
-  //             }
-  //           }
-  //         }
-
-  //         const updateData: any = {
-  //           stripeCustomerId,
-  //           stripeSubscriptionId,
-  //           status: cancel_at_period_end ? "canceling" : adjustedStatus,
-  //           startDate: toDate(start_date),
-  //           trialStart: toDate(trial_start),
-  //           trialEnd: toDate(trial_end),
-  //           currentPeriodStart: toDate(current_period_start),
-  //           currentPeriodEnd: toDate(current_period_end),
-  //           nextBillingDate: toDate(current_period_end),
-  //           amount: planAmount / 100,
-  //           currency,
-  //         };
-
-  //         const updatedSubscription = await SubscriptionModel.findOneAndUpdate(
-  //           { stripeCustomerId, stripeSubscriptionId },
-  //           { $set: updateData },
-  //           { upsert: false, new: true }
-  //         );
-
-  //         // 🔑 SEND APPROPRIATE NOTIFICATIONS FOR UPDATE SCENARIOS
-  //         if (updatedSubscription && existingSubscription) {
-  //           const wasTrialing = existingSubscription.status === "trialing";
-  //           const isNowActive = adjustedStatus === "active";
-  //           const wasActive = existingSubscription.status === "active";
-
-  //           if (wasTrialing && isNowActive) {
-  //             await NotificationService(
-  //               [updatedSubscription.userId] as any,
-  //               "SUBSCRIPTION_STARTED",
-  //               updatedSubscription._id as ObjectId
-  //             );
-  //           } else if (
-  //             cancel_at_period_end &&
-  //             !existingSubscription.nextPlanId
-  //           ) {
-  //             await NotificationService(
-  //               [updatedSubscription.userId] as any,
-  //               "SUBSCRIPTION_CANCELLED",
-  //               updatedSubscription._id as ObjectId
-  //             );
-  //           }
-  //         }
-
-  //         break;
-  //       }
-
-  //       case "customer.subscription.deleted": {
-  //         const { customer: stripeCustomerId, currency, id } = subscription;
-
-  //         const existingSub = await SubscriptionModel.findOne({
-  //           stripeCustomerId,
-  //           stripeSubscriptionId: id,
-  //         }).lean();
-
-  //         if (!existingSub) {
-  //           console.warn(
-  //             "⚠️ No existing subscription found for deletion event."
-  //           );
-  //           return;
-  //         }
-
-  //         const { userId, nextPlanId, paymentMethodId, _id } = existingSub;
-
-  //         // 🔑 UPDATE PLAN SCENARIO: Check if this is part of an upgrade flow
-  //         if (nextPlanId) {
-  //           console.log("🔄 Processing subscription upgrade/plan change...");
-
-  //           await SubscriptionModel.findByIdAndDelete(_id);
-  //           const planData = await planModel.findById(nextPlanId);
-
-  //           const newSub = await stripe.subscriptions.create({
-  //             customer:
-  //               typeof stripeCustomerId === "string"
-  //                 ? stripeCustomerId
-  //                 : stripeCustomerId?.id ?? "",
-  //             items: [
-  //               { price: planData?.stripePrices[currency as "eur" | "gbp"] },
-  //             ],
-  //             default_payment_method: paymentMethodId,
-  //             expand: ["latest_invoice.payment_intent"],
-  //           });
-
-  //           const newSubPrice = newSub.items.data[0]?.price;
-
-  //           // 🔑 CRITICAL: Handle BACS/SEPA for new subscription
-  //           const paymentMethodType = await getPaymentMethodType(
-  //             paymentMethodId
-  //           );
-  //           let newSubStatus = newSub.status;
-
-  //           if (shouldTreatAsActive(newSub, paymentMethodType)) {
-  //             newSubStatus = "active";
-  //             console.log(
-  //               `🔧 Adjusted new subscription status to active for ${paymentMethodType}`
-  //             );
-  //           }
-
-  //           const newSubscription = await SubscriptionModel.create({
-  //             userId,
-  //             stripeCustomerId,
-  //             stripeSubscriptionId: newSub.id,
-  //             planId: nextPlanId,
-  //             paymentMethodId,
-  //             status: newSubStatus,
-  //             trialStart: toDate(newSub.trial_start),
-  //             trialEnd: toDate(newSub.trial_end),
-  //             startDate: toDate(newSub.start_date),
-  //             currentPeriodStart: toDate(newSub.current_period_start),
-  //             currentPeriodEnd: toDate(newSub.current_period_end),
-  //             nextBillingDate: toDate(newSub.current_period_end),
-  //             amount: newSubPrice?.unit_amount
-  //               ? newSubPrice.unit_amount / 100
-  //               : 0,
-  //             currency: newSubPrice?.currency ?? "inr",
-  //             nextPlanId: null,
-  //           });
-
-  //           await NotificationService(
-  //             [userId] as any,
-  //             "SUBSCRIPTION_RENEWED", // or "PLAN_UPGRADED" if you have that notification type
-  //             newSubscription?._id as ObjectId
-  //           );
-  //         } else {
-  //           // 🔑 REGULAR CANCELLATION (not upgrade)
-  //           await SubscriptionModel.findByIdAndUpdate(_id, {
-  //             $set: {
-  //               status: "canceled",
-  //               trialEnd: null,
-  //               startDate: null,
-  //               currentPeriodEnd: null,
-  //               currentPeriodStart: null,
-  //               nextBillingDate: null,
-  //             },
-  //           });
-
-  //           await stripe.paymentMethods.detach(paymentMethodId);
-  //           await TokenModel.findOneAndDelete({ userId });
-  //           await NotificationService(
-  //             [userId] as any,
-  //             "SUBSCRIPTION_CANCELLED",
-  //             _id as ObjectId
-  //           );
-  //         }
-  //         break;
-  //       }
-
-  //       case "invoice.payment_succeeded": {
-  //         const invoice = event?.data?.object as Stripe.Invoice;
-  //         const customerId = invoice?.customer as string;
-
-  //         const existing = await SubscriptionModel.findOne({
-  //           stripeCustomerId: customerId,
-  //         });
-
-  //         if (!existing) break;
-
-  //         const subscriptionId = existing?.stripeSubscriptionId as string;
-  //         const userId = existing?.userId;
-
-  //         // 🔑 CRITICAL: Always ensure status is active when payment succeeds
-  //         const lineItem = invoice?.lines?.data?.[0];
-  //         const period = lineItem?.period;
-
-  //         await SubscriptionModel.findOneAndUpdate(
-  //           {
-  //             stripeCustomerId: customerId,
-  //             stripeSubscriptionId: subscriptionId,
-  //           },
-  //           {
-  //             $set: {
-  //               status: "active", // Always active when payment succeeds
-  //               currentPeriodStart: toDate(period?.start),
-  //               currentPeriodEnd: toDate(period?.end),
-  //               nextBillingDate: toDate(period?.end),
-  //             },
-  //           }
-  //         );
-
-  //         const pi =
-  //           typeof invoice.payment_intent === "string"
-  //             ? await stripe?.paymentIntents?.retrieve(invoice?.payment_intent)
-  //             : invoice?.payment_intent;
-
-  //         let charge: Stripe.Charge | undefined;
-  //         if (pi?.id) {
-  //           const chargesList = await stripe?.charges?.list({
-  //             payment_intent: pi.id,
-  //           });
-  //           charge = chargesList.data[0];
-  //         }
-
-  //         const card = charge?.payment_method_details?.card;
-
-  //         // 🔑 NOTIFICATION LOGIC
-  //         const billingReason = invoice.billing_reason;
-  //         if (billingReason === "subscription_create") {
-  //           if (invoice.amount_paid > 0) {
-  //             await NotificationService(
-  //               [userId],
-  //               "SUBSCRIPTION_STARTED",
-  //               existing?._id as ObjectId
-  //             );
-  //           } else {
-  //             await NotificationService(
-  //               [userId],
-  //               "FREETRIAL_STARTED",
-  //               existing?._id as ObjectId
-  //             );
-  //           }
-  //         } else if (billingReason === "subscription_cycle") {
-  //           await NotificationService(
-  //             [userId],
-  //             "SUBSCRIPTION_RENEWED",
-  //             existing?._id as ObjectId
-  //           );
-  //         } else if (billingReason === "subscription_update") {
-  //           await NotificationService(
-  //             [userId],
-  //             "SUBSCRIPTION_STARTED",
-  //             existing?._id as ObjectId
-  //           );
-  //         }
-
-  //         // Create transaction
-  //         await TransactionModel.create({
-  //           userId,
-  //           stripeCustomerId: customerId,
-  //           stripeSubscriptionId: subscriptionId,
-  //           invoiceId: invoice.id,
-  //           paymentIntentId: pi?.id,
-  //           status: "succeeded",
-  //           amount: invoice.amount_paid / 100,
-  //           currency: invoice.currency,
-  //           paymentMethodDetails: {
-  //             brand: card?.brand ?? "unknown",
-  //             last4: card?.last4 ?? "0000",
-  //             expMonth: card?.exp_month ?? 0,
-  //             expYear: card?.exp_year ?? 0,
-  //             type: card ? "card" : "unknown",
-  //           },
-  //           billingReason: invoice.billing_reason,
-  //           paidAt: toDate(invoice.status_transitions?.paid_at) ?? new Date(),
-  //         });
-
-  //         break;
-  //       }
-
-  //       case "invoice.payment_failed": {
-  //         const invoice = event.data.object as Stripe.Invoice;
-  //         const customerId = invoice.customer as string;
-
-  //         const existing = await SubscriptionModel.findOne({
-  //           stripeCustomerId: customerId,
-  //         });
-
-  //         if (!existing) break;
-
-  //         const subscriptionId = existing?.stripeSubscriptionId as string;
-  //         const userId = existing.userId;
-
-  //         const pi =
-  //           typeof invoice?.payment_intent === "string"
-  //             ? await stripe?.paymentIntents?.retrieve(invoice?.payment_intent)
-  //             : invoice.payment_intent;
-
-  //         // 🔑 CRITICAL: Don't mark BACS/SEPA as past_due for pending payments
-  //         const paymentMethodType = await getPaymentMethodType(
-  //           existing.paymentMethodId
-  //         );
-  //         const isBacsOrSepa =
-  //           paymentMethodType === "bacs_debit" ||
-  //           paymentMethodType === "sepa_debit";
-
-  //         // Only update to past_due if it's NOT a BACS/SEPA payment that's just pending
-  //         const isActualFailure =
-  //           pi?.last_payment_error?.type !== undefined &&
-  //           pi?.last_payment_error?.code !==
-  //             "payment_intent_authentication_failure";
-
-  //         if (isActualFailure) {
-  //           const invoiceFull = await stripe.invoices.retrieve(invoice.id);
-  //           if (invoiceFull.attempt_count >= 3) {
-  //             await stripe.subscriptions.cancel(subscriptionId); // Immediate cancel after max retries
-  //             await NotificationService(
-  //               [userId],
-  //               "SUBSCRIPTION_FAILED",
-  //               existing._id as ObjectId
-  //             );
-  //           }
-  //         } else if (!isBacsOrSepa) {
-  //           // For non-BACS/SEPA methods (e.g., cards), set to past_due immediately on any failure
-  //           await SubscriptionModel.updateOne(
-  //             { stripeSubscriptionId: subscriptionId },
-  //             { $set: { status: "past_due" } }
-  //           );
-  //           await NotificationService(
-  //             [userId],
-  //             "SUBSCRIPTION_FAILED",
-  //             existing._id as ObjectId
-  //           );
-  //         }
-
-  //         let charge: Stripe.Charge | undefined;
-  //         if (pi?.id) {
-  //           const chargesList = await stripe?.charges?.list({
-  //             payment_intent: pi.id,
-  //           });
-  //           charge = chargesList.data[0];
-  //         }
-  //         const card = charge?.payment_method_details?.card;
-
-  //         await TransactionModel.create({
-  //           userId,
-  //           stripeCustomerId: customerId,
-  //           stripeSubscriptionId: subscriptionId,
-  //           invoiceId: invoice.id,
-  //           paymentIntentId: pi?.id,
-  //           status: isActualFailure ? "failed" : "pending",
-  //           amount: invoice.amount_due / 100,
-  //           currency: invoice.currency,
-  //           paymentMethodDetails: {
-  //             brand: card?.brand ?? "unknown",
-  //             last4: card?.last4 ?? "0000",
-  //             expMonth: card?.exp_month ?? 0,
-  //             expYear: card?.exp_year ?? 0,
-  //             type: card ? "card" : "unknown",
-  //           },
-  //           billingReason: invoice.billing_reason,
-  //           errorMessage:
-  //             pi?.last_payment_error?.message ?? "Payment processing",
-  //           paidAt: new Date(),
-  //         });
-
-  //         break;
-  //       }
-
-  //       case "checkout.session.completed": {
-  //         const session = event.data.object as Stripe.Checkout.Session;
-
-  //         if (session.mode !== "subscription" || !session.subscription) break;
-
-  //         const subscription = await stripe.subscriptions.retrieve(
-  //           session.subscription as string
-  //         );
-
-  //         let paymentMethodId = subscription.default_payment_method as
-  //           | string
-  //           | null;
-  //         const stripeCustomerId = subscription.customer as string;
-  //         const item = subscription.items?.data?.[0];
-  //         const planAmount = item?.price?.unit_amount ?? 0;
-  //         const currency = item?.price?.currency ?? "gbp";
-  //         const userId = session.metadata?.userId;
-  //         const planId = session.metadata?.planId;
-
-  //         // 🔑 CRITICAL: Handle BACS/SEPA for checkout
-  //         const paymentMethodType = await getPaymentMethodType(paymentMethodId);
-  //         let subStatus = subscription.status;
-
-  //         if (shouldTreatAsActive(subscription, paymentMethodType)) {
-  //           subStatus = "active";
-  //           console.log(
-  //             `🔧 Adjusted checkout status to active for ${paymentMethodType}`
-  //           );
-  //         }
-
-  //         await SubscriptionModel.findOneAndDelete({ userId });
-  //         await UserModel.findByIdAndUpdate(userId, {
-  //           hasUsedTrial: true,
-  //           isCardSetupComplete: true,
-  //         });
-
-  //         const newSubscription = await SubscriptionModel.create({
-  //           userId,
-  //           stripeCustomerId,
-  //           stripeSubscriptionId: subscription.id,
-  //           planId,
-  //           paymentMethodId: paymentMethodId,
-  //           status: subStatus,
-  //           trialStart: toDate(subscription.trial_start),
-  //           trialEnd: toDate(subscription.trial_end),
-  //           startDate: toDate(subscription.start_date),
-  //           currentPeriodStart: toDate(subscription.current_period_start),
-  //           currentPeriodEnd: toDate(subscription.current_period_end),
-  //           nextBillingDate: toDate(subscription.current_period_end),
-  //           amount: planAmount / 100,
-  //           currency,
-  //           nextPlanId: null,
-  //         });
-
-  //         break;
-  //       }
-
-  //       // 🔑 ADDITIONAL SAFETY NET WEBHOOKS
-  //       case "payment_intent.succeeded": {
-  //         const paymentIntent = event.data.object as Stripe.PaymentIntent;
-  //         if (paymentIntent.invoice) {
-  //           const invoice = await stripe.invoices.retrieve(
-  //             paymentIntent.invoice as string
-  //           );
-  //           const subscription = await SubscriptionModel.findOne({
-  //             stripeCustomerId: invoice.customer as string,
-  //           });
-
-  //           if (subscription && subscription.status !== "active") {
-  //             await SubscriptionModel.findByIdAndUpdate(subscription._id, {
-  //               status: "active",
-  //             });
-  //             console.log(
-  //               "🔧 Updated subscription to active via payment_intent.succeeded"
-  //             );
-  //           }
-  //         }
-  //         break;
-  //       }
-
-  //       case "payment_intent.payment_failed": {
-  //         const paymentIntent = event.data.object as Stripe.PaymentIntent;
-  //         console.log(
-  //           "💳 Payment failed:",
-  //           paymentIntent.last_payment_error?.message
-  //         );
-  //         // Additional handling if needed
-  //         break;
-  //       }
-  //     }
-
-  //     console.log("✅ Successfully handled event:", event.type);
-  //     return {};
-  //   } catch (err: any) {
-  //     console.error("***STRIPE EVENT FAILED***", err.message);
-  //     return {};
-  //   }
-  // },
+  async handleStripeWebhook(req: Request) {
+    const sig = req.headers["stripe-signature"] as string;
+    const endpointSecret = process.env.STRIPE_WEBHOOK_SECRET as string;
+
+    if (!sig || !endpointSecret) {
+      console.error("***STRIPE SIGNATURE MISSING***");
+      return;
+    }
+
+    let event: Stripe.Event | undefined;
+    const toDate = (timestamp?: number | null): Date | null =>
+      typeof timestamp === "number" && !isNaN(timestamp)
+        ? new Date(timestamp * 1000)
+        : null;
+
+    // Helper function to determine payment method type
+    const getPaymentMethodType = async (paymentMethodId: string | null) => {
+      if (!paymentMethodId) return null;
+      try {
+        const paymentMethod = await stripe.paymentMethods.retrieve(
+          paymentMethodId
+        );
+        return paymentMethod.type;
+      } catch (error) {
+        console.error("Error retrieving payment method:", error);
+        return null;
+      }
+    };
+
+    // Helper function to determine if subscription should be treated as active
+    const shouldTreatAsActive = (
+      subscription: Stripe.Subscription,
+      paymentMethodType: string | null
+    ) => {
+      const isBacsOrSepa =
+        paymentMethodType === "bacs_debit" ||
+        paymentMethodType === "sepa_debit";
+
+      // If it's past_due but uses BACS/SEPA, treat as active (payment is just processing)
+      if (subscription.status === "past_due" && isBacsOrSepa) {
+        return true;
+      }
+
+      // If trial just ended but payment is pending for BACS/SEPA, treat as active
+      if (
+        subscription.status === "past_due" &&
+        subscription.trial_end &&
+        Math.abs(new Date().getTime() - subscription.trial_end * 1000) <
+          86400000
+      ) {
+        // Within 24 hours
+        return true;
+      }
+
+      return false;
+    };
+
+    try {
+      event = stripe.webhooks.constructEvent(req.body, sig, endpointSecret);
+      console.log(`***STRIPE EVENT TYPE***: ${event.type}`);
+
+      const subscription = event.data.object as Stripe.Subscription;
+
+      switch (event.type) {
+        case "customer.subscription.created":
+        case "customer.subscription.updated": {
+          const {
+            id: stripeSubscriptionId,
+            customer: stripeCustomerId,
+            status,
+            start_date,
+            trial_start,
+            trial_end,
+            cancel_at_period_end,
+            items,
+          } = subscription;
+
+          const item = items?.data?.[0];
+          const planAmount = item?.price?.unit_amount ?? 0;
+          const currency = item?.price?.currency ?? "inr";
+          const current_period_start = subscription.current_period_start;
+          const current_period_end = subscription.current_period_end;
+
+          // 🔑 CRITICAL: Get payment method type
+          const paymentMethodType = await getPaymentMethodType(
+            subscription.default_payment_method as string
+          );
+
+          // 🔑 CRITICAL: Determine actual status based on payment method
+          let adjustedStatus = status;
+          if (shouldTreatAsActive(subscription, paymentMethodType)) {
+            adjustedStatus = "active";
+            console.log(
+              `🔧 Adjusted ${status} to active for ${paymentMethodType} payment method`
+            );
+          }
+
+          // 🔑 HANDLE UPDATE PLAN SCENARIOS
+          const existingSubscription = await SubscriptionModel.findOne({
+            stripeCustomerId,
+            stripeSubscriptionId,
+          });
+
+          if (existingSubscription) {
+            console.log("📋 Updating existing subscription...");
+
+            // Check if this is a trial ending scenario
+            const wasTrialing = existingSubscription.status === "trialing";
+            const isTrialEnding = wasTrialing && status !== "trialing";
+
+            if (isTrialEnding) {
+              console.log("🔄 Detected trial ending");
+
+              // For BACS/SEPA users ending trial, ensure they maintain access
+              if (
+                paymentMethodType === "bacs_debit" ||
+                paymentMethodType === "sepa_debit"
+              ) {
+                adjustedStatus = "active";
+                console.log(
+                  "🔧 Maintaining access for BACS/SEPA user with ending trial"
+                );
+              }
+            }
+          }
+
+          const updateData: any = {
+            stripeCustomerId,
+            stripeSubscriptionId,
+            status: cancel_at_period_end ? "canceling" : adjustedStatus,
+            startDate: toDate(start_date),
+            trialStart: toDate(trial_start),
+            trialEnd: toDate(trial_end),
+            currentPeriodStart: toDate(current_period_start),
+            currentPeriodEnd: toDate(current_period_end),
+            nextBillingDate: toDate(current_period_end),
+            amount: planAmount / 100,
+            currency,
+          };
+
+          const updatedSubscription = await SubscriptionModel.findOneAndUpdate(
+            { stripeCustomerId, stripeSubscriptionId },
+            { $set: updateData },
+            { upsert: false, new: true }
+          );
+
+          // 🔑 SEND APPROPRIATE NOTIFICATIONS FOR UPDATE SCENARIOS
+          if (updatedSubscription && existingSubscription) {
+            const wasTrialing = existingSubscription.status === "trialing";
+            const isNowActive = adjustedStatus === "active";
+            const wasActive = existingSubscription.status === "active";
+
+            if (wasTrialing && isNowActive) {
+              await NotificationService(
+                [updatedSubscription.userId] as any,
+                "SUBSCRIPTION_STARTED",
+                updatedSubscription._id as ObjectId
+              );
+            } else if (
+              cancel_at_period_end &&
+              !existingSubscription.nextPlanId
+            ) {
+              await NotificationService(
+                [updatedSubscription.userId] as any,
+                "SUBSCRIPTION_CANCELLED",
+                updatedSubscription._id as ObjectId
+              );
+            }
+          }
+
+          break;
+        }
+
+        case "customer.subscription.deleted": {
+          const { customer: stripeCustomerId, currency, id } = subscription;
+
+          const existingSub = await SubscriptionModel.findOne({
+            stripeCustomerId,
+            stripeSubscriptionId: id,
+          }).lean();
+
+          if (!existingSub) {
+            console.warn(
+              "⚠️ No existing subscription found for deletion event."
+            );
+            return;
+          }
+
+          const { userId, nextPlanId, paymentMethodId, _id } = existingSub;
+
+          // 🔑 UPDATE PLAN SCENARIO: Check if this is part of an upgrade flow
+          if (nextPlanId) {
+            console.log("🔄 Processing subscription upgrade/plan change...");
+
+            await SubscriptionModel.findByIdAndDelete(_id);
+            const planData = await planModel.findById(nextPlanId);
+
+            const newSub = await stripe.subscriptions.create({
+              customer:
+                typeof stripeCustomerId === "string"
+                  ? stripeCustomerId
+                  : stripeCustomerId?.id ?? "",
+              items: [
+                { price: planData?.stripePrices[currency as "eur" | "gbp"] },
+              ],
+              default_payment_method: paymentMethodId,
+              expand: ["latest_invoice.payment_intent"],
+            });
+
+            const newSubPrice = newSub.items.data[0]?.price;
+
+            // 🔑 CRITICAL: Handle BACS/SEPA for new subscription
+            const paymentMethodType = await getPaymentMethodType(
+              paymentMethodId
+            );
+            let newSubStatus = newSub.status;
+
+            if (shouldTreatAsActive(newSub, paymentMethodType)) {
+              newSubStatus = "active";
+              console.log(
+                `🔧 Adjusted new subscription status to active for ${paymentMethodType}`
+              );
+            }
+
+            const newSubscription = await SubscriptionModel.create({
+              userId,
+              stripeCustomerId,
+              stripeSubscriptionId: newSub.id,
+              planId: nextPlanId,
+              paymentMethodId,
+              status: newSubStatus,
+              trialStart: toDate(newSub.trial_start),
+              trialEnd: toDate(newSub.trial_end),
+              startDate: toDate(newSub.start_date),
+              currentPeriodStart: toDate(newSub.current_period_start),
+              currentPeriodEnd: toDate(newSub.current_period_end),
+              nextBillingDate: toDate(newSub.current_period_end),
+              amount: newSubPrice?.unit_amount
+                ? newSubPrice.unit_amount / 100
+                : 0,
+              currency: newSubPrice?.currency ?? "inr",
+              nextPlanId: null,
+            });
+
+            await NotificationService(
+              [userId] as any,
+              "SUBSCRIPTION_RENEWED", // or "PLAN_UPGRADED" if you have that notification type
+              newSubscription?._id as ObjectId
+            );
+          } else {
+            // 🔑 REGULAR CANCELLATION (not upgrade)
+            await SubscriptionModel.findByIdAndUpdate(_id, {
+              $set: {
+                status: "canceled",
+                trialEnd: null,
+                startDate: null,
+                currentPeriodEnd: null,
+                currentPeriodStart: null,
+                nextBillingDate: null,
+              },
+            });
+
+            await stripe.paymentMethods.detach(paymentMethodId);
+            await TokenModel.findOneAndDelete({ userId });
+            await NotificationService(
+              [userId] as any,
+              "SUBSCRIPTION_CANCELLED",
+              _id as ObjectId
+            );
+          }
+          break;
+        }
+
+        case "invoice.payment_succeeded": {
+          const invoice = event?.data?.object as Stripe.Invoice;
+          const customerId = invoice?.customer as string;
+
+          const existing = await SubscriptionModel.findOne({
+            stripeCustomerId: customerId,
+          });
+
+          if (!existing) break;
+
+          const subscriptionId = existing?.stripeSubscriptionId as string;
+          const userId = existing?.userId;
+
+          // 🔑 CRITICAL: Always ensure status is active when payment succeeds
+          const lineItem = invoice?.lines?.data?.[0];
+          const period = lineItem?.period;
+
+          await SubscriptionModel.findOneAndUpdate(
+            {
+              stripeCustomerId: customerId,
+              stripeSubscriptionId: subscriptionId,
+            },
+            {
+              $set: {
+                status: "active", // Always active when payment succeeds
+                currentPeriodStart: toDate(period?.start),
+                currentPeriodEnd: toDate(period?.end),
+                nextBillingDate: toDate(period?.end),
+              },
+            }
+          );
+
+          const pi =
+            typeof invoice.payment_intent === "string"
+              ? await stripe?.paymentIntents?.retrieve(invoice?.payment_intent)
+              : invoice?.payment_intent;
+
+          let charge: Stripe.Charge | undefined;
+          if (pi?.id) {
+            const chargesList = await stripe?.charges?.list({
+              payment_intent: pi.id,
+            });
+            charge = chargesList.data[0];
+          }
+
+          const card = charge?.payment_method_details?.card;
+
+          // 🔑 NOTIFICATION LOGIC
+          const billingReason = invoice.billing_reason;
+          if (billingReason === "subscription_create") {
+            if (invoice.amount_paid > 0) {
+              await NotificationService(
+                [userId],
+                "SUBSCRIPTION_STARTED",
+                existing?._id as ObjectId
+              );
+            } else {
+              await NotificationService(
+                [userId],
+                "FREETRIAL_STARTED",
+                existing?._id as ObjectId
+              );
+            }
+          } else if (billingReason === "subscription_cycle") {
+            await NotificationService(
+              [userId],
+              "SUBSCRIPTION_RENEWED",
+              existing?._id as ObjectId
+            );
+          } else if (billingReason === "subscription_update") {
+            await NotificationService(
+              [userId],
+              "SUBSCRIPTION_STARTED",
+              existing?._id as ObjectId
+            );
+          }
+
+          // Create transaction
+          await TransactionModel.create({
+            userId,
+            stripeCustomerId: customerId,
+            stripeSubscriptionId: subscriptionId,
+            invoiceId: invoice.id,
+            paymentIntentId: pi?.id,
+            status: "succeeded",
+            amount: invoice.amount_paid / 100,
+            currency: invoice.currency,
+            paymentMethodDetails: {
+              brand: card?.brand ?? "unknown",
+              last4: card?.last4 ?? "0000",
+              expMonth: card?.exp_month ?? 0,
+              expYear: card?.exp_year ?? 0,
+              type: card ? "card" : "unknown",
+            },
+            billingReason: invoice.billing_reason,
+            paidAt: toDate(invoice.status_transitions?.paid_at) ?? new Date(),
+          });
+
+          break;
+        }
+
+        case "invoice.payment_failed": {
+          const invoice = event.data.object as Stripe.Invoice;
+          const customerId = invoice.customer as string;
+
+          const existing = await SubscriptionModel.findOne({
+            stripeCustomerId: customerId,
+          });
+
+          if (!existing) break;
+
+          const subscriptionId = existing?.stripeSubscriptionId as string;
+          const userId = existing.userId;
+
+          const pi =
+            typeof invoice?.payment_intent === "string"
+              ? await stripe?.paymentIntents?.retrieve(invoice?.payment_intent)
+              : invoice.payment_intent;
+
+          // 🔑 CRITICAL: Don't mark BACS/SEPA as past_due for pending payments
+          const paymentMethodType = await getPaymentMethodType(
+            existing.paymentMethodId
+          );
+          const isBacsOrSepa =
+            paymentMethodType === "bacs_debit" ||
+            paymentMethodType === "sepa_debit";
+
+          // Only update to past_due if it's NOT a BACS/SEPA payment that's just pending
+          const isActualFailure =
+            pi?.last_payment_error?.type !== undefined &&
+            pi?.last_payment_error?.code !==
+              "payment_intent_authentication_failure";
+
+          if (isActualFailure) {
+            const invoiceFull = await stripe.invoices.retrieve(invoice.id);
+            if (invoiceFull.attempt_count >= 3) {
+              await stripe.subscriptions.cancel(subscriptionId); // Immediate cancel after max retries
+              await NotificationService(
+                [userId],
+                "SUBSCRIPTION_FAILED",
+                existing._id as ObjectId
+              );
+            }
+          } else if (!isBacsOrSepa) {
+            // For non-BACS/SEPA methods (e.g., cards), set to past_due immediately on any failure
+            await SubscriptionModel.updateOne(
+              { stripeSubscriptionId: subscriptionId },
+              { $set: { status: "past_due" } }
+            );
+            await NotificationService(
+              [userId],
+              "SUBSCRIPTION_FAILED",
+              existing._id as ObjectId
+            );
+          }
+
+          let charge: Stripe.Charge | undefined;
+          if (pi?.id) {
+            const chargesList = await stripe?.charges?.list({
+              payment_intent: pi.id,
+            });
+            charge = chargesList.data[0];
+          }
+          const card = charge?.payment_method_details?.card;
+
+          await TransactionModel.create({
+            userId,
+            stripeCustomerId: customerId,
+            stripeSubscriptionId: subscriptionId,
+            invoiceId: invoice.id,
+            paymentIntentId: pi?.id,
+            status: isActualFailure ? "failed" : "pending",
+            amount: invoice.amount_due / 100,
+            currency: invoice.currency,
+            paymentMethodDetails: {
+              brand: card?.brand ?? "unknown",
+              last4: card?.last4 ?? "0000",
+              expMonth: card?.exp_month ?? 0,
+              expYear: card?.exp_year ?? 0,
+              type: card ? "card" : "unknown",
+            },
+            billingReason: invoice.billing_reason,
+            errorMessage:
+              pi?.last_payment_error?.message ?? "Payment processing",
+            paidAt: new Date(),
+          });
+
+          break;
+        }
+
+        case "checkout.session.completed": {
+          const session = event.data.object as Stripe.Checkout.Session;
+
+          if (session.mode !== "subscription" || !session.subscription) break;
+
+          const subscription = await stripe.subscriptions.retrieve(
+            session.subscription as string
+          );
+
+          let paymentMethodId = subscription.default_payment_method as
+            | string
+            | null;
+          const stripeCustomerId = subscription.customer as string;
+          const item = subscription.items?.data?.[0];
+          const planAmount = item?.price?.unit_amount ?? 0;
+          const currency = item?.price?.currency ?? "gbp";
+          const userId = session.metadata?.userId;
+          const planId = session.metadata?.planId;
+
+          // 🔑 CRITICAL: Handle BACS/SEPA for checkout
+          const paymentMethodType = await getPaymentMethodType(paymentMethodId);
+          let subStatus = subscription.status;
+
+          if (shouldTreatAsActive(subscription, paymentMethodType)) {
+            subStatus = "active";
+            console.log(
+              `🔧 Adjusted checkout status to active for ${paymentMethodType}`
+            );
+          }
+
+          await SubscriptionModel.findOneAndDelete({ userId });
+          await UserModel.findByIdAndUpdate(userId, {
+            hasUsedTrial: true,
+            isCardSetupComplete: true,
+          });
+
+          const newSubscription = await SubscriptionModel.create({
+            userId,
+            stripeCustomerId,
+            stripeSubscriptionId: subscription.id,
+            planId,
+            paymentMethodId: paymentMethodId,
+            status: subStatus,
+            trialStart: toDate(subscription.trial_start),
+            trialEnd: toDate(subscription.trial_end),
+            startDate: toDate(subscription.start_date),
+            currentPeriodStart: toDate(subscription.current_period_start),
+            currentPeriodEnd: toDate(subscription.current_period_end),
+            nextBillingDate: toDate(subscription.current_period_end),
+            amount: planAmount / 100,
+            currency,
+            nextPlanId: null,
+          });
+
+          break;
+        }
+
+        // 🔑 ADDITIONAL SAFETY NET WEBHOOKS
+        case "payment_intent.succeeded": {
+          const paymentIntent = event.data.object as Stripe.PaymentIntent;
+          if (paymentIntent.invoice) {
+            const invoice = await stripe.invoices.retrieve(
+              paymentIntent.invoice as string
+            );
+            const subscription = await SubscriptionModel.findOne({
+              stripeCustomerId: invoice.customer as string,
+            });
+
+            if (subscription && subscription.status !== "active") {
+              await SubscriptionModel.findByIdAndUpdate(subscription._id, {
+                status: "active",
+              });
+              console.log(
+                "🔧 Updated subscription to active via payment_intent.succeeded"
+              );
+            }
+          }
+          break;
+        }
+
+        case "payment_intent.payment_failed": {
+          const paymentIntent = event.data.object as Stripe.PaymentIntent;
+          console.log(
+            "💳 Payment failed:",
+            paymentIntent.last_payment_error?.message
+          );
+          // Additional handling if needed
+          break;
+        }
+      }
+
+      console.log("✅ Successfully handled event:", event.type);
+      return {};
+    } catch (err: any) {
+      console.error("***STRIPE EVENT FAILED***", err.message);
+      return {};
+    }
+  },
 
   async handleInAppAndroidWebhook(payload: any, req: any) {
     const eventTime = Number(payload.eventTimeMillis);

@@ -24,6 +24,7 @@ export interface IUser extends Document {
   isCardSetupComplete?: boolean;
   hasUsedTrial?: boolean;
   currentMilestone?: number;
+  userType: string;
 }
 
 const userSchema = new Schema<IUser>(
@@ -63,6 +64,9 @@ const userSchema = new Schema<IUser>(
       type: String,
       enum: languages,
       default: "en",
+    },
+    userType:{
+      type: String,
     },
     authType: {
       type: String,

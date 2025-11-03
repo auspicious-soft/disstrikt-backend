@@ -53,6 +53,7 @@ export async function generateToken(user: IUser) {
     countryCode: user.countryCode,
     authType: user.authType,
     currentMilestone: user.currentMilestone,
+    userType: user.userType,
   };
 
   const token = jwt.sign(tokenPayload, process.env.AUTH_SECRET as string, {
@@ -178,15 +179,8 @@ export function convertToUTC(date: string, hour: number, tz: string) {
 }
 
 export async function saveLogs(payload: any) {
-  const {
-    _id,
-    referenceId,
-    referenceModel,
-    logs,
-    email,
-    fullName,
-    role,
-  } = payload;
+  const { _id, referenceId, referenceModel, logs, email, fullName, role } =
+    payload;
 
   await AdminLogsModel.create({
     adminId: _id,

@@ -16,7 +16,7 @@ import {
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { language, fullName, email, password, country, fcmToken } = req.body;
+    const { language, fullName, email, password, country, fcmToken, userType = "mobile" } = req.body;
 
     if (!fullName || !email || !password) {
       throw new Error("registerRequiredFields");
@@ -42,6 +42,7 @@ export const registerUser = async (req: Request, res: Response) => {
       password,
       country,
       authType: "EMAIL",
+      userType,
       fcmToken,
       ...req.body,
     });
@@ -323,27 +324,27 @@ export const getLoginResponse = async (req: Request, res: Response) => {
   }
 };
 
-// export const buyAgain = async (req: Request, res: Response) => {
-//   try {
-//     const userData = req.user as any;
-//     req.body.language = userData.language || "en";
-//     const { planId } = req.body;
-//     const plan = await planModel.findById(planId);
-//     if (!plan) {
-//       throw new Error("Invalid plan Id");
-//     }
-//     const response = await authServices.buyAgain({
-//       userId: userData.id,
-//       planId,
-//     });
-//     return OK(res, response || {}, req.body.language || "en");
-//   } catch (err: any) {
-//     if (err.message) {
-//       return BADREQUEST(res, err.message, req.body.language || "en");
-//     }
-//     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
-//   }
-// };
+export const buyAgain = async (req: Request, res: Response) => {
+  try {
+    const userData = req.user as any;
+    req.body.language = userData.language || "en";
+    const { planId } = req.body;
+    const plan = await planModel.findById(planId);
+    if (!plan) {
+      throw new Error("Invalid plan Id");
+    }
+    const response = await authServices.buyAgain({
+      userId: userData.id,
+      planId,
+    });
+    return OK(res, response || {}, req.body.language || "en");
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
 
 export const getActivePlan = async (req: Request, res: Response) => {
   try {
