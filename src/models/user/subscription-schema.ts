@@ -33,17 +33,17 @@ const subscriptionSchema = new Schema<ISubscription>(
   {
     //Stripe Related Keys
 
-    stripeCustomerId: { type: String, required: true },
-    stripeSubscriptionId: { type: String, required: true },
+    stripeCustomerId: { type: String },
+    stripeSubscriptionId: { type: String },
     paymentMethodId: { type: String },
 
     //Stripe Related Keys
 
     userId: { type: Schema.Types.ObjectId, ref: "user" },
-    linkedPurchaseToken: { type: String, required: true },
-    orderId: { type: String, required: true },
-    deviceType: { type: String, required: true },
-    subscriptionId: { type: String, required: true },
+    linkedPurchaseToken: { type: String },
+    orderId: { type: String },
+    deviceType: { type: String},
+    subscriptionId: { type: String },
     planId: { type: Schema.Types.ObjectId, ref: "plan", required: true },
     status: {
       type: String,

@@ -23,6 +23,7 @@ import { google } from "googleapis";
 import { userMoreInfo } from "src/controllers/auth/auth-controller";
 import * as crypto from "crypto"; // Signature verify ke liye
 import axios from "axios";
+import { testPlanModel } from "src/models/admin/test-plan-schema";
 
 const rawBodyMiddleware = (req: any, res: any, next: any) => {
   // TypeScript types adjust kar lo
@@ -59,7 +60,10 @@ export async function convertToGBP(
 
 export const planServices = {
   async getPlans(payload: any) {
-    const plans = await planModel.find();
+    const plans =
+      process.env.PAYMENT === "DEV"
+        ? await testPlanModel.find()
+        : await planModel.find();
     return { plans, features, regionalAccess };
   },
 
@@ -164,7 +168,10 @@ export const planServices = {
 
     const { eur: eurAmount, gbp: gbpAmount } = unitAmounts;
 
-    const plan = await planModel.findById(planId);
+    const plan =
+      process.env.PAYMENT === "DEV"
+        ? await testPlanModel.findById(planId)
+        : await planModel.findById(planId);
     if (!plan) throw new Error("planNotFound");
 
     // Update Stripe product name and description
@@ -493,7 +500,7 @@ export const planServices = {
             console.log("🔄 Processing subscription upgrade/plan change...");
 
             await SubscriptionModel.findByIdAndDelete(_id);
-            const planData = await planModel.findById(nextPlanId);
+            const planData = process.env.PAYMENT === "DEV"? await testPlanModel.findById(nextPlanId) : await planModel.findById(nextPlanId);
 
             const newSub = await stripe.subscriptions.create({
               customer:
@@ -894,7 +901,19 @@ export const planServices = {
 
     const sub = response.data;
 
-    const planData = (await planModel.findOne({
+    const planData = process.env.PAYMENT === "DEV" ? (await testPlanModel.findOne({
+      $or: [
+        {
+          androidProductId: subscriptionId,
+        },
+        {
+          stripeProductId: subscriptionId,
+        },
+        {
+          iosProductId: subscriptionId,
+        },
+      ],
+    })) : (await planModel.findOne({
       $or: [
         {
           androidProductId: subscriptionId,

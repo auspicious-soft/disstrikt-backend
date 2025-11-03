@@ -453,14 +453,22 @@ export const authServices = {
   },
 
   async buyPlan(payload: any) {
-    const { userId, orderId, planId, currency, paymentMethodId, userType, id, country } =
-      payload;
+    const {
+      userId,
+      orderId,
+      planId,
+      currency,
+      paymentMethodId,
+      userType,
+      id,
+      country,
+    } = payload;
 
     if (userType === "web") {
-      const plans = await planModel
-        .findOne({ _id: planId, isActive: true })
-        .lean();
-
+      const plans =
+        process.env.PAYMENT !== "DEV"
+          ? await planModel.findOne({ _id: planId, isActive: true }).lean()
+          : await testPlanModel.findOne({ _id: planId, isActive: true }).lean();
       if (!plans) {
         throw new Error("planNotFound");
       }
@@ -761,7 +769,10 @@ export const authServices = {
     }
 
     const { currency, paymentMethodId } = checkSub;
-    const planData = await planModel.findById(planId);
+    const planData =
+      process.env.PAYMENT === "DEV"
+        ? await testPlanModel.findById(planId)
+        : await planModel.findById(planId);
     if (!planData) throw new Error("Invalid plan");
 
     // Start MongoDB session

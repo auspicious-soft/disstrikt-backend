@@ -15,6 +15,7 @@ import {
 } from "src/utils/response";
 import { JobModel } from "src/models/admin/jobs-schema";
 import { AppliedJobModel } from "src/models/admin/Applied-Jobs-schema";
+import { testPlanModel } from "src/models/admin/test-plan-schema";
 
 export const getDashboard = async (req: Request, res: Response) => {
   try {
@@ -46,7 +47,9 @@ export const getDashboard = async (req: Request, res: Response) => {
     ] = await Promise.all([
       UserModel.find().lean(),
       TaskResponseModel.find({ adminReviewed: false }).lean(),
-      planModel.find().lean(),
+      process.env.PAYMENT === "DEV"
+        ? testPlanModel.find().lean()
+        : planModel.find().lean(),
 
       // Revenue this month
       TransactionModel.aggregate([

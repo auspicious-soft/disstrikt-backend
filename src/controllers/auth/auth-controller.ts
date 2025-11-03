@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { planModel } from "src/models/admin/plan-schema";
+import { testPlanModel } from "src/models/admin/test-plan-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { authServices } from "src/services/auth/auth-services";
@@ -314,6 +315,10 @@ export const buyPlan = async (req: Request, res: Response) => {
       throw new Error("planId, currency, and paymentMethodId is required");
     }
 
+    if(planId){
+      userData.planId = planId;
+    }
+
     const response = await authServices.buyPlan({
       language: userData.language,
       country: userData.country,
@@ -355,7 +360,7 @@ export const buyAgain = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
     const { planId } = req.body;
-    const plan = await planModel.findById(planId);
+    const plan = process.env.PAYMENT === "DEV" ?await testPlanModel.findById(planId):   await planModel.findById(planId);
     if (!plan) {
       throw new Error("Invalid plan Id");
     }

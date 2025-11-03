@@ -48,6 +48,8 @@ export interface IPlan extends Document {
   features: TranslatedText[];
   trialDays: number;
   stripeProductId: string;
+  androidProductId: string;
+  iosProductId: string;
   stripePrices: {
     eur: string;
     gbp: string;
@@ -59,7 +61,7 @@ export interface IPlan extends Document {
 
   fullAccess: BenefitObject;
   trialAccess: BenefitObject;
-  isActive: boolean
+  isActive: boolean;
 }
 
 const PlanSchema = new Schema<IPlan>({
@@ -84,13 +86,14 @@ const PlanSchema = new Schema<IPlan>({
     eur: { type: Number, required: true },
     gbp: { type: Number, required: true },
   },
-
+  androidProductId: { type: String, required: true },
+  iosProductId: { type: String, required: true },
   fullAccess: { type: BenefitObjectSchema, default: {} },
   trialAccess: { type: BenefitObjectSchema, default: {} },
   isActive: {
     type: Boolean,
-    default: true
-  }
+    default: true,
+  },
 });
 
 export const testPlanModel = mongoose.model<IPlan>("testplan", PlanSchema);
