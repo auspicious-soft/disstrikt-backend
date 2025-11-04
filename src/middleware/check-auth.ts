@@ -10,6 +10,8 @@ import path from "path";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 import { AdminModel } from "src/models/admin/admin-schema";
 import stripe from "src/config/stripe";
+import { testPlanModel } from "src/models/admin/test-plan-schema";
+import { planModel } from "src/models/admin/plan-schema";
 
 configDotenv();
 declare global {
@@ -110,7 +112,7 @@ export const checkSubscription = async (
 
     if (userType === "web") {
       // 🔑 CRITICAL FIX: Include "past_due" for BACS/SEPA users
-      const subscription = await SubscriptionModel.findOne({
+      let subscription = (await SubscriptionModel.findOne({
         userId: id,
         status: {
           $in: [
@@ -122,11 +124,14 @@ export const checkSubscription = async (
         },
       })
         .sort({ createdAt: -1 }) // Latest first
-        .populate({
-          path: "planId",
-          select: "name",
-        })
-        .lean();
+        .lean()) as any;
+
+      const planId =
+        process.env.PAYMENT === "DEV"
+          ? await testPlanModel.findById(subscription?.planId).lean()
+          : ((await planModel.findById(subscription?.planId).lean()) as any);
+
+      subscription = { ...subscription, planId };
 
       if (!subscription) {
         return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
@@ -244,7 +249,7 @@ export const checkSubscription = async (
       next();
     } else {
       // 🔑 CRITICAL FIX: Include "past_due" for BACS/SEPA users
-      const subscription = await SubscriptionModel.findOne({
+      let subscription = (await SubscriptionModel.findOne({
         userId: id,
         status: {
           $in: [
@@ -256,11 +261,14 @@ export const checkSubscription = async (
         },
       })
         .sort({ createdAt: -1 }) // Latest first
-        .populate({
-          path: "planId",
-          select: "name",
-        })
-        .lean();
+        .lean()) as any;
+
+      const planId =
+        process.env.PAYMENT === "DEV"
+          ? await testPlanModel.findById(subscription?.planId).lean()
+          : ((await planModel.findById(subscription?.planId).lean()) as any);
+
+      subscription = { ...subscription, planId };
 
       if (!subscription) {
         return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");

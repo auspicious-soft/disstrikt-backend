@@ -218,6 +218,7 @@ export const authServices = {
         email,
         fullName: name,
         image: picture,
+        userType:"mobile",
         language,
         fcmToken,
         country,
