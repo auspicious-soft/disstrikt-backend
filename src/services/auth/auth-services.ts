@@ -163,8 +163,14 @@ export const authServices = {
     const token = await generateToken(checkExist);
     const userObj = checkExist.toObject();
     delete userObj.password;
-    return { ...userObj, token, subscription: subscription?.status || null };
+    return {
+      ...userObj,
+      token,
+      subscription: subscription?.status || null,
+      planId: subscription?.planId || null,
+    };
   },
+
   async socialLogin(payload: any) {
     const { idToken, fcmToken, authType, language, country, deviceType } =
       payload;
@@ -218,7 +224,7 @@ export const authServices = {
         email,
         fullName: name,
         image: picture,
-        userType:"mobile",
+        userType: "mobile",
         language,
         fcmToken,
         country,

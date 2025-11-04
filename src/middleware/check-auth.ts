@@ -126,16 +126,16 @@ export const checkSubscription = async (
         .sort({ createdAt: -1 }) // Latest first
         .lean()) as any;
 
+      if (!subscription) {
+        return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
+      }
+
       const planId =
         process.env.PAYMENT === "DEV"
           ? await testPlanModel.findById(subscription?.planId).lean()
           : ((await planModel.findById(subscription?.planId).lean()) as any);
 
       subscription = { ...subscription, planId };
-
-      if (!subscription) {
-        return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
-      }
 
       // 🔑 ADDITIONAL CHECK: Verify if "past_due" is legitimate access
       if (subscription.status === "past_due") {
@@ -263,16 +263,16 @@ export const checkSubscription = async (
         .sort({ createdAt: -1 }) // Latest first
         .lean()) as any;
 
+      if (!subscription) {
+        return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
+      }
+
       const planId =
         process.env.PAYMENT === "DEV"
           ? await testPlanModel.findById(subscription?.planId).lean()
           : ((await planModel.findById(subscription?.planId).lean()) as any);
 
       subscription = { ...subscription, planId };
-
-      if (!subscription) {
-        return UNAUTHORIZED(res, "noSubscription", req?.body?.language || "en");
-      }
 
       // 🔑 ADDITIONAL CHECK: Verify if "past_due" is legitimate access
       if (subscription.status === "past_due") {
