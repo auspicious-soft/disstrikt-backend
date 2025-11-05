@@ -20,7 +20,7 @@ import { translateJobFields } from "src/utils/helper";
 
 // Code
 const router = Router();
-
+ 
 //============================== USER Routes
 router.post("/register", registerUser);
 router.post("/verify-otp", verifyOtp);
