@@ -129,7 +129,7 @@ export const login = async (req: Request, res: Response) => {
       throw new Error("Email, language, Password & FCM is required");
     }
     const response = await authServices.login({
-      email,
+      email: email.toLowerCase(),
       password,
       fcmToken,
       userType,

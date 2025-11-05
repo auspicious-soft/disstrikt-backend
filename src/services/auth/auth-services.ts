@@ -123,7 +123,7 @@ export const authServices = {
   async login(payload: any) {
     const checkExist = await UserModel.findOne({
       email: payload.email,
-      authType: payload.authType || "EMAIL",
+      authType: "EMAIL",
       isVerifiedEmail: true,
       isDeleted: false,
     });
