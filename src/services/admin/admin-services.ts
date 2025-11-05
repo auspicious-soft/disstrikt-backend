@@ -418,6 +418,11 @@ export const planServices = {
             if (isTrialEnding) {
               console.log("🔄 Detected trial ending");
 
+              await UserModel.findByIdAndUpdate(existingSubscription.userId, {
+                hasUsedTrial: true,
+                isCardSetupComplete: true,
+              });
+
               // For BACS/SEPA users ending trial, ensure they maintain access
               if (
                 paymentMethodType === "bacs_debit" ||
@@ -457,6 +462,11 @@ export const planServices = {
             const isNowActive = adjustedStatus === "active";
             const wasActive = existingSubscription.status === "active";
 
+            await UserModel.findByIdAndUpdate(updatedSubscription.userId, {
+              hasUsedTrial: true,
+              isCardSetupComplete: true,
+            });
+
             if (wasTrialing && isNowActive) {
               await NotificationService(
                 [updatedSubscription.userId] as any,
@@ -494,13 +504,20 @@ export const planServices = {
           }
 
           const { userId, nextPlanId, paymentMethodId, _id } = existingSub;
+          await UserModel.findByIdAndUpdate(userId, {
+            hasUsedTrial: true,
+            isCardSetupComplete: true,
+          });
 
           // 🔑 UPDATE PLAN SCENARIO: Check if this is part of an upgrade flow
           if (nextPlanId) {
             console.log("🔄 Processing subscription upgrade/plan change...");
 
             await SubscriptionModel.findByIdAndDelete(_id);
-            const planData = process.env.PAYMENT === "DEV"? await testPlanModel.findById(nextPlanId) : await planModel.findById(nextPlanId);
+            const planData =
+              process.env.PAYMENT === "DEV"
+                ? await testPlanModel.findById(nextPlanId)
+                : await planModel.findById(nextPlanId);
 
             const newSub = await stripe.subscriptions.create({
               customer:
@@ -800,7 +817,7 @@ export const planServices = {
 
           await SubscriptionModel.findOneAndDelete({ userId });
           await UserModel.findByIdAndUpdate(userId, {
-            hasUsedTrial: true,
+            hasUsedTrial: planAmount > 0 ? true : false,
             isCardSetupComplete: true,
           });
 
@@ -901,31 +918,34 @@ export const planServices = {
 
     const sub = response.data;
 
-    const planData = process.env.PAYMENT === "DEV" ? (await testPlanModel.findOne({
-      $or: [
-        {
-          androidProductId: subscriptionId,
-        },
-        {
-          stripeProductId: subscriptionId,
-        },
-        {
-          iosProductId: subscriptionId,
-        },
-      ],
-    })) : (await planModel.findOne({
-      $or: [
-        {
-          androidProductId: subscriptionId,
-        },
-        {
-          stripeProductId: subscriptionId,
-        },
-        {
-          iosProductId: subscriptionId,
-        },
-      ],
-    })) as any;
+    const planData =
+      process.env.PAYMENT === "DEV"
+        ? await testPlanModel.findOne({
+            $or: [
+              {
+                androidProductId: subscriptionId,
+              },
+              {
+                stripeProductId: subscriptionId,
+              },
+              {
+                iosProductId: subscriptionId,
+              },
+            ],
+          })
+        : ((await planModel.findOne({
+            $or: [
+              {
+                androidProductId: subscriptionId,
+              },
+              {
+                stripeProductId: subscriptionId,
+              },
+              {
+                iosProductId: subscriptionId,
+              },
+            ],
+          })) as any);
 
     const {
       startTimeMillis,
