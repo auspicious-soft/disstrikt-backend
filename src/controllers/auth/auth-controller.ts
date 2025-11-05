@@ -44,6 +44,17 @@ export const registerUser = async (req: Request, res: Response) => {
     //   throw new Error("invalidEmailDomain")
     // }
 
+    await UserModel.findOneAndDelete({
+      $or: [
+        { email, isVerifiedEmail: false, isVerifiedPhone: false },
+        {
+          phone: req.body.phone,
+          isVerifiedEmail: false,
+          isVerifiedPhone: false,
+        },
+      ],
+    });
+
     const response = await authServices.register({
       language,
       fullName,
@@ -308,14 +319,11 @@ export const buyPlan = async (req: Request, res: Response) => {
       throw new Error("orderId is required");
     }
 
-    if (
-      (!planId || !currency) &&
-      userData.userType === "web"
-    ) {
+    if ((!planId || !currency) && userData.userType === "web") {
       throw new Error("planId, currency, and paymentMethodId is required");
     }
 
-    if(planId){
+    if (planId) {
       userData.planId = planId;
     }
 
@@ -360,7 +368,10 @@ export const buyAgain = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
     const { planId } = req.body;
-    const plan = process.env.PAYMENT === "DEV" ?await testPlanModel.findById(planId):   await planModel.findById(planId);
+    const plan =
+      process.env.PAYMENT === "DEV"
+        ? await testPlanModel.findById(planId)
+        : await planModel.findById(planId);
     if (!plan) {
       throw new Error("Invalid plan Id");
     }
