@@ -124,6 +124,7 @@ export const authServices = {
     const checkExist = await UserModel.findOne({
       email: payload.email,
       authType: payload.authType || "EMAIL",
+      isVerifiedEmail: true,
       isDeleted: false,
     });
 
