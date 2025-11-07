@@ -531,6 +531,7 @@ export const profileServices = {
       taskCount: totalCompletedTasks || 0,
       appliedJobs: userJobs.length || 0,
       selectedJobs: selectedJobs,
+      userType:userData.userType,
     };
   },
 
