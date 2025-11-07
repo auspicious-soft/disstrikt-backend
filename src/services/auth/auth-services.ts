@@ -503,6 +503,7 @@ export const authServices = {
       }
 
       const user = await UserModel.findById(id);
+      const token = await TokenModel.findOne({userId: id})
 
       if (!user?.stripeCustomerId) {
         throw new Error("stripeCustomerIdNotFound");
@@ -512,8 +513,8 @@ export const authServices = {
         const session = await stripe.checkout.sessions.create({
           mode: "subscription",
           customer: user?.stripeCustomerId,
-          success_url: "https://disstrikt-portfolio.vercel.app/",
-          cancel_url: "https://disstrikt-portfolio.vercel.app/",
+          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+          cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
           line_items: [
             {
               price: productPrice.id,
@@ -539,8 +540,8 @@ export const authServices = {
         const session = await stripe.checkout.sessions.create({
           mode: "subscription",
           customer: user?.stripeCustomerId,
-          success_url: "https://disstrikt-portfolio.vercel.app/",
-          cancel_url: "https://disstrikt-portfolio.vercel.app/",
+          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+          cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
           line_items: [
             {
               price: productPrice.id,
