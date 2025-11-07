@@ -513,7 +513,7 @@ export const authServices = {
         const session = await stripe.checkout.sessions.create({
           mode: "subscription",
           customer: user?.stripeCustomerId,
-          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
           cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
           line_items: [
             {
@@ -540,7 +540,7 @@ export const authServices = {
         const session = await stripe.checkout.sessions.create({
           mode: "subscription",
           customer: user?.stripeCustomerId,
-          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
           cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
           line_items: [
             {
