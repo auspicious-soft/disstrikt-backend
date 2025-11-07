@@ -393,7 +393,7 @@ export const getActivePlan = async (req: Request, res: Response) => {
     const userData = req.user as any;
     const response = await SubscriptionModel.findOne({
       userId: userData.id,
-    });
+    }).lean();
     const data = { ...response, ...userData };
     return OK(res, data || {}, req.body.language || "en");
   } catch (err: any) {
