@@ -394,7 +394,8 @@ export const getActivePlan = async (req: Request, res: Response) => {
     const response = await SubscriptionModel.findOne({
       userId: userData.id,
     });
-    return OK(res, response || {}, req.body.language || "en");
+    const data = { ...response, ...userData };
+    return OK(res, data || {}, req.body.language || "en");
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");

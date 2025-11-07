@@ -817,7 +817,7 @@ export const planServices = {
 
           await SubscriptionModel.findOneAndDelete({ userId });
           await UserModel.findByIdAndUpdate(userId, {
-            hasUsedTrial: planAmount > 0 ? true : false,
+            hasUsedTrial: true,
             isCardSetupComplete: true,
           });
 
