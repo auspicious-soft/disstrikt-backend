@@ -10,6 +10,7 @@ import { planModel } from "src/models/admin/plan-schema";
 import { QuizModel } from "src/models/admin/quiz-schema";
 import { TaskResponseModel } from "src/models/admin/task-response";
 import { TaskModel } from "src/models/admin/task-schema";
+import { testPlanModel } from "src/models/admin/test-plan-schema";
 import { NotificationModel } from "src/models/notifications/notification-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { UserInfoModel } from "src/models/user/user-info-schema";
@@ -36,14 +37,17 @@ export const homeServices = {
       id,
       currentMilestone = 1,
       subscription,
-      planId
+      planId,
     } = payload.userData;
 
     const { page = 1, limit = 10 } = payload; // 👈 pagination inputs
 
-    const plan = await planModel
-      .findById(planId)
-      .lean();
+    const plan =
+      process.env.PAYMENT === "DEV"
+        ? testPlanModel.findById(planId).lean()
+        : (planModel.findById(planId).lean() as any);
+
+    // const plan = await planModel.findById(planId).lean();
 
     const taskLimit =
       subscription.status === "trialing"
@@ -157,9 +161,16 @@ export const homeServices = {
 
   getTaskById: async (payload: any) => {
     const { taskId, userData } = payload;
-    const plan = await planModel
-      .findById(payload.userData.subscription.planId)
-      .lean();
+    const plan =
+      process.env.PAYMENT === "DEV"
+        ? testPlanModel.findById(payload.userData.subscription.planId).lean()
+        : (planModel
+            .findById(payload.userData.subscription.planId)
+            .lean() as any);
+
+    // const plan = await planModel
+    //   .findById(payload.userData.subscription.planId)
+    //   .lean();
 
     const taskLimit =
       userData.subscription.status === "trialing"
@@ -531,7 +542,7 @@ export const profileServices = {
       taskCount: totalCompletedTasks || 0,
       appliedJobs: userJobs.length || 0,
       selectedJobs: selectedJobs,
-      userType:userData.userType,
+      userType: userData.userType,
     };
   },
 
@@ -782,7 +793,7 @@ export const profileServices = {
       session.endSession();
       return {};
     } catch (e) {
-      console.log("==>",e)
+      console.log("==>", e);
       await session.abortTransaction();
       session.endSession();
       throw new Error("badrequest");
@@ -1099,9 +1110,14 @@ export const userJobServices = {
     const monthStart = startOfMonth(new Date());
     const monthEnd = endOfMonth(new Date());
 
-    const planData = await planModel
-      .findById(payload.subscription.planId)
-      .lean();
+    // const planData = await planModel
+    //   .findById(payload.subscription.planId)
+    //   .lean();
+
+    const planData =
+      process.env.PAYMENT === "DEV"
+        ? testPlanModel.findById(payload.subscription.planId).lean()
+        : (planModel.findById(payload.subscription.planId).lean() as any);
 
     const { jobApplicationsPerDay, jobApplicationsPerMonth } =
       subscription.status === "trialing"

@@ -947,6 +947,10 @@ export const planServices = {
             ],
           })) as any);
 
+    // if(!planData){
+    //   throw new Error("planNotFound");
+    // }
+
     const {
       startTimeMillis,
       expiryTimeMillis,
@@ -960,7 +964,7 @@ export const planServices = {
 
     // Notification type ke base pe action log karo
     let actionMessage = "";
-    switch (notificationType) {
+    switch (notificationType && planData) {
       case 1:
         actionMessage =
           "SUBSCRIPTION_RECOVERED - Subscription account hold se recover ho gayi ya pause se resume hui";
@@ -2294,9 +2298,15 @@ export const userServices = {
     })
       .select("nextBillingDate status amount planId currency")
       .lean();
-    const subscriptionName = await planModel
-      .findById(subscription?.planId)
-      .lean();
+
+    // const subscriptionName = await planModel
+    //   .findById(subscription?.planId)
+    //   .lean();
+
+    const subscriptionName =
+      process.env.PAYMENT === "DEV"
+        ? testPlanModel.findById(subscription?.planId).lean()
+        : (planModel.findById(subscription?.planId).lean() as any);
 
     const userMoreData = await UserInfoModel.findOne({ userId })
       .select(
