@@ -44,11 +44,11 @@ export const homeServices = {
 
     const plan =
       process.env.PAYMENT === "DEV"
-        ? testPlanModel.findById(planId).lean()
-        : (planModel.findById(planId).lean() as any);
+        ? await testPlanModel.findById(planId).lean()
+        : await planModel.findById(planId).lean();
 
     // const plan = await planModel.findById(planId).lean();
-
+    console.log(plan);
     const taskLimit =
       subscription.status === "trialing"
         ? plan?.trialAccess.tasks
@@ -163,10 +163,10 @@ export const homeServices = {
     const { taskId, userData } = payload;
     const plan =
       process.env.PAYMENT === "DEV"
-        ? testPlanModel.findById(payload.userData.subscription.planId).lean()
-        : (planModel
+        ? await testPlanModel.findById(payload.userData.subscription.planId).lean()
+        : await planModel
             .findById(payload.userData.subscription.planId)
-            .lean() as any);
+            .lean() as any;
 
     // const plan = await planModel
     //   .findById(payload.userData.subscription.planId)
@@ -1116,8 +1116,8 @@ export const userJobServices = {
 
     const planData =
       process.env.PAYMENT === "DEV"
-        ? testPlanModel.findById(payload.subscription.planId).lean()
-        : (planModel.findById(payload.subscription.planId).lean() as any);
+        ? await testPlanModel.findById(payload.subscription.planId).lean()
+        : await planModel.findById(payload.subscription.planId).lean();
 
     const { jobApplicationsPerDay, jobApplicationsPerMonth } =
       subscription.status === "trialing"
