@@ -964,7 +964,7 @@ export const planServices = {
 
     // Notification type ke base pe action log karo
     let actionMessage = "";
-    switch (notificationType && planData) {
+    switch (notificationType) {
       case 1:
         actionMessage =
           "SUBSCRIPTION_RECOVERED - Subscription account hold se recover ho gayi ya pause se resume hui";
@@ -1263,7 +1263,14 @@ export const planServices = {
               status: "canceled",
             },
           }
-        );
+        ).lean();
+
+        if (data?.userId) {
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
+        }
+
         break;
       case 19:
         actionMessage =
