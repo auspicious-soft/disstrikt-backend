@@ -2,6 +2,12 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import path from "path";
 import * as crypto from "crypto"; // Signature verify ke liye
+
+if (!globalThis.crypto) {
+  // @ts-ignore
+  globalThis.crypto = crypto.webcrypto;
+}
+
 import { fileURLToPath } from "url";
 import connectDB from "./config/db";
 import {
@@ -101,7 +107,7 @@ app.post(
   async (req: Request, res: Response) => {
     try {
       console.log("🍎 Apple IAP Webhook triggered");
-      console.log(req.body, req.params, req.headers, req.query)
+      console.log(req.body, req.params, req.headers, req.query);
       const bodyBuffer = req.body as Buffer;
       if (bodyBuffer.length === 0) return res.status(400).send("Empty body");
       const bodyStr = bodyBuffer.toString("utf8");
