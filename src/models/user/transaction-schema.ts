@@ -59,7 +59,7 @@ const transactionSchema = new Schema<ITransaction>(
   { timestamps: true }
 );
 
-transactionSchema.index({ orderId: 1, userId: 1 }, { unique: true });
+transactionSchema.index({ userId: 1 });
 
 export const TransactionModel = model<ITransaction>(
   "transaction",
