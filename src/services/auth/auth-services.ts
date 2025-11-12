@@ -650,6 +650,7 @@ export const authServices = {
     return {
       ...user,
       subscription: subscription?.status || null,
+      deviceType: subscription?.deviceType || null,
       planId: planId || null,
     };
   },
