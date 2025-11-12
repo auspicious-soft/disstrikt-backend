@@ -13,7 +13,11 @@ import { TokenModel } from "src/models/user/token-schema";
 import { TransactionModel } from "src/models/user/transaction-schema";
 import { UserModel } from "src/models/user/user-schema";
 import { features, languages, regionalAccess } from "src/utils/constant";
-import { convertToUTC, translateJobFields } from "src/utils/helper";
+import {
+  convertToUTC,
+  decodeSignedPayload,
+  translateJobFields,
+} from "src/utils/helper";
 import { Stripe } from "stripe";
 import { Parser } from "json2csv";
 import { UserInfoModel } from "src/models/user/user-info-schema";
@@ -24,20 +28,6 @@ import { userMoreInfo } from "src/controllers/auth/auth-controller";
 import * as crypto from "crypto"; // Signature verify ke liye
 import axios from "axios";
 import { testPlanModel } from "src/models/admin/test-plan-schema";
-
-const rawBodyMiddleware = (req: any, res: any, next: any) => {
-  // TypeScript types adjust kar lo
-  if (req.method !== "POST") return next();
-  let data = Buffer.alloc(0);
-  req.on("data", (chunk: Buffer) => (data = Buffer.concat([data, chunk])));
-  req.on("end", () => {
-    req.body = data;
-    console.log("Captured body length:", data.length); // 332 aana chahiye
-    console.log("Body preview:", data.toString("utf8").substring(0, 200)); // JSON start dekh lo
-    next();
-  });
-  req.on("error", () => res.status(400).send("Bad Request"));
-};
 
 export async function convertToGBP(
   amount: number,
@@ -990,10 +980,7 @@ export const planServices = {
 
         if (data?.userId) {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
-          const convertedAmountGBP = await convertToGBP(
-            originalAmount,
-            priceCurrencyCode
-          );
+          const convertedAmountGBP = originalAmount;
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -1006,7 +993,7 @@ export const planServices = {
                 planId: planData._id,
                 status: "succeeded",
                 amount: convertedAmountGBP,
-                currency: "gbp",
+                currency: priceCurrencyCode,
                 paidAt: new Date(eventTime) ?? new Date(),
               },
             },
@@ -1047,10 +1034,7 @@ export const planServices = {
 
         if (data?.userId) {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
-          const convertedAmountGBP = await convertToGBP(
-            originalAmount,
-            priceCurrencyCode
-          );
+          const convertedAmountGBP = originalAmount;
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -1063,7 +1047,7 @@ export const planServices = {
                 planId: planData._id,
                 status: "succeeded",
                 amount: convertedAmountGBP,
-                currency: "gbp",
+                currency: priceCurrencyCode,
                 paidAt: new Date(eventTime) ?? new Date(),
               },
             },
@@ -1201,10 +1185,7 @@ export const planServices = {
 
         if (data?.userId) {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
-          const convertedAmountGBP = await convertToGBP(
-            originalAmount,
-            priceCurrencyCode
-          );
+          const convertedAmountGBP = originalAmount;
           await TransactionModel.findOneAndUpdate(
             {
               orderId, // unique per subscription renewal/purchase
@@ -1215,7 +1196,7 @@ export const planServices = {
                 planId: planData._id,
                 status: "succeeded",
                 amount: convertedAmountGBP,
-                currency: "gbp",
+                currency: priceCurrencyCode,
                 paidAt: new Date(eventTime) ?? new Date(),
               },
             },
@@ -1298,6 +1279,275 @@ export const planServices = {
     //   await db.collection('users').updateOne({ purchaseToken }, { $set: { subscriptionStatus: 'active', renewedAt: new Date() } });
     // }
     // ... etc. for other types
+  },
+
+  async handleInAppIOSWebhook(payload: any, req: any) {
+    const webHookData = payload?.data;
+
+    let transactionInfo = null;
+    let renewalInfo = null;
+
+    if (webHookData?.signedTransactionInfo) {
+      transactionInfo = await decodeSignedPayload(
+        webHookData.signedTransactionInfo
+      );
+      console.log("💳 Transaction info:", transactionInfo);
+    }
+
+    if (webHookData?.signedRenewalInfo) {
+      renewalInfo = await decodeSignedPayload(webHookData.signedRenewalInfo);
+      console.log("♻️ Renewal info:", renewalInfo);
+    }
+
+    const notificationType = payload?.notificationType;
+    const subtype = payload?.subtype;
+
+    const productId =
+      renewalInfo?.autoRenewProductId || transactionInfo?.productId;
+
+    const originalTransactionId =
+      transactionInfo?.originalTransactionId ||
+      renewalInfo?.originalTransactionId;
+
+    const transactionId = transactionInfo?.transactionId;
+    const priceMicros = renewalInfo?.renewalPrice ?? transactionInfo?.price;
+    const currency =
+      (transactionInfo?.currency as string) ||
+      (renewalInfo?.currency as string);
+
+    const purchaseDate = transactionInfo?.purchaseDate as Date;
+    const expiresDate = transactionInfo?.expiresDate;
+    const appTransactionId =
+      transactionInfo?.appTransactionId || renewalInfo?.appTransactionId;
+
+    const planData =
+      process.env.PAYMENT === "DEV"
+        ? await testPlanModel.findOne({
+            $or: [
+              {
+                androidProductId: productId,
+              },
+              {
+                stripeProductId: productId,
+              },
+              {
+                iosProductId: productId,
+              },
+            ],
+          })
+        : ((await planModel.findOne({
+            $or: [
+              {
+                androidProductId: productId,
+              },
+              {
+                stripeProductId: productId,
+              },
+              {
+                iosProductId: productId,
+              },
+            ],
+          })) as any);
+
+    if (!planData) {
+      throw new Error("planNotFound");
+    }
+
+    // We'll use originalTransactionId as the linkedPurchaseToken to map subscriptions
+    const linkedPurchaseToken = originalTransactionId;
+    console.log(
+      "🔗 Linked Purchase Token:===>",
+      linkedPurchaseToken,
+      "other",
+      transactionId,
+      "other",
+      appTransactionId
+    );
+
+    // Convert micros -> base currency (same as Android)
+    const amount =
+      typeof priceMicros === "number" ? priceMicros / 1000 : undefined;
+
+    const amountBase = amount;
+
+    let data; // will store subscription doc when relevant
+    let actionMessage = "";
+
+    // Notification type ke base pe action log karo
+    switch (notificationType) {
+      case "DID_CHANGE_RENEWAL_PREF":
+      case "SUBSCRIBED":
+        actionMessage = "SUBSCRIBED - New subscription purchased (iOS)";
+        data = await SubscriptionModel.findOneAndUpdate(
+          {
+            orderId: linkedPurchaseToken,
+          },
+          {
+            $set: {
+              orderId: linkedPurchaseToken,
+              deviceType: "IOS",
+              subscriptionId: productId,
+              amount: subtype === "INITIAL_BUY" ? 0 : amount,
+              currentPeriodStart:
+                subtype === "INITIAL_BUY" ? null : purchaseDate,
+              currentPeriodEnd: subtype === "INITIAL_BUY" ? null : expiresDate,
+              startDate: purchaseDate,
+              trialStart: subtype === "INITIAL_BUY" ? purchaseDate : null,
+              trialEnd: subtype === "INITIAL_BUY" ? expiresDate : null,
+              currency: currency,
+              planId: planData._id,
+              status: subtype === "INITIAL_BUY" ? "trialing" : "active",
+            },
+          },
+          {
+            upsert: true,
+          }
+        );
+
+        if (subtype !== "INITIAL_BUY" && data?.userId) {
+          await TransactionModel.create({
+            orderId: transactionId,
+            userId: data.userId,
+            planId: planData._id,
+            status: "succeeded",
+            amount: amountBase,
+            currency: currency,
+            paidAt: new Date(purchaseDate) ?? new Date(),
+          });
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
+          await NotificationService(
+            [data.userId] as any,
+            "SUBSCRIPTION_RENEWED",
+            data._id as any
+          );
+        } else if (data && subtype === "INITIAL_BUY") {
+          // free trial started
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
+          await NotificationService(
+            [data?.userId],
+            "SUBSCRIPTION_STARTED",
+            data?._id as Types.ObjectId
+          );
+        }
+
+        break;
+      case "RENEWAL":
+      case "DID_RENEW":
+        actionMessage = "DID_RENEW - Subscription renewed (iOS)";
+        data = await SubscriptionModel.findOneAndUpdate(
+          { orderId: linkedPurchaseToken },
+          {
+            $set: {
+              orderId: linkedPurchaseToken,
+              amount: amountBase ?? 0,
+              currentPeriodStart: purchaseDate
+                ? new Date(Number(purchaseDate))
+                : null,
+              currentPeriodEnd: expiresDate
+                ? new Date(Number(expiresDate))
+                : null,
+              currency: currency || "USD",
+              planId: planData._id,
+              subscriptionId: productId,
+              status: "active",
+            },
+          },
+          { new: true }
+        );
+
+        console.warn("userId", data?.userId);
+
+        if (data?.userId) {
+          await TransactionModel.create({
+            orderId: transactionId,
+            userId: data.userId,
+            planId: planData._id,
+            status: "succeeded",
+            amount: amountBase,
+            currency: currency,
+            paidAt: new Date(purchaseDate) ?? new Date(),
+          });
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
+          await NotificationService(
+            [data.userId] as any,
+            "SUBSCRIPTION_RENEWED",
+            data._id as any
+          );
+        }
+        break;
+
+      case "DID_FAIL_TO_RENEW":
+        actionMessage =
+          "DID_FAIL_TO_RENEW - Subscription failed to renew (iOS)";
+        data = await SubscriptionModel.findOneAndUpdate(
+          { orderId: linkedPurchaseToken },
+          { $set: { status: "past_due" } },
+          { new: true }
+        );
+        if (data?.userId) {
+          await NotificationService(
+            [data.userId] as any,
+            "SUBSCRIPTION_FAILED",
+            data._id as any
+          );
+        }
+        break;
+
+      case "REVOKE":
+      case "EXPIRED":
+        actionMessage = "EXPIRED - Subscription expired (iOS)";
+        data = await SubscriptionModel.findOneAndDelete({
+          orderId: linkedPurchaseToken,
+        });
+        if (data?.userId) {
+          await UserModel.findByIdAndUpdate(data.userId, {
+            $set: { hasUsedTrial: true },
+          });
+          await NotificationService(
+            [data.userId] as any,
+            "SUBSCRIPTION_CANCELLED",
+            data._id as any
+          );
+        }
+        break;
+
+      case "REFUND":
+        break;
+
+      case "DID_CHANGE_RENEWAL_STATUS":
+        if (subtype === "DOWNGRADE") {
+        }
+        if (subtype === "UPGRADE") {
+        }
+        if (subtype === "AUTO_RENEW_DISABLED") {
+        }
+        if (subtype === "AUTO_RENEW_ENABLED") {
+        }
+
+        break;
+
+      case "DID_CHANGE_RENEWAL_PREF":
+        break;
+
+      case "PRICE_INCREASE":
+        break;
+
+      case "DID_RECOVER":
+        break;
+
+      case "TEST":
+        actionMessage = "TEST - Apple test notification (iOS)";
+        break;
+
+      default:
+        actionMessage = `UNKNOWN_TYPE_${notificationType} - Apple notification`;
+    }
   },
 };
 

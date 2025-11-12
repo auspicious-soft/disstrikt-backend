@@ -16,6 +16,7 @@ import {
 } from "./controllers/admin/plan-setting-controller";
 import { initializeFirebase } from "./utils/FCM/fcm";
 import { planServices } from "./services/admin/admin-services";
+import { decodeSignedPayload } from "./utils/helper";
 
 // Create __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -93,6 +94,44 @@ app.post("/in-app-android", rawBodyMiddleware, async (req: any, res: any) => {
     res.status(500).send("Error");
   }
 });
+
+app.post(
+  "/in-app-ios",
+  rawBodyMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      console.log("🍎 Apple IAP Webhook triggered");
+      console.log(req.body, req.params, req.headers, req.query)
+      const bodyBuffer = req.body as Buffer;
+      if (bodyBuffer.length === 0) return res.status(400).send("Empty body");
+      const bodyStr = bodyBuffer.toString("utf8");
+
+      // Parse body as JSON
+      let parsedBody: any;
+      try {
+        parsedBody = JSON.parse(bodyStr);
+      } catch (e) {
+        return res.status(400).send("Invalid JSON");
+      }
+
+      const { signedPayload } = parsedBody;
+
+      if (!signedPayload) {
+        console.log("⚠️ No signedPayload in request");
+        return res.sendStatus(200);
+      }
+
+      const decodedOuter = await decodeSignedPayload(signedPayload);
+      console.log("📦 Outer decoded payload:", decodedOuter);
+
+      await planServices.handleInAppIOSWebhook(decodedOuter, req);
+      res.status(200).send("OK");
+    } catch (err) {
+      console.error("Error:", err);
+      res.status(500).send("Error");
+    }
+  }
+);
 
 app.use(express.json());
 app.set("trust proxy", true);

@@ -44,7 +44,7 @@ const subscriptionSchema = new Schema<ISubscription>(
     orderId: { type: String },
     deviceType: { type: String},
     subscriptionId: { type: String },
-    planId: { type: Schema.Types.ObjectId, ref: "plan", required: true },
+    planId: { type: Schema.Types.ObjectId, ref: "plan"},
     status: {
       type: String,
       enum: [
@@ -63,8 +63,8 @@ const subscriptionSchema = new Schema<ISubscription>(
     currentPeriodStart: { type: Date, default: null },
     currentPeriodEnd: { type: Date, default: null },
     nextBillingDate: { type: Date, default: null },
-    amount: { type: Number, required: true },
-    currency: { type: String, required: true },
+    amount: { type: Number},
+    currency: { type: String},
     nextPlanId: { type: Schema.Types.ObjectId, ref: "plan", default: null },
   },
   {

@@ -49,6 +49,7 @@ export const registerUser = async (req: Request, res: Response) => {
         { email, isVerifiedEmail: false, isVerifiedPhone: false },
         {
           phone: req.body.phone,
+          email,
           isVerifiedEmail: false,
           isVerifiedPhone: false,
         },
@@ -312,33 +313,70 @@ export const buyPlan = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language;
 
-    const { planId, currency, paymentMethodId } = req.body;
-
-    const { orderId } = req.body;
-    if (!orderId && userData.userType === "mobile") {
-      throw new Error("orderId is required");
-    }
-
-    if ((!planId || !currency) && userData.userType === "web") {
-      throw new Error("planId, currency, and paymentMethodId is required");
-    }
-
-    if (planId) {
-      userData.planId = planId;
-    }
-
-    const response = await authServices.buyPlan({
-      language: userData.language,
-      country: userData.country,
-      userId: userData.id.toString(),
+    const {
       planId,
       currency,
-      userType: userData.userType,
+      paymentMethodId,
+      deviceType = null,
+    } = req.body;
+    const { orderId } = req.body;
+
+    console.log(
+      userData.id,
+      planId,
+      currency,
       paymentMethodId,
       orderId,
-      ...userData,
-    });
-    return OK(res, response || {}, req.body.language || "en", "loginSuccess");
+      deviceType
+    );
+
+    if (deviceType === "IOS") {
+      const checkSubscription = await SubscriptionModel.findOne({
+        userId: userData.id,
+      });
+
+      const plan = await planModel.findOne({ iosProductId: planId });
+
+      if (!checkSubscription) {
+        await SubscriptionModel.create({
+          userId: userData.id,
+          orderId: orderId,
+          deviceType: deviceType,
+          planId: plan?._id,
+          status: "trialing",
+        });
+      } else {
+        checkSubscription.orderId = orderId;
+        await checkSubscription.save();
+      }
+
+      return OK(res, {}, req.body.language || "en", "loginSuccess");
+    } else {
+      if (!orderId && userData.userType === "mobile") {
+        throw new Error("orderId is required");
+      }
+
+      if ((!planId || !currency) && userData.userType === "web") {
+        throw new Error("planId, currency, and paymentMethodId is required");
+      }
+
+      if (planId) {
+        userData.planId = planId;
+      }
+
+      const response = await authServices.buyPlan({
+        language: userData.language,
+        country: userData.country,
+        userId: userData.id.toString(),
+        planId,
+        currency,
+        userType: userData.userType,
+        paymentMethodId,
+        orderId,
+        ...userData,
+      });
+      return OK(res, response || {}, req.body.language || "en", "loginSuccess");
+    }
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language || "en");

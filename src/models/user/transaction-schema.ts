@@ -30,32 +30,31 @@ export interface ITransaction extends Document {
 const transactionSchema = new Schema<ITransaction>(
   {
     //stripe
-    stripeCustomerId: { type: String, required: true },
-    stripeSubscriptionId: { type: String, required: true },
-    invoiceId: { type: String, required: true },
+    stripeCustomerId: { type: String },
+    stripeSubscriptionId: { type: String },
+    invoiceId: { type: String },
     paymentMethodDetails: {
-      brand: { type: String, required: true },
-      last4: { type: String, required: true },
-      expMonth: { type: Number, required: true },
-      expYear: { type: Number, required: true },
-      type: { type: String, required: true }, // e.g. "card"
+      brand: { type: String },
+      last4: { type: String },
+      expMonth: { type: Number },
+      expYear: { type: Number },
+      type: { type: String }, // e.g. "card"
     },
-    billingReason: { type: String, required: true }, // e.g. "subscription_create", "subscription_cycle"
+    billingReason: { type: String }, // e.g. "subscription_create", "subscription_cycle"
     errorMessage: { type: String, default: null },
     metadata: { type: Schema.Types.Mixed }, // optional custom info
     //stripe
 
     userId: { type: Schema.Types.ObjectId, ref: "user" },
-    planId: { type: Schema.Types.ObjectId, ref: "plan", required: true },
+    planId: { type: Schema.Types.ObjectId, ref: "plan" },
     status: {
       type: String,
       enum: ["succeeded", "failed", "pending"],
-      required: true,
     },
-    orderId: { type: String, required: true },
-    amount: { type: Number, required: true },
-    currency: { type: String, required: true },
-    paidAt: { type: Date, required: true },
+    orderId: { type: String },
+    amount: { type: Number },
+    currency: { type: String },
+    paidAt: { type: Date },
   },
   { timestamps: true }
 );

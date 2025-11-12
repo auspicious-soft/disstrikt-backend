@@ -12,6 +12,7 @@ import jwt from "jsonwebtoken";
 import { TokenModel } from "src/models/user/token-schema";
 import axios from "axios";
 import jwkToPem from "jwk-to-pem";
+import { jwtVerify, importJWK, importX509 } from "jose";
 import fs from "fs";
 import { DateTime } from "luxon";
 import { AdminLogsModel } from "src/models/admin/admin-logs-schema";
@@ -192,3 +193,65 @@ export async function saveLogs(payload: any) {
     role,
   });
 }
+
+export async function decodeSignedPayload(signedPayload: string) {
+  try {
+    const [headerB64] = signedPayload.split(".");
+    const header = JSON.parse(
+      Buffer.from(headerB64, "base64").toString("utf8")
+    );
+
+    let publicKey;
+
+    if (header.x5c && header.x5c.length > 0) {
+      // ✅ Case 1: Certificate chain provided in the header
+      const cert = `-----BEGIN CERTIFICATE-----\n${header.x5c[0]}\n-----END CERTIFICATE-----`;
+      publicKey = await importX509(cert, header.alg);
+      console.log("✅ Using x5c public certificate from header");
+    } else if (header.kid) {
+      // ✅ Case 2: Only key ID provided → fetch Apple JWKS
+      const { data } = await axios.get(
+        "https://apple-public.keys.appstoreconnect.apple.com/keys"
+      );
+      const appleKey = data.keys.find((k: any) => k.kid === header.kid);
+      if (!appleKey)
+        throw new Error(`Apple public key not found for kid: ${header.kid}`);
+      publicKey = await importJWK(appleKey, "ES256");
+      console.log("✅ Using Apple JWKS public key");
+    } else {
+      throw new Error("No valid public key source found (x5c or kid missing)");
+    }
+
+    const { payload } = await jwtVerify(signedPayload, publicKey);
+    return payload;
+  } catch (err) {
+    console.error("⚠️ Failed to decode signed payload:", err);
+    return null;
+  }
+}
+
+// export async function decodeSignedPayload(signedPayload: string) {
+//   try {
+//     // Apple signs payload with its public keys (JWKS endpoint)
+//     const [headerB64] = signedPayload.split(".");
+//     const header = JSON.parse(
+//       Buffer.from(headerB64, "base64").toString("utf8")
+//     );
+//     const keyId = header.kid;
+
+//     // Fetch Apple's JWKS
+//     const { data } = await axios.get(
+//       "https://apple-public.keys.appstoreconnect.apple.com/keys"
+//     );
+//     const appleKey = data.keys.find((k: any) => k.kid === keyId);
+
+//     if (!appleKey) throw new Error("Apple public key not found");
+
+//     const publicKey = await importJWK(appleKey, "ES256");
+//     const { payload } = await jwtVerify(signedPayload, publicKey);
+//     return payload;
+//   } catch (err) {
+//     console.error("⚠️ Failed to decode signed payload:", err);
+//     return null;
+//   }
+// }
