@@ -643,15 +643,12 @@ export const authServices = {
       .populate("planId")
       .lean()) as any;
 
-    const planId =
-      subscription?.deviceType === "IOS"
-        ? subscription?.planId?.iosProductId
-        : subscription?.planId?.androidProductId;
     return {
       ...user,
       subscription: subscription?.status || null,
-      deviceType: subscription?.deviceType || null,
-      planId: planId || null,
+      planDeviceType: subscription?.deviceType || null,
+      planIdIOS: subscription?.planId?.iosProductId || null,
+      planIdAndroid: subscription?.planId?.androidProductId || null,
     };
   },
 
