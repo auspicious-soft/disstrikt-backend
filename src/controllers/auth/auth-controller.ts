@@ -313,12 +313,7 @@ export const buyPlan = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language;
 
-    const {
-      planId,
-      currency,
-      paymentMethodId,
-      deviceType = null,
-    } = req.body;
+    const { planId, currency, paymentMethodId, deviceType = null } = req.body;
     const { orderId } = req.body;
 
     console.log(
@@ -331,6 +326,14 @@ export const buyPlan = async (req: Request, res: Response) => {
     );
 
     if (deviceType === "IOS") {
+      const checkOrderId = await SubscriptionModel.findOne({
+        orderId: orderId,
+      });
+
+      if (checkOrderId) {
+        throw new Error("Order ID already used");
+      }
+
       const checkSubscription = await SubscriptionModel.findOne({
         userId: userData.id,
       });

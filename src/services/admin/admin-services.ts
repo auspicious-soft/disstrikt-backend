@@ -1502,9 +1502,11 @@ export const planServices = {
       case "REVOKE":
       case "EXPIRED":
         actionMessage = "EXPIRED - Subscription expired (iOS)";
-        data = await SubscriptionModel.findOneAndDelete({
-          orderId: linkedPurchaseToken,
-        });
+        data = await SubscriptionModel.findOneAndUpdate(
+          { orderId: linkedPurchaseToken },
+          { $set: { status: "canceled" } },
+          { new: true }
+        );
         if (data?.userId) {
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },

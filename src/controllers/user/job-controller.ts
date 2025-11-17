@@ -18,6 +18,7 @@ export const getJobs = async (req: Request, res: Response) => {
       ...req.query,
       userId: userData?.id || null,
       language: req.body.language || "en",
+      subscription: userData?.subscription || null,
     });
     return OK(res, response || {}, req.body.language);
   } catch (err: any) {
@@ -55,7 +56,6 @@ export const getJobById = async (req: Request, res: Response) => {
     const response = await userJobServices.getJobById({
       jobId:id,
       language: req.body.language || "en",
-      ...userData,
     });
     return OK(res, response || {}, req.body.language);
   } catch (err: any) {

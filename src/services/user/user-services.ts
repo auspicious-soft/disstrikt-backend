@@ -163,10 +163,12 @@ export const homeServices = {
     const { taskId, userData } = payload;
     const plan =
       process.env.PAYMENT === "DEV"
-        ? await testPlanModel.findById(payload.userData.subscription.planId).lean()
-        : await planModel
+        ? await testPlanModel
             .findById(payload.userData.subscription.planId)
-            .lean() as any;
+            .lean()
+        : ((await planModel
+            .findById(payload.userData.subscription.planId)
+            .lean()) as any);
 
     // const plan = await planModel
     //   .findById(payload.userData.subscription.planId)
@@ -998,6 +1000,7 @@ export const userJobServices = {
       currency,
       type = "NEW",
       userId,
+      subscription,
     } = payload;
 
     const filter: any = {};
@@ -1025,20 +1028,45 @@ export const userJobServices = {
       }
     }
 
+    // Fetch applied jobs if userId exists
     let appliedJobMap = new Map<string, string>();
+    let appliedJobsPromise: Promise<any[]> | null = null;
 
-    if (userId && type === "APPLIED") {
-      const appliedJobs = await AppliedJobModel.find({ userId });
+    if (userId) {
+      appliedJobsPromise = AppliedJobModel.find({ userId });
+    }
+
+    // Fetch plan data
+    const planPromise = subscription?.planId
+      ? process.env.PAYMENT === "DEV"
+        ? testPlanModel.findById(subscription.planId).lean()
+        : planModel.findById(subscription.planId).lean()
+      : Promise.resolve(null);
+
+    // Determine date ranges
+    const todayStart = startOfDay(new Date());
+    const todayEnd = endOfDay(new Date());
+    const monthStart = startOfMonth(new Date());
+    const monthEnd = endOfMonth(new Date());
+
+    // Fetch total jobs count and raw jobs will be done after appliedJobsPromise resolves
+    const [appliedJobs, planData] = await Promise.all([
+      appliedJobsPromise,
+      planPromise,
+    ]);
+
+    if (userId && appliedJobs) {
       const appliedJobIds = appliedJobs.map((j) => j.jobId);
       appliedJobMap = new Map(
         appliedJobs.map((j) => [j.jobId.toString(), j.status])
       );
-      filter._id = { $in: appliedJobIds };
-    } else if (userId && type === "NEW") {
-      const appliedJobs = await AppliedJobModel.find({ userId });
-      const appliedJobIds = appliedJobs.map((j) => j.jobId);
-      filter._id = { $nin: appliedJobIds };
-      filter.date = { $gte: new Date().toUTCString() };
+
+      if (type === "APPLIED") {
+        filter._id = { $in: appliedJobIds };
+      } else if (type === "NEW") {
+        filter._id = { $nin: appliedJobIds };
+        filter.date = { $gte: new Date().toUTCString() };
+      }
     }
 
     // Sorting
@@ -1058,12 +1086,11 @@ export const userJobServices = {
         break;
     }
 
-    // Fetch jobs
-    const totalJobs = await JobModel.countDocuments(filter);
-    const rawJobs = await JobModel.find(filter)
-      .sort(sortOption)
-      .skip(skip)
-      .limit(limitNumber);
+    // Fetch total jobs and paginated jobs in parallel
+    const [totalJobs, rawJobs] = await Promise.all([
+      JobModel.countDocuments(filter),
+      JobModel.find(filter).sort(sortOption).skip(skip).limit(limitNumber),
+    ]);
 
     const jobs = rawJobs.map((job: any) => {
       const jobObj = job.toObject();
@@ -1076,7 +1103,6 @@ export const userJobServices = {
         ...langFields,
       };
 
-      // Add application status only for applied jobs
       if (type === "APPLIED") {
         base.status = appliedJobMap.get(jobObj._id.toString()) || "PENDING";
       }
@@ -1085,8 +1111,37 @@ export const userJobServices = {
       return base;
     });
 
+    // Extract plan limits
+    const { jobApplicationsPerDay, jobApplicationsPerMonth } =
+      subscription?.status === "trialing"
+        ? planData?.trialAccess || {}
+        : (planData?.fullAccess as any) || {};
+
+    // Fetch applied jobs stats in parallel
+    const [jobAppliedByUserToday, jobAppliedByUserThisMonth] =
+      await Promise.all([
+        userId
+          ? AppliedJobModel.countDocuments({
+              userId,
+              createdAt: { $gte: todayStart, $lte: todayEnd },
+            })
+          : Promise.resolve(0),
+        userId
+          ? AppliedJobModel.countDocuments({
+              userId,
+              createdAt: { $gte: monthStart, $lte: monthEnd },
+            })
+          : Promise.resolve(0),
+      ]);
+
     return {
       data: jobs,
+      jobStats: {
+        jobAppliedByUserToday,
+        jobApplicationsPerDay,
+        jobAppliedByUserThisMonth,
+        jobApplicationsPerMonth,
+      },
       pagination: {
         total: totalJobs,
         page: pageNumber,
@@ -1095,7 +1150,6 @@ export const userJobServices = {
       },
     };
   },
-
   applyJobs: async (payload: any) => {
     const { jobId, id, gender, subscription } = payload;
 

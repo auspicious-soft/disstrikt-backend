@@ -70,7 +70,7 @@ paidRouter.patch("/update-user", updateUser);
 paidRouter.patch("/change-password", changePassword);
 paidRouter.patch("/change-language", changeLanguage);
 paidRouter.patch("/change-country", changeCountry);
-paidRouter.get("/get-platform-info", getPlatformInfo);
+router.get("/get-platform-info", getPlatformInfo);
 paidRouter
   .route("/notification-setting")
   .get(getNotificationSetting)
