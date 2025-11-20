@@ -40,6 +40,7 @@
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "@apple/app-store-server-library": "^1.6.0",
     "@aws-sdk/client-s3": "^3.687.0",
     "@aws-sdk/lib-storage": "^3.858.0",
     "@aws-sdk/s3-request-presigner": "^3.687.0",

@@ -476,6 +476,7 @@ export const authServices = {
         process.env.PAYMENT !== "DEV"
           ? await planModel.findOne({ _id: planId, isActive: true }).lean()
           : await testPlanModel.findOne({ _id: planId, isActive: true }).lean();
+
       if (!plans) {
         throw new Error("planNotFound");
       }
@@ -490,7 +491,7 @@ export const authServices = {
 
       const priceList = await stripe.prices.list({
         product: stripeProduct.id,
-        active: true, // only get active prices
+        active: true,
         limit: 10,
       });
 
@@ -502,95 +503,95 @@ export const authServices = {
         throw new Error("invalidCurrency");
       }
 
-      const user = await UserModel.findById(id);
+      const user = (await UserModel.findById(id)) as any;
       const token = await TokenModel.findOne({ userId: id });
 
       if (!user?.stripeCustomerId) {
         throw new Error("stripeCustomerIdNotFound");
       }
 
-      if (!user.hasUsedTrial) {
-        const session = await stripe.checkout.sessions.create({
-          mode: "subscription",
-          customer: user?.stripeCustomerId,
-          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
-          cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
-          line_items: [
-            {
-              price: productPrice.id,
-              quantity: 1,
-            },
-          ],
-          subscription_data: {
-            trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
-          },
-          payment_method_types:
-            country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
-          metadata: {
-            userId: (user as any)?._id.toString(),
-            planId: (plans as any)?._id.toString(),
-          },
-        });
-        await user.save();
+      // FIX: Simplified trial logic - check once
+      const userHasUsedTrial = user.hasUsedTrial || false;
+      const shouldGetTrial = !userHasUsedTrial && plans.trialDays > 0;
 
-        return session;
-      }
-
-      if (user.hasUsedTrial && plans.trialDays > 0) {
-        const session = await stripe.checkout.sessions.create({
-          mode: "subscription",
-          customer: user?.stripeCustomerId,
-          success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
-          cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
-          line_items: [
-            {
-              price: productPrice.id,
-              quantity: 1,
-            },
-          ],
-          payment_method_types:
-            country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
-          metadata: {
-            userId: (user as any)?._id.toString(),
-            planId: (plans as any)?._id.toString(),
+      const session = await stripe.checkout.sessions.create({
+        mode: "subscription",
+        customer: user?.stripeCustomerId,
+        success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
+        cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+        line_items: [
+          {
+            price: productPrice.id,
+            quantity: 1,
           },
-        });
-        await user.save();
+        ],
+        subscription_data: {
+          trial_period_days: shouldGetTrial ? plans.trialDays : undefined,
+        },
+        payment_method_types:
+          country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"],
+        metadata: {
+          userId: user?._id.toString(),
+          planId: (plans as any)._id.toString(),
+        },
+      });
 
-        return session;
-      }
-    } else {
+      return session;
+    }
+    // Android flow
+    else {
+      // FIX 1: Remove userId: null filter to avoid race condition
       const subscriptionData = await SubscriptionModel.findOneAndUpdate(
         {
           orderId,
-          userId: null,
+          // Removed userId: null - update regardless
         },
-        { $set: { userId } },
-        { new: true }
+        {
+          $set: { userId },
+          // FIX 2: Preserve webhook data if it arrived first
+          $setOnInsert: {
+            deviceType: "ANDROID",
+            status: "trialing", // default, webhook will update if needed
+          },
+        },
+        { new: true, upsert: false } // Don't create if doesn't exist
       );
 
       if (!subscriptionData) {
         throw new Error(`Subscription not found for orderId: ${orderId}`);
       }
 
-      const originalAmount = subscriptionData.amount; // convert micros → base currency
+      const originalAmount = subscriptionData.amount;
       const convertedAmountGBP = await convertToGBP(
         originalAmount,
         subscriptionData.currency
       );
 
+      // FIX 3: Check user's trial history to prevent exploit
+      const user = await UserModel.findById(userId);
+      const pastSubscriptions = await SubscriptionModel.find({
+        userId: userId,
+        _id: { $ne: subscriptionData._id },
+      });
+
+      const isFirstTimeUser =
+        !user?.hasUsedTrial && pastSubscriptions.length === 0;
+
       if (subscriptionData.status === "active" && userId) {
         await NotificationService(
           [userId],
           "SUBSCRIPTION_STARTED",
-          subscriptionData?._id as Types.ObjectId
+          subscriptionData._id as Types.ObjectId
         );
+
         await UserModel.findByIdAndUpdate(userId, {
           $set: { hasUsedTrial: true },
         });
+
+        // FIX 4: Prevent duplicate transactions
         await TransactionModel.findOneAndUpdate(
           {
-            orderId, // unique per subscription renewal/purchase
+            orderId,
             userId,
           },
           {
@@ -605,32 +606,216 @@ export const authServices = {
           { upsert: true, new: true }
         );
       } else if (subscriptionData.status === "trialing" && userId) {
-        await NotificationService(
-          [userId],
-          "FREETRIAL_STARTED",
-          subscriptionData?._id as Types.ObjectId
-        );
-        await TransactionModel.findOneAndUpdate(
-          {
-            orderId, // unique per subscription renewal/purchase
-            userId,
-          },
-          {
-            $setOnInsert: {
-              planId: subscriptionData.planId,
-              status: "succeeded",
-              amount: convertedAmountGBP,
-              currency: "gbp",
-              paidAt: new Date(),
-            },
-          },
-          { upsert: true, new: true }
-        );
+        // FIX 5: Validate trial eligibility
+        if (isFirstTimeUser) {
+          await NotificationService(
+            [userId],
+            "FREETRIAL_STARTED",
+            subscriptionData._id as Types.ObjectId
+          );
+        } else {
+          // User shouldn't have trial, log warning
+          console.warn(
+            `User ${userId} got trial but already used it. Converting to active.`
+          );
+
+          // Convert to active subscription
+          await SubscriptionModel.findByIdAndUpdate(subscriptionData._id, {
+            $set: { status: "active" },
+          });
+
+          await NotificationService(
+            [userId],
+            "SUBSCRIPTION_STARTED",
+            subscriptionData._id as Types.ObjectId
+          );
+        }
+
+        // Mark trial as used regardless
+        await UserModel.findByIdAndUpdate(userId, {
+          $set: { hasUsedTrial: true },
+        });
+
+        // FIX 6: Don't create transaction for trial starts (amount is 0)
+        // Transaction will be created when trial converts to paid
       }
 
       return {};
     }
   },
+
+  // async buyPlan(payload: any) {
+  //   const {
+  //     userId,
+  //     orderId,
+  //     planId,
+  //     currency,
+  //     paymentMethodId,
+  //     userType,
+  //     id,
+  //     country,
+  //   } = payload;
+
+  //   if (userType === "web") {
+  //     const plans =
+  //       process.env.PAYMENT !== "DEV"
+  //         ? await planModel.findOne({ _id: planId, isActive: true }).lean()
+  //         : await testPlanModel.findOne({ _id: planId, isActive: true }).lean();
+  //     if (!plans) {
+  //       throw new Error("planNotFound");
+  //     }
+
+  //     const stripeProduct = await stripe.products.retrieve(
+  //       plans.stripeProductId
+  //     );
+
+  //     if (!stripeProduct) {
+  //       throw new Error("planNotFound");
+  //     }
+
+  //     const priceList = await stripe.prices.list({
+  //       product: stripeProduct.id,
+  //       active: true, // only get active prices
+  //       limit: 10,
+  //     });
+
+  //     const productPrice = priceList?.data?.find(
+  //       (price) => price.currency === currency
+  //     );
+
+  //     if (!productPrice) {
+  //       throw new Error("invalidCurrency");
+  //     }
+
+  //     const user = await UserModel.findById(id);
+  //     const token = await TokenModel.findOne({ userId: id });
+
+  //     if (!user?.stripeCustomerId) {
+  //       throw new Error("stripeCustomerIdNotFound");
+  //     }
+
+  //     if (!user.hasUsedTrial) {
+  //       const session = await stripe.checkout.sessions.create({
+  //         mode: "subscription",
+  //         customer: user?.stripeCustomerId,
+  //         success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
+  //         cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+  //         line_items: [
+  //           {
+  //             price: productPrice.id,
+  //             quantity: 1,
+  //           },
+  //         ],
+  //         subscription_data: {
+  //           trial_period_days: user.hasUsedTrial ? undefined : plans.trialDays,
+  //         },
+  //         payment_method_types:
+  //           country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
+  //         metadata: {
+  //           userId: (user as any)?._id.toString(),
+  //           planId: (plans as any)?._id.toString(),
+  //         },
+  //       });
+  //       await user.save();
+
+  //       return session;
+  //     }
+
+  //     if (user.hasUsedTrial && plans.trialDays > 0) {
+  //       const session = await stripe.checkout.sessions.create({
+  //         mode: "subscription",
+  //         customer: user?.stripeCustomerId,
+  //         success_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}?success`,
+  //         cancel_url: `https://disstrikt-portfolio.vercel.app/subscription/${token?.token}`,
+  //         line_items: [
+  //           {
+  //             price: productPrice.id,
+  //             quantity: 1,
+  //           },
+  //         ],
+  //         payment_method_types:
+  //           country == "UK" ? ["card", "bacs_debit"] : ["sepa_debit", "card"], // ✅ Add this
+  //         metadata: {
+  //           userId: (user as any)?._id.toString(),
+  //           planId: (plans as any)?._id.toString(),
+  //         },
+  //       });
+  //       await user.save();
+
+  //       return session;
+  //     }
+  //   } else {
+  //     const subscriptionData = await SubscriptionModel.findOneAndUpdate(
+  //       {
+  //         orderId,
+  //         userId: null,
+  //       },
+  //       { $set: { userId } },
+  //       { new: true }
+  //     );
+
+  //     if (!subscriptionData) {
+  //       throw new Error(`Subscription not found for orderId: ${orderId}`);
+  //     }
+
+  //     const originalAmount = subscriptionData.amount; // convert micros → base currency
+  //     const convertedAmountGBP = await convertToGBP(
+  //       originalAmount,
+  //       subscriptionData.currency
+  //     );
+
+  //     if (subscriptionData.status === "active" && userId) {
+  //       await NotificationService(
+  //         [userId],
+  //         "SUBSCRIPTION_STARTED",
+  //         subscriptionData?._id as Types.ObjectId
+  //       );
+  //       await UserModel.findByIdAndUpdate(userId, {
+  //         $set: { hasUsedTrial: true },
+  //       });
+  //       await TransactionModel.findOneAndUpdate(
+  //         {
+  //           orderId, // unique per subscription renewal/purchase
+  //           userId,
+  //         },
+  //         {
+  //           $setOnInsert: {
+  //             planId: subscriptionData.planId,
+  //             status: "succeeded",
+  //             amount: convertedAmountGBP,
+  //             currency: "gbp",
+  //             paidAt: new Date(),
+  //           },
+  //         },
+  //         { upsert: true, new: true }
+  //       );
+  //     } else if (subscriptionData.status === "trialing" && userId) {
+  //       await NotificationService(
+  //         [userId],
+  //         "FREETRIAL_STARTED",
+  //         subscriptionData?._id as Types.ObjectId
+  //       );
+  //       await TransactionModel.findOneAndUpdate(
+  //         {
+  //           orderId, // unique per subscription renewal/purchase
+  //           userId,
+  //         },
+  //         {
+  //           $setOnInsert: {
+  //             planId: subscriptionData.planId,
+  //             status: "succeeded",
+  //             amount: convertedAmountGBP,
+  //             currency: "gbp",
+  //             paidAt: new Date(),
+  //           },
+  //         },
+  //         { upsert: true, new: true }
+  //       );
+  //     }
+
+  //     return {};
+  //   }
+  // },
 
   async getLoginResponse(payload: any) {
     const { userId } = payload;

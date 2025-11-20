@@ -6,6 +6,7 @@ import { UserModel } from "src/models/user/user-schema";
 import { authServices } from "src/services/auth/auth-services";
 import { portfolioServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 import {
   BADREQUEST,
@@ -313,44 +314,35 @@ export const buyPlan = async (req: Request, res: Response) => {
     const userData = req.user as any;
     req.body.language = userData.language;
 
-    const { planId, currency, paymentMethodId, deviceType = null } = req.body;
-    const { orderId } = req.body;
-
-    console.log(
-      userData.id,
+    const {
       planId,
       currency,
       paymentMethodId,
+      deviceType = null,
+      receiptData,
       orderId,
-      deviceType
-    );
+    } = req.body;
 
     if (deviceType === "IOS") {
-      const checkOrderId = await SubscriptionModel.findOne({
-        orderId: orderId,
-      });
+      const { originalTransactionId: orderId, ...restData } =
+        (jwt.decode(receiptData) as any) || {};
 
-      if (checkOrderId) {
-        throw new Error("Order ID already used");
+      console.log("Decoded Receipt Data:", { orderId });
+
+      const existing = await SubscriptionModel.findOne({ orderId });
+
+      if (existing) {
+        throw new Error("Subscription already exists");
       }
 
-      const checkSubscription = await SubscriptionModel.findOne({
-        userId: userData.id,
-      });
-
-      const plan = await planModel.findOne({ iosProductId: planId });
-
-      if (!checkSubscription) {
+      // ❗ Create new clean subscription entry ONLY when it truly doesn't exist
+      if (!existing) {
         await SubscriptionModel.create({
           userId: userData.id,
-          orderId: orderId,
-          deviceType: deviceType,
-          planId: plan?._id,
-          status: "trialing",
+          orderId,
+          deviceType: "IOS",
+          status: "trialing", // temporary until webhook updates
         });
-      } else {
-        checkSubscription.orderId = orderId;
-        await checkSubscription.save();
       }
 
       return OK(res, {}, req.body.language || "en", "loginSuccess");

@@ -83,17 +83,18 @@ export const handleStripeWebhook = async (req: Request, res: Response) => {
   }
 };
 
-export const rawBodyMiddleware = (req: any, res: any, next: any) => { // TypeScript types adjust kar lo
-  if (req.method !== 'POST') return next();
+export const rawBodyMiddleware = (req: any, res: any, next: any) => {
+  // TypeScript types adjust kar lo
+  if (req.method !== "POST") return next();
   let data = Buffer.alloc(0);
-  req.on('data', (chunk: Buffer) => data = Buffer.concat([data, chunk]));
-  req.on('end', () => {
+  req.on("data", (chunk: Buffer) => (data = Buffer.concat([data, chunk])));
+  req.on("end", () => {
     req.body = data;
-    console.log('Captured body length:', data.length); // 332 aana chahiye
-    console.log('Body preview:', data.toString('utf8').substring(0, 200)); // JSON start dekh lo
+    // console.log('Captured body length:', data.length); // 332 aana chahiye
+    // console.log('Body preview:', data.toString('utf8').substring(0, 200)); // JSON start dekh lo
     next();
   });
-  req.on('error', () => res.status(400).send('Bad Request'));
+  req.on("error", () => res.status(400).send("Bad Request"));
 };
 
 // export const handleInAppAndroidWebhook = async (req: Request, res: Response) => {
