@@ -106,30 +106,21 @@ app.post(
   rawBodyMiddleware,
   async (req: Request, res: Response) => {
     try {
-      console.log("🍎 Apple IAP Webhook triggered");
-      console.log(req.body, req.params, req.headers, req.query);
       const bodyBuffer = req.body as Buffer;
       if (bodyBuffer.length === 0) return res.status(400).send("Empty body");
       const bodyStr = bodyBuffer.toString("utf8");
-
-      // Parse body as JSON
       let parsedBody: any;
       try {
         parsedBody = JSON.parse(bodyStr);
       } catch (e) {
         return res.status(400).send("Invalid JSON");
       }
-
       const { signedPayload } = parsedBody;
-
       if (!signedPayload) {
         console.log("⚠️ No signedPayload in request");
         return res.sendStatus(200);
       }
-
       const decodedOuter = await decodeSignedPayload(signedPayload);
-      console.log("📦 Outer decoded payload:", decodedOuter);
-
       await planServices.handleInAppIOSWebhook(decodedOuter, req);
       res.status(200).send("OK");
     } catch (err) {

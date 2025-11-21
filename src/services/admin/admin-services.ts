@@ -1287,647 +1287,17 @@ export const planServices = {
     // ... etc. for other types
   },
 
-  // async handleInAppIOSWebhook(payload: any, req: any) {
-  //   const webHookData = payload?.data;
-
-  //   // Decode signed payloads (your decodeSignedPayload function)
-  //   let transactionInfo: any = null;
-  //   let renewalInfo: any = null;
-
-  //   try {
-  //     if (webHookData?.signedTransactionInfo) {
-  //       transactionInfo = await decodeSignedPayload(
-  //         webHookData.signedTransactionInfo
-  //       );
-  //     }
-  //     if (webHookData?.signedRenewalInfo) {
-  //       renewalInfo = await decodeSignedPayload(webHookData.signedRenewalInfo);
-  //     }
-  //   } catch (err) {
-  //     console.error("Failed to decode signed payloads:", err);
-  //     // proceed — but transactionInfo/renewalInfo may be null
-  //   }
-
-  //   const notificationType: string | undefined = payload?.notificationType;
-  //   const subtype: string | undefined = payload?.subtype;
-
-  //   const productId =
-  //     renewalInfo?.autoRenewProductId || transactionInfo?.productId;
-  //   const originalTransactionId =
-  //     transactionInfo?.originalTransactionId ||
-  //     renewalInfo?.originalTransactionId;
-  //   const transactionId =
-  //     transactionInfo?.transactionId || renewalInfo?.transactionId;
-
-  //   const priceMicros = renewalInfo?.renewalPrice ?? transactionInfo?.price;
-  //   const currency =
-  //     (transactionInfo?.currency as string) ||
-  //     (renewalInfo?.currency as string);
-
-  //   const purchaseDate = transactionInfo?.purchaseDate as Date | undefined;
-  //   const expiresDate =
-  //     transactionInfo?.expiresDate ?? renewalInfo?.expiresDate;
-
-  //   // Extract user id from appAccountToken
-  //   const appAccountToken =
-  //     transactionInfo?.appAccountToken || renewalInfo?.appAccountToken;
-  //   const userIdFromToken = appAccountToken || null;
-
-  //   // Fetch plan data
-  //   const planData =
-  //     process.env.PAYMENT === "DEV"
-  //       ? await testPlanModel.findOne({
-  //           $or: [
-  //             { androidProductId: productId },
-  //             { stripeProductId: productId },
-  //             { iosProductId: productId },
-  //           ],
-  //         })
-  //       : await planModel.findOne({
-  //           $or: [
-  //             { androidProductId: productId },
-  //             { stripeProductId: productId },
-  //             { iosProductId: productId },
-  //           ],
-  //         });
-
-  //   if (!planData) {
-  //     console.error("planNotFound for productId:", productId);
-  //     throw new Error("planNotFound");
-  //   }
-
-  //   const linkedPurchaseToken = originalTransactionId;
-  //   const amount =
-  //     typeof priceMicros === "number" ? priceMicros / 1_000_000 : undefined;
-  //   const amountBase = amount;
-
-  //   console.log(
-  //     `iOS Webhook => Type:${notificationType} Subtype:${subtype} OrigTxn:${originalTransactionId} Txn:${transactionId} Product:${productId} userFromToken:${
-  //       userIdFromToken ? "FOUND" : "NOT_FOUND"
-  //     }`
-  //   );
-
-  //   // Helper: isFirstTimeTrial (kept same logic)
-  //   const isFirstTimeTrial = async (
-  //     userId: string,
-  //     currentSubscriptionId?: any
-  //   ) => {
-  //     if (!userId) return false;
-  //     const user = await UserModel.findById(userId);
-  //     if (!user) return false;
-  //     const pastSubscription = await SubscriptionModel.findOne({
-  //       userId: userId,
-  //       _id: { $ne: currentSubscriptionId },
-  //     });
-  //     return !user.hasUsedTrial && !pastSubscription;
-  //   };
-
-  //   // ---------------------------
-  //   // Apple API call helper (JWT + dynamic endpoint)
-  //   // ---------------------------
-  //   function readApplePrivateKey(): string {
-  //     const pem = process.env.APPLE_PRIVATE_KEY || "";
-  //     return pem.replace(/\\n/g, "\n");
-  //   }
-
-  //   function generateAppleJWT(ttlSec = 12000) {
-  //     const keyId = process.env.APPLE_KEY_ID;
-  //     const issuerId = process.env.APPLE_ISSUER_ID;
-  //     if (!keyId || !issuerId)
-  //       throw new Error("APPLE_KEY_ID or APPLE_ISSUER_ID not set in env");
-
-  //     const privateKey = readApplePrivateKey();
-  //     const now = Math.floor(Date.now() / 1000);
-
-  //     const payload = {
-  //       iss: issuerId,
-  //       iat: now,
-  //       exp: now + ttlSec,
-  //       aud: "appstoreconnect-v1",
-  //       bid: "com.aus.disttrikt",
-  //     };
-
-  //     const header = {
-  //       alg: "ES256",
-  //       kid: keyId,
-  //       typ: "JWT",
-  //     };
-
-  //     console.log(payload, header);
-
-  //     return jwt.sign(payload, privateKey, header as jwt.SignOptions);
-  //   }
-
-  //   async function fetchAppleTransaction(
-  //     txnId: string | undefined,
-  //     environmentFromPayload?: string
-  //   ) {
-  //     if (!txnId) return null;
-  //     const base = "https://api.storekit-sandbox.itunes.apple.com";
-
-  //     // "https://api.storekit.itunes.apple.com"
-
-  //     try {
-  //       const token = generateAppleJWT(1200);
-  //       const url = `${base}/inApps/v1/transactions/${txnId}`;
-  //       console.log(token, url);
-  //       const resp = await axios.get(url, {
-  //         headers: {
-  //           Authorization: `Bearer ${token}`,
-  //           Accept: "application/json",
-  //         },
-  //         timeout: 15000,
-  //       });
-  //       console.log("Apple transaction fetched (minimal):", {
-  //         txnId,
-  //         environment: base.includes("sandbox") ? "sandbox" : "production",
-  //       });
-  //       return resp.data;
-  //     } catch (err: any) {
-  //       console.log(err);
-  //       if (err.response) {
-  //         console.warn(
-  //           "Apple API returned non-2xx:",
-  //           err.response.status,
-  //           err.response.data
-  //         );
-  //       } else {
-  //         console.warn("Apple API request failed:", err.message);
-  //       }
-  //       return null;
-  //     }
-  //   }
-
-  //   // ---------------------------
-  //   // Handlers (split functions)
-  //   // ---------------------------
-  //   async function handleResubscribe() {
-  //     let data: any = null;
-  //     const existingSubscription = await SubscriptionModel.findOne({
-  //       orderId: linkedPurchaseToken,
-  //     });
-
-  //     if (!existingSubscription) {
-  //       data = await SubscriptionModel.create({
-  //         userId: userIdFromToken,
-  //         orderId: linkedPurchaseToken,
-  //         deviceType: "IOS",
-  //         subscriptionId: productId,
-  //         amount: amountBase ?? 0,
-  //         currentPeriodStart: purchaseDate,
-  //         currentPeriodEnd: expiresDate,
-  //         startDate: purchaseDate,
-  //         trialStart: null,
-  //         trialEnd: null,
-  //         currency: currency,
-  //         planId: planData?._id,
-  //         status: "active",
-  //       });
-  //       console.log(`Created subscription with userId: ${userIdFromToken}`);
-  //     } else {
-  //       const updateData: any = {
-  //         subscriptionId: productId,
-  //         amount: amountBase ?? 0,
-  //         currentPeriodStart: purchaseDate,
-  //         currentPeriodEnd: expiresDate,
-  //         currency: currency,
-  //         planId: planData?._id,
-  //         status: "active",
-  //         trialStart: null,
-  //         trialEnd: null,
-  //       };
-  //       if (userIdFromToken) updateData.userId = userIdFromToken;
-
-  //       data = await SubscriptionModel.findByIdAndUpdate(
-  //         existingSubscription._id,
-  //         { $set: updateData },
-  //         { new: true }
-  //       );
-  //       console.log(
-  //         `Reactivated subscription ${existingSubscription._id} for user ${data.userId}`
-  //       );
-  //     }
-
-  //     if (data?.userId) {
-  //       await TransactionModel.findOneAndUpdate(
-  //         { orderId: transactionId, userId: data.userId },
-  //         {
-  //           $setOnInsert: {
-  //             planId: planData?._id,
-  //             status: "succeeded",
-  //             amount: amountBase,
-  //             currency: currency,
-  //             paidAt: new Date(purchaseDate || new Date()) ?? new Date(),
-  //           },
-  //         },
-  //         { upsert: true }
-  //       );
-
-  //       await UserModel.findByIdAndUpdate(data.userId, {
-  //         $set: { hasUsedTrial: true },
-  //       });
-
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_RENEWED",
-  //         data._id
-  //       );
-  //     } else {
-  //       console.warn(`No userId found for subscription ${data?._id}`);
-  //     }
-  //   }
-
-  //   async function handleInitialBuy() {
-  //     let data: any = null;
-  //     const existingSubscription = await SubscriptionModel.findOne({
-  //       orderId: linkedPurchaseToken,
-  //     });
-
-  //     if (existingSubscription) {
-  //       const updateData: any = {
-  //         deviceType: "IOS",
-  //         subscriptionId: productId,
-  //         amount: 0,
-  //         currentPeriodStart: null,
-  //         currentPeriodEnd: null,
-  //         startDate: purchaseDate,
-  //         trialStart: purchaseDate,
-  //         trialEnd: expiresDate,
-  //         currency: currency,
-  //         planId: planData?._id,
-  //         status: "trialing",
-  //       };
-  //       if (userIdFromToken) updateData.userId = userIdFromToken;
-
-  //       data = await SubscriptionModel.findByIdAndUpdate(
-  //         existingSubscription._id,
-  //         { $set: updateData },
-  //         { new: true }
-  //       );
-  //     } else {
-  //       data = await SubscriptionModel.create({
-  //         userId: userIdFromToken,
-  //         orderId: linkedPurchaseToken,
-  //         deviceType: "IOS",
-  //         subscriptionId: productId,
-  //         amount: 0,
-  //         currentPeriodStart: null,
-  //         currentPeriodEnd: null,
-  //         startDate: purchaseDate,
-  //         trialStart: purchaseDate,
-  //         trialEnd: expiresDate,
-  //         currency: currency,
-  //         planId: planData?._id,
-  //         status: "trialing",
-  //       });
-  //     }
-
-  //     if (data?.userId) {
-  //       const shouldGetTrial = await isFirstTimeTrial(data.userId, data._id);
-  //       if (shouldGetTrial) {
-  //         await UserModel.findByIdAndUpdate(data.userId, {
-  //           $set: { hasUsedTrial: true },
-  //         });
-  //         await NotificationService(
-  //           [data.userId],
-  //           "FREETRIAL_STARTED",
-  //           data._id as Types.ObjectId
-  //         );
-  //       } else {
-  //         console.warn(`User ${data.userId} attempting duplicate trial`);
-  //         await SubscriptionModel.findByIdAndUpdate(data._id, {
-  //           $set: {
-  //             status: "active",
-  //             trialStart: null,
-  //             trialEnd: null,
-  //             currentPeriodStart: purchaseDate,
-  //             currentPeriodEnd: expiresDate,
-  //             amount: amountBase || 0,
-  //           },
-  //         });
-  //         await NotificationService(
-  //           [data.userId],
-  //           "SUBSCRIPTION_STARTED",
-  //           data._id as Types.ObjectId
-  //         );
-  //       }
-  //     }
-  //   }
-
-  //   async function handleSubscribedRegular() {
-  //     let data: any = null;
-  //     const existingSubscription = await SubscriptionModel.findOne({
-  //       orderId: linkedPurchaseToken,
-  //     });
-
-  //     if (existingSubscription) {
-  //       const updateData: any = {
-  //         deviceType: "IOS",
-  //         subscriptionId: productId,
-  //         amount: amountBase,
-  //         currentPeriodStart: purchaseDate,
-  //         currentPeriodEnd: expiresDate,
-  //         startDate: purchaseDate,
-  //         trialStart: null,
-  //         trialEnd: null,
-  //         currency: currency,
-  //         planId: planData?._id, // defensive: handle planData shape
-  //         status: "active",
-  //       };
-  //       if (userIdFromToken) updateData.userId = userIdFromToken;
-
-  //       data = await SubscriptionModel.findByIdAndUpdate(
-  //         existingSubscription._id,
-  //         { $set: updateData },
-  //         { new: true }
-  //       );
-  //     } else {
-  //       data = await SubscriptionModel.create({
-  //         userId: userIdFromToken,
-  //         orderId: linkedPurchaseToken,
-  //         deviceType: "IOS",
-  //         subscriptionId: productId,
-  //         amount: amountBase,
-  //         currentPeriodStart: purchaseDate,
-  //         currentPeriodEnd: expiresDate,
-  //         startDate: purchaseDate,
-  //         trialStart: null,
-  //         trialEnd: null,
-  //         currency: currency,
-  //         planId: planData?._id,
-  //         status: "active",
-  //       });
-  //     }
-
-  //     if (data?.userId) {
-  //       await TransactionModel.findOneAndUpdate(
-  //         { orderId: transactionId, userId: data.userId },
-  //         {
-  //           $setOnInsert: {
-  //             planId: planData?._id,
-  //             status: "succeeded",
-  //             amount: amountBase,
-  //             currency: currency,
-  //             paidAt: new Date(purchaseDate || new Date()) ?? new Date(),
-  //           },
-  //         },
-  //         { upsert: true }
-  //       );
-
-  //       await UserModel.findByIdAndUpdate(data.userId, {
-  //         $set: { hasUsedTrial: true },
-  //       });
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_RENEWED",
-  //         data._id
-  //       );
-  //     }
-  //   }
-
-  //   async function handleDidRenew() {
-  //     const subscriptionToRenew = await SubscriptionModel.findOne({
-  //       orderId: linkedPurchaseToken,
-  //     });
-  //     if (!subscriptionToRenew) {
-  //       console.warn(
-  //         "DID_RENEW for unknown subscription:",
-  //         linkedPurchaseToken
-  //       );
-  //       return;
-  //     }
-  //     if (subscriptionToRenew.status === "canceled") {
-  //       console.warn(
-  //         "Ignoring renewal for canceled subscription:",
-  //         linkedPurchaseToken
-  //       );
-  //       return;
-  //     }
-
-  //     const update = {
-  //       amount: amountBase ?? 0,
-  //       currentPeriodStart: purchaseDate
-  //         ? new Date(Number(purchaseDate))
-  //         : null,
-  //       currentPeriodEnd: expiresDate ? new Date(Number(expiresDate)) : null,
-  //       currency: currency || "USD",
-  //       planId: planData?._id,
-  //       subscriptionId: productId,
-  //       status: "active",
-  //       trialStart: null,
-  //       trialEnd: null,
-  //     };
-
-  //     const data = (await SubscriptionModel.findOneAndUpdate(
-  //       { orderId: linkedPurchaseToken },
-  //       { $set: update },
-  //       { new: true }
-  //     )) as any;
-
-  //     if (data?.userId) {
-  //       await TransactionModel.findOneAndUpdate(
-  //         { orderId: transactionId, userId: data.userId },
-  //         {
-  //           $setOnInsert: {
-  //             planId: planData?._id,
-  //             status: "succeeded",
-  //             amount: amountBase,
-  //             currency: currency,
-  //             paidAt: new Date(purchaseDate || new Date()) ?? new Date(),
-  //           },
-  //         },
-  //         { upsert: true }
-  //       );
-  //       await UserModel.findByIdAndUpdate(data.userId, {
-  //         $set: { hasUsedTrial: true },
-  //       });
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_RENEWED",
-  //         data?._id
-  //       );
-  //     }
-  //   }
-
-  //   async function handleFailToRenew() {
-  //     const data = (await SubscriptionModel.findOneAndUpdate(
-  //       { orderId: linkedPurchaseToken },
-  //       { $set: { status: "past_due" } },
-  //       { new: true }
-  //     )) as any;
-  //     if (data?.userId) {
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_FAILED",
-  //         data?._id
-  //       );
-  //     }
-  //   }
-
-  //   async function handleExpiredOrRevoke() {
-  //     const data = (await SubscriptionModel.findOneAndUpdate(
-  //       { orderId: linkedPurchaseToken },
-  //       { $set: { status: "canceled" } },
-  //       { new: true }
-  //     )) as any;
-  //     if (data?.userId) {
-  //       await UserModel.findByIdAndUpdate(data.userId, {
-  //         $set: { hasUsedTrial: true },
-  //       });
-  //       await TokenModel.findOneAndDelete({ userId: data.userId });
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_CANCELLED",
-  //         data?._id
-  //       );
-  //     }
-  //   }
-
-  //   async function handleRefund() {
-  //     const data = (await SubscriptionModel.findOneAndUpdate(
-  //       { orderId: linkedPurchaseToken },
-  //       { $set: { status: "canceled" } },
-  //       { new: true }
-  //     )) as any;
-  //     if (data?.userId) {
-  //       await TransactionModel.findOneAndUpdate(
-  //         { orderId: transactionId, userId: data.userId },
-  //         { $set: { status: "refunded" } }
-  //       );
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_CANCELLED",
-  //         data?._id
-  //       );
-  //     }
-  //   }
-
-  //   async function handleChangeRenewalStatus() {
-  //     if (subtype === "AUTO_RENEW_DISABLED") {
-  //       const data = (await SubscriptionModel.findOneAndUpdate(
-  //         { orderId: linkedPurchaseToken },
-  //         { $set: { status: "canceling" } },
-  //         { new: true }
-  //       )) as any;
-  //       if (data?.userId)
-  //         await NotificationService(
-  //           [data.userId],
-  //           "SUBSCRIPTION_CANCELLED",
-  //           data?._id
-  //         );
-  //     } else if (subtype === "AUTO_RENEW_ENABLED") {
-  //       await SubscriptionModel.findOneAndUpdate(
-  //         { orderId: linkedPurchaseToken },
-  //         { $set: { status: "active" } },
-  //         { new: true }
-  //       );
-  //     }
-  //   }
-
-  //   async function handleDidRecover() {
-  //     const data = (await SubscriptionModel.findOneAndUpdate(
-  //       { orderId: linkedPurchaseToken },
-  //       {
-  //         $set: {
-  //           status: "active",
-  //           currentPeriodStart: purchaseDate,
-  //           currentPeriodEnd: expiresDate,
-  //         },
-  //       },
-  //       { new: true }
-  //     )) as any;
-  //     if (data?.userId) {
-  //       await NotificationService(
-  //         [data.userId],
-  //         "SUBSCRIPTION_RENEWED",
-  //         data?._id
-  //       );
-  //     }
-  //   }
-
-  //   // ---------------------------
-  //   // Main switch logic (delegates to handlers)
-  //   // ---------------------------
-  //   try {
-  //     // Attempt to fetch the Apple transaction (best-effort; useful for extra validation/logging)
-  //     const appleApiResponse = await fetchAppleTransaction(transactionId);
-  //     if (appleApiResponse) {
-  //       // Important minimal log of returned structure (avoid massive dumps)
-  //       console.log("Apple API Response keys:", Object.keys(appleApiResponse));
-  //     }
-
-  //     switch (notificationType) {
-  //       case "SUBSCRIBED":
-  //       case "DID_CHANGE_RENEWAL_PREF":
-  //         if (subtype === "RESUBSCRIBE") {
-  //           await handleResubscribe();
-  //         } else if (subtype === "INITIAL_BUY") {
-  //           await handleInitialBuy();
-  //         } else {
-  //           await handleSubscribedRegular();
-  //         }
-  //         break;
-
-  //       case "DID_RENEW":
-  //         await handleDidRenew();
-  //         break;
-
-  //       case "DID_FAIL_TO_RENEW":
-  //         await handleFailToRenew();
-  //         break;
-
-  //       case "REVOKE":
-  //       case "EXPIRED":
-  //         await handleExpiredOrRevoke();
-  //         break;
-
-  //       case "REFUND":
-  //         await handleRefund();
-  //         break;
-
-  //       case "DID_CHANGE_RENEWAL_STATUS":
-  //         await handleChangeRenewalStatus();
-  //         break;
-
-  //       case "DID_RECOVER":
-  //         await handleDidRecover();
-  //         break;
-
-  //       case "TEST":
-  //         console.log("Apple TEST notification received.");
-  //         break;
-
-  //       default:
-  //         console.log(`UNKNOWN_TYPE_${notificationType} - Apple notification`);
-  //     }
-
-  //     console.log(
-  //       "✅ handleInAppIOSWebhook processed:",
-  //       notificationType,
-  //       subtype
-  //     );
-  //   } catch (err) {
-  //     console.error("Error processing iOS webhook:", err);
-  //     // rethrow or swallow depending on your webhook framework expectations
-  //     throw err;
-  //   }
-  // },
-
   async handleInAppIOSWebhook(payload: any, req: any) {
     const webHookData = payload?.data;
 
-    let transactionInfo = null;
-    let renewalInfo = null;
-
-    if (webHookData?.signedTransactionInfo) {
-      transactionInfo = await decodeSignedPayload(
-        webHookData.signedTransactionInfo
-      );
-    }
-
-    if (webHookData?.signedRenewalInfo) {
-      renewalInfo = await decodeSignedPayload(webHookData.signedRenewalInfo);
-    }
+    const [transactionInfo, renewalInfo] = await Promise.all([
+      webHookData.signedTransactionInfo
+        ? decodeSignedPayload(webHookData.signedTransactionInfo)
+        : null,
+      webHookData.signedRenewalInfo
+        ? decodeSignedPayload(webHookData.signedRenewalInfo)
+        : null,
+    ]);
 
     const notificationType = payload?.notificationType;
     const subtype = payload?.subtype;
@@ -1946,63 +1316,57 @@ export const planServices = {
       (renewalInfo?.currency as string);
 
     const purchaseDate = transactionInfo?.purchaseDate as Date;
-    const expiresDate = transactionInfo?.expiresDate;
+    const expiresDate = transactionInfo?.expiresDate as Date;
 
     const appAccountToken =
       transactionInfo?.appAccountToken || renewalInfo?.appAccountToken;
 
-    const planData =
-      process.env.PAYMENT === "DEV"
-        ? await testPlanModel.findOne({
-            $or: [
-              { androidProductId: productId },
-              { stripeProductId: productId },
-              { iosProductId: productId },
-            ],
-          })
-        : await planModel.findOne({
-            $or: [
-              { androidProductId: productId },
-              { stripeProductId: productId },
-              { iosProductId: productId },
-            ],
-          });
+    const planModelToUse =
+      process.env.PAYMENT === "DEV" ? testPlanModel : planModel;
 
-    if (!planData) {
-      throw new Error("planNotFound");
-    }
+    const [userData, planData] = await Promise.all([
+      UserModel.findOne({ uuid: appAccountToken }),
+      planModelToUse.findOne({
+        $or: [
+          { androidProductId: productId },
+          { stripeProductId: productId },
+          { iosProductId: productId },
+        ],
+      }),
+    ]);
+
+    if (!planData) throw new Error("planNotFound");
+
+    const userId = userData?._id ?? null;
+
+    const amountBase = typeof priceMicros === "number" ? priceMicros / 1000 : 0;
 
     const linkedPurchaseToken = originalTransactionId;
-    const amount =
-      typeof priceMicros === "number" ? priceMicros / 1000 : undefined;
-    const amountBase = amount;
 
     let data: any = null;
-    let actionMessage = "";
 
-    console.log(transactionInfo, renewalInfo, linkedPurchaseToken, amountBase);
+    console.log(
+      notificationType,
+      "Subtype==>",
+      "✅" + subtype || "Unknown",
+      "Price==>",
+      "✅" + amountBase || "Unknown",
+      "UserId==>",
+      "✅" + userId || "Not Present",
+      userData?.fullName || null
+    );
 
     switch (notificationType) {
       case "SUBSCRIBED":
       case "DID_CHANGE_RENEWAL_PREF":
-        // ========================================
-        // CRITICAL: Handle RESUBSCRIBE separately
-        // ========================================
         if (subtype === "RESUBSCRIBE") {
-          actionMessage =
-            "RESUBSCRIBE - User resubscribed after cancellation (iOS)";
-
-          // Find the existing subscription (should be canceled)
           const existingSubscription = await SubscriptionModel.findOne({
-            orderId: linkedPurchaseToken,
+            userId: userId,
           });
-
-          console.log(existingSubscription)
 
           if (!existingSubscription) {
             break;
           } else {
-            // REACTIVATE the existing subscription (don't create new!)
             data = await SubscriptionModel.findByIdAndUpdate(
               existingSubscription._id,
               {
@@ -2027,27 +1391,22 @@ export const planServices = {
           }
 
           // Handle notifications and transactions
-          if (data?.userId) {
-            await TransactionModel.findOneAndUpdate(
-              { orderId: transactionId, userId: data.userId },
-              {
-                $setOnInsert: {
-                  planId: planData._id,
-                  status: "succeeded",
-                  amount: amountBase,
-                  currency: currency,
-                  paidAt: new Date(purchaseDate) ?? new Date(),
-                },
-              },
-              { upsert: true }
-            );
-
-            await UserModel.findByIdAndUpdate(data.userId, {
+          if (userId) {
+            await TransactionModel.create({
+              orderId: transactionId,
+              userId: userId,
+              planId: planData._id,
+              status: "succeeded",
+              amount: amountBase,
+              currency: currency,
+              paidAt: new Date(purchaseDate) ?? new Date(),
+            });
+            await UserModel.findByIdAndUpdate(userId, {
               $set: { hasUsedTrial: true },
             });
 
             await NotificationService(
-              [data.userId] as any,
+              [userId] as any,
               "SUBSCRIPTION_RENEWED",
               data._id as any
             );
@@ -2057,13 +1416,9 @@ export const planServices = {
         }
 
         if (subtype === "INITIAL_BUY") {
-          actionMessage = "INITIAL_BUY - Free trial started (iOS)";
-
-          data = await SubscriptionModel.findOneAndUpdate(
-        { orderId: linkedPurchaseToken },
-        {
-          $set: {
+          const data = await SubscriptionModel.create({
             orderId: linkedPurchaseToken,
+            userId: userId,
             deviceType: "IOS",
             subscriptionId: productId,
             amount: 0,
@@ -2075,13 +1430,9 @@ export const planServices = {
             currency: currency,
             planId: planData._id,
             status: "trialing",
-          },
-        },
-        { new: true, upsert: true }
-      );
+          });
 
-
-          if (data?.userId) {
+          if (data.userId) {
             await NotificationService(
               [data.userId],
               "FREETRIAL_STARTED",
@@ -2094,10 +1445,8 @@ export const planServices = {
         break;
 
       case "DID_RENEW":
-        actionMessage = "DID_RENEW - Subscription renewed (iOS)";
-
         const subscriptionToRenew = await SubscriptionModel.findOne({
-          orderId: linkedPurchaseToken,
+          userId: userId,
         });
 
         if (!subscriptionToRenew) {
@@ -2115,7 +1464,7 @@ export const planServices = {
         }
 
         data = await SubscriptionModel.findOneAndUpdate(
-          { orderId: linkedPurchaseToken },
+          { userId: userId },
           {
             $set: {
               amount: amountBase ?? 0,
@@ -2137,19 +1486,15 @@ export const planServices = {
         );
 
         if (data?.userId) {
-          await TransactionModel.findOneAndUpdate(
-            { orderId: transactionId, userId: data.userId },
-            {
-              $setOnInsert: {
-                planId: planData._id,
-                status: "succeeded",
-                amount: amountBase,
-                currency: currency,
-                paidAt: new Date(purchaseDate) ?? new Date(),
-              },
-            },
-            { upsert: true }
-          );
+          await TransactionModel.create({
+            userId: data.userId,
+            orderId: transactionId,
+            planId: planData._id,
+            status: "succeeded",
+            amount: amountBase,
+            currency: currency,
+            paidAt: new Date(purchaseDate) ?? new Date(),
+          });
 
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },
@@ -2164,10 +1509,8 @@ export const planServices = {
         break;
 
       case "DID_FAIL_TO_RENEW":
-        actionMessage =
-          "DID_FAIL_TO_RENEW - Subscription failed to renew (iOS)";
         data = await SubscriptionModel.findOneAndUpdate(
-          { orderId: linkedPurchaseToken },
+          { userId: userId },
           { $set: { status: "past_due" } },
           { new: true }
         );
@@ -2182,9 +1525,8 @@ export const planServices = {
 
       case "REVOKE":
       case "EXPIRED":
-        actionMessage = "EXPIRED - Subscription expired (iOS)";
         data = await SubscriptionModel.findOneAndUpdate(
-          { orderId: linkedPurchaseToken },
+          { userId: userId },
           { $set: { status: "canceled" } },
           { new: true }
         );
@@ -2202,9 +1544,8 @@ export const planServices = {
         break;
 
       case "REFUND":
-        actionMessage = "REFUND - Subscription refunded (iOS)";
         data = await SubscriptionModel.findOneAndUpdate(
-          { orderId: linkedPurchaseToken },
+          { userId: userId },
           { $set: { status: "canceled" } },
           { new: true }
         );
@@ -2225,9 +1566,8 @@ export const planServices = {
 
       case "DID_CHANGE_RENEWAL_STATUS":
         if (subtype === "AUTO_RENEW_DISABLED") {
-          actionMessage = "AUTO_RENEW_DISABLED - User disabled auto-renewal";
           data = await SubscriptionModel.findOneAndUpdate(
-            { orderId: linkedPurchaseToken },
+            { userId: userId },
             { $set: { status: "canceling" } },
             { new: true }
           );
@@ -2240,9 +1580,8 @@ export const planServices = {
             );
           }
         } else if (subtype === "AUTO_RENEW_ENABLED") {
-          actionMessage = "AUTO_RENEW_ENABLED - User re-enabled auto-renewal";
           data = await SubscriptionModel.findOneAndUpdate(
-            { orderId: linkedPurchaseToken },
+            { userId: userId },
             { $set: { status: "active" } },
             { new: true }
           );
@@ -2250,10 +1589,8 @@ export const planServices = {
         break;
 
       case "DID_RECOVER":
-        actionMessage =
-          "DID_RECOVER - Subscription recovered from billing issue";
         data = await SubscriptionModel.findOneAndUpdate(
-          { orderId: linkedPurchaseToken },
+          { userId: userId },
           {
             $set: {
               status: "active",
@@ -2274,282 +1611,12 @@ export const planServices = {
         break;
 
       case "TEST":
-        actionMessage = "TEST - Apple test notification (iOS)";
         break;
 
       default:
-        actionMessage = `UNKNOWN_TYPE_${notificationType} - Apple notification`;
+        break;
     }
-
-    console.log(`✅ ${actionMessage}`);
   },
-
-  // async handleInAppIOSWebhook(payload: any, req: any) {
-  //   const webHookData = payload?.data;
-
-  //   let transactionInfo = null;
-  //   let renewalInfo = null;
-
-  //   if (webHookData?.signedTransactionInfo) {
-  //     transactionInfo = await decodeSignedPayload(
-  //       webHookData.signedTransactionInfo
-  //     );
-  //     // console.log("💳 Transaction info:", transactionInfo);
-  //   }
-
-  //   if (webHookData?.signedRenewalInfo) {
-  //     renewalInfo = await decodeSignedPayload(webHookData.signedRenewalInfo);
-  //     // console.log("♻️ Renewal info:", renewalInfo);
-  //   }
-
-  //   const notificationType = payload?.notificationType;
-  //   const subtype = payload?.subtype;
-
-  //   const productId =
-  //     renewalInfo?.autoRenewProductId || transactionInfo?.productId;
-
-  //   const originalTransactionId =
-  //     transactionInfo?.originalTransactionId ||
-  //     renewalInfo?.originalTransactionId;
-
-  //   const transactionId = transactionInfo?.transactionId;
-  //   const priceMicros = renewalInfo?.renewalPrice ?? transactionInfo?.price;
-  //   const currency =
-  //     (transactionInfo?.currency as string) ||
-  //     (renewalInfo?.currency as string);
-
-  //   const purchaseDate = transactionInfo?.purchaseDate as Date;
-  //   const expiresDate = transactionInfo?.expiresDate;
-  //   const appTransactionId =
-  //     transactionInfo?.appTransactionId || renewalInfo?.appTransactionId;
-
-  //   const planData =
-  //     process.env.PAYMENT === "DEV"
-  //       ? await testPlanModel.findOne({
-  //           $or: [
-  //             {
-  //               androidProductId: productId,
-  //             },
-  //             {
-  //               stripeProductId: productId,
-  //             },
-  //             {
-  //               iosProductId: productId,
-  //             },
-  //           ],
-  //         })
-  //       : ((await planModel.findOne({
-  //           $or: [
-  //             {
-  //               androidProductId: productId,
-  //             },
-  //             {
-  //               stripeProductId: productId,
-  //             },
-  //             {
-  //               iosProductId: productId,
-  //             },
-  //           ],
-  //         })) as any);
-
-  //   if (!planData) {
-  //     throw new Error("planNotFound");
-  //   }
-
-  //   // We'll use originalTransactionId as the linkedPurchaseToken to map subscriptions
-  //   const linkedPurchaseToken = originalTransactionId;
-
-  //   // Convert micros -> base currency (same as Android)
-  //   const amount =
-  //     typeof priceMicros === "number" ? priceMicros / 1000 : undefined;
-
-  //   const amountBase = amount;
-
-  //   let data; // will store subscription doc when relevant
-  //   let actionMessage = "";
-
-  //   console.log(payload);
-
-  //   // Notification type ke base pe action log karo
-  //   switch (notificationType) {
-  //     case "DID_CHANGE_RENEWAL_PREF":
-  //     case "SUBSCRIBED":
-  //       actionMessage = "SUBSCRIBED - New subscription purchased (iOS)";
-  //       data = await SubscriptionModel.findOneAndUpdate(
-  //         {
-  //           orderId: linkedPurchaseToken,
-  //           status: { $in: ["active", "trialing", "canceling"] },
-  //         },
-  //         {
-  //           $set: {
-  //             orderId: linkedPurchaseToken,
-  //             deviceType: "IOS",
-  //             subscriptionId: productId,
-  //             amount: subtype === "INITIAL_BUY" ? 0 : amount,
-  //             currentPeriodStart:
-  //               subtype === "INITIAL_BUY" ? null : purchaseDate,
-  //             currentPeriodEnd: subtype === "INITIAL_BUY" ? null : expiresDate,
-  //             startDate: purchaseDate,
-  //             trialStart: subtype === "INITIAL_BUY" ? purchaseDate : null,
-  //             trialEnd: subtype === "INITIAL_BUY" ? expiresDate : null,
-  //             currency: currency,
-  //             planId: planData._id,
-  //             status: subtype === "INITIAL_BUY" ? "trialing" : "active",
-  //           },
-  //         },
-  //         {
-  //           upsert: true,
-  //         }
-  //       );
-
-  //       if (subtype !== "INITIAL_BUY" && data?.userId) {
-  //         await TransactionModel.create({
-  //           orderId: transactionId,
-  //           userId: data.userId,
-  //           planId: planData._id,
-  //           status: "succeeded",
-  //           amount: amountBase,
-  //           currency: currency,
-  //           paidAt: new Date(purchaseDate) ?? new Date(),
-  //         });
-  //         await UserModel.findByIdAndUpdate(data.userId, {
-  //           $set: { hasUsedTrial: true },
-  //         });
-  //         await NotificationService(
-  //           [data.userId] as any,
-  //           "SUBSCRIPTION_RENEWED",
-  //           data._id as any
-  //         );
-  //       } else if (data && subtype === "INITIAL_BUY") {
-  //         // free trial started
-  //         await UserModel.findByIdAndUpdate(data.userId, {
-  //           $set: { hasUsedTrial: true },
-  //         });
-  //         await NotificationService(
-  //           [data?.userId],
-  //           "SUBSCRIPTION_STARTED",
-  //           data?._id as Types.ObjectId
-  //         );
-  //       }
-
-  //       break;
-  //     case "RENEWAL":
-  //     case "DID_RENEW":
-  //       actionMessage = "DID_RENEW - Subscription renewed (iOS)";
-  //       data = await SubscriptionModel.findOneAndUpdate(
-  //         { orderId: linkedPurchaseToken },
-  //         {
-  //           $set: {
-  //             orderId: linkedPurchaseToken,
-  //             amount: amountBase ?? 0,
-  //             currentPeriodStart: purchaseDate
-  //               ? new Date(Number(purchaseDate))
-  //               : null,
-  //             currentPeriodEnd: expiresDate
-  //               ? new Date(Number(expiresDate))
-  //               : null,
-  //             currency: currency || "USD",
-  //             planId: planData._id,
-  //             subscriptionId: productId,
-  //             status: "active",
-  //           },
-  //         },
-  //         { new: true }
-  //       );
-
-  //       console.warn("userId", data?.userId);
-
-  //       if (data?.userId) {
-  //         await TransactionModel.create({
-  //           orderId: transactionId,
-  //           userId: data.userId,
-  //           planId: planData._id,
-  //           status: "succeeded",
-  //           amount: amountBase,
-  //           currency: currency,
-  //           paidAt: new Date(purchaseDate) ?? new Date(),
-  //         });
-  //         await UserModel.findByIdAndUpdate(data.userId, {
-  //           $set: { hasUsedTrial: true },
-  //         });
-  //         await NotificationService(
-  //           [data.userId] as any,
-  //           "SUBSCRIPTION_RENEWED",
-  //           data._id as any
-  //         );
-  //       }
-  //       break;
-
-  //     case "DID_FAIL_TO_RENEW":
-  //       actionMessage =
-  //         "DID_FAIL_TO_RENEW - Subscription failed to renew (iOS)";
-  //       data = await SubscriptionModel.findOneAndUpdate(
-  //         { orderId: linkedPurchaseToken },
-  //         { $set: { status: "past_due" } },
-  //         { new: true }
-  //       );
-  //       if (data?.userId) {
-  //         await NotificationService(
-  //           [data.userId] as any,
-  //           "SUBSCRIPTION_FAILED",
-  //           data._id as any
-  //         );
-  //       }
-  //       break;
-
-  //     case "REVOKE":
-  //     case "EXPIRED":
-  //       actionMessage = "EXPIRED - Subscription expired (iOS)";
-  //       data = await SubscriptionModel.findOneAndUpdate(
-  //         { orderId: linkedPurchaseToken },
-  //         { $set: { status: "canceled" } },
-  //         { new: true }
-  //       );
-  //       if (data?.userId) {
-  //         await UserModel.findByIdAndUpdate(data.userId, {
-  //           $set: { hasUsedTrial: true },
-  //         });
-  //         await TokenModel.findOneAndDelete({ userId: data.userId });
-  //         await NotificationService(
-  //           [data.userId] as any,
-  //           "SUBSCRIPTION_CANCELLED",
-  //           data._id as any
-  //         );
-  //       }
-  //       break;
-
-  //     case "REFUND":
-  //       break;
-
-  //     case "DID_CHANGE_RENEWAL_STATUS":
-  //       if (subtype === "DOWNGRADE") {
-  //       }
-  //       if (subtype === "UPGRADE") {
-  //       }
-  //       if (subtype === "AUTO_RENEW_DISABLED") {
-  //       }
-  //       if (subtype === "AUTO_RENEW_ENABLED") {
-  //       }
-
-  //       break;
-
-  //     case "DID_CHANGE_RENEWAL_PREF":
-  //       break;
-
-  //     case "PRICE_INCREASE":
-  //       break;
-
-  //     case "DID_RECOVER":
-  //       break;
-
-  //     case "TEST":
-  //       actionMessage = "TEST - Apple test notification (iOS)";
-  //       break;
-
-  //     default:
-  //       actionMessage = `UNKNOWN_TYPE_${notificationType} - Apple notification`;
-  //   }
-  // },
 };
 
 export const jobServices = {

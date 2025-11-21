@@ -1,8 +1,10 @@
 import mongoose, { Document, Schema } from "mongoose";
+import { v4 as uuid } from "uuid";
 import { authTypes, countries, genders, languages } from "src/utils/constant";
 
 export interface IUser extends Document {
   fullName: string;
+  uuid: string;
   email: string;
   password?: string;
   image?: string;
@@ -33,6 +35,12 @@ const userSchema = new Schema<IUser>(
       type: String,
       required: true,
       trim: true,
+    },
+    uuid:{
+      type: String,
+      required: true,
+      unique: true,
+      default: () => uuid(),
     },
     email: {
       type: String,
