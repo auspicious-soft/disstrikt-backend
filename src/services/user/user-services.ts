@@ -1255,7 +1255,10 @@ export const userJobServices = {
       minHeightInCm: data.minHeightInCm,
     };
 
-    const status = await AppliedJobModel.findOne({ userId: id, jobId: jobId });
+    const status = await AppliedJobModel.findOne({
+      jobId,
+      userId: id,
+    }).lean();
 
     return {
       ...response,

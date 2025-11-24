@@ -59,7 +59,6 @@ const transactionSchema = new Schema<ITransaction>(
   { timestamps: true }
 );
 
-transactionSchema.index({ userId: 1 });
 
 export const TransactionModel = model<ITransaction>(
   "transaction",

@@ -981,7 +981,7 @@ export const planServices = {
               currentPeriodEnd: expiryTimeMillis
                 ? new Date(Number(expiryTimeMillis))
                 : null,
-              currency: priceCurrencyCode,
+              currency: priceCurrencyCode.toLowerCase(),
               planId: planData._id,
               status: "active",
             },
@@ -992,21 +992,15 @@ export const planServices = {
         if (data?.userId) {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
           const convertedAmountGBP = originalAmount;
-          await TransactionModel.findOneAndUpdate(
-            {
-              userId: data.userId,
-            },
-            {
-              $setOnInsert: {
+          await TransactionModel.create({
                 userId: data.userId,
                 planId: planData._id,
                 status: "succeeded",
                 amount: convertedAmountGBP,
-                currency: priceCurrencyCode,
+                currency: priceCurrencyCode.toLowerCase(),
                 paidAt: new Date(eventTime) ?? new Date(),
               },
-            },
-            { upsert: true, new: true }
+
           );
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },
@@ -1032,7 +1026,7 @@ export const planServices = {
               currentPeriodEnd: expiryTimeMillis
                 ? new Date(Number(expiryTimeMillis))
                 : null,
-              currency: priceCurrencyCode,
+              currency: priceCurrencyCode.toLowerCase(),
               planId: planData._id,
               status: "active",
             },
@@ -1043,21 +1037,14 @@ export const planServices = {
         if (data?.userId) {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
           const convertedAmountGBP = originalAmount;
-          await TransactionModel.findOneAndUpdate(
-            {
-              userId: data.userId,
-            },
-            {
-              $setOnInsert: {
+          await TransactionModel.create({
                 userId: data.userId,
                 planId: planData._id,
                 status: "succeeded",
                 amount: convertedAmountGBP,
-                currency: priceCurrencyCode,
+                currency: priceCurrencyCode.toLowerCase(),
                 paidAt: new Date(eventTime) ?? new Date(),
               },
-            },
-            { upsert: true, new: true }
           );
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },
@@ -1120,7 +1107,7 @@ export const planServices = {
                 paymentState === 2 ? new Date(Number(startTimeMillis)) : null,
               trialEnd:
                 paymentState === 2 ? new Date(Number(expiryTimeMillis)) : null,
-              currency: priceCurrencyCode,
+              currency: priceCurrencyCode.toLowerCase(),
               planId: planData._id,
               status:
                 paymentState === 2
@@ -1175,7 +1162,7 @@ export const planServices = {
               currentPeriodEnd: expiryTimeMillis
                 ? new Date(Number(expiryTimeMillis))
                 : null,
-              currency: priceCurrencyCode,
+              currency: priceCurrencyCode.toLowerCase(),
               planId: planData._id,
               status: "active",
             },
@@ -1186,20 +1173,14 @@ export const planServices = {
         if (data?.userId) {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
           const convertedAmountGBP = originalAmount;
-          await TransactionModel.findOneAndUpdate(
-            {
-              userId: data.userId,
-            },
-            {
-              $setOnInsert: {
+          await TransactionModel.findOneAndUpdate({
+                userId: data.userId,
                 planId: planData._id,
                 status: "succeeded",
                 amount: convertedAmountGBP,
-                currency: priceCurrencyCode,
+                currency: priceCurrencyCode.toLowerCase(),
                 paidAt: new Date(eventTime) ?? new Date(),
               },
-            },
-            { upsert: true, new: true }
           );
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },

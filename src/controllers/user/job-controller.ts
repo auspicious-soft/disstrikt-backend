@@ -56,6 +56,7 @@ export const getJobById = async (req: Request, res: Response) => {
     const response = await userJobServices.getJobById({
       jobId:id,
       language: req.body.language || "en",
+      id: userData?.id,
     });
     return OK(res, response || {}, req.body.language);
   } catch (err: any) {
