@@ -993,15 +993,13 @@ export const planServices = {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
           const convertedAmountGBP = originalAmount;
           await TransactionModel.create({
-                userId: data.userId,
-                planId: planData._id,
-                status: "succeeded",
-                amount: convertedAmountGBP,
-                currency: priceCurrencyCode.toLowerCase(),
-                paidAt: new Date(eventTime) ?? new Date(),
-              },
-
-          );
+            userId: data.userId,
+            planId: planData._id,
+            status: "succeeded",
+            amount: convertedAmountGBP,
+            currency: priceCurrencyCode.toLowerCase(),
+            paidAt: new Date(eventTime) ?? new Date(),
+          });
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },
           });
@@ -1038,14 +1036,13 @@ export const planServices = {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
           const convertedAmountGBP = originalAmount;
           await TransactionModel.create({
-                userId: data.userId,
-                planId: planData._id,
-                status: "succeeded",
-                amount: convertedAmountGBP,
-                currency: priceCurrencyCode.toLowerCase(),
-                paidAt: new Date(eventTime) ?? new Date(),
-              },
-          );
+            userId: data.userId,
+            planId: planData._id,
+            status: "succeeded",
+            amount: convertedAmountGBP,
+            currency: priceCurrencyCode.toLowerCase(),
+            paidAt: new Date(eventTime) ?? new Date(),
+          });
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },
           });
@@ -1174,14 +1171,13 @@ export const planServices = {
           const originalAmount = priceAmountMicros / 1000000; // convert micros → base currency
           const convertedAmountGBP = originalAmount;
           await TransactionModel.findOneAndUpdate({
-                userId: data.userId,
-                planId: planData._id,
-                status: "succeeded",
-                amount: convertedAmountGBP,
-                currency: priceCurrencyCode.toLowerCase(),
-                paidAt: new Date(eventTime) ?? new Date(),
-              },
-          );
+            userId: data.userId,
+            planId: planData._id,
+            status: "succeeded",
+            amount: convertedAmountGBP,
+            currency: priceCurrencyCode.toLowerCase(),
+            paidAt: new Date(eventTime) ?? new Date(),
+          });
           await UserModel.findByIdAndUpdate(data.userId, {
             $set: { hasUsedTrial: true },
           });
@@ -2150,15 +2146,24 @@ export const taskServices = {
     }
 
     if (Array.isArray(task.link) && task.link.length) {
-      // Find files that exist in old task but not in the new payload
-      const filesToDelete = task.link.filter(
+      // Find removed items
+      const removedLinks = task.link.filter(
         (oldFile: string) => !link.includes(oldFile)
       );
 
-      if (filesToDelete.length > 0) {
-        await Promise.all(
-          filesToDelete.map((file: string) => deleteFileFromS3(file))
-        );
+      // Only delete INTERNAL S3 paths (skip YouTube, http, etc.)
+      const s3FilesToDelete = removedLinks.filter(
+        (file: string) => !file.startsWith("http")
+      );
+
+      if (s3FilesToDelete.length > 0) {
+        try {
+          await Promise.all(
+            s3FilesToDelete.map((file: string) => deleteFileFromS3(file))
+          );
+        } catch (err) {
+          console.error("S3 delete error:", err);
+        }
       }
     }
 
