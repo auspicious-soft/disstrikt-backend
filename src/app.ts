@@ -162,7 +162,7 @@ app.use("/api/user", checkUserAuth, user);
 app.use("/api/paid-user", checkUserAuth, checkSubscription, paidUser);
 
 // //*****************Admin Routes******************/
-app.use("/api/admin", admin);
+app.use("/api/admin", checkAdminAuth, admin);
 
 // //*****************Stripe Test Routes*****************/
 // app.get("/success-test", stripeSuccess);
