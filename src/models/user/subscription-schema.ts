@@ -25,6 +25,7 @@ export interface ISubscription extends Document {
   amount: number;
   currency: string;
   nextPlanId: Types.ObjectId;
+  environment: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -42,9 +43,9 @@ const subscriptionSchema = new Schema<ISubscription>(
     userId: { type: Schema.Types.ObjectId, ref: "user" },
     linkedPurchaseToken: { type: String },
     orderId: { type: String },
-    deviceType: { type: String},
+    deviceType: { type: String },
     subscriptionId: { type: String },
-    planId: { type: Schema.Types.ObjectId, ref: "plan"},
+    planId: { type: Schema.Types.ObjectId, ref: "plan" },
     status: {
       type: String,
       enum: [
@@ -63,8 +64,13 @@ const subscriptionSchema = new Schema<ISubscription>(
     currentPeriodStart: { type: Date, default: null },
     currentPeriodEnd: { type: Date, default: null },
     nextBillingDate: { type: Date, default: null },
-    amount: { type: Number},
-    currency: { type: String},
+    amount: { type: Number },
+    currency: { type: String },
+    environment: {
+      type: String,
+      enum: ["Production", "Sandbox", "Xcode"],
+      default: "Production",
+    },
     nextPlanId: { type: Schema.Types.ObjectId, ref: "plan", default: null },
   },
   {

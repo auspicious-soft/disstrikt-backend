@@ -9,6 +9,7 @@ import {
   logoutUser,
   setupIntent,
   userMoreInfo,
+  validateIosReceipt,
 } from "src/controllers/auth/auth-controller";
 import {
   getTaskById,
@@ -54,6 +55,8 @@ router.get("/get-login-response", getLoginResponse);
 router.post("/logout", logoutUser);
 router.post("/buy-again", buyAgain);
 router.get("/get-active-plan", getActivePlan);
+
+router.post("/validate-ios-receipt", validateIosReceipt);
 
 const paidRouter = Router();
 

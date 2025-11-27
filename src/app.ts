@@ -97,7 +97,7 @@ app.post("/in-app-android", rawBodyMiddleware, async (req: any, res: any) => {
     res.status(200).send("OK");
   } catch (err) {
     console.error("Error:", err);
-    res.status(500).send("Error");
+    res.status(200).send("OK");
   }
 });
 
@@ -121,11 +121,11 @@ app.post(
         return res.sendStatus(200);
       }
       const decodedOuter = await decodeSignedPayload(signedPayload);
-      await planServices.handleInAppIOSWebhook(decodedOuter, req);
+      await planServices.handleInAppIOSWebhook(decodedOuter, req, res);
       res.status(200).send("OK");
     } catch (err) {
       console.error("Error:", err);
-      res.status(500).send("Error");
+      res.status(200).send("OK");
     }
   }
 );

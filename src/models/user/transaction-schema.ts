@@ -25,6 +25,7 @@ export interface ITransaction extends Document {
   amount: number;
   currency: string;
   paidAt: Date;
+  environment: "Production" | "Sandbox" | "Xcode";
 }
 
 const transactionSchema = new Schema<ITransaction>(
@@ -55,10 +56,14 @@ const transactionSchema = new Schema<ITransaction>(
     amount: { type: Number },
     currency: { type: String },
     paidAt: { type: Date },
+    environment: {
+      type: String,
+      enum: ["Production", "Sandbox", "Xcode"],
+      default: "Production",
+    },
   },
   { timestamps: true }
 );
-
 
 export const TransactionModel = model<ITransaction>(
   "transaction",

@@ -7,6 +7,7 @@ import { authServices } from "src/services/auth/auth-services";
 import { portfolioServices } from "src/services/user/user-services";
 import { countries, languages } from "src/utils/constant";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import jwksClient from "jwks-rsa";
 
 import {
   BADREQUEST,
@@ -15,6 +16,8 @@ import {
   OK,
   UNAUTHORIZED,
 } from "src/utils/response";
+import axios from "axios";
+import { TransactionModel } from "src/models/user/transaction-schema";
 
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -556,3 +559,252 @@ export const userPortfolio = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
+// const APPLE_PROD_URL = "https://buy.itunes.apple.com/verifyReceipt";
+// const APPLE_SANDBOX_URL = "https://sandbox.itunes.apple.com/verifyReceipt";
+
+// const client = jwksClient({
+//   jwksUri: "https://apple-keys.itunes.apple.com/v1/keys",
+//   cache: true,
+//   cacheMaxEntries: 5,
+//   cacheMaxAge: 86400000, // 24 hours
+// });
+
+// const getSigningKey = (kid: string): Promise<string> => {
+//   return new Promise((resolve, reject) => {
+//     client.getSigningKey(kid, (err, key) => {
+//       if (err) reject(err);
+//       else resolve(key!.getPublicKey());
+//     });
+//   });
+// };
+
+async function validateStoreKit2JWS(
+  signedJWS: string
+): Promise<{ valid: boolean; data?: any; error?: string }> {
+  try {
+    const decodedHeader = jwt.decode(signedJWS, { complete: true })?.header;
+    const header = decodedHeader as any;
+    if (
+      header.alg !== "ES256" ||
+      !Array.isArray(header.x5c) ||
+      header.x5c.length === 0
+    ) {
+      return { valid: false, error: "Invalid header: missing ES256 or x5c" };
+    }
+    // Step 2: Extract Apple's intermediate cert (the first one in x5c)
+    const appleCertBase64 = header.x5c[0];
+    const applePublicKey = `-----BEGIN CERTIFICATE-----\n${appleCertBase64}\n-----END CERTIFICATE-----`;
+
+    // Step 3: Verify signature using the embedded cert
+    const payload = jwt.verify(signedJWS, applePublicKey, {
+      algorithms: ["ES256"],
+    }) as any;
+
+    console.log(payload);
+
+    return {
+      valid: true,
+      data: {
+        transactionId: payload.transactionId,
+        originalTransactionId:
+          payload.originalTransactionId || payload.transactionId,
+        productId: payload.productId,
+        purchaseDate: new Date(Number(payload.purchaseDate)),
+        expiresDate: payload.expiresDate
+          ? new Date(Number(payload.expiresDate))
+          : null,
+        environment: payload.environment, // "Sandbox" or "Production"
+        isTrial: payload.offerDiscountType === "FREE_TRIAL" ? true : false,
+        price: payload.price,
+        currency: payload.currency,
+        transactionReason: payload.transactionReason,
+        appAccountToken: payload.appAccountToken, // very useful to match user
+      },
+    };
+  } catch (err: any) {
+    return { valid: false, error: err.message };
+  }
+}
+
+export const validateIosReceipt = async (req: Request, res: Response) => {
+  try {
+    const user = req.user as any;
+    const { receiptData } = req.body;
+
+    console.log(receiptData);
+
+    if (!receiptData) {
+      return res.status(400).json({ message: "receiptMissing" });
+    }
+
+    const result = await validateStoreKit2JWS(receiptData);
+
+    // STEP 1: Validate with Apple
+    // const validateReceipt = async (url: string) => {
+    //   return axios.post(
+    //     url,
+    //     {
+    //       "receipt-data": receiptData,
+    //       password: process.env.APPLE_SHARED_SECRET,
+    //       excludeOldTransactions: true,
+    //     },
+    //     { timeout: 8000 }
+    //   );
+    // };
+
+    // let appleResponse = await validateReceipt(APPLE_PROD_URL);
+
+    // console.log("Apple Response:", appleResponse.data);
+    // if (appleResponse.data.status === 21007) {
+    //   appleResponse = await validateReceipt(APPLE_SANDBOX_URL);
+    // }
+    // const data = appleResponse.data;
+    // if (data.status !== 0 || !data.latest_receipt_info?.length) {
+    //   return res
+    //     .status(400)
+    //     .json({ message: "invalidReceipt", appleStatus: data.status });
+    // }
+
+    const {
+      transactionId,
+      originalTransactionId,
+      productId,
+      purchaseDate,
+      expiresDate,
+      environment,
+      currency,
+      isTrial,
+      price,
+      transactionReason,
+    } = result.data;
+
+    // STEP 3: Fetch user & plan
+    const planData = await planModel.findOne({
+      iosProductId: productId,
+    });
+
+    if (!planData) {
+      return res.status(400).json({ message: "planNotFound" });
+    }
+
+    const userId = user.id;
+
+    // STEP 4: Create or update subscription
+    const existingSub = await SubscriptionModel.findOne({ userId });
+
+    console.log(existingSub);
+
+    let subscription;
+    if (!existingSub && isTrial) {
+      // create new subscription
+      subscription = await SubscriptionModel.create({
+        userId,
+        subscriptionId: productId,
+        planId: planData._id,
+        deviceType: "IOS",
+        orderId: originalTransactionId,
+        amount: 0, // Apple doesn't give price in receipt
+        currency: currency.toLowerCase(),
+        status: "trialing",
+        currentPeriodStart: purchaseDate,
+        currentPeriodEnd: expiresDate,
+        trialStart: purchaseDate,
+        trialEnd: expiresDate,
+        environment: environment,
+      });
+
+      return res.status(200).json({
+        message: "receiptValid",
+        subscription,
+      });
+
+    } else if (
+      transactionReason === "PURCHASE" &&
+      existingSub?.status === "canceled"
+    ) {
+      // update existing subscription
+      subscription = await SubscriptionModel.findOneAndUpdate(
+        { userId },
+        {
+          $set: {
+            subscriptionId: productId,
+            planId: planData._id,
+            currentPeriodStart: purchaseDate,
+            currentPeriodEnd: expiresDate,
+            status: expiresDate > new Date() ? "active" : "past_due",
+            trialStart: null,
+            trialEnd: null,
+            currency: currency.toLowerCase(),
+            price: price / 1000,
+            environment: environment,
+          },
+        },
+        { new: true }
+      );
+
+      return res.status(200).json({
+        message: "receiptValid",
+        subscription,
+      });
+    } else {
+      throw Error("No Active Subscription Found");
+    }
+
+    // STEP 5: Log transaction
+    // await TransactionModel.create({
+    //   userId,
+    //   orderId: transactionId,
+    //   planId: planData._id,
+    //   status: "succeeded",
+    //   amount: 0,
+    //   currency: "USD",
+    //   paidAt: purchaseDate,
+    // });
+
+    // STEP 6: Return success to app
+  } catch (err) {
+    console.error("Receipt validation error:", err);
+    return res.status(500).json({ message: "serverError" });
+  }
+};
+
+// export const validateIosReceipt3 = async (req: Request, res: Response) => {
+//   try {
+//     const user = req.user as any;
+//     const { receiptData } = req.body;
+
+//     const response = await fetch(
+//       // "https://sandbox.itunes.apple.com/verifyReceipt",
+//       "https://buy.itunes.apple.com/verifyReceipt",
+//       {
+//         method: "POST",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//         body: JSON.stringify({
+//           "receipt-data": receiptData, // <<< DEKHIYE, WAHI TOKEN YAHAN AAYA HAI
+//           password: process.env.APPLE_SHARED_SECRET,
+//           "exclude-old-transactions": true, // Taaki sirf naye transaction ki details milein
+//         }),
+//       }
+//     );
+
+//     const jsonResponse = await response.json();
+
+//     if (jsonResponse.status === 0) {
+//       // Status 0 ka matlab hai ki receipt valid hai.
+//       console.log("Receipt is valid!");
+//       // Ab aap user ko access de sakte hain.
+//       // jsonResponse.latest_receipt_info ya jsonResponse.receipt.in_app se transaction details nikalein.
+//       return { success: true, data: jsonResponse };
+//     } else {
+//       // Status 0 nahi hai, matlab receipt invalid hai ya koi aur issue hai.
+//       console.log("Receipt is invalid. Status:", jsonResponse.status);
+//       return { success: false, status: jsonResponse.status };
+//     }
+//   } catch (err) {
+//     console.error("Receipt validation error:", err);
+//     return res.status(500).json({ message: "serverError" });
+//   }
+// };
