@@ -692,15 +692,12 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
 
     // STEP 4: Create or update subscription
     const existingSub = await SubscriptionModel.findOne({
-      $or: [
-        {
-          userId,
-          orderId: originalTransactionId,
-        },
-      ],
+      orderId: originalTransactionId,
     });
 
-    console.log(existingSub);
+    if (existingSub && existingSub?.userId !== userId) {
+      throw Error("No Active Subscription Found");
+    }
 
     let subscription;
     if (!existingSub && isTrial) {
