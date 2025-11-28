@@ -691,7 +691,14 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
     const userId = user.id;
 
     // STEP 4: Create or update subscription
-    const existingSub = await SubscriptionModel.findOne({ userId });
+    const existingSub = await SubscriptionModel.findOne({
+      $or: [
+        {
+          userId,
+          orderId: originalTransactionId,
+        },
+      ],
+    });
 
     console.log(existingSub);
 
@@ -718,7 +725,6 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
         message: "receiptValid",
         subscription,
       });
-
     } else if (
       transactionReason === "PURCHASE" &&
       existingSub?.status === "canceled"
