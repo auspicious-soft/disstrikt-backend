@@ -695,10 +695,6 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
       orderId: originalTransactionId,
     });
 
-    if (existingSub && existingSub?.userId !== userId) {
-      throw Error("Subscription belongs to another account");
-    }
-
     let subscription;
     if (!existingSub && isTrial) {
       // create new subscription
@@ -724,7 +720,8 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
       });
     } else if (
       transactionReason === "PURCHASE" &&
-      existingSub?.status === "canceled"
+      existingSub?.status === "canceled" &&
+      existingSub?.userId === userId
     ) {
       // update existing subscription
       subscription = await SubscriptionModel.findOneAndUpdate(
@@ -750,25 +747,16 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
         message: "receiptValid",
         subscription,
       });
+    } else if (existingSub && existingSub?.userId !== userId) {
+      throw Error("Subscription belongs to another account");
     } else {
       throw Error("No Active Subscription Found");
     }
-
-    // STEP 5: Log transaction
-    // await TransactionModel.create({
-    //   userId,
-    //   orderId: transactionId,
-    //   planId: planData._id,
-    //   status: "succeeded",
-    //   amount: 0,
-    //   currency: "USD",
-    //   paidAt: purchaseDate,
-    // });
-
-    // STEP 6: Return success to app
-  } catch (err) {
-    console.error("Receipt validation error:", err);
-    return res.status(500).json({ message: "serverError" });
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language || "en");
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
 
