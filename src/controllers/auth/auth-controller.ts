@@ -696,7 +696,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
     });
 
     if (existingSub && existingSub?.userId !== userId) {
-      throw Error("No Active Subscription Found");
+      throw Error("Subscription belongs to another account");
     }
 
     let subscription;
