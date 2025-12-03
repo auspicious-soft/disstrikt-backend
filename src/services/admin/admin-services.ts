@@ -1271,9 +1271,9 @@ export const planServices = {
       const environment =
         webHookData?.environment || payload?.environment || "Production";
 
-      console.log(
-        `[iOS WEBHOOK] Environment: ${environment}, Type: ${payload?.notificationType}`
-      );
+      // console.log(
+      //   `[iOS WEBHOOK] Environment: ${environment}, Type: ${payload?.notificationType}`
+      // );
 
       const [transactionInfo, renewalInfo] = await Promise.all([
         webHookData.signedTransactionInfo
@@ -1333,14 +1333,14 @@ export const planServices = {
 
       let data: any = null;
 
-      console.log(
-        `[${notificationType}]`,
-        `Subtype: ${subtype || "None"}`,
-        `Env: ${environment}`,
-        `Price: ${amountBase}`,
-        `UserId: ${userId || "Not Present"}`,
-        `User: ${userData?.fullName || ""}`
-      );
+      // console.log(
+      //   `[${notificationType}]`,
+      //   `Subtype: ${subtype || "None"}`,
+      //   `Env: ${environment}`,
+      //   `Price: ${amountBase}`,
+      //   `UserId: ${userId || "Not Present"}`,
+      //   `User: ${userData?.fullName || ""}`
+      // );
 
       switch (notificationType) {
         case "SUBSCRIBED":

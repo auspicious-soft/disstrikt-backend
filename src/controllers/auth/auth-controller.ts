@@ -632,7 +632,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
     const user = req.user as any;
     const { receiptData } = req.body;
 
-    console.log(receiptData);
+    // console.log(receiptData);
 
     if (!receiptData) {
       return res.status(400).json({ message: "receiptMissing" });
@@ -679,6 +679,19 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
       transactionReason,
     } = result.data;
 
+    // console.log(
+    //   transactionId,
+    //   originalTransactionId,
+    //   productId,
+    //   purchaseDate,
+    //   expiresDate,
+    //   environment,
+    //   currency,
+    //   isTrial,
+    //   price,
+    //   transactionReason
+    // );
+
     // STEP 3: Fetch user & plan
     const planData = await planModel.findOne({
       iosProductId: productId,
@@ -696,6 +709,23 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
     });
 
     let subscription;
+
+    console.log(
+      (transactionReason === "PURCHASE" || transactionReason === "RENEWAL") &&
+        (existingSub?.status === "canceled" ||
+          existingSub?.status === "active") &&
+        existingSub?.userId.toString() === userId.toString(),
+      transactionReason,
+      existingSub?.status,
+      existingSub?.userId.toString() === userId.toString(),
+      existingSub?.userId.toString(),
+      userId.toString(),
+      originalTransactionId,
+      expiresDate,
+      new Date(),
+      expiresDate > new Date()
+    );
+
     if (!existingSub && isTrial) {
       // create new subscription
       subscription = await SubscriptionModel.create({
@@ -719,10 +749,36 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
         subscription,
       });
     } else if (
-      transactionReason === "PURCHASE" &&
-      existingSub?.status === "canceled" &&
-      existingSub?.userId === userId
+      (transactionReason === "PURCHASE" || transactionReason === "RENEWAL") &&
+      (existingSub?.status === "canceled" ||
+        existingSub?.status === "active") &&
+      existingSub?.userId.toString() === userId.toString() &&
+      price > 0 &&
+      expiresDate > new Date()
     ) {
+      console.log(
+        "subscriptionId",
+        productId,
+        "planId",
+        planData._id,
+        "currentPeriodStart",
+        purchaseDate,
+        "currentPeriodEnd",
+        expiresDate,
+        "status",
+        "active",
+        "trialStart",
+        null,
+        "trialEnd",
+        null,
+        "currency",
+        currency.toLowerCase(),
+        "price",
+        price / 1000,
+        "environment",
+        environment
+      );
+
       // update existing subscription
       subscription = await SubscriptionModel.findOneAndUpdate(
         { userId },
@@ -732,7 +788,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
             planId: planData._id,
             currentPeriodStart: purchaseDate,
             currentPeriodEnd: expiresDate,
-            status: expiresDate > new Date() ? "active" : "past_due",
+            status: "active",
             trialStart: null,
             trialEnd: null,
             currency: currency.toLowerCase(),
