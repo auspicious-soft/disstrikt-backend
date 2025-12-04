@@ -96,6 +96,7 @@ jobs:
               -e AWS_BUCKET_NAME='${{ secrets.AWS_BUCKET_NAME }}' \
               -e APPLE_KEYS_URL='${{ secrets.APPLE_KEYS_URL }}' \
               -e APPLE_KEY_ID='${{ secrets.APPLE_KEY_ID }}' \
+              -e APPLE_BUNDEL_ID='${{ secrets.APPLE_BUNDEL_ID }}' \
               -e APPLE_ISSUER_ID='${{ secrets.APPLE_ISSUER_ID }}' \
               -e APPLE_PRIVATE_KEY='${{ secrets.APPLE_PRIVATE_KEY }}' \
               -e NEXT_PUBLIC_AWS_BUCKET_PATH='${{ secrets.NEXT_PUBLIC_AWS_BUCKET_PATH }}' \
