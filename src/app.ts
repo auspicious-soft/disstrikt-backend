@@ -130,6 +130,39 @@ app.post(
   }
 );
 
+app.post(
+  "/in-app-ios-production",
+  rawBodyMiddleware,
+  async (req: Request, res: Response) => {
+    try {
+      const bodyBuffer = req.body as Buffer;
+      if (bodyBuffer.length === 0) return res.status(400).send("Empty body");
+      const bodyStr = bodyBuffer.toString("utf8");
+      let parsedBody: any;
+      try {
+        parsedBody = JSON.parse(bodyStr);
+      } catch (e) {
+        return res.status(400).send("Invalid JSON");
+      }
+      const { signedPayload } = parsedBody;
+      if (!signedPayload) {
+        console.log("⚠️ No signedPayload in request");
+        return res.sendStatus(200);
+      }
+      const decodedOuter = await decodeSignedPayload(signedPayload);
+      await planServices.handleInAppIOSWebhookProduction(
+        decodedOuter,
+        req,
+        res
+      );
+      res.status(200).send("OK");
+    } catch (err) {
+      console.error("Error:", err);
+      res.status(200).send("OK");
+    }
+  }
+);
+
 app.use(express.json());
 app.set("trust proxy", true);
 app.use(express.urlencoded({ extended: true }));

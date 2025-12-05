@@ -715,6 +715,11 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
       (a: any, b: any) => b.data.purchaseDate - a.data.purchaseDate
     )[0];
 
+
+    if(!latest.valid){
+      throw new Error("Invalid Receipt")
+    }
+
     const planData = await planModel.findOne({
       iosProductId: latest.data.productId,
     });
@@ -746,7 +751,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
     } else {
       if (latest.data.expiresDate > new Date()) {
         SubscriptionModel.findOneAndUpdate(
-          { userId },
+          { userId, environment: latest.data.environment },
           {
             $set: {
               subscriptionId: latest.data.productId,
