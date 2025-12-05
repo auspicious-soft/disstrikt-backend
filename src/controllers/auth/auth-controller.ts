@@ -758,6 +758,8 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
             $set: {
               subscriptionId: latest.data.productId,
               planId: planData._id,
+              orderId: originalTransactionId,
+              deviceType: "IOS",
               currentPeriodStart: new Date(latest.data.purchaseDate),
               currentPeriodEnd: new Date(latest.data.expiresDate),
               status:
@@ -767,7 +769,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
               trialStart: null,
               trialEnd: null,
               currency: currency.toLowerCase(),
-              price: price / 1000,
+              amount: latest.data.price / 1000,
               environment: environment,
             },
           },
