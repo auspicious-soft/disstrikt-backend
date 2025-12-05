@@ -771,7 +771,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
               environment: environment,
             },
           },
-          { new: true }
+          { new: true, upsert: true }
         );
       } else {
         throw new Error("No Plan Found");
