@@ -694,13 +694,13 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
       }
     } while (response.hasMore);
 
-    // console.log(transactions);
-    // console.log(
-    //   "xxxxxxx---xxxxxxxx",
-    //   response,
-    //   transactions,
-    //   "xxxxxxx---xxxxxxxx"
-    // );
+    console.log(transactions);
+    console.log(
+      "xxxxxxx---xxxxxxxx",
+      response,
+      transactions,
+      "xxxxxxx---xxxxxxxx"
+    );
 
     const decodedTransactions = [];
 
@@ -714,6 +714,8 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
     const latest: any = decodedTransactions.sort(
       (a: any, b: any) => b.data.purchaseDate - a.data.purchaseDate
     )[0];
+
+    console.log("XXXXX", latest, "xxxxxx")
 
 
     if(!latest.valid){
