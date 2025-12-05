@@ -752,7 +752,7 @@ export const validateIosReceipt = async (req: Request, res: Response) => {
       });
     } else {
       if (latest.data.expiresDate > new Date()) {
-        SubscriptionModel.findOneAndUpdate(
+        await SubscriptionModel.findOneAndUpdate(
           { userId, environment: latest.data.environment },
           {
             $set: {
