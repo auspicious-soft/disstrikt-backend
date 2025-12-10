@@ -834,6 +834,12 @@ export const authServices = {
       planDeviceType: subscription?.deviceType || null,
       planIdIOS: subscription?.planId?.iosProductId || null,
       planIdAndroid: subscription?.planId?.androidProductId || null,
+      endDate:
+        (subscription?.status === "active" || subscription?.status === "canceling")
+          ? subscription?.currentPeriodEnd
+          : subscription?.status === "trialing"
+          ? subscription?.trialEnd
+          : null,
     };
   },
 
