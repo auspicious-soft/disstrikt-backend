@@ -370,6 +370,8 @@ export const authServices = {
   async getPlans(payload: any) {
     const { language } = payload;
 
+    console.log(process.env.PAYMENT);
+    
     const plans =
       process.env.PAYMENT == "PROD"
         ? await planModel.find({ isActive: true }).lean()
