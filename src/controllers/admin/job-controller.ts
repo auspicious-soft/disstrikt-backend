@@ -16,7 +16,7 @@ export const createJob = async (req: Request, res: Response) => {
       maxAge,
       date,
       time,
-      pay,
+      pay = 0,
       currency,
       countryCode,
       minHeightInCm,
@@ -28,7 +28,6 @@ export const createJob = async (req: Request, res: Response) => {
       !maxAge ||
       !date ||
       !time ||
-      !pay ||
       !currency ||
       !countryCode ||
       !minHeightInCm ||
