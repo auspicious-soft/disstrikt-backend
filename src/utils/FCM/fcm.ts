@@ -52,7 +52,6 @@ export const NotificationService = async (
 ) => {
   try {
     // pick message template
-
     const notifications: any[] = [];
 
     for (const userId of userIds) {
