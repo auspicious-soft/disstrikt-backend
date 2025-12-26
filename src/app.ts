@@ -33,7 +33,6 @@ const app = express();
 initializeFirebase();
 
 //Webhook Routes
-
 app.post(
   `/webhook`,
   express.raw({ type: "application/json" }),
