@@ -48,8 +48,8 @@ export const getDashboard = async (req: Request, res: Response) => {
       UserModel.find().lean(),
       TaskResponseModel.find({ adminReviewed: false }).lean(),
       process.env.PAYMENT === "DEV"
-        ? testPlanModel.find().lean()
-        : planModel.find().lean(),
+        ? await testPlanModel.find().lean()
+        : await planModel.find().lean(),
 
       // Revenue this month
       TransactionModel.aggregate([

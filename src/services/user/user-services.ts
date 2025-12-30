@@ -1039,8 +1039,8 @@ export const userJobServices = {
     // Fetch plan data
     const planPromise = subscription?.planId
       ? process.env.PAYMENT === "DEV"
-        ? testPlanModel.findById(subscription.planId).lean()
-        : planModel.findById(subscription.planId).lean()
+        ? await testPlanModel.findById(subscription.planId).lean()
+        : await planModel.findById(subscription.planId).lean()
       : Promise.resolve(null);
 
     // Determine date ranges

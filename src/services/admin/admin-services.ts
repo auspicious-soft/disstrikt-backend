@@ -1355,7 +1355,7 @@ export const planServices = {
           if (subtype === "RESUBSCRIBE") {
             const existingSubscription = await SubscriptionModel.findOne({
               userId: userId,
-              environment
+              environment,
             });
 
             if (!existingSubscription) {
@@ -1713,7 +1713,7 @@ export const planServices = {
           if (subtype === "RESUBSCRIBE") {
             const existingSubscription = await SubscriptionModel.findOne({
               userId: userId,
-              environment
+              environment,
             });
 
             if (!existingSubscription) {
@@ -1802,7 +1802,7 @@ export const planServices = {
         case "DID_RENEW":
           const subscriptionToRenew = await SubscriptionModel.findOne({
             userId: userId,
-            environment
+            environment,
           });
 
           if (!subscriptionToRenew) {
@@ -2907,6 +2907,13 @@ export const userServices = {
           as: "subscriptions",
         },
       },
+      {
+        $addFields: {
+          firstSubscription: {
+            $arrayElemAt: ["$subscriptions", 0],
+          },
+        },
+      },
 
       // Join plan from subscriptions.planId
       {
@@ -2940,6 +2947,12 @@ export const userServices = {
               "",
             ],
           },
+          deviceType: {
+            $ifNull: ["$firstSubscription.deviceType", null],
+          },
+          environment: {
+            $ifNull: ["$firstSubscription.environment", null],
+          },
         },
       },
 
@@ -2950,6 +2963,8 @@ export const userServices = {
           fullName: 1,
           country: 1,
           subscriptionPlan: 1,
+          deviceType: 1,
+          environment: 1,
           jobAppliedCount: 1,
           totalAmountPaid: 1,
           currency: 1,
@@ -3002,8 +3017,10 @@ export const userServices = {
 
     const subscriptionName =
       process.env.PAYMENT === "DEV"
-        ? testPlanModel.findById(subscription?.planId).lean()
-        : (planModel.findById(subscription?.planId).lean() as any);
+        ? await testPlanModel.findById(subscription?.planId).lean() as any
+        : await planModel.findById(subscription?.planId).lean() as any;
+
+    console.log("SUBSCRIPTION NAME:", subscriptionName);
 
     const userMoreData = await UserInfoModel.findOne({ userId })
       .select(
