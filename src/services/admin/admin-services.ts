@@ -2928,6 +2928,18 @@ export const userServices = {
       // Add computed fields
       {
         $addFields: {
+          status: {
+            $ifNull: [{ $arrayElemAt: ["$subscriptions.status", 0] }, ""],
+          },
+          trialEnd: {
+            $ifNull: [{ $arrayElemAt: ["$subscriptions.trialEnd", 0] }, ""],
+          },
+          currentPeriodEnd: {
+            $ifNull: [
+              { $arrayElemAt: ["$subscriptions.currentPeriodEnd", 0] },
+              "",
+            ],
+          },
           jobAppliedCount: { $size: "$appliedJobs" },
           totalAmountPaid: {
             $sum: {
@@ -2963,6 +2975,9 @@ export const userServices = {
           fullName: 1,
           country: 1,
           subscriptionPlan: 1,
+          status: 1,
+          trialEnd: 1,
+          currentPeriodEnd: 1,
           deviceType: 1,
           environment: 1,
           jobAppliedCount: 1,
@@ -3017,8 +3032,8 @@ export const userServices = {
 
     const subscriptionName =
       process.env.PAYMENT === "DEV"
-        ? await testPlanModel.findById(subscription?.planId).lean() as any
-        : await planModel.findById(subscription?.planId).lean() as any;
+        ? ((await testPlanModel.findById(subscription?.planId).lean()) as any)
+        : ((await planModel.findById(subscription?.planId).lean()) as any);
 
     console.log("SUBSCRIPTION NAME:", subscriptionName);
 
