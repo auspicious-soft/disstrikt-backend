@@ -428,16 +428,19 @@ export const getActivities = async (req: Request, res: Response) => {
     if (type === "Upcoming") {
       filter.time = { $gt: now };
       sort.time = 1;
+      filter.status = "Booked";
     }
 
     if (type === "Past") {
       filter.time = { $lt: now };
       sort.time = -1;
+      filter.status = "Booked";
     }
 
     if (type === "Reviewed") {
       filter.time = { $lt: now };
       filter.attended = { $ne: null };
+      filter.status = "Booked";
       sort.time = -1;
     }
 
@@ -478,6 +481,36 @@ export const getActivities = async (req: Request, res: Response) => {
       },
       req.body.language || "en"
     );
+  } catch (err: any) {
+    return err.message
+      ? BADREQUEST(res, err.message, req.body.language || "en")
+      : INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const giveRatings = async (req: Request, res: Response) => {
+  try {
+    let { slotId, attended, rating, images, comments } = req.body as any;
+
+    const checkExist = await StudioBookingModel.findOne({
+      _id: slotId,
+      status: "Booked",
+    });
+
+    if (!checkExist) {
+      throw new Error("Booking not found");
+    }
+
+    await StudioBookingModel.findByIdAndUpdate(slotId, {
+      $set: {
+        attended,
+        rating,
+        images,
+        comments,
+      },
+    });
+
+    return OK(res, {}, req.body.language || "en");
   } catch (err: any) {
     return err.message
       ? BADREQUEST(res, err.message, req.body.language || "en")

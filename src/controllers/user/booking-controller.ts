@@ -353,7 +353,7 @@ export const getBookingById = async (req: Request, res: Response) => {
     const { slotId } = req.query;
     const checkExist = await StudioBookingModel.findOne({
       _id: slotId,
-    }).populate("studioId");
+    }).populate("studioId").populate({path: "userId", select: "fullName"});
     return OK(res, checkExist, req.body.language);
   } catch (err: any) {
     if (err.message) {

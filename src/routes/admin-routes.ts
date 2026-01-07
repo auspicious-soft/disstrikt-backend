@@ -32,6 +32,7 @@ import {
   getShootFeatures,
   getStudioById,
   getStudios,
+  giveRatings,
 } from "src/controllers/admin/studio-controller";
 import {
   addCheckbox,
@@ -110,7 +111,7 @@ router.route("/shootFeatures").get(getShootFeatures).post(addShootFeatures)
 
 // Manage Activities
 router.route("/activities").get(getActivities);
-router.route("/activitiesById").get(getBookingById);
+router.route("/activitiesById").get(getBookingById).post(giveRatings);
 
 
 // Temperary route for creating an admin
