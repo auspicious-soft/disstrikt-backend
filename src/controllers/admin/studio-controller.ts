@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
+import { CancelBookingModel } from "src/models/admin/cancel-booking-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
@@ -356,5 +357,130 @@ export const getShootFeatures = async (req: Request, res: Response) => {
       return BADREQUEST(res, err.message, req.body.language || "en");
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
+
+export const getActivities = async (req: Request, res: Response) => {
+  try {
+    let {
+      type = "Upcoming",
+      page = 1,
+      limit = 10,
+      search = "",
+    } = req.query as any;
+
+    if (!["Upcoming", "Past", "Reviewed", "Cancelled"].includes(type)) {
+      throw new Error("Invalid type");
+    }
+
+    page = Math.max(Number(page), 1);
+    limit = Math.min(Number(limit), 50);
+    const skip = (page - 1) * limit;
+    const now = new Date();
+
+    if (type === "Cancelled") {
+      const filter: any = { status: "Cancelled" };
+      const searchRegex = search ? new RegExp(search, "i") : null;
+      let sort: any = { time: 1 };
+
+      const data = await CancelBookingModel.find(filter)
+        .populate({ path: "userId", select: "fullName" })
+        .populate({ path: "studioId", select: "name" })
+        .select(
+          "activityType date startTime endtime userId studioId cancelledBy"
+        )
+        .sort(sort)
+        .skip(skip)
+        .limit(limit)
+        .lean();
+
+      const filteredData = searchRegex
+        ? data.filter(
+            (d: any) =>
+              searchRegex.test(d.activityType) ||
+              searchRegex.test(d.userId?.fullName || "") ||
+              searchRegex.test(d.studioId?.name || "")
+          )
+        : data;
+
+      const total = searchRegex
+        ? filteredData.length
+        : await CancelBookingModel.countDocuments(filter);
+
+      return OK(
+        res,
+        {
+          data: filteredData,
+          pagination: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+          },
+        },
+        req.body.language || "en"
+      );
+    }
+
+    const filter: any = { status: "Booked" };
+    let sort: any = { time: 1 };
+
+    if (type === "Upcoming") {
+      filter.time = { $gt: now };
+      sort.time = 1;
+    }
+
+    if (type === "Past") {
+      filter.time = { $lt: now };
+      sort.time = -1;
+    }
+
+    if (type === "Reviewed") {
+      filter.time = { $lt: now };
+      filter.attended = { $ne: null };
+      sort.time = -1;
+    }
+
+    const searchRegex = search ? new RegExp(search, "i") : null;
+
+    const data = await StudioBookingModel.find(filter)
+      .populate({ path: "userId", select: "fullName" })
+      .populate({ path: "studioId", select: "name" })
+      .select("activityType date startTime endtime userId studioId")
+      .sort(sort)
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    const filteredData = searchRegex
+      ? data.filter(
+          (d: any) =>
+            searchRegex.test(d.activityType) ||
+            searchRegex.test(d.userId?.fullName || "") ||
+            searchRegex.test(d.studioId?.name || "")
+        )
+      : data;
+
+    const total = searchRegex
+      ? filteredData.length
+      : await StudioBookingModel.countDocuments(filter);
+
+    return OK(
+      res,
+      {
+        data: filteredData,
+        pagination: {
+          page,
+          limit,
+          total,
+          totalPages: Math.ceil(total / limit),
+        },
+      },
+      req.body.language || "en"
+    );
+  } catch (err: any) {
+    return err.message
+      ? BADREQUEST(res, err.message, req.body.language || "en")
+      : INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };

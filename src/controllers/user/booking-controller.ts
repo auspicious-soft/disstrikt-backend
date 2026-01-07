@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
 import mongoose from "mongoose";
-import { planModel } from "src/models/admin/plan-schema";
+import { CancelBookingModel } from "src/models/admin/cancel-booking-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
@@ -316,12 +316,30 @@ export const bookStudio = async (req: Request, res: Response) => {
 export const getBookings = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
-    const checkExist = await StudioBookingModel.find({
-      userId: userData.id,
-    })
-      .select("activityType date time slot status startTime endtime")
-      .populate({ path: "studioId", select: "name" })
-      .sort({ time: -1 });
+    const { type = "Upcoming" } = req.query as any;
+    if (!["Upcoming", "Cancelled", "Previous"].includes(type)) {
+      throw new Error("Invalid type");
+    }
+    let checkExist;
+    const date = new Date();
+    if (type == "Cancelled") {
+      checkExist = await CancelBookingModel.find({
+        userId: userData.id,
+      })
+        .select(
+          "activityType date time slot status startTime endtime cancelledBy"
+        )
+        .populate({ path: "studioId", select: "name" })
+        .sort({ time: -1 });
+    } else {
+      checkExist = await StudioBookingModel.find({
+        userId: userData.id,
+        time: type === "Upcoming" ? { $gt: date } : { $lt: date },
+      })
+        .select("activityType date time slot status startTime endtime")
+        .populate({ path: "studioId", select: "name" })
+        .sort({ time: -1 });
+    }
     return OK(res, checkExist, req.body.language);
   } catch (err: any) {
     if (err.message) {
@@ -333,10 +351,8 @@ export const getBookings = async (req: Request, res: Response) => {
 export const getBookingById = async (req: Request, res: Response) => {
   try {
     const { slotId } = req.query;
-    const userData = req.user as any;
     const checkExist = await StudioBookingModel.findOne({
       _id: slotId,
-      userId: userData.id,
     }).populate("studioId");
     return OK(res, checkExist, req.body.language);
   } catch (err: any) {
@@ -470,6 +486,12 @@ export const cancelBooking = async (req: Request, res: Response) => {
         },
       }
     );
+
+    await CancelBookingModel.create({
+      ...checkExist,
+      cancelledBy: "USER",
+      status: "Cancelled",
+    });
     return OK(res, {}, req.body.language);
   } catch (err: any) {
     if (err.message) {

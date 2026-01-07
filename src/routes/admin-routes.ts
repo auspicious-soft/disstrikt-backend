@@ -28,6 +28,7 @@ import {
   addStudios,
   deleteBookingDate,
   deleteStudios,
+  getActivities,
   getShootFeatures,
   getStudioById,
   getStudios,
@@ -52,6 +53,7 @@ import {
   submitTaskResponse,
   updateEmployee,
 } from "src/controllers/admin/user-controller";
+import { getBookingById } from "src/controllers/user/booking-controller";
 import { checkAdminAuth } from "src/middleware/check-auth";
 import { AdminModel } from "src/models/admin/admin-schema";
 import { hashPassword } from "src/utils/helper";
@@ -106,7 +108,9 @@ router.route("/studio").post(addStudios).get(getStudios).delete(deleteStudios);
 router.route("/studioById").get(getStudioById).delete(deleteBookingDate);
 router.route("/shootFeatures").get(getShootFeatures).post(addShootFeatures)
 
-// Manage Bookings
+// Manage Activities
+router.route("/activities").get(getActivities);
+router.route("/activitiesById").get(getBookingById);
 
 
 // Temperary route for creating an admin
