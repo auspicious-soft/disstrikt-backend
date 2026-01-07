@@ -39,6 +39,12 @@ const BenefitObjectSchema = {
   unlimitedShoots: { type: Boolean, default: false },
   regionalAccess: { type: Array, default: [] },
   modelRouteProgram: { type: Boolean, default: false },
+  portfolioBootcamp: { type: Boolean, default: false },
+  portfolioCooling: { type: Number, default: 180 },
+  skillBootcamp: { type: Boolean, default: false },
+  skillCooling: { type: Number, default: 180 },
+  createAShoot: { type: Boolean, default: false },
+  shootCooling: { type: Number, default: 180 },
 };
 
 export interface IPlan extends Document {

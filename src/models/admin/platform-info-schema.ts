@@ -15,6 +15,17 @@ export interface IPlatformInfo extends Document {
     email: string;
     address: TranslatedText;
   };
+  shootPolicy?: TranslatedText;
+  shootGoals?: string[];
+  shootFormat?: string[];
+  vibes?: string[];
+  addOnFeatures?: [
+    {
+      key: string;
+      value: number;
+    }
+  ];
+  canBringOutfits: number;
   isActive?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
@@ -64,6 +75,35 @@ const platformInfoSchema = new Schema<IPlatformInfo>(
           es: "",
         },
       },
+    },
+    shootPolicy: {
+      type: Object,
+      default: {
+        en: "",
+        nl: "",
+        fr: "",
+        es: "",
+      },
+    },
+    shootGoals: {
+      type: [String],
+      default: [],
+    },
+    shootFormat: {
+      type: [String],
+      default: [],
+    },
+    vibes: {
+      type: [String],
+      default: [],
+    },
+    addOnFeatures: {
+      type: [Object],
+      default: [],
+    },
+    canBringOutfits: {
+      type: Number,
+      default: 0,
     },
     isActive: {
       type: Boolean,

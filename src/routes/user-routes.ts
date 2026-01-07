@@ -12,6 +12,13 @@ import {
   validateIosReceipt,
 } from "src/controllers/auth/auth-controller";
 import {
+  bookStudio,
+  getAvailableDateAndSlots,
+  getBookings,
+  getLevelUp,
+  getStudios,
+} from "src/controllers/user/booking-controller";
+import {
   getTaskById,
   submitTaskById,
   userHome,
@@ -95,7 +102,13 @@ paidRouter.get("/jobs/:id", getJobById);
 paidRouter.get("/search-user", userSearch);
 
 // NOTIFICATION
-paidRouter.get("/get-notifications", getNotifications)
+paidRouter.get("/get-notifications", getNotifications);
+
+// BOOTCAMPS
+paidRouter.get("/levelUp", getLevelUp);
+paidRouter.get("/studios", getStudios);
+paidRouter.get("/studioAvailability", getAvailableDateAndSlots);
+paidRouter.route("/bookStudio").post(bookStudio).get(getBookings);
 
 //============================== ADMIN Routes
 export { router, paidRouter };

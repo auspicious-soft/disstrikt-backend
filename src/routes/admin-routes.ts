@@ -24,6 +24,15 @@ import {
 } from "src/controllers/admin/plan-setting-controller";
 import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
 import {
+  addShootFeatures,
+  addStudios,
+  deleteBookingDate,
+  deleteStudios,
+  getShootFeatures,
+  getStudioById,
+  getStudios,
+} from "src/controllers/admin/studio-controller";
+import {
   addCheckbox,
   addQuiz,
   createTask,
@@ -90,6 +99,15 @@ router.route("/getUserById/:id").get(getUserById);
 // Employee-management-routes
 router.route("/employee").post(createEmployee).get(getEmployees);
 router.route("/employee-by-id/:id").get(getEmployeesById).put(updateEmployee);
+
+// Phase 2 -
+// Manage Studios
+router.route("/studio").post(addStudios).get(getStudios).delete(deleteStudios);
+router.route("/studioById").get(getStudioById).delete(deleteBookingDate);
+router.route("/shootFeatures").get(getShootFeatures).post(addShootFeatures)
+
+// Manage Bookings
+
 
 // Temperary route for creating an admin
 router.post("/create-admin", async (req, res) => {
