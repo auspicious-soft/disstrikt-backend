@@ -2,7 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface IStudiosBooking extends Document {
   studioId: mongoose.Types.ObjectId;
-  userId: mongoose.Types.ObjectId;
+  userId: mongoose.Types.ObjectId | null;
   date: Date;
   time: Date;
   startTime: string;
@@ -13,7 +13,11 @@ export interface IStudiosBooking extends Document {
   rating: number;
   comments: string | null;
   images: string[];
-  activityType?: "Portfolio Bootcamp" | "Skill Bootcamp" | "Create a Shoot";
+  activityType?:
+    | "Portfolio Bootcamp"
+    | "Skill Bootcamp"
+    | "Create a Shoot"
+    | null;
   addOnFeatures?: object[];
   shootFormat?: string;
   shootGoals?: string;
@@ -76,8 +80,8 @@ const StudioBookingSchema = new Schema<IStudiosBooking>(
     },
     activityType: {
       type: String,
-      enum: ["Portfolio Bootcamp", "Skill Bootcamp", "Create a Shoot"],
-      default: [],
+      enum: ["Portfolio Bootcamp", "Skill Bootcamp", "Create a Shoot", null],
+      default: "",
     },
     addOnFeatures: {
       type: [Object],
@@ -85,15 +89,15 @@ const StudioBookingSchema = new Schema<IStudiosBooking>(
     },
     shootFormat: {
       type: String,
-      default: [],
+      default: "",
     },
     shootGoals: {
       type: String,
-      default: [],
+      default: "",
     },
     vibes: {
       type: String,
-      default: [],
+      default: "",
     },
     canBringOutfits: {
       type: Number,

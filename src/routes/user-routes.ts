@@ -13,7 +13,10 @@ import {
 } from "src/controllers/auth/auth-controller";
 import {
   bookStudio,
+  cancelBooking,
+  editBooking,
   getAvailableDateAndSlots,
+  getBookingById,
   getBookings,
   getLevelUp,
   getStudios,
@@ -108,7 +111,14 @@ paidRouter.get("/get-notifications", getNotifications);
 paidRouter.get("/levelUp", getLevelUp);
 paidRouter.get("/studios", getStudios);
 paidRouter.get("/studioAvailability", getAvailableDateAndSlots);
-paidRouter.route("/bookStudio").post(bookStudio).get(getBookings);
+paidRouter
+  .route("/bookStudio")
+  .post(bookStudio)
+  .get(getBookings)
+  .put(editBooking)
+  .delete(cancelBooking);
+
+paidRouter.get("/bookingById", getBookingById)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

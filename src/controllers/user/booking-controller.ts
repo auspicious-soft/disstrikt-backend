@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { Types } from "mongoose";
+import mongoose from "mongoose";
 import { planModel } from "src/models/admin/plan-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
@@ -317,8 +318,159 @@ export const getBookings = async (req: Request, res: Response) => {
     const userData = req.user as any;
     const checkExist = await StudioBookingModel.find({
       userId: userData.id,
-    }).sort({ time: -1 });
+    })
+      .select("activityType date time slot status startTime endtime")
+      .populate({ path: "studioId", select: "name" })
+      .sort({ time: -1 });
     return OK(res, checkExist, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const getBookingById = async (req: Request, res: Response) => {
+  try {
+    const { slotId } = req.query;
+    const userData = req.user as any;
+    const checkExist = await StudioBookingModel.findOne({
+      _id: slotId,
+      userId: userData.id,
+    }).populate("studioId");
+    return OK(res, checkExist, req.body.language);
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const editBooking = async (req: Request, res: Response) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const {
+      currentSlotId,
+      newSlotId,
+      addOnFeatures = [],
+      shootFormat = "",
+      shootGoals = "",
+      vibes = "",
+      canBringOutfits = 0,
+    } = req.body;
+
+    const userData = req.user as any;
+
+    // 1️⃣ Verify old booking belongs to user & is booked
+    const oldBooking = await StudioBookingModel.findOne(
+      {
+        _id: currentSlotId,
+        userId: userData.id,
+        status: "Booked",
+      },
+      null,
+      { session }
+    );
+
+    if (!oldBooking) {
+      throw new Error("Invalid or unauthorized booking");
+    }
+
+    // 2️⃣ Atomically claim new slot
+    const newBooking = await StudioBookingModel.findOneAndUpdate(
+      {
+        _id: newSlotId,
+        status: "Empty",
+      },
+      {
+        $set: {
+          userId: userData.id,
+          activityType: oldBooking.activityType,
+          addOnFeatures,
+          shootFormat,
+          shootGoals,
+          vibes,
+          canBringOutfits,
+          status: "Booked",
+        },
+      },
+      { new: true, session }
+    );
+
+    if (!newBooking) {
+      throw new Error("New slot is no longer available");
+    }
+
+    // 3️⃣ Release old slot
+    await StudioBookingModel.updateOne(
+      { _id: currentSlotId },
+      {
+        $set: {
+          userId: null,
+          activityType: null,
+          addOnFeatures: [],
+          shootFormat: "",
+          shootGoals: "",
+          vibes: "",
+          canBringOutfits: 0,
+          status: "Empty",
+        },
+      },
+      { session }
+    );
+
+    await session.commitTransaction();
+    session.endSession();
+
+    return OK(res, newBooking, req.body.language);
+  } catch (err: any) {
+    await session.abortTransaction();
+    session.endSession();
+
+    return err.message
+      ? BADREQUEST(res, err.message, req.body.language)
+      : INTERNAL_SERVER_ERROR(res, req.body.language);
+  }
+};
+export const cancelBooking = async (req: Request, res: Response) => {
+  try {
+    const { slotId } = req.query as any;
+
+    const userData = req.user as any;
+
+    const checkExist = await StudioBookingModel.findById(slotId).lean();
+    if (!checkExist || checkExist.status !== "Booked") {
+      throw new Error("Slot does not available");
+    }
+
+    const now = new Date();
+    const diffInHours =
+      (new Date(checkExist.time).getTime() - now.getTime()) / (1000 * 60 * 60);
+
+    if (diffInHours < 48) {
+      throw new Error(
+        "Bookings cannot be cancelled within 48 hours of the scheduled time"
+      );
+    }
+
+    await StudioBookingModel.findOneAndUpdate(
+      { _id: slotId, userId: userData.id, status: "Booked" },
+      {
+        $set: {
+          userId: null,
+          activityType: null,
+          addOnFeatures: [],
+          shootFormat: "",
+          shootGoals: "",
+          vibes: "",
+          canBringOutfits: 0,
+          status: "Empty",
+        },
+      }
+    );
+    return OK(res, {}, req.body.language);
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);
