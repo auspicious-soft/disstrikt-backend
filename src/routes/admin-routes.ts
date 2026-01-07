@@ -26,6 +26,7 @@ import { multerUpload, uploadToS3 } from "src/controllers/admin/s3-controller";
 import {
   addShootFeatures,
   addStudios,
+  cancelBooking,
   deleteBookingDate,
   deleteStudios,
   getActivities,
@@ -111,7 +112,7 @@ router.route("/shootFeatures").get(getShootFeatures).post(addShootFeatures)
 
 // Manage Activities
 router.route("/activities").get(getActivities);
-router.route("/activitiesById").get(getBookingById).post(giveRatings);
+router.route("/activitiesById").get(getBookingById).post(giveRatings).put(cancelBooking);
 
 
 // Temperary route for creating an admin

@@ -517,3 +517,47 @@ export const giveRatings = async (req: Request, res: Response) => {
       : INTERNAL_SERVER_ERROR(res, req.body.language || "en");
   }
 };
+
+export const cancelBooking = async (req: Request, res: Response) => {
+  try {
+    let { slotId, comments } = req.body as any;
+
+    const checkExist = await StudioBookingModel.findOne({
+      _id: slotId,
+      status: "Booked",
+    }).lean();
+
+    if (!checkExist) {
+      throw new Error("Booking not found");
+    }
+
+    await StudioBookingModel.findOneAndUpdate(
+      { _id: slotId, status: "Booked" },
+      {
+        $set: {
+          userId: null,
+          activityType: null,
+          addOnFeatures: [],
+          shootFormat: "",
+          shootGoals: "",
+          vibes: "",
+          canBringOutfits: 0,
+          status: "Empty",
+        },
+      }
+    );
+
+    await CancelBookingModel.create({
+      ...checkExist,
+      cancelledBy: "ADMIN",
+      comments,
+      status: "Cancelled",
+    });
+
+    return OK(res, {}, req.body.language || "en");
+  } catch (err: any) {
+    return err.message
+      ? BADREQUEST(res, err.message, req.body.language || "en")
+      : INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+  }
+};
