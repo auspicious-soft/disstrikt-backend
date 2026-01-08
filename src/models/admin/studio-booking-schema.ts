@@ -45,10 +45,18 @@ const StudioBookingSchema = new Schema<IStudiosBooking>(
     startTime: {
       type: String,
       required: true,
+      set: (v: string) => {
+        const [h, m] = v.split(":");
+        return `${h.padStart(2, "0")}:${(m ?? "00").padStart(2, "0")}`;
+      },
     },
     endtime: {
       type: String,
       required: true,
+      set: (v: string) => {
+        const [h, m] = v.split(":");
+        return `${h.padStart(2, "0")}:${(m ?? "00").padStart(2, "0")}`;
+      },
     },
     time: {
       type: Date,

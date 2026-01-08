@@ -31,21 +31,21 @@ export const getLevelUp = async (req: Request, res: Response) => {
           eligible: false,
           percentage: 0,
           daysLeft: null,
-          reason: "NEED_PLAN_UPGRADE",
+          reason: "NO_ACCESS",
         },
         {
           type: "Skill Bootcamp",
           eligible: false,
           percentage: 0,
           daysLeft: null,
-          reason: "NEED_PLAN_UPGRADE",
+          reason: "NO_ACCESS",
         },
         {
           type: "Create a Shoot",
           eligible: false,
           percentage: 0,
           daysLeft: null,
-          reason: "NEED_PLAN_UPGRADE",
+          reason: "NO_ACCESS",
         },
       ];
     } else {
@@ -102,6 +102,7 @@ export const getLevelUp = async (req: Request, res: Response) => {
             eligible: true,
             percentage: 100,
             daysLeft: 0,
+            reason: "CAN_ACCESS",
           };
         }
 
