@@ -212,6 +212,7 @@ export const getStudioById = async (req: Request, res: Response) => {
           // date-wide range
           startTime: { $min: "$startTime" },
           endTime: { $max: "$endtime" },
+          interval:{ $first: "$slot" },
 
           // 👇 push all slots
           slots: {
@@ -233,7 +234,8 @@ export const getStudioById = async (req: Request, res: Response) => {
           },
           startTime: 1,
           endTime: 1,
-          slot: { $ifNull: ["$bookedSlots", 0] },
+          bookedSlots: { $ifNull: ["$bookedSlots", 0] },
+          interval: 1,
           slots: 1, // 👈 expose slots array
         },
       },
