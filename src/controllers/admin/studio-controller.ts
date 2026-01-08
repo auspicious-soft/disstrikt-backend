@@ -96,7 +96,7 @@ export const addStudios = async (req: Request, res: Response) => {
           slot: `${slotDuration}h`,
           status: "Empty",
           attended: null,
-          activity: null,
+          activityType: null,
           rating: 0,
           comments: null,
           images: [],
