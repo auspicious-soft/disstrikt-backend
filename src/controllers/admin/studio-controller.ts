@@ -201,13 +201,28 @@ export const getStudioById = async (req: Request, res: Response) => {
       {
         $group: {
           _id: "$date",
+
+          // count booked slots
           bookedSlots: {
             $sum: {
               $cond: [{ $eq: ["$status", "Booked"] }, 1, 0],
             },
           },
+
+          // date-wide range
           startTime: { $min: "$startTime" },
           endTime: { $max: "$endtime" },
+
+          // 👇 push all slots
+          slots: {
+            $push: {
+              bookingId: "$_id",
+              startTime: "$startTime",
+              endTime: "$endtime",
+              status: "$status",
+              userId: "$userId",
+            },
+          },
         },
       },
       {
@@ -219,6 +234,7 @@ export const getStudioById = async (req: Request, res: Response) => {
           startTime: 1,
           endTime: 1,
           slot: { $ifNull: ["$bookedSlots", 0] },
+          slots: 1, // 👈 expose slots array
         },
       },
       { $sort: { date: 1 } },
@@ -275,33 +291,21 @@ export const deleteStudios = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteBookingDate = async (req: Request, res: Response) => {
+export const deleteBookingSlot = async (req: Request, res: Response) => {
   try {
-    const { id, date } = req.query as any;
-    if (!id || !date) {
-      throw new Error("Id & date is required");
+    const { id } = req.query as any;
+    if (!id) {
+      throw new Error("Booking Id is required");
     }
 
-    const checkExist = await StudioModel.findById(id);
+    const checkExist = await StudioBookingModel.findById(id);
     if (!checkExist) {
       throw new Error("Studio does not exist");
     }
-    const exactDate = new Date(date);
-    const checkActiveBookings = await StudioBookingModel.countDocuments({
-      studioId: id,
-      date: exactDate,
-      status: "Booked",
-    });
-
-    if (checkActiveBookings > 0) {
-      throw new Error(
-        `Please first reschedule ${checkActiveBookings} active booking of ${date}`
-      );
+    if (checkExist.status === "Booked") {
+      throw new Error(`Please first reschedule the booking to delete`);
     } else {
-      await StudioBookingModel.deleteMany({
-        studioId: id,
-        date: exactDate,
-      });
+      await StudioBookingModel.findOneAndDelete(id);
     }
 
     return OK(res, {}, req.body.language || "en");

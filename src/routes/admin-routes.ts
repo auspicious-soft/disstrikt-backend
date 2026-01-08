@@ -27,7 +27,7 @@ import {
   addShootFeatures,
   addStudios,
   cancelBooking,
-  deleteBookingDate,
+  deleteBookingSlot,
   deleteStudios,
   getActivities,
   getShootFeatures,
@@ -107,7 +107,7 @@ router.route("/employee-by-id/:id").get(getEmployeesById).put(updateEmployee);
 // Phase 2 -
 // Manage Studios
 router.route("/studio").post(addStudios).get(getStudios).delete(deleteStudios);
-router.route("/studioById").get(getStudioById).delete(deleteBookingDate);
+router.route("/studioById").get(getStudioById).delete(deleteBookingSlot);
 router.route("/shootFeatures").get(getShootFeatures).post(addShootFeatures)
 
 // Manage Activities
