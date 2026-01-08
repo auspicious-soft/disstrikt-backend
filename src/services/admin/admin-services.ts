@@ -2008,7 +2008,10 @@ export const jobServices = {
     if (createdJob._id && createdJob?.en?.gender) {
       // find all users with the same gender
       const users = await UserInfoModel.find({
-        gender: createdJob.en.gender,
+        gender:
+          createdJob.en.gender === "BOTH"
+            ? { $in: ["MALE", "FEMALE"] }
+            : createdJob.en.gender,
       })
         .select("_id userId")
         .lean();
