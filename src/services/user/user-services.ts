@@ -1220,7 +1220,7 @@ export const userJobServices = {
       throw new Error("requestAlreadyExist");
     }
 
-    if (checkJob?.en?.gender !== gender) {
+    if (checkJob?.en?.gender !== gender && checkJob?.en?.gender !== "BOTH") {
       throw new Error("invalidGender");
     }
 
