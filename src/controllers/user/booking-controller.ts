@@ -328,7 +328,7 @@ export const getBookings = async (req: Request, res: Response) => {
         userId: userData.id,
       })
         .select(
-          "activityType date time slot status startTime endtime cancelledBy"
+          "activityType date time slot status startTime endtime attended cancelledBy"
         )
         .populate({ path: "studioId", select: "name" })
         .sort({ time: -1 });
@@ -337,7 +337,9 @@ export const getBookings = async (req: Request, res: Response) => {
         userId: userData.id,
         time: type === "Upcoming" ? { $gt: date } : { $lt: date },
       })
-        .select("activityType date time slot status startTime endtime")
+        .select(
+          "activityType date time slot status startTime  endtime attended"
+        )
         .populate({ path: "studioId", select: "name" })
         .sort({ time: -1 });
     }
@@ -354,7 +356,9 @@ export const getBookingById = async (req: Request, res: Response) => {
     const { slotId } = req.query;
     const checkExist = await StudioBookingModel.findOne({
       _id: slotId,
-    }).populate("studioId").populate({path: "userId", select: "fullName"});
+    })
+      .populate("studioId")
+      .populate({ path: "userId", select: "fullName email image phone country" });
     return OK(res, checkExist, req.body.language);
   } catch (err: any) {
     if (err.message) {
