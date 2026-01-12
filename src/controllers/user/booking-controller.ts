@@ -356,15 +356,19 @@ export const getBookings = async (req: Request, res: Response) => {
 };
 export const getBookingById = async (req: Request, res: Response) => {
   try {
-    const { slotId } = req.query;
-    const checkExist = await StudioBookingModel.findOne({
-      _id: slotId,
-    })
-      .populate("studioId")
-      .populate({
-        path: "userId",
-        select: "fullName email image phone country",
-      });
+    const { slotId, type = null } = req.query;
+
+    let checkExist;
+    if (type === "Cancelled") {
+      checkExist = await CancelBooking2Model.findOne({ slotId })
+        .populate("studioId")
+        .populate("userId");
+    } else {
+      checkExist = await StudioBookingModel.findById(slotId)
+        .populate("studioId")
+        .populate("userId");
+    }
+
     return OK(res, checkExist, req.body.language);
   } catch (err: any) {
     if (err.message) {
@@ -499,10 +503,19 @@ export const cancelBooking = async (req: Request, res: Response) => {
     );
 
     await CancelBooking2Model.create({
-      ...checkExist,
       cancelledBy: "USER",
       status: "Cancelled",
+      userId: userData.id,
+      slotId: checkExist._id,
+      studioId: checkExist?.studioId,
+      date: checkExist?.date,
+      time: checkExist?.time,
+      startTime: checkExist?.startTime,
+      endtime: checkExist?.endtime,
+      slot: checkExist?.slot,
+      activityType: checkExist?.activityType,
     });
+
     return OK(res, {}, req.body.language);
   } catch (err: any) {
     if (err.message) {

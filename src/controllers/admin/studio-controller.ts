@@ -394,7 +394,7 @@ export const getActivities = async (req: Request, res: Response) => {
         .populate({ path: "userId", select: "fullName" })
         .populate({ path: "studioId", select: "name" })
         .select(
-          "activityType date startTime endtime userId studioId cancelledBy"
+          "activityType date startTime endtime slotId userId studioId cancelledBy"
         )
         .sort(sort)
         .skip(skip)

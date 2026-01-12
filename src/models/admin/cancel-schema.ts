@@ -2,6 +2,7 @@ import mongoose, { Schema, Document } from "mongoose";
 
 export interface ICancelBooking2 extends Document {
   studioId: mongoose.Types.ObjectId;
+  slotId: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId | null;
   date: Date;
   time: Date;
@@ -20,6 +21,11 @@ const CancelBooking2Schema = new Schema<ICancelBooking2>(
     studioId: {
       type: Schema.Types.ObjectId,
       ref: "studio",
+      required: true,
+    },
+    slotId: {
+      type: Schema.Types.ObjectId,
+      ref: "studiobooking",
       required: true,
     },
     userId: {
@@ -65,7 +71,6 @@ const CancelBooking2Schema = new Schema<ICancelBooking2>(
   },
   { timestamps: true }
 );
-
 
 export const CancelBooking2Model = mongoose.model<ICancelBooking2>(
   "cancelBooking2",
