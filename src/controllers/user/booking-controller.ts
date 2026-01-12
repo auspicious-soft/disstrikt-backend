@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { ChatCompletionMessageParam } from "openai/resources/index";
 import { openai } from "src/config/openAI";
 import { CancelBooking2Model } from "src/models/admin/cancel-schema";
+import { planModel } from "src/models/admin/plan-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
@@ -528,16 +529,21 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     const { botUsed = null } = req.query;
-    if (!botUsed) {
+    if (
+      !botUsed ||
+      !["Camille", "Harper", "Lumi"].includes(botUsed as string)
+    ) {
       throw new Error("Bot type not available");
     }
+
     const { content } = req.body;
     // Save user's message first
     await chatModel.create([
       {
         userId: userData.id,
         role: "user",
-        botUsed: "Camille",
+        botUsed,
+        modelUsed: process.env.AI_MODEL,
         content,
       },
     ]);
@@ -546,10 +552,44 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
 
     // Get the last 10 messages (5 exchanges) from the conversation history
     const chatHistory = await chatModel
-      .find({ userId: userData.id, botUsed: "Camille" })
+      .find({ userId: userData.id, botUsed })
       .sort({ createdAt: -1 })
       .limit(10)
       .lean();
+
+    let plans = (await planModel
+      .find()
+      .select("name description fullAccess")
+      .lean()) as any;
+
+    plans = plans.map((val: any) => {
+      return {
+        name: val.name.en,
+        description: val.description,
+        "Free trial access": `User can only do ${val.trialAccess.tasks}, that's it`,
+        "Number of tasks allowed": val.fullAccess.tasks,
+        "Can apply on jobs per day/month": `${val.fullAccess?.jobApplicationsPerDay}/${val.fullAccess?.jobApplicationsPerMonth}`,
+        "Can attend skill bootcamp": `${val.fullAccess.skillBootcamp}`,
+        "Cooldown period after skill bootcamp attended": `${val.fullAccess.skillCooling}`,
+        "Can create a shoot": `${val.fullAccess.createAShoot}`,
+        "Cooldown period after shoot attended": `${val.fullAccess.shootCooling}`,
+        "Can attend portfolio bootcamp": `${val.fullAccess.portfolioBootcamp}`,
+        "Cooldown period after portfolio bootcamp attended": `${val.fullAccess.portfolioCooling}`,
+      };
+    });
+
+    const prompt = {
+      Camille: `
+      Your are Coach "Camille", Your tone is Sweet & overly friendly. You are going to chat with our models registered with our application Disstrikt. You will provide details general questions related to modeling industry and provide information about subscription and help them doing tasks if they stuck on any. 
+
+      Our subscriptions plans details are ${plans}
+      User (${userData.fullName}) has current plan ${userData.subscription.planName} and status is ${userData.subscription.status}, 
+
+
+      `,
+      Harper: "",
+      Lumi: "",
+    } as any;
 
     // Reverse to get chronological order
     const conversationHistory = chatHistory.reverse();
@@ -558,8 +598,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     const messages: ChatCompletionMessageParam[] = [
       {
         role: "system",
-        content:
-          "You are a supportive and confident AI coach for an intermittent fasting app. Your job is to guide users through their 16:8 fasting routine, improve their eating habits, suggest light workouts, boost their emotional resilience, and help them build a healthier lifestyle. Always reply in an encouraging and expert tone. You can respond to users to not ask questions from other topics.",
+        content: prompt[botUsed as any] as string,
       },
       // Add conversation history with proper typing
       ...conversationHistory.map((msg) => ({
@@ -586,7 +625,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     res.setHeader("Connection", "keep-alive");
 
     const stream = await openai.chat.completions.create({
-      model: "GPT-5-mini",
+      model: "gpt-4",
       messages,
       temperature: 0.8,
       stream: true,
@@ -612,7 +651,8 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
       {
         userId: userData.id,
         role: "assistant",
-        botUsed: "Camille",
+        botUsed,
+        modelUsed: process.env.AI_MODEL,
         content: fullResponse,
       },
     ]);

@@ -559,10 +559,18 @@ export const cancelBooking = async (req: Request, res: Response) => {
     );
 
     await CancelBooking2Model.create({
-      ...checkExist,
+      slotId,
       cancelledBy: "ADMIN",
       comments,
       status: "Cancelled",
+      userId: checkExist.userId,
+      studioId: checkExist?.studioId,
+      date: checkExist?.date,
+      time: checkExist?.time,
+      startTime: checkExist?.startTime,
+      endtime: checkExist?.endtime,
+      slot: checkExist?.slot,
+      activityType: checkExist?.activityType,
     });
 
     return OK(res, {}, req.body.language || "en");
