@@ -213,7 +213,7 @@ export const getStudioById = async (req: Request, res: Response) => {
           // date-wide range
           startTime: { $min: "$startTime" },
           endTime: { $max: "$endtime" },
-          interval:{ $first: "$slot" },
+          interval: { $first: "$slot" },
 
           // 👇 push all slots
           slots: {
@@ -453,14 +453,18 @@ export const getActivities = async (req: Request, res: Response) => {
 
     const searchRegex = search ? new RegExp(search, "i") : null;
 
-    const data = await StudioBookingModel.find(filter)
+    let data = (await StudioBookingModel.find(filter)
       .populate({ path: "userId", select: "fullName" })
       .populate({ path: "studioId", select: "name" })
       .select("activityType date startTime endtime userId studioId")
       .sort(sort)
       .skip(skip)
       .limit(limit)
-      .lean();
+      .lean()) as any;
+
+    data = data?.map((val: any) => {
+      return { ...val, slotId: val._id };
+    });
 
     const filteredData = searchRegex
       ? data.filter(

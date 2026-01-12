@@ -14,6 +14,7 @@ import {
 import {
   bookStudio,
   cancelBooking,
+  chatWithGPTServices,
   editBooking,
   getAvailableDateAndSlots,
   getBookingById,
@@ -119,6 +120,8 @@ paidRouter
   .delete(cancelBooking);
 
 paidRouter.get("/bookingById", getBookingById)
+
+paidRouter.post("/chat-with-ai", chatWithGPTServices)
 
 //============================== ADMIN Routes
 export { router, paidRouter };

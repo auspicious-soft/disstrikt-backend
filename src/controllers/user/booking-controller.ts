@@ -524,10 +524,13 @@ export const cancelBooking = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
-
-export const chatWithCamilleServices = async (req: Request, res: Response) => {
+export const chatWithGPTServices = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
+    const { botUsed = null } = req.query;
+    if (!botUsed) {
+      throw new Error("Bot type not available");
+    }
     const { content } = req.body;
     // Save user's message first
     await chatModel.create([
