@@ -505,3 +505,109 @@ export const cancelBooking = async (req: Request, res: Response) => {
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
+// export const chatWithGPTServices = async (req: Request, res: Response) => {
+//   const userData = req.user as any;
+//   const { content } = req.body;
+
+//   try {
+//     // Save user's message first
+//     await chatModel.create([
+//       {
+//         userId: userData.id,
+//         role: "user",
+//         content,
+//       },
+//     ]);
+
+//     // Get the last 10 messages (5 exchanges) from the conversation history
+//     const chatHistory = await chatModel
+//       .find({ userId: userData.id, modelUsed: "gpt-4" })
+//       .sort({ createdAt: -1 })
+//       .limit(10)
+//       .lean();
+
+//     // Reverse to get chronological order
+//     const conversationHistory = chatHistory.reverse();
+
+//     // Prepare messages array for OpenAI API with proper typing
+//     const messages: ChatCompletionMessageParam[] = [
+//       {
+//         role: "system",
+//         content:
+//           "You are a supportive and confident AI coach for an intermittent fasting app. Your job is to guide users through their 16:8 fasting routine, improve their eating habits, suggest light workouts, boost their emotional resilience, and help them build a healthier lifestyle. Always reply in an encouraging and expert tone. You can respond to users to not ask questions from other topics.",
+//       },
+//       // Add conversation history with proper typing
+//       ...conversationHistory.map((msg) => ({
+//         role: msg.role as "user" | "assistant",
+//         content: msg.content,
+//       })),
+//     ];
+
+//     const lastMessage = conversationHistory[conversationHistory.length - 1];
+//     if (
+//       !lastMessage ||
+//       lastMessage.role !== "user" ||
+//       lastMessage.content !== content
+//     ) {
+//       messages.push({
+//         role: "user",
+//         content,
+//       });
+//     }
+
+//     // Set up streaming response to client
+//     res.setHeader("Content-Type", "text/event-stream");
+//     res.setHeader("Cache-Control", "no-cache");
+//     res.setHeader("Connection", "keep-alive");
+
+//     const stream = await openai.chat.completions.create({
+//       model: "gpt-4",
+//       messages,
+//       temperature: 0.8,
+//       stream: true,
+//       max_tokens: 800,
+//     });
+
+//     let fullResponse = "";
+
+//     // Process each chunk from the stream
+//     for await (const chunk of stream) {
+//       const content = chunk.choices[0]?.delta?.content || "";
+//       if (content) {
+//         res.write(`data: ${JSON.stringify({ content })}\n\n`);
+//         fullResponse += content;
+//       }
+//     }
+
+//     // End the stream
+//     res.write("data: [DONE]\n\n");
+//     res.end();
+
+//     await chatModel.create([
+//       {
+//         userId: userData.id,
+//         role: "assistant",
+//         content: fullResponse,
+//       },
+//     ]);
+
+//     return true;
+//   } catch (err) {
+//     console.error("Error in chat stream:", err);
+//     if (!res.headersSent) {
+//       return errorResponseHandler(
+//         "Failed to send message",
+//         httpStatusCode.INTERNAL_SERVER_ERROR,
+//         res
+//       );
+//     } else {
+//       res.write(
+//         `data: ${JSON.stringify({ error: "Stream error occurred" })}\n\n`
+//       );
+//       res.end();
+//       return true;
+//     }
+//   }
+// };
+

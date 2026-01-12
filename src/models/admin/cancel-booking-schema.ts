@@ -66,10 +66,6 @@ const CancelBookingSchema = new Schema<ICancelBooking>(
   { timestamps: true }
 );
 
-CancelBookingSchema.index(
-  { studioId: 1, date: 1, startTime: 1 },
-  { unique: true }
-);
 
 export const CancelBookingModel = mongoose.model<ICancelBooking>(
   "cancelBooking",
