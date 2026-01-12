@@ -99,6 +99,8 @@ jobs:
               -e APPLE_BUNDEL_ID='${{ secrets.APPLE_BUNDEL_ID }}' \
               -e APPLE_ISSUER_ID='${{ secrets.APPLE_ISSUER_ID }}' \
               -e APPLE_PRIVATE_KEY='${{ secrets.APPLE_PRIVATE_KEY }}' \
+              -e OPEN_AI_API_KEY='${{ secrets.OPEN_AI_API_KEY }}' \
+              -e AI_MODEL='${{ secrets.AI_MODEL }}' \
               -e NEXT_PUBLIC_AWS_BUCKET_PATH='${{ secrets.NEXT_PUBLIC_AWS_BUCKET_PATH }}' \
               ${{ secrets.DOCKER_USERNAME }}/disstrikt-backend:latest || { echo 'Docker run failed'; exit 1; }
 
