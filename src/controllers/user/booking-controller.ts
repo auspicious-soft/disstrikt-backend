@@ -3,6 +3,7 @@ import { Types } from "mongoose";
 import mongoose from "mongoose";
 import { ChatCompletionMessageParam } from "openai/resources/index";
 import { openai } from "src/config/openAI";
+import { uploadFileToS3 } from "src/config/s3";
 import { CancelBooking2Model } from "src/models/admin/cancel-schema";
 import { planModel } from "src/models/admin/plan-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
@@ -10,6 +11,7 @@ import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
 import { chatModel } from "src/models/user/chat-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
+import { NotificationService } from "src/utils/FCM/fcm";
 import { BADREQUEST, INTERNAL_SERVER_ERROR, OK } from "src/utils/response";
 
 export const getLevelUp = async (req: Request, res: Response) => {
@@ -517,6 +519,12 @@ export const cancelBooking = async (req: Request, res: Response) => {
       activityType: checkExist?.activityType,
     });
 
+    await NotificationService(
+      [userData.id] as any,
+      "SUBSCRIPTION_STARTED",
+      checkExist._id as Object
+    );
+
     return OK(res, {}, req.body.language);
   } catch (err: any) {
     if (err.message) {
@@ -537,6 +545,32 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     }
 
     const { content } = req.body;
+    const uploadedFile = req.file;
+
+    let imageS3Key: string | null = null;
+    let imageUrl: string | null = null;
+    let imageBase64: string | null = null;
+
+    if (uploadedFile) {
+      if (!uploadedFile.mimetype.startsWith("image/")) {
+        throw new Error("Only image files are allowed");
+      }
+
+      // Upload to S3
+      const s3Result = await uploadFileToS3(
+        uploadedFile.buffer,
+        uploadedFile.originalname,
+        uploadedFile.mimetype,
+        userData.id,
+        "chat"
+      );
+      imageS3Key = s3Result.key;
+
+      // Convert to base64 for OpenAI Vision
+      imageBase64 = uploadedFile.buffer.toString("base64");
+      imageUrl = `data:${uploadedFile.mimetype};base64,${imageBase64}`;
+    }
+
     // Save user's message first
     await chatModel.create([
       {
@@ -545,10 +579,9 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
         botUsed,
         modelUsed: process.env.AI_MODEL,
         content,
+        imageUrl: imageS3Key,
       },
     ]);
-
-    //["Camille", "Harper", "Lumi"]
 
     // Get the last 10 messages (5 exchanges) from the conversation history
     const chatHistory = await chatModel
@@ -559,7 +592,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
 
     let plans = (await planModel
       .find()
-      .select("name description fullAccess")
+      .select("name description fullAccess trialAccess")
       .lean()) as any;
 
     plans = plans.map((val: any) => {
@@ -580,16 +613,137 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
 
     const prompt = {
       Camille: `
-      Your are Coach "Camille", Your tone is Sweet & overly friendly. You are going to chat with our models registered with our application Disstrikt. You will provide details general questions related to modeling industry and provide information about subscription and help them doing tasks if they stuck on any (You can ask users about the task datails in such cases). 
-      Our subscriptions plans details are ${plans},
-      User (${userData.fullName}) has current plan ${userData.subscription.planName} and status is ${userData.subscription.status}, 
+          You are Coach Camille — the Level-Up Coach for Disstrikt.
+          Your tone is sweet, warm, overly friendly, and slightly flirty in a professional way.
 
-      We have two other chat models name Harper and Lumi, Harper is to guid users on questions related to jobs in our platform. User has a portfolio book in our app where user upload photos and videos so Harper will guid them for that as well. On the other side Lumi is to answer basic platform questions regarding membership (Pause, cancel), changing settings like profile pic and language so if anything is asked related to these two other models let the users know about this so that user can ask other models.
-      `,
-      Harper: "",
-      Lumi: "",
+          You only answer questions related to:
+          • Modeling industry
+          • Subscriptions
+          • Tasks
+          • Shoots
+          • Bootcamps
+          • Portfolio bootcamp
+          • User limits & cooldowns
+          • Why something is locked
+          • How to perform a task
+
+          You must ALWAYS use the user's subscription data and plan rules below.
+
+          ──────────────── USER CONTEXT ────────────────
+          User name: ${userData.fullName}
+          Current plan: ${userData.subscription.planName}
+          Plan status: ${userData.subscription.status}
+
+          Plans & limits:
+          ${JSON.stringify(plans, null, 2)}
+
+          Important system rules:
+          • The user can only perform tasks allowed by their plan
+          • Trial users are extremely limited
+          • If cooldown exists, user must wait before next activity
+          • If user already has a future scheduled shoot or bootcamp, they cannot book another
+          • Never allow booking or claiming something that violates plan limits
+
+          ──────────────── RESPONSE RULES ────────────────
+          When a user asks why something is blocked:
+          1. First check their plan
+          2. Then explain it sweetly
+          3. Offer upgrade if appropriate
+
+          Examples:
+          • If they can't book → check shoot + cooldown
+          • If they can't do task → check task limit
+          • If trial → explain trial restriction
+
+          When user is stuck on a task:
+          • Ask for task name or details
+          • Then guide them step-by-step
+
+          When user asks something related to:
+          • Jobs, castings, portfolio book → Tell them to ask Harper
+          • Membership, pause, cancel, settings → Tell them to ask Lumi
+
+          You must NEVER answer questions that belong to Harper or Lumi.
+
+          You must NEVER invent platform features.
+          `,
+      Harper: `
+        You are Harper the Hunter — Disstrikt's job and career expert.
+        Your tone is funny, playful, confident, and slightly sarcastic in a charming way.
+
+        You only answer questions related to:
+        • Jobs
+        • Castings
+        • Auditions
+        • Applications
+        • Portfolio book
+        • Job visibility
+        • Job selection
+        • Add-ons inside studio (payment related to jobs)
+
+        ───────────── PLATFORM RULES ─────────────
+        Jobs exist in 3 types:
+        • Male
+        • Female
+        • Both
+
+        User sees jobs only if they match job requirements.
+
+        Navigation:
+        Job Board → Main Home Page → Career  
+        Applied Jobs → Main Home Page → Career → Applied Jobs  
+
+        ──────────────── RESPONSE RULES ────────────────
+        When user asks:
+        • Where to apply → guide to Job Board
+        • Where to check selection → Applied Jobs
+        • Can't see a job → explain requirement mismatch politely
+        • Portfolio review → give advice (never claim system access unless explicitly allowed)
+
+        If user asks about:
+        • Subscription
+        • Tasks
+        • Shoots
+        • Bootcamps → redirect to Camille
+
+        If user asks about:
+        • Cancel
+        • Pause
+        • Settings
+        • Profile → redirect to Lumi
+
+        You must never answer out-of-scope questions.
+        `,
+      Lumi: `
+          You are Lumi the Light — Disstrikt's boring but accurate support bot.
+          Your tone is neutral, minimal, factual, and not playful.
+
+          You only answer questions related to:
+          • Membership
+          • Pause
+          • Cancel
+          • Billing
+          • Account
+          • Profile
+          • Language
+          • Settings
+          • App vs Web
+
+          Examples:
+          • Cancel → App Store or Web portal
+          • Pause → App Store subscriptions
+          • Profile picture → Profile → Edit → Upload
+          • Language → Settings → Language
+
+          If user asks about:
+          • Jobs → redirect to Harper
+          • Tasks, shoots, bootcamps, plans → redirect to Camille
+
+          Never roleplay. Never flirt. Never joke.
+          Only give direct instructions.
+          `,
     } as any;
-
+    const systemPrompt = prompt[botUsed as keyof typeof prompt];
     // Reverse to get chronological order
     const conversationHistory = chatHistory.reverse();
 
@@ -597,7 +751,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     const messages: ChatCompletionMessageParam[] = [
       {
         role: "system",
-        content: prompt[botUsed as any] as string,
+        content: systemPrompt,
       },
       // Add conversation history with proper typing
       ...conversationHistory.map((msg) => ({
@@ -605,6 +759,25 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
         content: msg.content,
       })),
     ];
+
+    // Add the user message (with or without image)
+    if (imageUrl) {
+      messages.push({
+        role: "user",
+        content: [
+          { type: "text", text: content || "User uploaded an image" },
+          {
+            type: "image_url",
+            image_url: { url: imageUrl },
+          },
+        ],
+      });
+    } else {
+      messages.push({
+        role: "user",
+        content,
+      });
+    }
 
     const lastMessage = conversationHistory[conversationHistory.length - 1];
     if (
@@ -623,8 +796,14 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
+    const isImage = !!imageUrl;
+
+    const openAiModel = isImage
+      ? "gpt-4o" // MUST be multimodal
+      : process.env.AI_MODEL || "gpt-4o-mini";
+
     const stream = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: openAiModel,
       messages,
       temperature: 0.8,
       stream: true,
@@ -651,7 +830,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
         userId: userData.id,
         role: "assistant",
         botUsed,
-        modelUsed: process.env.AI_MODEL,
+        modelUsed: openAiModel,
         content: fullResponse,
       },
     ]);
@@ -668,5 +847,65 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
       res.end();
       return true;
     }
+  }
+};
+export const chatHistoryServices = async (req: Request, res: Response) => {
+  try {
+    const { botUsed = "Camille" } = req.query;
+    const userData = req.user as any;
+
+    if (
+      !botUsed ||
+      !["Camille", "Harper", "Lumi"].includes(botUsed as string)
+    ) {
+      throw new Error("Bot type not available");
+    }
+
+    // Get pagination parameters from query
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 20;
+    const skip = (page - 1) * limit;
+
+    // Get total count for pagination metadata
+    const totalCount = await chatModel.countDocuments({
+      userId: userData.id,
+      botUsed,
+    });
+
+    // Get paginated chat history
+    const chatHistory = await chatModel
+      .find({ userId: userData.id, botUsed })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    chatHistory.reverse();
+
+    // Calculate pagination metadata
+    const totalPages = Math.ceil(totalCount / limit);
+    const hasNextPage = page < totalPages;
+    const hasPrevPage = page > 1;
+
+    return OK(
+      res,
+      {
+        data: chatHistory,
+        pagination: {
+          totalCount,
+          totalPages,
+          currentPage: page,
+          limit,
+          hasNextPage,
+          hasPrevPage,
+        },
+      },
+      req.body.language
+    );
+  } catch (err: any) {
+    if (err.message) {
+      return BADREQUEST(res, err.message, req.body.language);
+    }
+    return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };

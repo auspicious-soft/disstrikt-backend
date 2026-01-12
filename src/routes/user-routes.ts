@@ -14,6 +14,7 @@ import {
 import {
   bookStudio,
   cancelBooking,
+  chatHistoryServices,
   chatWithGPTServices,
   editBooking,
   getAvailableDateAndSlots,
@@ -55,6 +56,7 @@ import {
   updateUser,
   userProfile,
 } from "src/controllers/user/profile-controller";
+import { multerMiddleware } from "src/middleware/multer";
 
 // Code
 const router = Router();
@@ -119,9 +121,10 @@ paidRouter
   .put(editBooking)
   .delete(cancelBooking);
 
-paidRouter.get("/bookingById", getBookingById)
+paidRouter.get("/bookingById", getBookingById);
 
-paidRouter.post("/chat-with-ai", chatWithGPTServices)
+paidRouter.post("/chat-with-ai", multerMiddleware, chatWithGPTServices);
+paidRouter.get("/get-chat-history", chatHistoryServices);
 
 //============================== ADMIN Routes
 export { router, paidRouter };

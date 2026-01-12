@@ -103,6 +103,9 @@ export const notificationMessages = {
       title: "Subscription Cancelled",
       description: "Your subscription has been cancelled.",
     },
+
+    // New Notifications,
+    //Todo
   },
   nl: {
     TASK_COMPLETED: {
