@@ -1,6 +1,6 @@
 import mongoose, { Schema, Document } from "mongoose";
 
-export interface ICancelBooking extends Document {
+export interface ICancelBooking2 extends Document {
   studioId: mongoose.Types.ObjectId;
   userId: mongoose.Types.ObjectId | null;
   date: Date;
@@ -15,7 +15,7 @@ export interface ICancelBooking extends Document {
   createdAt: Date;
 }
 
-const CancelBookingSchema = new Schema<ICancelBooking>(
+const CancelBooking2Schema = new Schema<ICancelBooking2>(
   {
     studioId: {
       type: Schema.Types.ObjectId,
@@ -67,7 +67,7 @@ const CancelBookingSchema = new Schema<ICancelBooking>(
 );
 
 
-export const CancelBookingModel22 = mongoose.model<ICancelBooking>(
+export const CancelBooking2Model = mongoose.model<ICancelBooking2>(
   "cancelBooking2",
-  CancelBookingSchema
+  CancelBooking2Schema
 );

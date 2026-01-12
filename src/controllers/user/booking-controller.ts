@@ -3,7 +3,7 @@ import { Types } from "mongoose";
 import mongoose from "mongoose";
 import { ChatCompletionMessageParam } from "openai/resources/index";
 import { openai } from "src/config/openAI";
-import { CancelBookingModel2 } from "src/models/admin/cancel-booking-schema";
+import { CancelBooking2Model } from "src/models/admin/cancel-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
@@ -327,7 +327,7 @@ export const getBookings = async (req: Request, res: Response) => {
     let checkExist;
     const date = new Date();
     if (type == "Cancelled") {
-      checkExist = await CancelBookingModel2.find({
+      checkExist = await CancelBooking2Model.find({
         userId: userData.id,
       })
         .select(
@@ -498,7 +498,7 @@ export const cancelBooking = async (req: Request, res: Response) => {
       }
     );
 
-    await CancelBookingModel2.create({
+    await CancelBooking2Model.create({
       ...checkExist,
       cancelledBy: "USER",
       status: "Cancelled",
@@ -512,16 +512,16 @@ export const cancelBooking = async (req: Request, res: Response) => {
   }
 };
 
-export const chatWithGPTServices = async (req: Request, res: Response) => {
-  const userData = req.user as any;
-  const { content } = req.body;
-
+export const chatWithCamilleServices = async (req: Request, res: Response) => {
   try {
+    const userData = req.user as any;
+    const { content } = req.body;
     // Save user's message first
     await chatModel.create([
       {
         userId: userData.id,
         role: "user",
+        botUsed: "Camille",
         content,
       },
     ]);
@@ -570,7 +570,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     res.setHeader("Connection", "keep-alive");
 
     const stream = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "GPT-5-mini",
       messages,
       temperature: 0.8,
       stream: true,
@@ -596,6 +596,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
       {
         userId: userData.id,
         role: "assistant",
+        botUsed: "Camille",
         content: fullResponse,
       },
     ]);
@@ -604,7 +605,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
   } catch (err) {
     console.error("Error in chat stream:", err);
     if (!res.headersSent) {
-      //Todo Error
+      return INTERNAL_SERVER_ERROR(res, req.body.language);
     } else {
       res.write(
         `data: ${JSON.stringify({ error: "Stream error occurred" })}\n\n`
