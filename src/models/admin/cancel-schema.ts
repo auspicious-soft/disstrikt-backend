@@ -67,7 +67,7 @@ const CancelBookingSchema = new Schema<ICancelBooking>(
 );
 
 
-export const CancelBookingModel2 = mongoose.model<ICancelBooking>(
-  "cancelBooking",
+export const CancelBookingModel22 = mongoose.model<ICancelBooking>(
+  "cancelBooking2",
   CancelBookingSchema
 );

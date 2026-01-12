@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
-import { CancelBookingModel } from "src/models/admin/cancel-booking-schema";
+import { CancelBookingModel2 } from "src/models/admin/cancel-booking-schema";
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
@@ -389,7 +389,7 @@ export const getActivities = async (req: Request, res: Response) => {
       const searchRegex = search ? new RegExp(search, "i") : null;
       let sort: any = { time: 1 };
 
-      const data = await CancelBookingModel.find(filter)
+      const data = await CancelBookingModel2.find(filter)
         .populate({ path: "userId", select: "fullName" })
         .populate({ path: "studioId", select: "name" })
         .select(
@@ -411,7 +411,7 @@ export const getActivities = async (req: Request, res: Response) => {
 
       const total = searchRegex
         ? filteredData.length
-        : await CancelBookingModel.countDocuments(filter);
+        : await CancelBookingModel2.countDocuments(filter);
 
       return OK(
         res,
@@ -553,7 +553,7 @@ export const cancelBooking = async (req: Request, res: Response) => {
       }
     );
 
-    await CancelBookingModel.create({
+    await CancelBookingModel2.create({
       ...checkExist,
       cancelledBy: "ADMIN",
       comments,
