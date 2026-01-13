@@ -9,6 +9,7 @@ import { v4 as uuid } from "uuid";
 import { uploadFileToS3 } from "src/config/s3";
 import { configDotenv } from "dotenv";
 import ffmpeg from "fluent-ffmpeg";
+import moment from "moment-timezone";
 
 // for local machine
 // ffmpeg.setFfmpegPath("C:\\ffmpeg\\bin\\ffmpeg.exe");
@@ -191,3 +192,23 @@ export async function uploadToPortfolio(userId: any, taskNumber: number) {
 
   return true;
 }
+
+export const convertToUTCFromMinutes = (
+  date: string,
+  minutes: number,
+  timeZone: string
+) => {
+  const base = moment.tz(date, timeZone).startOf("day");
+  return base.add(minutes, "minutes").utc().toDate();
+};
+
+export const timeToMinutes = (t: string) => {
+  const [h, m] = t.split(":").map(Number);
+  return h * 60 + (m || 0);
+};
+
+export const minutesToTime = (m: number) => {
+  const h = Math.floor(m / 60);
+  const mm = m % 60;
+  return `${String(h).padStart(2, "0")}:${String(mm).padStart(2, "0")}`;
+};
