@@ -103,9 +103,6 @@ export const notificationMessages = {
       title: "Subscription Cancelled",
       description: "Your subscription has been cancelled.",
     },
-<<<<<<< Updated upstream
-=======
-
     // New Notifications,
     PORTFOLIO_BOOTCAMP_CANCELLED: {
       title: "Portfolio Bootcamp Cancelled",
@@ -136,7 +133,6 @@ export const notificationMessages = {
       title: "Shoot Reviewed",
       description: "Your shoot has been successfully reviewed by Disstrikt.",
     },
->>>>>>> Stashed changes
   },
   nl: {
     TASK_COMPLETED: {
