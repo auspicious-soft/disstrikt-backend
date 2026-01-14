@@ -397,7 +397,7 @@ export const deleteBookingSlot = async (req: Request, res: Response) => {
     if (checkExist.status === "Booked") {
       throw new Error(`Please first reschedule the booking to delete`);
     } else {
-      await StudioBookingModel.findOneAndDelete(id);
+      await StudioBookingModel.findByIdAndDelete(id);
     }
 
     return OK(res, {}, req.body.language || "en");
