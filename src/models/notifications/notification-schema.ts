@@ -14,6 +14,12 @@ export interface INotification extends Document {
     | "SUBSCRIPTION_RENEWED"
     | "SUBSCRIPTION_FAILED"
     | "SUBSCRIPTION_CANCELLED"
+    | "PORTFOLIO_BOOTCAMP_CANCELLED"
+    | "SKILL_BOOTCAMP_CANCELLED"
+    | "SHOOT_CANCELLED"
+    | "PORTFOLIO_BOOTCAMP_REVIEWED"
+    | "SKILL_BOOTCAMP_REVIEWED"
+    | "SHOOT_REVIEWED"
   title: string;
   description: string;
   language: "en" | "nl" | "fr" | "es";
@@ -46,6 +52,12 @@ const notificationSchema = new Schema<INotification>(
         "SUBSCRIPTION_RENEWED",
         "SUBSCRIPTION_FAILED",
         "SUBSCRIPTION_CANCELLED",
+        "PORTFOLIO_BOOTCAMP_CANCELLED",
+        "SKILL_BOOTCAMP_CANCELLED",
+        "SHOOT_CANCELLED",
+        "PORTFOLIO_BOOTCAMP_REVIEWED",
+        "SKILL_BOOTCAMP_REVIEWED",
+        "SHOOT_REVIEWED",
       ],
       required: true,
     },

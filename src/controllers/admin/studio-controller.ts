@@ -1,12 +1,14 @@
 import { Request, Response } from "express";
 import mongoose from "mongoose";
 import { CancelBooking2Model } from "src/models/admin/cancel-schema";
-
 import { PlatformInfoModel } from "src/models/admin/platform-info-schema";
 import { StudioBookingModel } from "src/models/admin/studio-booking-schema";
 import { StudioModel } from "src/models/admin/studio-schema";
+import { NotificationService } from "src/utils/FCM/fcm";
 import { convertToUTC } from "src/utils/helper";
 import { BADREQUEST, INTERNAL_SERVER_ERROR, OK } from "src/utils/response";
+import { convertToUTCFromMinutes, minutesToTime, timeToMinutes } from "src/utils/task-helpers";
+
 
 export const addStudios = async (req: Request, res: Response) => {
   try {
@@ -20,81 +22,58 @@ export const addStudios = async (req: Request, res: Response) => {
       timeZone,
     } = req.body;
 
+    if (!timeZone) throw new Error("Timezone is mandatory");
+
     let studio;
 
-    if (!timeZone) {
-      throw new Error("Timezone is mandatory");
-    }
-
-    /* -------------------- CREATE / UPDATE STUDIO -------------------- */
     if (id) {
       studio = await StudioModel.findByIdAndUpdate(
         id,
-        {
-          $set: { name, location, city, country },
-        },
+        { $set: { name, location, city, country } },
         { new: true }
       );
-
-      if (!studio) {
-        return BADREQUEST(res, "Studio not found", req.body.language || "en");
-      }
+      if (!studio) return BADREQUEST(res, "Studio not found", req.body.language);
     } else {
-      studio = await StudioModel.create({
-        name,
-        location,
-        city,
-        country,
-      });
+      studio = await StudioModel.create({ name, location, city, country });
     }
 
-    /* -------------------- SLOT HANDLING -------------------- */
-    if (!slots.length || !studio?._id) {
-      return OK(res, studio, req.body.language || "en");
-    }
+    if (!slots.length) return OK(res, studio, req.body.language);
 
     const studioId = studio._id;
 
-    /* 🔹 Fetch existing dates for this studio */
-    const existingDates = await StudioBookingModel.distinct("date", {
-      studioId,
-    });
+    /* get existing days */
+    const existingDates = await StudioBookingModel.distinct("date", { studioId });
+    const dateSet = new Set(existingDates.map((d) => d.toISOString().split("T")[0]));
 
-    const existingDateSet = new Set(
-      existingDates.map((d: Date) => d.toISOString().split("T")[0])
-    );
+    const newSlots = slots.filter((s: any) => !dateSet.has(s.date));
 
-    /* 🔹 Only take slots whose date does NOT exist */
-    const newSlots = slots.filter((s: any) => !existingDateSet.has(s.date));
+    if (!newSlots.length) return OK(res, studio, req.body.language);
 
-    if (!newSlots.length) {
-      return OK(res, studio, req.body.language || "en");
-    }
-
-    /* -------------------- GENERATE BOOKINGS -------------------- */
-    const bookings: any[] = [];
+    const bookings = [];
 
     for (const s of newSlots) {
-      const slotDuration = Number(s.slot);
-      if (slotDuration <= 0) continue;
+      const slotMinutes = Number(s.slot); // 30, 60, 90, 150 etc
+      if (slotMinutes <= 0) continue;
 
-      let currentHour = Number(s.startTime.split(":")[0]);
-      const endHour = Number(s.endTime.split(":")[0]);
+      const startMin = timeToMinutes(s.startTime);
+      const endMin = timeToMinutes(s.endTime);
 
-      while (currentHour + slotDuration <= endHour) {
-        const startTimeStr = `${currentHour}:00`;
-        const endTimeStr = `${currentHour + slotDuration}:00`;
+      let cursor = startMin;
 
-        const startUTC = convertToUTC(s.date, currentHour, timeZone);
+      while (cursor + slotMinutes <= endMin) {
+        const startTime = minutesToTime(cursor);
+        const endTime = minutesToTime(cursor + slotMinutes);
+
+        const utcTime = convertToUTCFromMinutes(s.date, cursor, timeZone);
 
         bookings.push({
           studioId,
           userId: null,
           date: new Date(s.date),
-          startTime: startTimeStr,
-          endtime: endTimeStr,
-          time: startUTC,
-          slot: `${slotDuration}h`,
+          startTime,
+          endtime: endTime,
+          time: utcTime,
+          slot: `${slotMinutes}m`,
           status: "Empty",
           attended: null,
           activityType: null,
@@ -103,24 +82,134 @@ export const addStudios = async (req: Request, res: Response) => {
           images: [],
         });
 
-        currentHour += slotDuration;
+        cursor += slotMinutes;
       }
     }
 
-    /* -------------------- INSERT NEW BOOKINGS -------------------- */
     if (bookings.length) {
-      await StudioBookingModel.insertMany(bookings);
+      await StudioBookingModel.insertMany(bookings, { ordered: false });
     }
 
-    return OK(res, studio, req.body.language || "en");
+    return OK(res, studio, req.body.language);
   } catch (err: any) {
     console.error(err);
-    if (err.message) {
-      return BADREQUEST(res, err.message, req.body.language || "en");
-    }
-    return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+    return BADREQUEST(res, err.message || "Server error", req.body.language);
   }
 };
+
+// export const addStudios = async (req: Request, res: Response) => {
+//   try {
+//     const {
+//       id = null,
+//       name,
+//       location,
+//       city,
+//       country,
+//       slots = [],
+//       timeZone,
+//     } = req.body;
+
+//     let studio;
+
+//     if (!timeZone) {
+//       throw new Error("Timezone is mandatory");
+//     }
+
+//     /* -------------------- CREATE / UPDATE STUDIO -------------------- */
+//     if (id) {
+//       studio = await StudioModel.findByIdAndUpdate(
+//         id,
+//         {
+//           $set: { name, location, city, country },
+//         },
+//         { new: true }
+//       );
+
+//       if (!studio) {
+//         return BADREQUEST(res, "Studio not found", req.body.language || "en");
+//       }
+//     } else {
+//       studio = await StudioModel.create({
+//         name,
+//         location,
+//         city,
+//         country,
+//       });
+//     }
+
+//     /* -------------------- SLOT HANDLING -------------------- */
+//     if (!slots.length || !studio?._id) {
+//       return OK(res, studio, req.body.language || "en");
+//     }
+
+//     const studioId = studio._id;
+
+//     /* 🔹 Fetch existing dates for this studio */
+//     const existingDates = await StudioBookingModel.distinct("date", {
+//       studioId,
+//     });
+
+//     const existingDateSet = new Set(
+//       existingDates.map((d: Date) => d.toISOString().split("T")[0])
+//     );
+
+//     /* 🔹 Only take slots whose date does NOT exist */
+//     const newSlots = slots.filter((s: any) => !existingDateSet.has(s.date));
+
+//     if (!newSlots.length) {
+//       return OK(res, studio, req.body.language || "en");
+//     }
+
+//     /* -------------------- GENERATE BOOKINGS -------------------- */
+//     const bookings: any[] = [];
+
+//     for (const s of newSlots) {
+//       const slotDuration = Number(s.slot);
+//       if (slotDuration <= 0) continue;
+
+//       let currentHour = Number(s.startTime.split(":")[0]);
+//       const endHour = Number(s.endTime.split(":")[0]);
+
+//       while (currentHour + slotDuration <= endHour) {
+//         const startTimeStr = `${currentHour}:00`;
+//         const endTimeStr = `${currentHour + slotDuration}:00`;
+
+//         const startUTC = convertToUTC(s.date, currentHour, timeZone);
+
+//         bookings.push({
+//           studioId,
+//           userId: null,
+//           date: new Date(s.date),
+//           startTime: startTimeStr,
+//           endtime: endTimeStr,
+//           time: startUTC,
+//           slot: `${slotDuration}h`,
+//           status: "Empty",
+//           attended: null,
+//           activityType: null,
+//           rating: 0,
+//           comments: null,
+//           images: [],
+//         });
+
+//         currentHour += slotDuration;
+//       }
+//     }
+
+//     /* -------------------- INSERT NEW BOOKINGS -------------------- */
+//     if (bookings.length) {
+//       await StudioBookingModel.insertMany(bookings);
+//     }
+
+//     return OK(res, studio, req.body.language || "en");
+//   } catch (err: any) {
+//     console.error(err);
+//     if (err.message) {
+//       return BADREQUEST(res, err.message, req.body.language || "en");
+//     }
+//     return INTERNAL_SERVER_ERROR(res, req.body.language || "en");
+//   }
+// };
 
 export const getStudios = async (req: Request, res: Response) => {
   try {
@@ -308,7 +397,7 @@ export const deleteBookingSlot = async (req: Request, res: Response) => {
     if (checkExist.status === "Booked") {
       throw new Error(`Please first reschedule the booking to delete`);
     } else {
-      await StudioBookingModel.findOneAndDelete(id);
+      await StudioBookingModel.findByIdAndDelete(id);
     }
 
     return OK(res, {}, req.body.language || "en");
@@ -521,6 +610,19 @@ export const giveRatings = async (req: Request, res: Response) => {
       },
     });
 
+    const notificationType =
+      checkExist.activityType == "Portfolio Bootcamp"
+        ? "PORTFOLIO_BOOTCAMP_REVIEWED"
+        : checkExist.activityType == "Skill Bootcamp"
+        ? "SKILL_BOOTCAMP_REVIEWED"
+        : "SHOOT_REVIEWED";
+
+    await NotificationService(
+      [checkExist.userId] as any,
+      notificationType,
+      checkExist._id as Object
+    );
+
     return OK(res, {}, req.body.language || "en");
   } catch (err: any) {
     return err.message
@@ -572,6 +674,19 @@ export const cancelBooking = async (req: Request, res: Response) => {
       slot: checkExist?.slot,
       activityType: checkExist?.activityType,
     });
+
+    const notificationType =
+      checkExist.activityType == "Portfolio Bootcamp"
+        ? "PORTFOLIO_BOOTCAMP_CANCELLED"
+        : checkExist.activityType == "Skill Bootcamp"
+        ? "SKILL_BOOTCAMP_CANCELLED"
+        : "SHOOT_CANCELLED";
+
+    await NotificationService(
+      [checkExist.userId] as any,
+      notificationType,
+      checkExist._id as Object
+    );
 
     return OK(res, {}, req.body.language || "en");
   } catch (err: any) {

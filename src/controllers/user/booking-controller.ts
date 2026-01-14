@@ -397,6 +397,20 @@ export const editBooking = async (req: Request, res: Response) => {
 
     const userData = req.user as any;
 
+    if (newSlotId == currentSlotId) {
+      await StudioBookingModel.findByIdAndUpdate(newSlotId, {
+        $set: {
+          addOnFeatures,
+          shootFormat,
+          shootGoals,
+          vibes,
+          canBringOutfits,
+        },
+      });
+
+      return OK(res, {}, req.body.language);
+    }
+
     // 1️⃣ Verify old booking belongs to user & is booked
     const oldBooking = await StudioBookingModel.findOne(
       {

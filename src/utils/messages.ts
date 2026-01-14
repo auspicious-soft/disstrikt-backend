@@ -103,9 +103,36 @@ export const notificationMessages = {
       title: "Subscription Cancelled",
       description: "Your subscription has been cancelled.",
     },
-
     // New Notifications,
-    //Todo
+    PORTFOLIO_BOOTCAMP_CANCELLED: {
+      title: "Portfolio Bootcamp Cancelled",
+      description:
+        "Unfortunately, your Portfolio Bootcamp has been cancelled by Disstrikt.",
+    },
+    SKILL_BOOTCAMP_CANCELLED: {
+      title: "Skill Bootcamp Cancelled",
+      description:
+        "Unfortunately, your Skill Bootcamp has been cancelled by Disstrikt.",
+    },
+    SHOOT_CANCELLED: {
+      title: "Shoot Cancelled",
+      description:
+        "Unfortunately, your scheduled shoot has been cancelled by Disstrikt.",
+    },
+    PORTFOLIO_BOOTCAMP_REVIEWED: {
+      title: "Portfolio Bootcamp Reviewed",
+      description:
+        "Your Portfolio Bootcamp has been successfully reviewed by Disstrikt.",
+    },
+    SKILL_BOOTCAMP_REVIEWED: {
+      title: "Skill Bootcamp Reviewed",
+      description:
+        "Your Skill Bootcamp has been successfully reviewed by Disstrikt.",
+    },
+    SHOOT_REVIEWED: {
+      title: "Shoot Reviewed",
+      description: "Your shoot has been successfully reviewed by Disstrikt.",
+    },
   },
   nl: {
     TASK_COMPLETED: {
@@ -153,6 +180,36 @@ export const notificationMessages = {
     SUBSCRIPTION_CANCELLED: {
       title: "Abonnement Geannuleerd",
       description: "Je abonnement is geannuleerd.",
+    },
+
+    // New Notifications
+    PORTFOLIO_BOOTCAMP_CANCELLED: {
+      title: "Portfolio Bootcamp Geannuleerd",
+      description:
+        "Helaas is jouw Portfolio Bootcamp geannuleerd door Disstrikt.",
+    },
+    SKILL_BOOTCAMP_CANCELLED: {
+      title: "Skill Bootcamp Geannuleerd",
+      description: "Helaas is jouw Skill Bootcamp geannuleerd door Disstrikt.",
+    },
+    SHOOT_CANCELLED: {
+      title: "Fotoshoot Geannuleerd",
+      description:
+        "Helaas is jouw geplande fotoshoot geannuleerd door Disstrikt.",
+    },
+    PORTFOLIO_BOOTCAMP_REVIEWED: {
+      title: "Portfolio Bootcamp Beoordeeld",
+      description:
+        "Jouw Portfolio Bootcamp is succesvol beoordeeld door Disstrikt.",
+    },
+    SKILL_BOOTCAMP_REVIEWED: {
+      title: "Skill Bootcamp Beoordeeld",
+      description:
+        "Jouw Skill Bootcamp is succesvol beoordeeld door Disstrikt.",
+    },
+    SHOOT_REVIEWED: {
+      title: "Fotoshoot Beoordeeld",
+      description: "Jouw fotoshoot is succesvol beoordeeld door Disstrikt.",
     },
   },
   fr: {
@@ -202,6 +259,38 @@ export const notificationMessages = {
       title: "Abonnement Annulé",
       description: "Votre abonnement a été annulé.",
     },
+
+    //New Notifications
+    PORTFOLIO_BOOTCAMP_CANCELLED: {
+      title: "Bootcamp Portfolio Annulé",
+      description:
+        "Malheureusement, votre Bootcamp Portfolio a été annulé par Disstrikt.",
+    },
+    SKILL_BOOTCAMP_CANCELLED: {
+      title: "Bootcamp de Compétences Annulé",
+      description:
+        "Malheureusement, votre Bootcamp de Compétences a été annulé par Disstrikt.",
+    },
+    SHOOT_CANCELLED: {
+      title: "Séance Photo Annulée",
+      description:
+        "Malheureusement, votre séance photo programmée a été annulée par Disstrikt.",
+    },
+    PORTFOLIO_BOOTCAMP_REVIEWED: {
+      title: "Bootcamp Portfolio Évalué",
+      description:
+        "Votre Bootcamp Portfolio a été évalué avec succès par Disstrikt.",
+    },
+    SKILL_BOOTCAMP_REVIEWED: {
+      title: "Bootcamp de Compétences Évalué",
+      description:
+        "Votre Bootcamp de Compétences a été évalué avec succès par Disstrikt.",
+    },
+    SHOOT_REVIEWED: {
+      title: "Séance Photo Évaluée",
+      description:
+        "Votre séance photo a été évaluée avec succès par Disstrikt.",
+    },
   },
   es: {
     TASK_COMPLETED: {
@@ -250,6 +339,38 @@ export const notificationMessages = {
       title: "Suscripción Cancelada",
       description: "Tu suscripción ha sido cancelada.",
     },
+
+    //New Notifications
+    PORTFOLIO_BOOTCAMP_CANCELLED: {
+      title: "Bootcamp de Portafolio Cancelado",
+      description:
+        "Lamentablemente, tu Bootcamp de Portafolio ha sido cancelado por Disstrikt.",
+    },
+    SKILL_BOOTCAMP_CANCELLED: {
+      title: "Bootcamp de Habilidades Cancelado",
+      description:
+        "Lamentablemente, tu Bootcamp de Habilidades ha sido cancelado por Disstrikt.",
+    },
+    SHOOT_CANCELLED: {
+      title: "Sesión de Fotos Cancelada",
+      description:
+        "Lamentablemente, tu sesión de fotos programada ha sido cancelada por Disstrikt.",
+    },
+    PORTFOLIO_BOOTCAMP_REVIEWED: {
+      title: "Bootcamp de Portafolio Revisado",
+      description:
+        "Tu Bootcamp de Portafolio ha sido revisado con éxito por Disstrikt.",
+    },
+    SKILL_BOOTCAMP_REVIEWED: {
+      title: "Bootcamp de Habilidades Revisado",
+      description:
+        "Tu Bootcamp de Habilidades ha sido revisado con éxito por Disstrikt.",
+    },
+    SHOOT_REVIEWED: {
+      title: "Sesión de Fotos Revisada",
+      description:
+        "Tu sesión de fotos ha sido revisada con éxito por Disstrikt.",
+    },
   },
 };
 
@@ -257,7 +378,7 @@ export const customMessages: Record<SupportedLang, any> = {
   en: {
     registerAgain: "Session expired, please register again",
     loginSuccess: "Login successful",
-    invalidEmailDomain:"Invalid email domain.",
+    invalidEmailDomain: "Invalid email domain.",
     otpResent: "OTP resent successfully",
     logoutSuccess: "Logout successful",
     badrequest: "Bad request",
@@ -316,7 +437,7 @@ export const customMessages: Record<SupportedLang, any> = {
   nl: {
     registerAgain: "Sessie verlopen, registreer opnieuw",
     loginSuccess: "Inloggen geslaagd",
-    invalidEmailDomain:"Ongeldig e-maildomein",
+    invalidEmailDomain: "Ongeldig e-maildomein",
     otpResent: "OTP succesvol opnieuw verzonden",
     logoutSuccess: "Uitloggen geslaagd",
     badrequest: "Ongeldig verzoek",
@@ -377,7 +498,7 @@ export const customMessages: Record<SupportedLang, any> = {
   fr: {
     registerAgain: "Session expirée, veuillez vous réinscrire",
     loginSuccess: "Connexion réussie",
-    invalidEmailDomain:"Domaine de courriel invalide",
+    invalidEmailDomain: "Domaine de courriel invalide",
     otpResent: "OTP renvoyé avec succès",
     logoutSuccess: "Déconnexion réussie",
     badrequest: "Requête invalide",
@@ -439,7 +560,7 @@ export const customMessages: Record<SupportedLang, any> = {
   es: {
     registerAgain: "Sesión expirada, por favor regístrate de nuevo",
     loginSuccess: "Inicio de sesión exitoso",
-    invalidEmailDomain:"Dominio de correo electrónico no válido",
+    invalidEmailDomain: "Dominio de correo electrónico no válido",
     otpResent: "OTP reenviado con éxito",
     logoutSuccess: "Cierre de sesión exitoso",
     badrequest: "Solicitud incorrecta",
