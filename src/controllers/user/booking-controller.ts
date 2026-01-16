@@ -365,7 +365,7 @@ export const getBookingById = async (req: Request, res: Response) => {
 
     let checkExist;
     if (type === "Cancelled") {
-      checkExist = await CancelBooking2Model.findOne({ slotId })
+      checkExist = await CancelBooking2Model.findOne({ _id: slotId })
         .populate("studioId")
         .populate("userId")
         .lean();
