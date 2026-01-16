@@ -7,8 +7,11 @@ import { StudioModel } from "src/models/admin/studio-schema";
 import { NotificationService } from "src/utils/FCM/fcm";
 import { convertToUTC } from "src/utils/helper";
 import { BADREQUEST, INTERNAL_SERVER_ERROR, OK } from "src/utils/response";
-import { convertToUTCFromMinutes, minutesToTime, timeToMinutes } from "src/utils/task-helpers";
-
+import {
+  convertToUTCFromMinutes,
+  minutesToTime,
+  timeToMinutes,
+} from "src/utils/task-helpers";
 
 export const addStudios = async (req: Request, res: Response) => {
   try {
@@ -32,7 +35,8 @@ export const addStudios = async (req: Request, res: Response) => {
         { $set: { name, location, city, country } },
         { new: true }
       );
-      if (!studio) return BADREQUEST(res, "Studio not found", req.body.language);
+      if (!studio)
+        return BADREQUEST(res, "Studio not found", req.body.language);
     } else {
       studio = await StudioModel.create({ name, location, city, country });
     }
@@ -42,8 +46,12 @@ export const addStudios = async (req: Request, res: Response) => {
     const studioId = studio._id;
 
     /* get existing days */
-    const existingDates = await StudioBookingModel.distinct("date", { studioId });
-    const dateSet = new Set(existingDates.map((d) => d.toISOString().split("T")[0]));
+    const existingDates = await StudioBookingModel.distinct("date", {
+      studioId,
+    });
+    const dateSet = new Set(
+      existingDates.map((d) => d.toISOString().split("T")[0])
+    );
 
     const newSlots = slots.filter((s: any) => !dateSet.has(s.date));
 
@@ -465,7 +473,11 @@ export const getActivities = async (req: Request, res: Response) => {
       search = "",
     } = req.query as any;
 
-    if (!["Upcoming", "Past", "Reviewed", "Cancelled"].includes(type)) {
+    if (
+      !["Upcoming", "Past", "Reviewed", "Cancelled", "Unattended"].includes(
+        type
+      )
+    ) {
       throw new Error("Invalid type");
     }
 
@@ -529,13 +541,20 @@ export const getActivities = async (req: Request, res: Response) => {
 
     if (type === "Past") {
       filter.time = { $lt: now };
+      filter.attended = { $eq: null };
       sort.time = -1;
       filter.status = "Booked";
     }
 
     if (type === "Reviewed") {
       filter.time = { $lt: now };
-      filter.attended = { $ne: null };
+      filter.attended = { $eq: "Yes" };
+      filter.status = "Booked";
+      sort.time = -1;
+    }
+    if (type === "Unattended") {
+      filter.time = { $lt: now };
+      filter.attended = { $eq: "No" };
       filter.status = "Booked";
       sort.time = -1;
     }
