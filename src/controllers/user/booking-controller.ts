@@ -13,6 +13,8 @@ import { chatModel } from "src/models/user/chat-schema";
 import { SubscriptionModel } from "src/models/user/subscription-schema";
 import { NotificationService } from "src/utils/FCM/fcm";
 import { BADREQUEST, INTERNAL_SERVER_ERROR, OK } from "src/utils/response";
+import { userMoreInfo } from "../auth/auth-controller";
+import { UserInfoModel } from "src/models/user/user-info-schema";
 
 export const getLevelUp = async (req: Request, res: Response) => {
   try {
@@ -365,14 +367,29 @@ export const getBookingById = async (req: Request, res: Response) => {
     if (type === "Cancelled") {
       checkExist = await CancelBooking2Model.findOne({ slotId })
         .populate("studioId")
-        .populate("userId");
+        .populate("userId")
+        .lean();
     } else {
       checkExist = await StudioBookingModel.findById(slotId)
         .populate("studioId")
-        .populate("userId");
+        .populate("userId")
+        .lean();
     }
 
-    return OK(res, checkExist, req.body.language);
+    const moreData = await UserInfoModel.findOne({
+      userId: checkExist?.userId?._id,
+    })
+      .select("gender")
+      .lean();
+
+    return OK(
+      res,
+      {
+        ...checkExist,
+        userId: { ...checkExist?.userId, ...moreData },
+      },
+      req.body.language
+    );
   } catch (err: any) {
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);
@@ -424,6 +441,16 @@ export const editBooking = async (req: Request, res: Response) => {
 
     if (!oldBooking) {
       throw new Error("Invalid or unauthorized booking");
+    }
+
+    const now = new Date();
+    const diffInHours =
+      (new Date(oldBooking.time).getTime() - now.getTime()) / (1000 * 60 * 60);
+
+    if (diffInHours < 48) {
+      throw new Error(
+        "Bookings timing cannot be updated within 48 hours of the scheduled time"
+      );
     }
 
     // 2️⃣ Atomically claim new slot
