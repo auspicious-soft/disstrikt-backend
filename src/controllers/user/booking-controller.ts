@@ -16,21 +16,188 @@ import { BADREQUEST, INTERNAL_SERVER_ERROR, OK } from "src/utils/response";
 import { userMoreInfo } from "../auth/auth-controller";
 import { UserInfoModel } from "src/models/user/user-info-schema";
 
+// export const getLevelUp = async (req: Request, res: Response) => {
+//   try {
+//     const userData = req.user as any;
+//     req.body.language = userData.language || "en";
+//     const activePlan = (await SubscriptionModel.findOne({
+//       userId: userData.id,
+//     })
+//       .populate("planId")
+//       .lean()) as any;
+
+//     let data;
+
+//     if (
+//       ["trialing", "incomplete", "canceled", "past_due"].includes(
+//         userData?.subscription?.status,
+//       )
+//     ) {
+//       data = [
+//         {
+//           type: "Portfolio Bootcamp",
+//           eligible: false,
+//           percentage: 0,
+//           daysLeft: null,
+//           reason: "NO_ACCESS",
+//         },
+//         {
+//           type: "Skill Bootcamp",
+//           eligible: false,
+//           percentage: 0,
+//           daysLeft: null,
+//           reason: "NO_ACCESS",
+//         },
+//         {
+//           type: "Create a Shoot",
+//           eligible: false,
+//           percentage: 0,
+//           daysLeft: null,
+//           reason: "NO_ACCESS",
+//         },
+//       ];
+//     } else {
+//       const now = new Date();
+
+//       const futureBookings = await StudioBookingModel.find({
+//         userId: userData.id,
+//         time: { $gt: now },
+//         status: "Booked",
+//       }).sort({ time: 1 });
+
+//       const hasFutureBooking = futureBookings.length > 0;
+
+//       // Last completed booking (attended = Yes OR time < now)
+//       const lastCompletedBooking = await StudioBookingModel.findOne({
+//         userId: userData.id,
+//         status: "Booked",
+//         time: { $lt: now },
+//       })
+//         .sort({ time: -1 })
+//         .lean();
+
+//       const daysSinceLastBooking = lastCompletedBooking
+//         ? Math.floor(
+//             (now.getTime() - new Date(lastCompletedBooking.time).getTime()) /
+//               (1000 * 60 * 60 * 24),
+//           )
+//         : null;
+
+//       const calculateEligibility = (
+//         hasAccess: boolean,
+//         coolingDays: number,
+//       ) => {
+//         if (!hasAccess) {
+//           return {
+//             eligible: false,
+//             percentage: 0,
+//             daysLeft: 0,
+//             reason: "NO_ACCESS",
+//           };
+//         }
+
+//         if (hasFutureBooking) {
+//           return {
+//             eligible: false,
+//             percentage: 100,
+//             daysLeft: null,
+//             reason: "HAS_FUTURE_BOOKING",
+//           };
+//         }
+
+//         if (!lastCompletedBooking || coolingDays === 0) {
+//           return {
+//             eligible: true,
+//             percentage: 100,
+//             daysLeft: 0,
+//             reason: "CAN_ACCESS",
+//           };
+//         }
+
+//         const remainingDays = coolingDays - daysSinceLastBooking!;
+
+//         if (remainingDays > 0) {
+//           return {
+//             eligible: false,
+//             percentage: Math.floor(
+//               ((coolingDays - remainingDays) / coolingDays) * 100,
+//             ),
+//             daysLeft: remainingDays,
+//             reason: "IN_COOLING_PERIOD",
+//           };
+//         }
+
+//         return {
+//           eligible: true,
+//           percentage: 100,
+//           daysLeft: 0,
+//         };
+//       };
+
+//       const {
+//         portfolioBootcamp,
+//         portfolioCooling,
+//         skillBootcamp,
+//         skillCooling,
+//         createAShoot,
+//         shootCooling,
+//       } = activePlan.planId.fullAccess;
+
+//       const planKey = activePlan.planId.key as string;
+
+//       const portfolio = calculateEligibility(
+//         portfolioBootcamp,
+//         portfolioCooling,
+//       );
+
+//       const skill = calculateEligibility(skillBootcamp, skillCooling);
+
+//       const shoot = calculateEligibility(createAShoot, shootCooling);
+
+//       data = [
+//         {
+//           type: "Portfolio Bootcamp",
+//           ...portfolio,
+//         },
+//         {
+//           type: "Skill Bootcamp",
+//           ...skill,
+//         },
+//         {
+//           type: "Create a Shoot",
+//           ...shoot,
+//         },
+//       ];
+//     }
+
+//     return OK(res, data || {}, req.body.language);
+//   } catch (err: any) {
+//     if (err.message) {
+//       return BADREQUEST(res, err.message, req.body.language);
+//     }
+//     return INTERNAL_SERVER_ERROR(res, req.body.language);
+//   }
+// };
+
 export const getLevelUp = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
+
     const activePlan = (await SubscriptionModel.findOne({
       userId: userData.id,
     })
       .populate("planId")
       .lean()) as any;
 
+    const planKey = activePlan?.planId?.key; // "aspire-model" | "new-face" | "rising-star"
+
     let data;
 
+    /* ------------------ NO ACTIVE SUBSCRIPTION CASE ------------------ */
     if (
       ["trialing", "incomplete", "canceled", "past_due"].includes(
-        userData?.subscription?.status
+        userData?.subscription?.status,
       )
     ) {
       data = [
@@ -56,132 +223,174 @@ export const getLevelUp = async (req: Request, res: Response) => {
           reason: "NO_ACCESS",
         },
       ];
-    } else {
-      const now = new Date();
+      return OK(res, data, req.body.language);
+    }
 
-      const futureBookings = await StudioBookingModel.find({
-        userId: userData.id,
-        time: { $gt: now },
-        status: "Booked",
-      }).sort({ time: 1 });
+    /* ------------------ NEW-FACE PLAN ------------------ */
+    if (planKey === "new-face") {
+      data = [
+        {
+          type: "Portfolio Bootcamp",
+          eligible: false,
+          percentage: 0,
+          daysLeft: null,
+          reason: "NO_ACCESS",
+        },
+        {
+          type: "Skill Bootcamp",
+          eligible: false,
+          percentage: 0,
+          daysLeft: null,
+          reason: "NO_ACCESS",
+        },
+        {
+          type: "Create a Shoot",
+          eligible: false,
+          percentage: 0,
+          daysLeft: null,
+          reason: "NO_ACCESS",
+        },
+      ];
+      return OK(res, data, req.body.language);
+    }
 
-      const hasFutureBooking = futureBookings.length > 0;
+    /* ------------------ COMMON DATA ------------------ */
+    const now = new Date();
 
-      // Last completed booking (attended = Yes OR time < now)
-      const lastCompletedBooking = await StudioBookingModel.findOne({
-        userId: userData.id,
-        status: "Booked",
-        time: { $lt: now },
-      })
-        .sort({ time: -1 })
-        .lean();
+    const futureBookings = await StudioBookingModel.find({
+      userId: userData.id,
+      time: { $gt: now },
+      status: "Booked",
+    }).sort({ time: 1 });
 
-      const daysSinceLastBooking = lastCompletedBooking
-        ? Math.floor(
-            (now.getTime() - new Date(lastCompletedBooking.time).getTime()) /
-              (1000 * 60 * 60 * 24)
-          )
-        : null;
+    const hasFutureBooking = futureBookings.length > 0;
 
-      const calculateEligibility = (
-        hasAccess: boolean,
-        coolingDays: number
-      ) => {
-        if (!hasAccess) {
-          return {
-            eligible: false,
-            percentage: 0,
-            daysLeft: 0,
-            reason: "NO_ACCESS",
-          };
-        }
+    const lastCompletedBooking = await StudioBookingModel.findOne({
+      userId: userData.id,
+      status: "Booked",
+      time: { $lt: now },
+    })
+      .sort({ time: -1 })
+      .lean();
 
-        if (hasFutureBooking) {
-          return {
-            eligible: false,
-            percentage: 100,
-            daysLeft: null,
-            reason: "HAS_FUTURE_BOOKING",
-          };
-        }
+    const daysSinceLastBooking = lastCompletedBooking
+      ? Math.floor(
+          (now.getTime() - new Date(lastCompletedBooking.time).getTime()) /
+            (1000 * 60 * 60 * 24),
+        )
+      : null;
 
-        if (!lastCompletedBooking || coolingDays === 0) {
-          return {
-            eligible: true,
-            percentage: 100,
-            daysLeft: 0,
-            reason: "CAN_ACCESS",
-          };
-        }
+    const calculateEligibility = (hasAccess: boolean, coolingDays: number) => {
+      if (!hasAccess) {
+        return {
+          eligible: false,
+          percentage: 0,
+          daysLeft: 0,
+          reason: "NO_ACCESS",
+        };
+      }
 
-        const remainingDays = coolingDays - daysSinceLastBooking!;
+      if (hasFutureBooking) {
+        return {
+          eligible: false,
+          percentage: 100,
+          daysLeft: null,
+          reason: "HAS_FUTURE_BOOKING",
+        };
+      }
 
-        if (remainingDays > 0) {
-          return {
-            eligible: false,
-            percentage: Math.floor(
-              ((coolingDays - remainingDays) / coolingDays) * 100
-            ),
-            daysLeft: remainingDays,
-            reason: "IN_COOLING_PERIOD",
-          };
-        }
-
+      if (!lastCompletedBooking || coolingDays === 0) {
         return {
           eligible: true,
           percentage: 100,
           daysLeft: 0,
+          reason: "CAN_ACCESS",
         };
+      }
+
+      const remainingDays = coolingDays - daysSinceLastBooking!;
+
+      if (remainingDays > 0) {
+        return {
+          eligible: false,
+          percentage: Math.floor(
+            ((coolingDays - remainingDays) / coolingDays) * 100,
+          ),
+          daysLeft: remainingDays,
+          reason: "IN_COOLING_PERIOD",
+        };
+      }
+
+      return {
+        eligible: true,
+        percentage: 100,
+        daysLeft: 0,
+        reason: "CAN_ACCESS",
       };
+    };
 
-      const {
-        portfolioBootcamp,
-        portfolioCooling,
-        skillBootcamp,
-        skillCooling,
-        createAShoot,
-        shootCooling,
-      } = activePlan.planId.fullAccess;
+    const {
+      portfolioBootcamp,
+      portfolioCooling,
+      skillBootcamp,
+      skillCooling,
+      createAShoot,
+      shootCooling,
+    } = activePlan.planId.fullAccess;
 
-      const portfolio = calculateEligibility(
-        portfolioBootcamp,
-        portfolioCooling
-      );
+    /* ------------------ PORTFOLIO ------------------ */
+    const portfolio = calculateEligibility(portfolioBootcamp, portfolioCooling);
 
-      const skill = calculateEligibility(skillBootcamp, skillCooling);
+    /* ------------------ SKILL (ASPIRE-MODEL RULE) ------------------ */
+    let skill;
 
-      const shoot = calculateEligibility(createAShoot, shootCooling);
+    if (planKey === "aspire-model") {
+      const hasAttendedPortfolioBootcamp = await StudioBookingModel.exists({
+        userId: userData.id,
+        activityType: "Portfolio Bootcamp",
+        attended: "Yes",
+      });
 
-      data = [
-        {
-          type: "Portfolio Bootcamp",
-          ...portfolio,
-        },
-        {
-          type: "Skill Bootcamp",
-          ...skill,
-        },
-        {
-          type: "Create a Shoot",
-          ...shoot,
-        },
-      ];
+      if (!hasAttendedPortfolioBootcamp) {
+        skill = {
+          eligible: false,
+          percentage: 0,
+          daysLeft: null,
+          reason: "PORTFOLIO_NOT_COMPLETED",
+        };
+      } else {
+        skill = calculateEligibility(skillBootcamp, skillCooling);
+      }
+    } else {
+      // rising-star → no restriction
+      skill = calculateEligibility(skillBootcamp, skillCooling);
     }
 
-    return OK(res, data || {}, req.body.language);
+    /* ------------------ SHOOT ------------------ */
+    const shoot = calculateEligibility(createAShoot, shootCooling);
+
+    data = [
+      { type: "Portfolio Bootcamp", ...portfolio },
+      { type: "Skill Bootcamp", ...skill },
+      { type: "Create a Shoot", ...shoot },
+    ];
+
+    return OK(res, data, req.body.language);
   } catch (err: any) {
+    console.error(err);
     if (err.message) {
       return BADREQUEST(res, err.message, req.body.language);
     }
     return INTERNAL_SERVER_ERROR(res, req.body.language);
   }
 };
+
 export const getStudios = async (req: Request, res: Response) => {
   try {
     const userData = req.user as any;
     req.body.language = userData.language || "en";
     const studios = await StudioModel.find({ isDeleted: false }).select(
-      "name city country"
+      "name city country",
     );
     const activityType = [
       "Portfolio Bootcamp",
@@ -190,7 +399,7 @@ export const getStudios = async (req: Request, res: Response) => {
     ];
     const additionalInfo = await PlatformInfoModel.findOne({})
       .select(
-        "shootPolicy shootGoals shootFormat vibes addOnFeatures canBringOutfits"
+        "shootPolicy shootGoals shootFormat vibes addOnFeatures canBringOutfits",
       )
       .lean();
 
@@ -289,7 +498,7 @@ export const bookStudio = async (req: Request, res: Response) => {
 
     if (
       !["Portfolio Bootcamp", "Skill Bootcamp", "Create a Shoot"].includes(
-        activityType
+        activityType,
       )
     ) {
       throw new Error("Invalid activity type");
@@ -311,7 +520,7 @@ export const bookStudio = async (req: Request, res: Response) => {
           status: "Booked",
         },
       },
-      { new: true }
+      { new: true },
     );
 
     return OK(res, bookingData, req.body.language);
@@ -336,7 +545,7 @@ export const getBookings = async (req: Request, res: Response) => {
         userId: userData.id,
       })
         .select(
-          "activityType date time slot status startTime endtime attended cancelledBy"
+          "activityType date time slot status startTime endtime attended cancelledBy",
         )
         .populate({ path: "studioId", select: "name" })
         .sort({ time: -1 });
@@ -346,7 +555,7 @@ export const getBookings = async (req: Request, res: Response) => {
         time: type === "Upcoming" ? { $gt: date } : { $lt: date },
       })
         .select(
-          "activityType date time slot status startTime  endtime attended"
+          "activityType date time slot status startTime  endtime attended",
         )
         .populate({ path: "studioId", select: "name" })
         .sort({ time: -1 });
@@ -388,7 +597,7 @@ export const getBookingById = async (req: Request, res: Response) => {
         ...checkExist,
         userId: { ...checkExist?.userId, ...moreData },
       },
-      req.body.language
+      req.body.language,
     );
   } catch (err: any) {
     if (err.message) {
@@ -436,7 +645,7 @@ export const editBooking = async (req: Request, res: Response) => {
         status: "Booked",
       },
       null,
-      { session }
+      { session },
     );
 
     if (!oldBooking) {
@@ -449,7 +658,7 @@ export const editBooking = async (req: Request, res: Response) => {
 
     if (diffInHours < 48) {
       throw new Error(
-        "Bookings timing cannot be updated within 48 hours of the scheduled time"
+        "Bookings timing cannot be updated within 48 hours of the scheduled time",
       );
     }
 
@@ -471,7 +680,7 @@ export const editBooking = async (req: Request, res: Response) => {
           status: "Booked",
         },
       },
-      { new: true, session }
+      { new: true, session },
     );
 
     if (!newBooking) {
@@ -493,7 +702,7 @@ export const editBooking = async (req: Request, res: Response) => {
           status: "Empty",
         },
       },
-      { session }
+      { session },
     );
 
     await session.commitTransaction();
@@ -526,7 +735,7 @@ export const cancelBooking = async (req: Request, res: Response) => {
 
     if (diffInHours < 48) {
       throw new Error(
-        "Bookings cannot be cancelled within 48 hours of the scheduled time"
+        "Bookings cannot be cancelled within 48 hours of the scheduled time",
       );
     }
 
@@ -543,7 +752,7 @@ export const cancelBooking = async (req: Request, res: Response) => {
           canBringOutfits: 0,
           status: "Empty",
         },
-      }
+      },
     );
 
     await CancelBooking2Model.create({
@@ -560,11 +769,11 @@ export const cancelBooking = async (req: Request, res: Response) => {
       activityType: checkExist?.activityType,
     });
 
-    await NotificationService(
-      [userData.id] as any,
-      "SUBSCRIPTION_STARTED",
-      checkExist._id as Object
-    );
+    // await NotificationService(
+    //   [userData.id] as any,
+    //   "SUBSCRIPTION_STARTED",
+    //   checkExist._id as Object,
+    // );
 
     return OK(res, {}, req.body.language);
   } catch (err: any) {
@@ -603,7 +812,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
         uploadedFile.originalname,
         uploadedFile.mimetype,
         userData.id,
-        "chat"
+        "chat",
       );
       imageS3Key = s3Result.key;
 
@@ -653,8 +862,8 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
     });
 
     const prompt = {
-      Camille: `
-          You are Coach Camille — the Level-Up Coach for Disstrikt.
+      Harper: `
+          You are Harper — the Level-Up Coach for Disstrikt.
           Your tone is sweet, warm, overly friendly, and slightly flirty in a professional way.
 
           You only answer questions related to:
@@ -676,7 +885,8 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
           Plan status: ${userData.subscription.status}
 
           Plans & limits:
-          ${JSON.stringify(plans, null, 2)}
+          ${JSON.stringify(plans, null, 2)},
+          Note: For Aspire model plan you can access the skill bootcamp only after attending the portfolio bootcamp.
 
           Important system rules:
           • The user can only perform tasks allowed by their plan
@@ -708,8 +918,8 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
 
           You must NEVER invent platform features.
           `,
-      Harper: `
-        You are Harper the Hunter — Disstrikt's job and career expert.
+      Camille: `
+        You are Camille — Disstrikt's job and career expert.
         Your tone is funny, playful, confident, and slightly sarcastic in a charming way.
 
         You only answer questions related to:
@@ -756,7 +966,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
         You must never answer out-of-scope questions.
         `,
       Lumi: `
-          You are Lumi the Light — Disstrikt's boring but accurate support bot.
+          You are Lumi — Disstrikt's boring but accurate support bot.
           Your tone is neutral, minimal, factual, and not playful.
 
           You only answer questions related to:
@@ -883,7 +1093,7 @@ export const chatWithGPTServices = async (req: Request, res: Response) => {
       return INTERNAL_SERVER_ERROR(res, req.body.language);
     } else {
       res.write(
-        `data: ${JSON.stringify({ error: "Stream error occurred" })}\n\n`
+        `data: ${JSON.stringify({ error: "Stream error occurred" })}\n\n`,
       );
       res.end();
       return true;
@@ -941,7 +1151,7 @@ export const chatHistoryServices = async (req: Request, res: Response) => {
           hasPrevPage,
         },
       },
-      req.body.language
+      req.body.language,
     );
   } catch (err: any) {
     if (err.message) {
