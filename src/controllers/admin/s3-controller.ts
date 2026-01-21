@@ -16,8 +16,8 @@ export const uploadToS3 = async (req: Request, res: Response) => {
     const file = req.file;
     const { role, _id } = userData || { role: "USER" };
     const {
-      id = role === "ADMIN" ? _id : userData.userId,
-      isAdmin = role === "ADMIN" ? true : false,
+      id = role === "ADMIN" || role === "EMPLOYEE"? _id : userData.userId,
+      isAdmin = role === "ADMIN" || role === "EMPLOYEE" ? true : false,
       language = "en",
     } = userData || { id: null, isAdmin: true, language: "en" };
 
