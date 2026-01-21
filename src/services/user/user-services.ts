@@ -112,7 +112,7 @@ export const homeServices = {
 
     const tasks = result || [];
     const unlockedTask = tasks.find(
-      (data: any) => data.adminReviewed === false
+      (data: any) => data.adminReviewed === false,
     );
 
     const total = result.length || 0;
@@ -181,7 +181,7 @@ export const homeServices = {
 
     const task = (await TaskModel.findById(taskId)
       .select(
-        `${userData.language} taskType answerType link taskNumber milestone appReview count`
+        `${userData.language} taskType answerType link taskNumber milestone appReview count`,
       )
       .lean()) as any;
 
@@ -210,7 +210,7 @@ export const homeServices = {
       throw new Error(
         userData.subscription.status === "trialing"
           ? "youAreOnFreeTrial"
-          : "upgradeYourPlan"
+          : "upgradeYourPlan",
       );
     }
 
@@ -333,7 +333,7 @@ export const homeServices = {
         } else if (taskData?.taskType === "PORT_IMAGE") {
           isPresent = await checkPortfolioImage(
             userData.id,
-            taskData?.count || 0
+            taskData?.count || 0,
           );
           errorMessage = "enoughImagesNotFound";
         } else if (taskData?.taskType === "PORT_INTRO_VIDEO") {
@@ -350,7 +350,7 @@ export const homeServices = {
         } else if (taskData?.taskType === "UPLOAD") {
           isPresent = await uploadToPortfolio(
             userData?.id,
-            taskData?.taskNumber || 500
+            taskData?.taskNumber || 500,
           );
           rating = 3;
           taskReviewed = true;
@@ -467,7 +467,7 @@ export const homeServices = {
           appReview: taskData?.appReview,
         },
       },
-      { upsert: true }
+      { upsert: true },
     );
 
     if (taskData?.appReview) {
@@ -475,7 +475,7 @@ export const homeServices = {
         [userData.id],
         "TASK_COMPLETED",
         taskId,
-        taskData?.taskNumber
+        taskData?.taskNumber,
       );
     }
 
@@ -496,7 +496,7 @@ export const homeServices = {
         [userData.id],
         "MILESTONE_UNLOCKED",
         nextTask._id,
-        taskData?.taskNumber
+        taskData?.taskNumber,
       );
     }
 
@@ -598,7 +598,7 @@ export const profileServices = {
           dob: payload?.dob,
         },
       },
-      { new: true }
+      { new: true },
     ).lean();
 
     const user = await UserModel.findByIdAndUpdate(
@@ -611,7 +611,7 @@ export const profileServices = {
           phone: payload?.phone,
         },
       },
-      { new: true }
+      { new: true },
     ).lean();
 
     return {
@@ -638,7 +638,7 @@ export const profileServices = {
 
     const passwordStatus = await verifyPassword(
       oldPassword,
-      user?.password || ""
+      user?.password || "",
     );
 
     if (!passwordStatus) {
@@ -657,7 +657,7 @@ export const profileServices = {
     await UserModel.findByIdAndUpdate(
       id,
       { $set: { language } },
-      { new: true }
+      { new: true },
     );
     return {};
   },
@@ -690,7 +690,7 @@ export const profileServices = {
           userData.subscription.stripeSubscriptionId,
           {
             cancel_at_period_end: true,
-          }
+          },
         );
 
         await SubscriptionModel.findOneAndUpdate(
@@ -703,7 +703,7 @@ export const profileServices = {
               status: "canceling",
             },
           },
-          { session }
+          { session },
         );
       }
 
@@ -725,7 +725,7 @@ export const profileServices = {
             {
               trial_end: "now", // Give 24 hours grace
               proration_behavior: "none",
-            }
+            },
           );
         } else {
           await stripe.subscriptions.update(
@@ -733,7 +733,7 @@ export const profileServices = {
             {
               trial_end: "now",
               proration_behavior: "none",
-            }
+            },
           );
         }
       }
@@ -758,14 +758,14 @@ export const profileServices = {
             userData.subscription.stripeSubscriptionId,
             {
               cancel_at_period_end: true,
-            }
+            },
           );
 
           // The new subscription will be created in the webhook when the current one is deleted
         } else {
           // For cards, immediate cancellation works fine
           await stripe.subscriptions.cancel(
-            userData.subscription.stripeSubscriptionId
+            userData.subscription.stripeSubscriptionId,
           );
         }
       }
@@ -775,7 +775,7 @@ export const profileServices = {
           userData.subscription.stripeSubscriptionId,
           {
             cancel_at_period_end: true,
-          }
+          },
         );
 
         await SubscriptionModel.findOneAndUpdate(
@@ -787,7 +787,7 @@ export const profileServices = {
               nextPlanId: planId,
             },
           },
-          { session }
+          { session },
         );
       }
 
@@ -809,6 +809,25 @@ export const portfolioServices = {
     const portfolio = await UserInfoModel.findOne({
       userId: userData.id,
     }).lean();
+
+    const activePlan = (await SubscriptionModel.findOne({
+      userId: userData.id,
+      $or: [{ status: "active" }, { status: "trialing" }],
+    })
+      .populate("planId")
+      .lean()) as any;
+
+    console.log(
+      activePlan?.planId?.fullAccess.videoUploadLimit,
+      activePlan?.planId?.fullAccess.pictureUploadLimit,
+    );
+
+    const canUploadVideos =
+      (portfolio?.portfolioImages.length || 0) <
+      (activePlan?.planId?.fullAccess.pictureUploadLimit || 1);
+    const canUploadPhotos =
+      (portfolio?.videos?.length || 0) <
+      (activePlan?.planId?.fullAccess.videoUploadLimit || 1);
 
     const {
       aboutMe,
@@ -851,6 +870,8 @@ export const portfolioServices = {
       country: userData.country,
       email: userData.email,
       phone: userData.phone,
+      canUploadVideos,
+      canUploadPhotos
     };
 
     return response;
@@ -866,7 +887,7 @@ export const portfolioServices = {
         links: data.links,
         setCards: data.setCards,
       },
-      { new: true }
+      { new: true },
     );
 
     const response = {
@@ -944,7 +965,7 @@ export const portfolioServices = {
     }).lean();
 
     const udpateData = checkExist?.videos?.filter(
-      (val: any) => val.url !== data.url
+      (val: any) => val.url !== data.url,
     );
 
     await UserInfoModel.findByIdAndUpdate(checkExist?._id, {
@@ -1058,7 +1079,7 @@ export const userJobServices = {
     if (userId && appliedJobs) {
       const appliedJobIds = appliedJobs.map((j) => j.jobId);
       appliedJobMap = new Map(
-        appliedJobs.map((j) => [j.jobId.toString(), j.status])
+        appliedJobs.map((j) => [j.jobId.toString(), j.status]),
       );
 
       if (type === "APPLIED") {
@@ -1229,7 +1250,7 @@ export const userJobServices = {
     } else {
       await JobModel.updateOne(
         { _id: jobId },
-        { $addToSet: { appliedUsers: id } } // avoids duplicates
+        { $addToSet: { appliedUsers: id } }, // avoids duplicates
       );
       await AppliedJobModel.create({
         jobId,
@@ -1300,7 +1321,7 @@ export const userSearchServices = {
             },
           },
         },
-        { $sort: { priority: 1 } } // Same-country first
+        { $sort: { priority: 1 } }, // Same-country first
       );
     }
 
@@ -1314,7 +1335,7 @@ export const userSearchServices = {
           image: 1,
           country: 1,
         },
-      }
+      },
     );
 
     const response = await UserModel.aggregate(queryPipeline);
