@@ -829,6 +829,10 @@ export const portfolioServices = {
       (portfolio?.videos?.length || 0) <
       (activePlan?.planId?.fullAccess.videoUploadLimit || 1);
 
+    const photosLeft =
+      activePlan?.planId?.fullAccess.pictureUploadLimit -
+      (portfolio?.portfolioImages.length || 0);
+
     const {
       aboutMe,
       portfolioImages,
@@ -871,7 +875,8 @@ export const portfolioServices = {
       email: userData.email,
       phone: userData.phone,
       canUploadVideos,
-      canUploadPhotos
+      photosLeft,
+      canUploadPhotos,
     };
 
     return response;
